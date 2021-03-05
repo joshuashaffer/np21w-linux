@@ -51,7 +51,7 @@ static REG8 sxsi_pos(UINT type, SXSIDEV sxsi, FILEPOS *ppos) {
 	}
 	else {
 		if(sxsi->totals > 0xffffff){
-			// ‘å—e—ÊƒfƒBƒXƒN—p
+			// å¤§å®¹é‡ãƒ‡ã‚£ã‚¹ã‚¯ç”¨
 			pos = ((FILEPOS)CPU_DX << 16) | CPU_CX;
 		}else{
 			pos = (CPU_DL << 16) | CPU_CX;
@@ -169,7 +169,7 @@ static REG8 sasibios_read(UINT type, SXSIDEV sxsi) {
 		if (CPU_STAT_PM && CPU_STAT_VM86 && biosioemu.enable) {
 #if defined(SUPPORT_IDEIO_48BIT)
 			if(sxsi->totals > 0xffffff){
-				// ‘å—e—ÊƒfƒBƒXƒN—p
+				// å¤§å®¹é‡ãƒ‡ã‚£ã‚¹ã‚¯ç”¨
 				// for Windows 9x IDE Driver
 				UINT8 sn;
 				UINT16 cy;
@@ -179,7 +179,7 @@ static REG8 sasibios_read(UINT type, SXSIDEV sxsi) {
 				hd = (posbase % 255);
 				posbase /= 255;
 				cy = posbase & 0xffff;
-				// LIFO‚È‚Ì‚Å‹t‡’ˆÓ
+				// LIFOãªã®ã§é€†é †æ³¨æ„
 				biosioemu_push8(0x644, (CPU_BX / 512) & 0xff); 
 				biosioemu_push8(0x646, sn); 
 				biosioemu_push8(0x64a, ((cy >> 8) & 0xff)); 
@@ -205,7 +205,7 @@ static REG8 sasibios_read(UINT type, SXSIDEV sxsi) {
 				hd = (posbase % sxsi->surfaces);
 				posbase /= sxsi->surfaces;
 				cy = posbase & 0xffff;
-				// LIFO‚È‚Ì‚Å‹t‡’ˆÓ
+				// LIFOãªã®ã§é€†é †æ³¨æ„
 				biosioemu_push8(0x644, (CPU_BX / 512) & 0xff); 
 				biosioemu_push8(0x646, sn); 
 				biosioemu_push8(0x64a, ((cy >> 8) & 0xff)); 
@@ -221,7 +221,7 @@ static REG8 sasibios_read(UINT type, SXSIDEV sxsi) {
 				biosioemu_push8_read(0x430);
 			}
 			
-			// XXX: Win9x—p Workaround Ú‘±ƒtƒ‰ƒOØ‚è‘Ö‚¦iNTŒn‚ÍƒvƒƒeƒNƒgƒ‚[ƒh‚ÅBIOSƒR[ƒ‹‚µ‚È‚¢‚Í‚¸j 
+			// XXX: Win9xç”¨ Workaround æ¥ç¶šãƒ•ãƒ©ã‚°åˆ‡ã‚Šæ›¿ãˆï¼ˆNTç³»ã¯ãƒ—ãƒ­ãƒ†ã‚¯ãƒˆãƒ¢ãƒ¼ãƒ‰ã§BIOSã‚³ãƒ¼ãƒ«ã—ãªã„ã¯ãšï¼‰ 
 			mem[0x05ba] = mem[0x05bb];
 		}
 #endif
@@ -269,10 +269,10 @@ static REG8 sasibios_format(UINT type, SXSIDEV sxsi) {
 	FILEPOS	pos;
 
 	if (CPU_AH & 0x80) {
-		if (type == SXSIBIOS_SCSI) {		// ‚Æ‚è‚ ‚¦‚¸SCSI‚Ì‚İ
+		if (type == SXSIBIOS_SCSI) {		// ã¨ã‚Šã‚ãˆãšSCSIã®ã¿
 			UINT count;
 			FILEPOS posmax;
-			count = timing_getcount();			// ŠÔ‚ğ~‚ß‚é
+			count = timing_getcount();			// æ™‚é–“ã‚’æ­¢ã‚ã‚‹
 			ret = 0;
 			pos = 0;
 			posmax = (FILEPOS)sxsi->surfaces * sxsi->cylinders;
@@ -283,7 +283,7 @@ static REG8 sasibios_format(UINT type, SXSIDEV sxsi) {
 				}
 				pos++;
 			}
-			timing_setcount(count);							// ÄŠJ
+			timing_setcount(count);							// å†é–‹
 		}
 		else {
 			ret = 0xd0;
@@ -309,10 +309,10 @@ static REG8 scsibios_format(UINT type, SXSIDEV sxsi) {
 	FILEPOS	pos;
 
 	if (CPU_AH & 0x80) {
-		if (type == SXSIBIOS_SCSI) {		// ‚Æ‚è‚ ‚¦‚¸SCSI‚Ì‚İ
+		if (type == SXSIBIOS_SCSI) {		// ã¨ã‚Šã‚ãˆãšSCSIã®ã¿
 			UINT count;
 			FILEPOS posmax;
-			count = timing_getcount();			// ŠÔ‚ğ~‚ß‚é
+			count = timing_getcount();			// æ™‚é–“ã‚’æ­¢ã‚ã‚‹
 			ret = 0;
 			pos = 0;
 			posmax = (FILEPOS)sxsi->surfaces * sxsi->cylinders;
@@ -323,7 +323,7 @@ static REG8 scsibios_format(UINT type, SXSIDEV sxsi) {
 				}
 				pos++;
 			}
-			timing_setcount(count);							// ÄŠJ
+			timing_setcount(count);							// å†é–‹
 		}
 		else {
 			ret = 0xd0;
@@ -419,21 +419,21 @@ static REG8 sasibios_sense(UINT type, SXSIDEV sxsi) {
 
 static const SXSIFUNC sasifunc[16] = {
 			sxsibios_failed,		// SASI 0:
-			sxsibios_succeed,		// SASI 1: ƒxƒŠƒtƒ@ƒC
+			sxsibios_succeed,		// SASI 1: ãƒ™ãƒªãƒ•ã‚¡ã‚¤
 			sxsibios_failed,		// SASI 2:
-			sasibios_init,			// SASI 3: ƒCƒjƒVƒƒƒ‰ƒCƒY
-			sasibios_sense,			// SASI 4: ƒZƒ“ƒX
-			sasibios_write,			// SASI 5: ƒf[ƒ^‚Ì‘‚«‚İ
-			sasibios_read,			// SASI 6: ƒf[ƒ^‚Ì“Ç‚İ‚İ
-			sxsibios_succeed,		// SASI 7: ƒŠƒgƒ‰ƒNƒg
+			sasibios_init,			// SASI 3: ã‚¤ãƒ‹ã‚·ãƒ£ãƒ©ã‚¤ã‚º
+			sasibios_sense,			// SASI 4: ã‚»ãƒ³ã‚¹
+			sasibios_write,			// SASI 5: ãƒ‡ãƒ¼ã‚¿ã®æ›¸ãè¾¼ã¿
+			sasibios_read,			// SASI 6: ãƒ‡ãƒ¼ã‚¿ã®èª­ã¿è¾¼ã¿
+			sxsibios_succeed,		// SASI 7: ãƒªãƒˆãƒ©ã‚¯ãƒˆ
 			sxsibios_failed,		// SASI 8:
 			sxsibios_failed,		// SASI 9:
 			sxsibios_failed,		// SASI a:
 			sxsibios_failed,		// SASI b:
 			sxsibios_failed,		// SASI c:
-			sasibios_format,		// SASI d: ƒtƒH[ƒ}ƒbƒg
+			sasibios_format,		// SASI d: ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 			sxsibios_failed,		// SASI e:
-			sxsibios_succeed};		// SASI f: ƒŠƒgƒ‰ƒNƒg
+			sxsibios_succeed};		// SASI f: ãƒªãƒˆãƒ©ã‚¯ãƒˆ
 
 REG8 sasibios_operate(void) {
 
@@ -562,21 +562,21 @@ static REG8 scsibios_chginf(UINT type, SXSIDEV sxsi) {
 
 static const SXSIFUNC scsifunc[16] = {
 			sxsibios_failed,		// SCSI 0:
-			sxsibios_succeed,		// SCSI 1: ƒxƒŠƒtƒ@ƒC
+			sxsibios_succeed,		// SCSI 1: ãƒ™ãƒªãƒ•ã‚¡ã‚¤
 			sxsibios_failed,		// SCSI 2:
-			scsibios_init,			// SCSI 3: ƒCƒjƒVƒƒƒ‰ƒCƒY
-			scsibios_sense,			// SCSI 4: ƒZƒ“ƒX
-			scsibios_write,			// SCSI 5: ƒf[ƒ^‚Ì‘‚«‚İ
-			scsibios_read,			// SCSI 6: ƒf[ƒ^‚Ì“Ç‚İ‚İ
-			sxsibios_succeed,		// SCSI 7: ƒŠƒgƒ‰ƒNƒg
+			scsibios_init,			// SCSI 3: ã‚¤ãƒ‹ã‚·ãƒ£ãƒ©ã‚¤ã‚º
+			scsibios_sense,			// SCSI 4: ã‚»ãƒ³ã‚¹
+			scsibios_write,			// SCSI 5: ãƒ‡ãƒ¼ã‚¿ã®æ›¸ãè¾¼ã¿
+			scsibios_read,			// SCSI 6: ãƒ‡ãƒ¼ã‚¿ã®èª­ã¿è¾¼ã¿
+			sxsibios_succeed,		// SCSI 7: ãƒªãƒˆãƒ©ã‚¯ãƒˆ
 			sxsibios_failed,		// SCSI 8:
 			sxsibios_failed,		// SCSI 9:
-			scsibios_setsec,		// SCSI a: ƒZƒNƒ^’·İ’è
+			scsibios_setsec,		// SCSI a: ã‚»ã‚¯ã‚¿é•·è¨­å®š
 			sxsibios_failed,		// SCSI b:
-			scsibios_chginf,		// SCSI c: ‘ã‘Öî•ñæ“¾
-			scsibios_format,		// SCSI d: ƒtƒH[ƒ}ƒbƒg
+			scsibios_chginf,		// SCSI c: ä»£æ›¿æƒ…å ±å–å¾—
+			scsibios_format,		// SCSI d: ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 			sxsibios_failed,		// SCSI e:
-			sxsibios_succeed};		// SCSI f: ƒŠƒgƒ‰ƒNƒg
+			sxsibios_succeed};		// SCSI f: ãƒªãƒˆãƒ©ã‚¯ãƒˆ
 
 REG8 scsibios_operate(void) {
 
@@ -593,7 +593,7 @@ REG8 scsibios_operate(void) {
 }
 
 
-// ‚ ‚Æ‚Å scsicmd‚©‚çˆÚ“®
+// ã‚ã¨ã§ scsicmdã‹ã‚‰ç§»å‹•
 #endif
 
 

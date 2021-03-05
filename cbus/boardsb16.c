@@ -41,7 +41,7 @@ static void trace_fmt_ex(const char *fmt, ...)
  * Creative Sound Blaster 16(98)
  * YMF262-M(OPL3) + CT1741(PCM) + CT1745(MIXER) + YM2203(OPN - option)
  *
- * ƒfƒtƒHƒ‹ƒgd—l IO:D2 DMA:3 INT:5 
+ * ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆä»•æ§˜ IO:D2 DMA:3 INT:5 
  */
 
 #define G_OPL3_INDEX	1
@@ -49,7 +49,7 @@ static void trace_fmt_ex(const char *fmt, ...)
 static const UINT8 sb16base[] = {0xd2,0xd4,0xd6,0xd8,0xda,0xdc,0xde};
 static int samplerate;
 
-static UINT8 seq[] = {0x60, 0x80, 0xff, 0x21}; // XXX: Win2kƒhƒ‰ƒCƒo‚Ìƒ`ƒFƒbƒN‚ğ’Ê‚·‚½‚ß‚¾‚¯‚Ìb’èƒV[ƒPƒ“ƒX
+static UINT8 seq[] = {0x60, 0x80, 0xff, 0x21}; // XXX: Win2kãƒ‰ãƒ©ã‚¤ãƒã®ãƒã‚§ãƒƒã‚¯ã‚’é€šã™ãŸã‚ã ã‘ã®æš«å®šã‚·ãƒ¼ã‚±ãƒ³ã‚¹
 static int forceopl3mode = 0;
 static int seqpos = 0;
 
@@ -108,7 +108,7 @@ static void IOOUTCALL sb16_o2000(UINT port, REG8 dat) {
 	(void)port;
 #ifdef USE_MAME
 	YMF262Write(g_mame_opl3[G_OPL3_INDEX], 0, dat);
-	g_opl3[G_OPL3_INDEX].s.addrl = dat; // Key Display—p
+	g_opl3[G_OPL3_INDEX].s.addrl = dat; // Key Displayç”¨
 #endif
 	//TRACEOUT(("OPL3 PORT=0x%04x, DATA=0x%02x", port, dat));
 }
@@ -117,7 +117,7 @@ static void IOOUTCALL sb16_o2100(UINT port, REG8 dat) {
 	(void)port;
 #ifdef USE_MAME
 	YMF262Write(g_mame_opl3[G_OPL3_INDEX], 1, dat);
-	opl3_writeRegister(&g_opl3[G_OPL3_INDEX], g_opl3[G_OPL3_INDEX].s.addrl, dat); // Key Display—p
+	opl3_writeRegister(&g_opl3[G_OPL3_INDEX], g_opl3[G_OPL3_INDEX].s.addrl, dat); // Key Displayç”¨
 #endif
 	if(g_opl3[G_OPL3_INDEX].s.addrl==2 || g_opl3[G_OPL3_INDEX].s.addrl==4){
 		if(seqpos < sizeof(seq) && seq[seqpos]==dat){
@@ -134,7 +134,7 @@ static void IOOUTCALL sb16_o2200(UINT port, REG8 dat) {
 	(void)port;
 #ifdef USE_MAME
 	YMF262Write(g_mame_opl3[G_OPL3_INDEX], 2, dat);
-	g_opl3[G_OPL3_INDEX].s.addrh = dat; // Key Display—p
+	g_opl3[G_OPL3_INDEX].s.addrh = dat; // Key Displayç”¨
 #endif
 	//TRACEOUT(("OPL3 PORT=0x%04x, DATA=0x%02x", port, dat));
 }
@@ -143,15 +143,15 @@ static void IOOUTCALL sb16_o2300(UINT port, REG8 dat) {
 	(void)port;
 #ifdef USE_MAME
 	YMF262Write(g_mame_opl3[G_OPL3_INDEX], 3, dat);
-	opl3_writeExtendedRegister(&g_opl3[G_OPL3_INDEX], g_opl3[G_OPL3_INDEX].s.addrh, dat); // Key Display—p
+	opl3_writeExtendedRegister(&g_opl3[G_OPL3_INDEX], g_opl3[G_OPL3_INDEX].s.addrh, dat); // Key Displayç”¨
 #endif
 	//TRACEOUT(("OPL3 PORT=0x%04x, DATA=0x%02x", port, dat));
 }
 
 static void IOOUTCALL sb16_o2800(UINT port, REG8 dat) {
 	/**
-	 * ‚¢‚í‚ä‚éPC/AT‚ÅŒ¾‚¤‚Æ‚±‚ë‚ÌAdlibŒİŠ·ƒ|[ƒg
-	 * UltimaUnderWorld‚Å‚Í‚±‚¿‚ç‚ğ’@‚­
+	 * ã„ã‚ã‚†ã‚‹PC/ATã§è¨€ã†ã¨ã“ã‚ã®Adlibäº’æ›ãƒãƒ¼ãƒˆ
+	 * UltimaUnderWorldã§ã¯ã“ã¡ã‚‰ã‚’å©ã
 	 */
 	port = dat;
 #ifdef USE_MAME
@@ -196,10 +196,10 @@ static REG8 IOINPCALL sb16_i8100(UINT port) {
 	TRACEOUT(("MPU PORT=0x%04x", port));
 		if(mpu98.enable){
 			mpu98.mode = 1; // force set UART mode
-			return mpu98ii_i2(port) & ~0x40; // ‹­§Ready
+			return mpu98ii_i2(port) & ~0x40; // å¼·åˆ¶Ready
 		}else if(smpu98.enable){
 			smpu98.mode = 1; // force set UART mode
-			return smpu98_i2(port) & ~0x40; // ‹­§Ready
+			return smpu98_i2(port) & ~0x40; // å¼·åˆ¶Ready
 		}
 	//}
 	return 0x00;
@@ -309,7 +309,7 @@ static void IOOUTCALL gameport_o4d2(UINT port, REG8 dat)
 #else
 	gameport_tsc = 0;
 #endif
-	//gameport_clkmax = pccore.baseclock * pccore.maxmultiple / 1000; // ‚Æ‚è‚ ‚¦‚¸1ms‚Å¥¥¥
+	//gameport_clkmax = pccore.baseclock * pccore.maxmultiple / 1000; // ã¨ã‚Šã‚ãˆãš1msã§ï½¥ï½¥ï½¥
 	//gameport_timeoutcounter = 400;
 	//gameport_timeoutinterval = gameport_clkmax * 2 / gameport_timeoutcounter;
 	//nevent_set(NEVENT_CDWAIT, gameport_timeoutinterval, gameport_timeoutproc, NEVENT_ABSOLUTE);
@@ -340,10 +340,10 @@ static REG8 IOINPCALL gameport_i4d2(UINT port)
 	if(gameport_useqpc){
 		//li.QuadPart = li.QuadPart * GAMEPORT_JOYCOUNTER_TMPCLK / gameport_qpf.QuadPart;
 		clockdiff = (unsigned long long)(li.QuadPart - gameport_tsc);// * GAMEPORT_JOYCOUNTER_TMPCLK / gameport_qpf.QuadPart;
-		gameport_clkmax = gameport_qpf.QuadPart / 1300; // ‚Æ‚è‚ ‚¦‚¸0.7ms‚Å¥¥¥
+		gameport_clkmax = gameport_qpf.QuadPart / 1300; // ã¨ã‚Šã‚ãˆãš0.7msã§ï½¥ï½¥ï½¥
 	}else{
 		clockdiff = CPU_MSR_TSC - gameport_tsc;
-		gameport_clkmax = pccore.realclock / 1430; // ‚Æ‚è‚ ‚¦‚¸0.7ms‚Å¥¥¥
+		gameport_clkmax = pccore.realclock / 1430; // ã¨ã‚Šã‚ãˆãš0.7msã§ï½¥ï½¥ï½¥
 	}
 #else
 #if defined(USE_TSC)
@@ -352,10 +352,10 @@ static REG8 IOINPCALL gameport_i4d2(UINT port)
 	}else{
 		clockdiff = CPU_MSR_TSC - gameport_tsc;
 	}
-	gameport_clkmax = pccore.baseclock * pccore.maxmultiple / 1430; // ‚Æ‚è‚ ‚¦‚¸0.7ms‚Å¥¥¥
+	gameport_clkmax = pccore.baseclock * pccore.maxmultiple / 1430; // ã¨ã‚Šã‚ãˆãš0.7msã§ï½¥ï½¥ï½¥
 #if !defined(SUPPORT_IA32_HAXM)
 	if(gameport_tsccounter == 0 || !np2cfg.consttsc){
-		gameport_clkmax = gameport_clkmax * pccore.maxmultiple / pccore.multiple; // CPUƒNƒƒbƒNˆË‘¶‚Ìê‡‚Ìfix
+		gameport_clkmax = gameport_clkmax * pccore.maxmultiple / pccore.multiple; // CPUã‚¯ãƒ­ãƒƒã‚¯ä¾å­˜ã®å ´åˆã®fix
 	}
 #endif
 #else
@@ -430,10 +430,10 @@ void boardsb16_reset(const NP2CFG *pConfig) {
 #endif
 		}
 	}
-	olddsp = g_sb16.dsp_info; // dsp_info‚¾‚¯‰Šú‰»‚µ‚È‚¢
+	olddsp = g_sb16.dsp_info; // dsp_infoã ã‘åˆæœŸåŒ–ã—ãªã„
 	ZeroMemory(&g_sb16, sizeof(g_sb16));
 	g_sb16.dsp_info = olddsp;
-	// ƒ{[ƒhƒfƒtƒHƒ‹ƒg IO:D2 DMA:3 IRQ:5(INT1) 
+	// ãƒœãƒ¼ãƒ‰ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ IO:D2 DMA:3 IRQ:5(INT1) 
 	g_sb16.base = np2cfg.sndsb16io; //0xd2;
 	g_sb16.dmach = np2cfg.sndsb16dma; //0x3;
 	g_sb16.dmairq = np2cfg.sndsb16irq; //0x5;
@@ -482,10 +482,10 @@ void boardsb16_bind(void) {
 #endif
 	
 	iocore_attachout(0x8000 + g_sb16.base, sb16_o8000);	/* MIDI Port */
-	//iocore_attachout(0x8001 + g_sb16.base, sb16_o8100);	/* MIDI Port b’è */
+	//iocore_attachout(0x8001 + g_sb16.base, sb16_o8100);	/* MIDI Port æš«å®š */
 	iocore_attachout(0x8100 + g_sb16.base, sb16_o8100);	/* MIDI Port */
 	iocore_attachinp(0x8000 + g_sb16.base, sb16_i8000);	/* MIDI Port */
-	//iocore_attachinp(0x8001 + g_sb16.base, sb16_i8100);	/* MIDI Port b’è */
+	//iocore_attachinp(0x8001 + g_sb16.base, sb16_i8100);	/* MIDI Port æš«å®š */
 	iocore_attachinp(0x8100 + g_sb16.base, sb16_i8100);	/* MIDI Port */
 	
 	iocore_attachout(0xC800 + g_sb16.base, sb16_o2000);	/* FM Music Register Address Port */
@@ -495,7 +495,7 @@ void boardsb16_bind(void) {
 	iocore_attachinp(0xCA00 + g_sb16.base, sb16_i2200);	/* Advanced FM Music Status Port */
 	iocore_attachout(0xCB00 + g_sb16.base, sb16_o2300);	/* Advanced FM Music Data Port */
 	
-	// PC/ATŒİŠ·‹@ƒeƒXƒg
+	// PC/ATäº’æ›æ©Ÿãƒ†ã‚¹ãƒˆ
 	if(np2cfg.sndsb16at){
 		iocore_attachout(0x388, sb16_o2000);	/* FM Music Register Address Port */
 		iocore_attachinp(0x388, sb16_i2000);	/* FM Music Status Port */
@@ -506,7 +506,7 @@ void boardsb16_bind(void) {
 	}
 
 #if defined(SUPPORT_GAMEPORT)
-	// ƒQ[ƒ€ƒ|[ƒgŠ„‚è“–‚Ä 4d2h
+	// ã‚²ãƒ¼ãƒ ãƒãƒ¼ãƒˆå‰²ã‚Šå½“ã¦ 4d2h
 	if(np2cfg.gameport){
 		iocore_attachout(0x0400 + g_sb16.base, gameport_o4d2);
 		iocore_attachinp(0x0400 + g_sb16.base, gameport_i4d2);
@@ -520,7 +520,7 @@ void boardsb16_bind(void) {
 		samplerate = np2cfg.samplingrate;
 	}
 	sound_streamregist(g_mame_opl3[G_OPL3_INDEX], (SOUNDCB)opl3gen_getpcm);
-	opl3_bind(&g_opl3[G_OPL3_INDEX]); // MAMEg—p‚Ìê‡Key Display—p
+	opl3_bind(&g_opl3[G_OPL3_INDEX]); // MAMEä½¿ç”¨ã®å ´åˆKey Displayç”¨
 }
 void boardsb16_unbind(void) {
 	ct1745io_unbind();
@@ -547,10 +547,10 @@ void boardsb16_unbind(void) {
 	iocore_detachinp(0x0700 + g_sb16.base);	/* GAME Port */
 	
 	iocore_detachout(0x8000 + g_sb16.base);	/* MIDI Port */
-	//iocore_detachout(0x8001 + g_sb16.base);	/* MIDI Port b’è */
+	//iocore_detachout(0x8001 + g_sb16.base);	/* MIDI Port æš«å®š */
 	iocore_detachout(0x8100 + g_sb16.base);	/* MIDI Port */
 	iocore_detachinp(0x8000 + g_sb16.base);	/* MIDI Port */
-	//iocore_detachinp(0x8001 + g_sb16.base);	/* MIDI Port b’è */
+	//iocore_detachinp(0x8001 + g_sb16.base);	/* MIDI Port æš«å®š */
 	iocore_detachinp(0x8100 + g_sb16.base);	/* MIDI Port */
 	
 	iocore_detachout(0xC800 + g_sb16.base);	/* FM Music Register Address Port */
@@ -560,7 +560,7 @@ void boardsb16_unbind(void) {
 	iocore_detachinp(0xCA00 + g_sb16.base);	/* Advanced FM Music Status Port */
 	iocore_detachout(0xCB00 + g_sb16.base);	/* Advanced FM Music Data Port */
 	
-	// PC/ATŒİŠ·‹@ƒeƒXƒg
+	// PC/ATäº’æ›æ©Ÿãƒ†ã‚¹ãƒˆ
 	if(np2cfg.sndsb16at){
 		iocore_detachout(0x388);	/* FM Music Register Address Port */
 		iocore_detachinp(0x388);	/* FM Music Status Port */
@@ -571,7 +571,7 @@ void boardsb16_unbind(void) {
 	}
 
 #if defined(SUPPORT_GAMEPORT)
-	// ƒQ[ƒ€ƒ|[ƒgŠ„‚è“–‚Ä 4d2h
+	// ã‚²ãƒ¼ãƒ ãƒãƒ¼ãƒˆå‰²ã‚Šå½“ã¦ 4d2h
 	if(np2cfg.gameport){
 		iocore_detachout(0x0400 + g_sb16.base);
 		iocore_detachinp(0x0400 + g_sb16.base);

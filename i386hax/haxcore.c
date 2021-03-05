@@ -72,14 +72,14 @@ static void make_vcpu_str(OEMCHAR* buf, UINT32 vm_id, UINT32 vcpu_id){
 	_stprintf(buf, OEMTEXT("\\\\.\\hax_vm%02d_vcpu%02d"), vm_id, vcpu_id);
 }
 
-// HAXM‚ªg‚¦‚»‚¤‚©ƒ`ƒFƒbƒN
+// HAXMãŒä½¿ãˆãã†ã‹ãƒã‚§ãƒƒã‚¯
 UINT8 i386hax_check(void) {
 	
 #if defined(_WIN32)
 	HAX_MODULE_VERSION haxver = {0};
 	HAX_CAPINFO haxcap = {0};
 
-	// HAXMƒJ[ƒlƒ‹ƒ‚[ƒhƒhƒ‰ƒCƒo‚ğŠJ‚­
+	// HAXMã‚«ãƒ¼ãƒãƒ«ãƒ¢ãƒ¼ãƒ‰ãƒ‰ãƒ©ã‚¤ãƒã‚’é–‹ã
 	np2hax.hDevice = CreateFile(OEMTEXT("\\\\.\\HAX"), 
 		GENERIC_READ|GENERIC_WRITE, 0, NULL, 
 		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -92,7 +92,7 @@ UINT8 i386hax_check(void) {
         return FAILURE;
 	}
 	
-	// HAXMƒo[ƒWƒ‡ƒ“‚ğæ“¾
+	// HAXMãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’å–å¾—
 	if(i386haxfunc_getversion(&haxver)==SUCCESS){
 		char buf[256] = {0};
 		TRACEOUT(("HAXM: HAX getversion: compatible version %d, current version %d", haxver.compat_version, haxver.current_version));
@@ -105,7 +105,7 @@ UINT8 i386hax_check(void) {
 		goto initfailure;
 	}
 	
-	// HAXM‚Åg‚¦‚é‹@”\‚ğ’²¸
+	// HAXMã§ä½¿ãˆã‚‹æ©Ÿèƒ½ã‚’èª¿æŸ»
 	if(i386haxfunc_getcapability(&haxcap)==SUCCESS){
 		char buf[256] = {0};
 		TRACEOUT(("HAXM: HAX getcapability: wstatus 0x%.4x, winfo 0x%.4x, win_refcount %d, mem_quota %d", haxcap.wstatus, haxcap.winfo, haxcap.win_refcount, haxcap.mem_quota));
@@ -163,7 +163,7 @@ void i386hax_initialize(void) {
 
 	i386hax_deinitialize();
 	
-	// HAXMƒJ[ƒlƒ‹ƒ‚[ƒhƒhƒ‰ƒCƒo‚ğŠJ‚­
+	// HAXMã‚«ãƒ¼ãƒãƒ«ãƒ¢ãƒ¼ãƒ‰ãƒ‰ãƒ©ã‚¤ãƒã‚’é–‹ã
 	np2hax.hDevice = CreateFile(OEMTEXT("\\\\.\\HAX"), 
 		GENERIC_READ|GENERIC_WRITE, 0, NULL, 
 		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -199,7 +199,7 @@ void i386hax_createVM(void) {
 
 	i386hax_disposeVM();
 	
-	// HAXM‰¼‘zƒ}ƒVƒ“‚ğì¬
+	// HAXMä»®æƒ³ãƒã‚·ãƒ³ã‚’ä½œæˆ
 	if(i386haxfunc_createVM(&np2hax.vm_id)==FAILURE){
 		TRACEOUT(("HAXM: HAX create VM failed."));
 		msgbox("HAXM VM", "HAX create VM failed.");
@@ -208,7 +208,7 @@ void i386hax_createVM(void) {
 
 	make_vm_str(vm_str, np2hax.vm_id);
 	
-	// HAXM‰¼‘zƒ}ƒVƒ“‚ğŠJ‚­
+	// HAXMä»®æƒ³ãƒã‚·ãƒ³ã‚’é–‹ã
 	np2hax.hVMDevice = CreateFile(vm_str, 
 		GENERIC_READ|GENERIC_WRITE, 0, NULL, 
 		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -218,7 +218,7 @@ void i386hax_createVM(void) {
 		return;
 	}
 	
-	// ‚ ‚Ü‚èˆÓ–¡‚È‚µH
+	// ã‚ã¾ã‚Šæ„å‘³ãªã—ï¼Ÿ
 	//hax_qemu_ver.cur_version = 0x0;
 	//if(i386haxfunc_notifyQEMUversion(&hax_qemu_ver)==FAILURE){
 	//	TRACEOUT(("HAXM: HAX notify QEMU version failed."));
@@ -226,7 +226,7 @@ void i386hax_createVM(void) {
 	//	goto error2;
 	//}
 	
-	// ‰¼‘zCPU‚ğì¬
+	// ä»®æƒ³CPUã‚’ä½œæˆ
 	if(i386haxfunc_VCPUcreate(0)==FAILURE){
 		TRACEOUT(("HAXM: HAX create VCPU failed."));
 		msgbox("HAXM VM", "HAX create VCPU failed.");
@@ -235,7 +235,7 @@ void i386hax_createVM(void) {
 	
 	make_vcpu_str(vcpu_str, np2hax.vm_id, 0);
 	
-	// ‰¼‘zCPU‚ğŠJ‚­
+	// ä»®æƒ³CPUã‚’é–‹ã
 	np2hax.hVCPUDevice = CreateFile(vcpu_str, 
 		GENERIC_READ|GENERIC_WRITE, 0, NULL, 
 		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -245,14 +245,14 @@ void i386hax_createVM(void) {
 		goto error2;
 	}
 	
-	// ‰¼‘zCPU‚Æƒf[ƒ^‚ğ‚â‚è‚Æ‚è‚·‚é‚Ì‚½‚ß‚ÌêŠ‚ğŠm•Û
+	// ä»®æƒ³CPUã¨ãƒ‡ãƒ¼ã‚¿ã‚’ã‚„ã‚Šã¨ã‚Šã™ã‚‹ã®ãŸã‚ã®å ´æ‰€ã‚’ç¢ºä¿
 	if(i386haxfunc_vcpu_setup_tunnel(&np2hax.tunnel)==FAILURE){
 		TRACEOUT(("HAXM: HAX VCPU setup tunnel failed."));
 		msgbox("HAXM VM", "HAX VCPU setup tunnel failed.");
 		goto error2;
 	}
 	
-	// ƒfƒoƒbƒO‹@”\‚ğ—LŒø‚É‚·‚éiHAX_DEBUG_USE_SW_BP‚Í‰¼‘zƒ}ƒVƒ“‚ªINT3 CCh‚ğŒÄ‚Ô‚Æ–³ğŒ‚Å‰¼‘zƒ}ƒVƒ“ƒ‚ƒjƒ^‚ÉˆÚs‚Å‚«‚éj
+	// ãƒ‡ãƒãƒƒã‚°æ©Ÿèƒ½ã‚’æœ‰åŠ¹ã«ã™ã‚‹ï¼ˆHAX_DEBUG_USE_SW_BPã¯ä»®æƒ³ãƒã‚·ãƒ³ãŒINT3 CChã‚’å‘¼ã¶ã¨ç„¡æ¡ä»¶ã§ä»®æƒ³ãƒã‚·ãƒ³ãƒ¢ãƒ‹ã‚¿ã«ç§»è¡Œã§ãã‚‹ï¼‰
 	np2hax.bioshookenable = 1;
 	hax_dbg.control = HAX_DEBUG_ENABLE|HAX_DEBUG_USE_SW_BP;//|HAX_DEBUG_USE_HW_BP|HAX_DEBUG_STEP;
 	if(i386haxfunc_vcpu_debug(&hax_dbg)==FAILURE){
@@ -266,7 +266,7 @@ void i386hax_createVM(void) {
 	
 	memset(&np2haxcore, 0, sizeof(np2haxcore));
 	
-	// ƒfƒtƒHƒ‹ƒg‚ÌƒŒƒWƒXƒ^İ’è‚ğŠo‚¦‚Ä‚¨‚­
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ãƒ¬ã‚¸ã‚¹ã‚¿è¨­å®šã‚’è¦šãˆã¦ãŠã
 	i386haxfunc_vcpu_getREGs(&np2haxstat.state);
 	i386haxfunc_vcpu_getFPU(&np2haxstat.fpustate);
 	memcpy(&np2haxstat.default_state, &np2haxstat.state, sizeof(np2haxstat.state));
@@ -287,7 +287,7 @@ error1:
 
 void i386hax_resetVMMem(void) {
 	
-	// ƒƒ‚ƒŠü‚è‚Ì‰Šúİ’è
+	// ãƒ¡ãƒ¢ãƒªå‘¨ã‚Šã®åˆæœŸè¨­å®š
 	np2haxcore.lastA20en = (CPU_ADRSMASK != 0x000fffff);
 	i386hax_vm_sethmemory(np2haxcore.lastA20en);
 	np2haxcore.lastITFbank = CPU_ITFBANK;
@@ -318,7 +318,7 @@ void i386hax_resetVMMem(void) {
 
 void i386hax_resetVMCPU(void) {
 	
-	// CPUü‚è‚Ì‰Šúİ’è
+	// CPUå‘¨ã‚Šã®åˆæœŸè¨­å®š
 	np2haxstat.irq_reqidx_cur = np2haxstat.irq_reqidx_end = 0;
 	
 	memcpy(&np2haxstat.state, &np2haxstat.default_state, sizeof(np2haxstat.state));
@@ -406,7 +406,7 @@ ia32hax_setHAXtoNP2IOADDR()
 	}
 }
 
-// HAXƒŒƒWƒXƒ^ ¨ NP2 IA-32 ƒŒƒWƒXƒ^
+// HAXãƒ¬ã‚¸ã‚¹ã‚¿ â†’ NP2 IA-32 ãƒ¬ã‚¸ã‚¹ã‚¿
 void
 ia32hax_copyregHAXtoNP2(void)
 {
@@ -496,7 +496,7 @@ ia32hax_copyregHAXtoNP2(void)
 	CPU_EBP = np2haxstat.state._ebp;
 	CPU_ESP = np2haxstat.state._esp;
 	CPU_EIP = np2haxstat.state._eip;
-	CPU_PREV_EIP = np2haxstat.state._eip; // XXX: ‚ ‚ñ‚Ü‚è—Ç‚­‚È‚¢
+	CPU_PREV_EIP = np2haxstat.state._eip; // XXX: ã‚ã‚“ã¾ã‚Šè‰¯ããªã„
 	
 	//if(!(lasteflags & I_FLAG) && (np2haxstat.state._eflags & I_FLAG)){
 	//	TRACEOUT(("I_FLAG on"));
@@ -557,7 +557,7 @@ ia32hax_copyregHAXtoNP2(void)
 	
 	//ia32hax_setHAXtoNP2IOADDR();
 }
-// NP2 IA-32 ƒŒƒWƒXƒ^ ¨ HAXƒŒƒWƒXƒ^
+// NP2 IA-32 ãƒ¬ã‚¸ã‚¹ã‚¿ â†’ HAXãƒ¬ã‚¸ã‚¹ã‚¿
 void
 ia32hax_copyregNP2toHAX(void)
 {
@@ -707,7 +707,7 @@ ia32hax_copyregNP2toHAX(void)
 	//np2haxstat.state._pde = CPU_STAT_PDE_BASE;
 }
 
-// ‰¼‘zƒ}ƒVƒ“Às
+// ä»®æƒ³ãƒã‚·ãƒ³å®Ÿè¡Œ
 void i386hax_vm_exec_part(void) {
 	HAX_TUNNEL *tunnel;
 	UINT8 *iobuf;
@@ -751,13 +751,13 @@ void i386hax_vm_exec_part(void) {
 		memcpy(&np2haxstat.state, &np2haxstat.default_state, sizeof(np2haxstat.state));
 		memcpy(&np2haxstat.fpustate, &np2haxstat.default_fpustate, sizeof(np2haxstat.fpustate));
 	
-		// HAXƒŒƒWƒXƒ^‚ğXV
+		// HAXãƒ¬ã‚¸ã‚¹ã‚¿ã‚’æ›´æ–°
 		ia32hax_copyregNP2toHAX();
 		i386haxfunc_vcpu_setREGs(&np2haxstat.state);
 		i386haxfunc_vcpu_setFPU(&np2haxstat.fpustate);
 		//i386hax_disposeVM();
 		//
-		//// HAXM‰¼‘zƒ}ƒVƒ“‚ğŠJ‚­
+		//// HAXMä»®æƒ³ãƒã‚·ãƒ³ã‚’é–‹ã
 		//make_vm_str(vm_str, np2hax.vm_id);
 		//np2hax.hVMDevice = CreateFile(vm_str, 
 		//	GENERIC_READ|GENERIC_WRITE, 0, NULL, 
@@ -768,7 +768,7 @@ void i386hax_vm_exec_part(void) {
 		//	return;
 		//}
 
-		//// ‰¼‘zCPU‚ğŠJ‚­
+		//// ä»®æƒ³CPUã‚’é–‹ã
 		//make_vcpu_str(vcpu_str, np2hax.vm_id, 0);
 		//np2hax.hVCPUDevice = CreateFile(vcpu_str, 
 		//	GENERIC_READ|GENERIC_WRITE, 0, NULL, 
@@ -778,7 +778,7 @@ void i386hax_vm_exec_part(void) {
 		//	TRACEOUT(("HAXM: Failed to initialize the HAX VCPU device."));
 		//}
 	
-		// ‰¼‘zCPU‚Æƒf[ƒ^‚ğ‚â‚è‚Æ‚è‚·‚é‚Ì‚½‚ß‚ÌêŠ‚ğŠm•Û
+		// ä»®æƒ³CPUã¨ãƒ‡ãƒ¼ã‚¿ã‚’ã‚„ã‚Šã¨ã‚Šã™ã‚‹ã®ãŸã‚ã®å ´æ‰€ã‚’ç¢ºä¿
 		if(i386haxfunc_vcpu_setup_tunnel(&np2hax.tunnel)==FAILURE){
 			TRACEOUT(("HAXM: HAX VCPU setup tunnel failed."));
 		}
@@ -810,21 +810,21 @@ void i386hax_vm_exec_part(void) {
 		}
 	}
 
-	// HAXM‚Æ‚Ìƒf[ƒ^‚â‚è‚Æ‚è—p
+	// HAXMã¨ã®ãƒ‡ãƒ¼ã‚¿ã‚„ã‚Šã¨ã‚Šç”¨
 	tunnel = (HAX_TUNNEL*)np2hax.tunnel.va;
 	iobuf = (UINT8*)np2hax.tunnel.io_va;
 	
-	// ”LƒŒƒWƒXƒ^‚ğHAXƒŒƒWƒXƒ^‚ÉƒRƒs[
+	// çŒ«ãƒ¬ã‚¸ã‚¹ã‚¿ã‚’HAXãƒ¬ã‚¸ã‚¹ã‚¿ã«ã‚³ãƒ”ãƒ¼
 	ia32hax_copyregNP2toHAX();
 	
-	// •K—v‚È‚çHAXƒŒƒWƒXƒ^‚ğXV
+	// å¿…è¦ãªã‚‰HAXãƒ¬ã‚¸ã‚¹ã‚¿ã‚’æ›´æ–°
 	if(np2haxstat.update_regs) i386haxfunc_vcpu_setREGs(&np2haxstat.state);
 	if(np2haxstat.update_fpu) i386haxfunc_vcpu_setFPU(&np2haxstat.fpustate);
 	
 	np2haxcore.hltflag = 0;
 	
 coutinue_cpu:
-	// ƒƒ‚ƒŠ—‚İ‚Ì\¬‚ª•Ï‚í‚Á‚Ä‚¢‚½‚ç•Ï‚¦‚é
+	// ãƒ¡ãƒ¢ãƒªçµ¡ã¿ã®æ§‹æˆãŒå¤‰ã‚ã£ã¦ã„ãŸã‚‰å¤‰ãˆã‚‹
 	if(np2haxcore.lastA20en != (CPU_ADRSMASK != 0x000fffff)){
 		i386hax_vm_sethmemory(CPU_ADRSMASK != 0x000fffff);
 		np2haxcore.lastA20en = (CPU_ADRSMASK != 0x000fffff);
@@ -839,7 +839,7 @@ coutinue_cpu:
 		np2haxcore.lastVGA256linear = (vramop.mio2[0x2]==0x1 && (gdc.analog & (1 << GDCANALOG_256))!=0);
 	}
 	
-	// ƒvƒƒeƒNƒgƒ‚[ƒh‚ª‘±‚¢‚½‚çBIOSƒGƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“—p‚ÌƒfƒoƒbƒOİ’è‚ğ–³Œø‚É‚·‚éiƒfƒoƒbƒOƒŒƒWƒXƒ^‚ğg‚¤ƒ\ƒtƒg—pj
+	// ãƒ—ãƒ­ãƒ†ã‚¯ãƒˆãƒ¢ãƒ¼ãƒ‰ãŒç¶šã„ãŸã‚‰BIOSã‚¨ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ã®ãƒ‡ãƒãƒƒã‚°è¨­å®šã‚’ç„¡åŠ¹ã«ã™ã‚‹ï¼ˆãƒ‡ãƒãƒƒã‚°ãƒ¬ã‚¸ã‚¹ã‚¿ã‚’ä½¿ã†ã‚½ãƒ•ãƒˆç”¨ï¼‰
 	if(CPU_STAT_PM && CPU_STAT_PAGING && !CPU_STAT_VM86){
 		if(pmcounter < PMCOUNTER_THRESHOLD){
 			pmcounter++;
@@ -854,7 +854,7 @@ coutinue_cpu:
 	}else{
 		if(pmcounter > 0){
 			if(!CPU_STAT_PM && !CPU_STAT_PAGING && !CPU_STAT_VM86){
-				// ƒŠƒAƒ‹ƒ‚[ƒh‚Á‚Û‚¢‚Ì‚ÅƒJƒEƒ“ƒ^ƒŠƒZƒbƒg
+				// ãƒªã‚¢ãƒ«ãƒ¢ãƒ¼ãƒ‰ã£ã½ã„ã®ã§ã‚«ã‚¦ãƒ³ã‚¿ãƒªã‚»ãƒƒãƒˆ
 				pmcounter = 0;
 			}else{
 				pmcounter--;
@@ -868,41 +868,41 @@ coutinue_cpu:
 		}
 	}
 
-	// Š„‚è‚İ‚ğˆ—
+	// å‰²ã‚Šè¾¼ã¿ã‚’å‡¦ç†
 	if(np2haxstat.irq_reqidx_cur != np2haxstat.irq_reqidx_end){
-		if (tunnel->ready_for_interrupt_injection) { // Š„‚è‚İ€”õOKH
+		if (tunnel->ready_for_interrupt_injection) { // å‰²ã‚Šè¾¼ã¿æº–å‚™OKï¼Ÿ
 			i386haxfunc_vcpu_interrupt(np2haxstat.irq_req[np2haxstat.irq_reqidx_cur]);
 			np2haxstat.irq_reqidx_cur++;
 		}
 	}
-	if(np2haxstat.irq_reqidx_cur != np2haxstat.irq_reqidx_end){ // Š„‚è‚İ‚ª•K—v‚È‚çrequest_interrupt_window‚ğ1‚É‚·‚é
+	if(np2haxstat.irq_reqidx_cur != np2haxstat.irq_reqidx_end){ // å‰²ã‚Šè¾¼ã¿ãŒå¿…è¦ãªã‚‰request_interrupt_windowã‚’1ã«ã™ã‚‹
 		tunnel->request_interrupt_window = 1;
 	}else{
 		tunnel->request_interrupt_window = 0;
 	}
 
-	// ƒŠƒZƒbƒg‰Â”\ƒtƒ‰ƒO‚ğƒNƒŠƒA
+	// ãƒªã‚»ãƒƒãƒˆå¯èƒ½ãƒ•ãƒ©ã‚°ã‚’ã‚¯ãƒªã‚¢
 	np2haxcore.ready_for_reset = 0;
 	
 coutinue_cpu_imm:
-	// HAXM CPUÀs
+	// HAXM CPUå®Ÿè¡Œ
 	if(np2hax.emumode){
 		tunnel->_exit_status = HAX_EXIT_STATECHANGE;
 	}else{
 		i386haxfunc_vcpu_run();
 	}
 
-	// Às’â~——R‚ğæ“¾
+	// å®Ÿè¡Œåœæ­¢ç†ç”±ã‚’å–å¾—
 	exitstatus = tunnel->_exit_status;
 
-	// CPUÀsÄŠJ‚Ì‚½‚ß‚Ìˆ—i‚‘¬ˆ—‚ª—v‚é‚à‚Ìj
+	// CPUå®Ÿè¡Œå†é–‹ã®ãŸã‚ã®å‡¦ç†ï¼ˆé«˜é€Ÿå‡¦ç†ãŒè¦ã‚‹ã‚‚ã®ï¼‰
 	switch (exitstatus) {
-	case HAX_EXIT_IO: // I/Oƒ|[ƒg‚Ö‚ÌƒAƒNƒZƒX
+	case HAX_EXIT_IO: // I/Oãƒãƒ¼ãƒˆã¸ã®ã‚¢ã‚¯ã‚»ã‚¹
 		//printf("HAX_EXIT_IO\n");
 		oldremclock = CPU_REMCLOCK;
-		switch(tunnel->io._direction){ // “ü—Í or o—Í
-		case HAX_IO_OUT: // o—Í
-			if(tunnel->io._df==0){ // ˜A‘±‚Åƒf[ƒ^‚ğo—Í‚·‚éê‡‚Ì•ûŒüH
+		switch(tunnel->io._direction){ // å…¥åŠ› or å‡ºåŠ›
+		case HAX_IO_OUT: // å‡ºåŠ›
+			if(tunnel->io._df==0){ // é€£ç¶šã§ãƒ‡ãƒ¼ã‚¿ã‚’å‡ºåŠ›ã™ã‚‹å ´åˆã®æ–¹å‘ï¼Ÿ
 				int i;
 				UINT8 *bufptr = iobuf;
 				for(i=0;i<tunnel->io._count;i++){
@@ -910,7 +910,7 @@ coutinue_cpu_imm:
 						iocore_out8(tunnel->io._port, *bufptr);
 					}else if(tunnel->io._size==2){ // 2yte
 						iocore_out16(tunnel->io._port, LOADINTELWORD(bufptr));
-					}else{ // tunnel->io._size==4 // ‚»‚êˆÈŠOiÀ¿4bytej
+					}else{ // tunnel->io._size==4 // ãã‚Œä»¥å¤–ï¼ˆå®Ÿè³ª4byteï¼‰
 						iocore_out32(tunnel->io._port, LOADINTELDWORD(bufptr));
 					}
 					bufptr += tunnel->io._size;
@@ -924,15 +924,15 @@ coutinue_cpu_imm:
 						iocore_out8(tunnel->io._port, *bufptr);
 					}else if(tunnel->io._size==2){ // 2yte
 						iocore_out16(tunnel->io._port, LOADINTELWORD(bufptr));
-					}else{ // tunnel->io._size==4 // ‚»‚êˆÈŠOiÀ¿4bytej
+					}else{ // tunnel->io._size==4 // ãã‚Œä»¥å¤–ï¼ˆå®Ÿè³ª4byteï¼‰
 						iocore_out32(tunnel->io._port, LOADINTELDWORD(bufptr));
 					}
 					bufptr -= tunnel->io._size;
 				}
 			}
 			break;
-		case HAX_IO_IN: // “ü—Í
-			if(tunnel->io._df==0){ // ˜A‘±‚Åƒf[ƒ^‚ğ“ü—Í‚·‚éê‡‚Ì•ûŒüH
+		case HAX_IO_IN: // å…¥åŠ›
+			if(tunnel->io._df==0){ // é€£ç¶šã§ãƒ‡ãƒ¼ã‚¿ã‚’å…¥åŠ›ã™ã‚‹å ´åˆã®æ–¹å‘ï¼Ÿ
 				int i;
 				UINT8 *bufptr = iobuf;
 				for(i=0;i<tunnel->io._count;i++){
@@ -941,7 +941,7 @@ coutinue_cpu_imm:
 					}else if(tunnel->io._size==2){
 						STOREINTELWORD(bufptr, iocore_inp16(tunnel->io._port)); // 2yte
 					}else{ // tunnel->io._size==4
-						STOREINTELDWORD(bufptr, iocore_inp32(tunnel->io._port)); // ‚»‚êˆÈŠOiÀ¿4bytej
+						STOREINTELDWORD(bufptr, iocore_inp32(tunnel->io._port)); // ãã‚Œä»¥å¤–ï¼ˆå®Ÿè³ª4byteï¼‰
 					}
 					bufptr += tunnel->io._size;
 				}
@@ -955,7 +955,7 @@ coutinue_cpu_imm:
 					}else if(tunnel->io._size==2){
 						STOREINTELWORD(bufptr, iocore_inp16(tunnel->io._port)); // 2yte
 					}else{ // tunnel->io._size==4
-						STOREINTELDWORD(bufptr, iocore_inp32(tunnel->io._port)); // ‚»‚êˆÈŠOiÀ¿4bytej
+						STOREINTELDWORD(bufptr, iocore_inp32(tunnel->io._port)); // ãã‚Œä»¥å¤–ï¼ˆå®Ÿè³ª4byteï¼‰
 					}
 					bufptr -= tunnel->io._size;
 				}
@@ -963,7 +963,7 @@ coutinue_cpu_imm:
 			break;
 		}
 		if(tunnel->io._port==0x1480){
-			// ƒQ[ƒ€ƒ|[ƒg“Ç‚İæ‚è‚Í‘¦À‚É•Ô‚·
+			// ã‚²ãƒ¼ãƒ ãƒãƒ¼ãƒˆèª­ã¿å–ã‚Šã¯å³åº§ã«è¿”ã™
 			goto coutinue_cpu_imm;
 		}
 		if(CPU_REMCLOCK==-1){
@@ -971,13 +971,13 @@ coutinue_cpu_imm:
 		}
 		//CPU_REMCLOCK = oldremclock;
 		
-		// ‚‘¬‰»‚Ì‚½‚ß‚Éˆê•”‚ÌI/Oƒ|[ƒg‚Ìˆ—‚ğŠÈ—ª‰»
+		// é«˜é€ŸåŒ–ã®ãŸã‚ã«ä¸€éƒ¨ã®I/Oãƒãƒ¼ãƒˆã®å‡¦ç†ã‚’ç°¡ç•¥åŒ–
 		//if(tunnel->io._port != 0x90 && tunnel->io._port != 0x92 && tunnel->io._port != 0x94 && 
 		//	tunnel->io._port != 0xc8 && tunnel->io._port != 0xca && tunnel->io._port != 0xcc && tunnel->io._port != 0xbe && tunnel->io._port != 0x4be) {
 		//	(0x430 <= tunnel->io._port && tunnel->io._port <= 0x64e && !(g_nevent.item[NEVENT_SASIIO].flag & NEVENT_ENABLE)) || 
 		//	(0x7FD9 <= tunnel->io._port && tunnel->io._port <= 0x7FDF)){
 			if(tunnel->io._port==0x640){
-				// Œµ‚µ‚ß‚É‚·‚é
+				// å³ã—ã‚ã«ã™ã‚‹
 				if (np2haxcore.hurryup) {
 					np2haxcore.hurryup = 0;
 					break;
@@ -993,7 +993,7 @@ coutinue_cpu_imm:
 				np2haxcore.lastclock.QuadPart = np2haxcore.clockcount.QuadPart;
 			}
 	
-			// ŠÔØ‚ê‚È‚ç”²‚¯‚é
+			// æ™‚é–“åˆ‡ã‚Œãªã‚‰æŠœã‘ã‚‹
 			if (CPU_REMCLOCK <= 0) {
 				break;
 			}
@@ -1011,13 +1011,13 @@ coutinue_cpu_imm:
 			goto coutinue_cpu;
 		//}
 		break;
-	case HAX_EXIT_FAST_MMIO: // ƒƒ‚ƒŠƒ}ƒbƒvƒhI/O‚Ö‚ÌƒAƒNƒZƒX
+	case HAX_EXIT_FAST_MMIO: // ãƒ¡ãƒ¢ãƒªãƒãƒƒãƒ—ãƒ‰I/Oã¸ã®ã‚¢ã‚¯ã‚»ã‚¹
 		//printf("HAX_EXIT_FAST_MMIO\n");
 		{
 			HAX_FASTMMIO *mmio = (HAX_FASTMMIO*)np2hax.tunnel.io_va;
 				
-			switch(mmio->direction){ // ƒf[ƒ^READ/WRITE‚Ì”»’è
-			case 0: // ƒf[ƒ^READ
+			switch(mmio->direction){ // ãƒ‡ãƒ¼ã‚¿READ/WRITEã®åˆ¤å®š
+			case 0: // ãƒ‡ãƒ¼ã‚¿READ
 				if(mmio->size==1){
 					mmio->value = memp_read8((UINT32)mmio->gpa);
 				}else if(mmio->size==2){
@@ -1026,7 +1026,7 @@ coutinue_cpu_imm:
 					mmio->value = memp_read32((UINT32)mmio->gpa);
 				}
 				break;
-			case 1: // ƒf[ƒ^WRITE
+			case 1: // ãƒ‡ãƒ¼ã‚¿WRITE
 				if(mmio->size==1){
 					memp_write8((UINT32)mmio->gpa, (UINT8)mmio->value);
 				}else if(mmio->size==2){
@@ -1035,7 +1035,7 @@ coutinue_cpu_imm:
 					memp_write32((UINT32)mmio->gpa, (UINT32)mmio->value);
 				}
 				break;
-			default: // ƒf[ƒ^READ¨ƒf[ƒ^WRITE
+			default: // ãƒ‡ãƒ¼ã‚¿READâ†’ãƒ‡ãƒ¼ã‚¿WRITE
 				if(mmio->size==1){
 					memp_write8((UINT32)mmio->gpa2, memp_read8((UINT32)mmio->gpa));
 				}else if(mmio->size==2){
@@ -1056,7 +1056,7 @@ coutinue_cpu_imm:
 			np2haxcore.lastclock.QuadPart = np2haxcore.clockcount.QuadPart;
 		}
 	
-		// ŠÔØ‚ê‚È‚ç”²‚¯‚é
+		// æ™‚é–“åˆ‡ã‚Œãªã‚‰æŠœã‘ã‚‹
 		if (CPU_REMCLOCK <= 0) {
 			break;
 		}
@@ -1074,28 +1074,28 @@ coutinue_cpu_imm:
 		break;
 	}
 	
-	// HAXMƒŒƒWƒXƒ^‚ğ“Ç‚İæ‚è
+	// HAXMãƒ¬ã‚¸ã‚¹ã‚¿ã‚’èª­ã¿å–ã‚Š
 	i386haxfunc_vcpu_getREGs(&np2haxstat.state);
 	i386haxfunc_vcpu_getFPU(&np2haxstat.fpustate);
 	np2haxstat.update_regs = np2haxstat.update_fpu = 0;
 	
-	// HAXMƒŒƒWƒXƒ^¨”LƒŒƒWƒXƒ^‚ÉƒRƒs[
+	// HAXMãƒ¬ã‚¸ã‚¹ã‚¿â†’çŒ«ãƒ¬ã‚¸ã‚¹ã‚¿ã«ã‚³ãƒ”ãƒ¼
 	ia32hax_copyregHAXtoNP2();
 	
-	// CPUÀsÄŠJ‚Ì‚½‚ß‚Ìˆ—iˆ—‘¬“x‚Í‚Ç‚¤‚Å‚à‚¢‚¢•¨j
+	// CPUå®Ÿè¡Œå†é–‹ã®ãŸã‚ã®å‡¦ç†ï¼ˆå‡¦ç†é€Ÿåº¦ã¯ã©ã†ã§ã‚‚ã„ã„ç‰©ï¼‰
 	switch (exitstatus) {
-	case HAX_EXIT_MMIO: // ƒƒ‚ƒŠƒ}ƒbƒvƒhI/O‚Ö‚ÌƒAƒNƒZƒXi‹Œ®E‚à‚¤ŒÄ‚Î‚ê‚È‚¢‚Æv‚¤j
+	case HAX_EXIT_MMIO: // ãƒ¡ãƒ¢ãƒªãƒãƒƒãƒ—ãƒ‰I/Oã¸ã®ã‚¢ã‚¯ã‚»ã‚¹ï¼ˆæ—§å¼ãƒ»ã‚‚ã†å‘¼ã°ã‚Œãªã„ã¨æ€ã†ï¼‰
 		//printf("HAX_EXIT_MMIO\n");
 		break;
-	case HAX_EXIT_REALMODE: // –‘Oİ’è‚ğ‚·‚é‚ÆƒŠƒAƒ‹ƒ‚[ƒh‚Ì‚ÉŒÄ‚Î‚ê‚é‚ç‚µ‚¢
+	case HAX_EXIT_REALMODE: // äº‹å‰è¨­å®šã‚’ã™ã‚‹ã¨ãƒªã‚¢ãƒ«ãƒ¢ãƒ¼ãƒ‰ã®æ™‚ã«å‘¼ã°ã‚Œã‚‹ã‚‰ã—ã„
 		//printf("HAX_EXIT_REALMODE\n");
 		break;
-	case HAX_EXIT_INTERRUPT: // Š„‚è‚İ¥¥¥H
+	case HAX_EXIT_INTERRUPT: // å‰²ã‚Šè¾¼ã¿ï½¥ï½¥ï½¥ï¼Ÿ
 		//printf("HAX_EXIT_INTERRUPT\n");
-		// ƒŠƒZƒbƒg‰Â”\ƒtƒ‰ƒO‚ğ—§‚Ä‚é
+		// ãƒªã‚»ãƒƒãƒˆå¯èƒ½ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 		np2haxcore.ready_for_reset = 1;
 		break;
-	case HAX_EXIT_UNKNOWN: // “ä
+	case HAX_EXIT_UNKNOWN: // è¬
 		//printf("HAX_EXIT_UNKNOWN\n");
 		//if(!CPU_RESETREQ){
 		//	np2hax.emumode = 1;
@@ -1110,15 +1110,15 @@ coutinue_cpu_imm:
 		//	np2haxstat.update_fpu = 1;
 		//}
 		break;
-	case HAX_EXIT_HLT: // HLT–½—ß‚ªÀs‚³‚ê‚½‚Æ‚«
+	case HAX_EXIT_HLT: // HLTå‘½ä»¤ãŒå®Ÿè¡Œã•ã‚ŒãŸã¨ã
 		np2haxcore.hltflag = 1;
 		//printf("HAX_EXIT_HLT\n");
-		// ƒŠƒZƒbƒg‰Â”\ƒtƒ‰ƒO‚ğ—§‚Ä‚é
+		// ãƒªã‚»ãƒƒãƒˆå¯èƒ½ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 		np2haxcore.ready_for_reset = 1;
 		break;
-	case HAX_EXIT_STATECHANGE: // CPUó‘Ô‚ª•Ï‚í‚Á‚½‚Æ‚«¥¥¥‚ÆŒ¾‚¢‚Â‚ÂA–ÀãCPU‚ªÀs•s”\(panic)‚É‚È‚Á‚½‚Æ‚«‚µ‚©ŒÄ‚Î‚ê‚È‚¢
+	case HAX_EXIT_STATECHANGE: // CPUçŠ¶æ…‹ãŒå¤‰ã‚ã£ãŸã¨ãï½¥ï½¥ï½¥ã¨è¨€ã„ã¤ã¤ã€äº‹å®Ÿä¸ŠCPUãŒå®Ÿè¡Œä¸èƒ½(panic)ã«ãªã£ãŸã¨ãã—ã‹å‘¼ã°ã‚Œãªã„
 		//printf("HAX_EXIT_STATECHANGE\n");
-		// ƒŠƒZƒbƒg‰Â”\ƒtƒ‰ƒO‚ğ—§‚Ä‚é
+		// ãƒªã‚»ãƒƒãƒˆå¯èƒ½ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 		np2haxcore.ready_for_reset = 1;
 		//if(!CPU_RESETREQ){
 		//	np2hax.emumode = 1;
@@ -1149,29 +1149,29 @@ coutinue_cpu_imm:
 		//	return;
 		//}
 		break;
-	case HAX_EXIT_PAUSED: // ˆê’â~H
+	case HAX_EXIT_PAUSED: // ä¸€æ™‚åœæ­¢ï¼Ÿ
 		//printf("HAX_EXIT_PAUSED\n");
-		// ƒŠƒZƒbƒg‰Â”\ƒtƒ‰ƒO‚ğ—§‚Ä‚é
+		// ãƒªã‚»ãƒƒãƒˆå¯èƒ½ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 		np2haxcore.ready_for_reset = 1;
 		break;
-	case HAX_EXIT_PAGEFAULT: // ƒy[ƒWƒtƒH[ƒ‹ƒgH
+	case HAX_EXIT_PAGEFAULT: // ãƒšãƒ¼ã‚¸ãƒ•ã‚©ãƒ¼ãƒ«ãƒˆï¼Ÿ
 		//printf("HAX_EXIT_PAGEFAULT\n");
 		break;
-	case HAX_EXIT_DEBUG: // ƒfƒoƒbƒO–½—ß(INT3 CCh)‚ªŒÄ‚Î‚ê‚½‚Æ‚«
+	case HAX_EXIT_DEBUG: // ãƒ‡ãƒãƒƒã‚°å‘½ä»¤(INT3 CCh)ãŒå‘¼ã°ã‚ŒãŸã¨ã
 		//printf("HAX_EXIT_DEBUG\n");
-		// ƒŠƒZƒbƒg‰Â”\ƒtƒ‰ƒO‚ğ—§‚Ä‚é
+		// ãƒªã‚»ãƒƒãƒˆå¯èƒ½ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 		np2haxcore.ready_for_reset = 1;
-		// ƒŠƒAƒ‹ƒ‚[ƒh or ‰¼‘z86
+		// ãƒªã‚¢ãƒ«ãƒ¢ãƒ¼ãƒ‰ or ä»®æƒ³86
 		if(!CPU_STAT_PM || CPU_STAT_VM86){
 			addr = CPU_EIP + (CPU_CS << 4);
-			// BIOSƒR[ƒ‹
+			// BIOSã‚³ãƒ¼ãƒ«
 			if(memp_read8(addr)==bioshookinfo.hookinst){
 				CPU_EIP++;
 				if(ia32hax_bioscall()){
 				}
 				np2haxstat.update_regs = 1;
 				np2haxstat.update_segment_regs = 1;
-				// ƒJƒEƒ“ƒ^ƒŠƒZƒbƒg
+				// ã‚«ã‚¦ãƒ³ã‚¿ãƒªã‚»ãƒƒãƒˆ
 				pmcounter = 0;
 			}
 		}
@@ -1241,7 +1241,7 @@ void i386hax_disposeVM(void) {
 	if(!np2hax.hVCPUDevice) return;
 	if(!np2hax.hVMDevice) return;
 	
-	// ‰¼‘zƒ}ƒVƒ“‚ğ•Â‚¶‚é
+	// ä»®æƒ³ãƒã‚·ãƒ³ã‚’é–‰ã˜ã‚‹
 	CloseHandle(np2hax.hVCPUDevice);
 	np2hax.hVCPUDevice = NULL;
 	CloseHandle(np2hax.hVMDevice);
@@ -1259,7 +1259,7 @@ void i386hax_deinitialize(void) {
 
 	i386hax_disposeVM();
 	
-	// HAXM‚ğ•Â‚¶‚é
+	// HAXMã‚’é–‰ã˜ã‚‹
 	CloseHandle(np2hax.hDevice);
 	np2hax.hDevice = NULL;
 	
@@ -1269,7 +1269,7 @@ void i386hax_deinitialize(void) {
 #endif
 }
 
-// HAXM‰¼‘zƒ}ƒVƒ“‚Åg—p‚·‚éƒzƒXƒg‚Ìƒƒ‚ƒŠ—Ìˆæ‚ğ“o˜^i“o˜^Ï‚İƒƒ‚ƒŠ‚Ì‚İ‰¼‘zƒ}ƒVƒ“‚ÉŠ„‚è“–‚Ä‰Â”\j
+// HAXMä»®æƒ³ãƒã‚·ãƒ³ã§ä½¿ç”¨ã™ã‚‹ãƒ›ã‚¹ãƒˆã®ãƒ¡ãƒ¢ãƒªé ˜åŸŸã‚’ç™»éŒ²ï¼ˆç™»éŒ²æ¸ˆã¿ãƒ¡ãƒ¢ãƒªã®ã¿ä»®æƒ³ãƒã‚·ãƒ³ã«å‰²ã‚Šå½“ã¦å¯èƒ½ï¼‰
 void i386hax_vm_allocmemory(void) {
 	
 #if defined(_WIN32)
@@ -1331,7 +1331,7 @@ void i386hax_vm_allocmemoryex(UINT8 *vramptr, UINT32 size) {
 #endif
 }
 
-// HAXM‰¼‘zƒ}ƒVƒ“‚ÌƒQƒXƒg•¨—ƒAƒhƒŒƒX(Guest Physical Address; GPA)‚ÉƒzƒXƒg‚Ì‰¼‘zƒAƒhƒŒƒX(Host Virtual Address; HVA)‚ğŠ„‚è“–‚Ä
+// HAXMä»®æƒ³ãƒã‚·ãƒ³ã®ã‚²ã‚¹ãƒˆç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹(Guest Physical Address; GPA)ã«ãƒ›ã‚¹ãƒˆã®ä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹(Host Virtual Address; HVA)ã‚’å‰²ã‚Šå½“ã¦
 void i386hax_vm_setmemory(void) {
 	
 #if defined(_WIN32)

@@ -129,8 +129,8 @@ enum
 	STATFLAG_SXSI,
 	STATFLAG_MASK				= 0x3fff,
 	
-	STATFLAG_BWD_COMPATIBLE			= 0x4000, // ‚±‚Ìƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚é‚Æ‚«AŒÃ‚¢ƒo[ƒWƒ‡ƒ“‚ÌƒXƒe[ƒgƒZ[ƒu‚ÆŒİŠ·«‚ª‚ ‚éi‘«‚è‚È‚¢ƒf[ƒ^‚Í0‚Å–„‚ß‚ç‚ê‚é‚Ì‚Å’ˆÓ‚·‚éj‚¢‚Ü‚Ì‚Æ‚±‚ëSTATFLAG_BIN‚Ì‚İƒTƒ|[ƒg
-	STATFLAG_FWD_COMPATIBLE			= 0x8000, // ‚±‚Ìƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚é‚Æ‚«AV‚µ‚¢ƒo[ƒWƒ‡ƒ“‚ÌƒXƒe[ƒgƒZ[ƒu‚ÆŒİŠ·«‚ª‚ ‚éi‘«‚è‚È‚¢ƒf[ƒ^‚Í–³‚©‚Á‚½‚±‚Æ‚É‚È‚é‚Ì‚Å’ˆÓ‚·‚éj‚¢‚Ü‚Ì‚Æ‚±‚ëSTATFLAG_BIN‚Ì‚İƒTƒ|[ƒg
+	STATFLAG_BWD_COMPATIBLE			= 0x4000, // ã“ã®ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ã‚‹ã¨ãã€å¤ã„ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã®ã‚¹ãƒ†ãƒ¼ãƒˆã‚»ãƒ¼ãƒ–ã¨äº’æ›æ€§ãŒã‚ã‚‹ï¼ˆè¶³ã‚Šãªã„ãƒ‡ãƒ¼ã‚¿ã¯0ã§åŸ‹ã‚ã‚‰ã‚Œã‚‹ã®ã§æ³¨æ„ã™ã‚‹ï¼‰ã„ã¾ã®ã¨ã“ã‚STATFLAG_BINã®ã¿ã‚µãƒãƒ¼ãƒˆ
+	STATFLAG_FWD_COMPATIBLE			= 0x8000, // ã“ã®ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ã‚‹ã¨ãã€æ–°ã—ã„ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã®ã‚¹ãƒ†ãƒ¼ãƒˆã‚»ãƒ¼ãƒ–ã¨äº’æ›æ€§ãŒã‚ã‚‹ï¼ˆè¶³ã‚Šãªã„ãƒ‡ãƒ¼ã‚¿ã¯ç„¡ã‹ã£ãŸã“ã¨ã«ãªã‚‹ã®ã§æ³¨æ„ã™ã‚‹ï¼‰ã„ã¾ã®ã¨ã“ã‚STATFLAG_BINã®ã¿ã‚µãƒãƒ¼ãƒˆ
 };
 
 typedef struct {
@@ -395,7 +395,7 @@ void statflag_seterr(STFLAGH sfh, const OEMCHAR *str) {
 
 // ---- function
 
-// ŠÖ”ƒ|ƒCƒ“ƒ^‚ğ int‚É•ÏXB
+// é–¢æ•°ãƒã‚¤ãƒ³ã‚¿ã‚’ intã«å¤‰æ›´ã€‚
 static BRESULT proc2num(void *func, const PROCTBL *tbl, int size) {
 
 	int		i;
@@ -1005,7 +1005,7 @@ static int flagload_fm(STFLAGH sfh, const SFENTRY *tbl)
 	ret = statflag_read(sfh, &nSoundID, sizeof(nSoundID));
 	if(nSoundID==SOUNDID_INVALID){
 		// new statsave
-		// V•û®ƒXƒe[ƒgƒZ[ƒuFŒ´‘¥‚Æ‚µ‚Ä\‘¢‘ÌƒTƒCƒY‚ğ‘‚­‚æ‚¤‚É•ÏXB•œŒ³‚É‘«‚è‚È‚¢•”•ª‚Í0‚Å–„‚ß‚ç‚ê‚éBƒƒ“ƒo‡‚ğ“ü‚ê‘Ö‚¦‚¸’Ç‹L‚µ‚Ä‚¢‚¯‚ÎH•v‚É‚æ‚èŒİŠ·«ˆÛ‚ª‰Â”\B
+		// æ–°æ–¹å¼ã‚¹ãƒ†ãƒ¼ãƒˆã‚»ãƒ¼ãƒ–ï¼šåŸå‰‡ã¨ã—ã¦æ§‹é€ ä½“ã‚µã‚¤ã‚ºã‚’æ›¸ãã‚ˆã†ã«å¤‰æ›´ã€‚å¾©å…ƒæ™‚ã«è¶³ã‚Šãªã„éƒ¨åˆ†ã¯0ã§åŸ‹ã‚ã‚‰ã‚Œã‚‹ã€‚ãƒ¡ãƒ³ãƒé †ã‚’å…¥ã‚Œæ›¿ãˆãšè¿½è¨˜ã—ã¦ã„ã‘ã°å·¥å¤«ã«ã‚ˆã‚Šäº’æ›æ€§ç¶­æŒãŒå¯èƒ½ã€‚
 		ret = statflag_read(sfh, &nSoundID, sizeof(nSoundID));
 		fmboard_reset(&np2cfg, nSoundID);
 
@@ -1013,12 +1013,12 @@ static int flagload_fm(STFLAGH sfh, const SFENTRY *tbl)
 		if (nSaveFlags & FLAG_MG)
 		{
 			ret |= statflag_read(sfh, &datalen, sizeof(datalen));
-			if(datalen > sizeof(g_musicgen)) return STATFLAG_FAILURE; // ‹Œƒo[ƒWƒ‡ƒ“‚Å“Ç‚ß‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¨‚­iƒRƒƒ“ƒgƒAƒEƒg‚·‚é‚Æ“Ç‚ß‚é‚æ‚¤‚É‚È‚é‚ªA‚¿‚á‚ñ‚Æl‚¦‚ÄİŒv‚µ‚È‚¢‚ÆŠëŒ¯j
+			if(datalen > sizeof(g_musicgen)) return STATFLAG_FAILURE; // æ—§ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§èª­ã‚ãªã„ã‚ˆã†ã«ã—ã¦ãŠãï¼ˆã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã™ã‚‹ã¨èª­ã‚ã‚‹ã‚ˆã†ã«ãªã‚‹ãŒã€ã¡ã‚ƒã‚“ã¨è€ƒãˆã¦è¨­è¨ˆã—ãªã„ã¨å±é™ºï¼‰
 			ret |= statflag_read(sfh, &g_musicgen, min(datalen, sizeof(g_musicgen)));
 			if(datalen > sizeof(g_musicgen)){
 				sfh->pos += datalen - sizeof(g_musicgen);
 			}else{
-				memset((UINT8*)(&g_musicgen) + datalen, 0, sizeof(g_musicgen) - datalen); // ‚È‚¢•”•ª‚Í0–„‚ß
+				memset((UINT8*)(&g_musicgen) + datalen, 0, sizeof(g_musicgen) - datalen); // ãªã„éƒ¨åˆ†ã¯0åŸ‹ã‚
 			}
 			board14_allkeymake();
 		}
@@ -1032,23 +1032,23 @@ static int flagload_fm(STFLAGH sfh, const SFENTRY *tbl)
 		if (nSaveFlags & FLAG_PCM86)
 		{
 			ret |= statflag_read(sfh, &datalen, sizeof(datalen));
-			if(datalen > sizeof(g_pcm86)) return STATFLAG_FAILURE; // ‹Œƒo[ƒWƒ‡ƒ“‚Å“Ç‚ß‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¨‚­iƒRƒƒ“ƒgƒAƒEƒg‚·‚é‚Æ“Ç‚ß‚é‚æ‚¤‚É‚È‚é‚ªA‚¿‚á‚ñ‚Æl‚¦‚ÄİŒv‚µ‚È‚¢‚ÆŠëŒ¯j
+			if(datalen > sizeof(g_pcm86)) return STATFLAG_FAILURE; // æ—§ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§èª­ã‚ãªã„ã‚ˆã†ã«ã—ã¦ãŠãï¼ˆã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã™ã‚‹ã¨èª­ã‚ã‚‹ã‚ˆã†ã«ãªã‚‹ãŒã€ã¡ã‚ƒã‚“ã¨è€ƒãˆã¦è¨­è¨ˆã—ãªã„ã¨å±é™ºï¼‰
 			ret |= statflag_read(sfh, &g_pcm86, min(datalen, sizeof(g_pcm86)));
 			if(datalen > sizeof(g_pcm86)){
 				sfh->pos += datalen - sizeof(g_pcm86);
 			}else{
-				memset((UINT8*)(&g_pcm86) + datalen, 0, sizeof(g_pcm86) - datalen); // ‚È‚¢•”•ª‚Í0–„‚ß
+				memset((UINT8*)(&g_pcm86) + datalen, 0, sizeof(g_pcm86) - datalen); // ãªã„éƒ¨åˆ†ã¯0åŸ‹ã‚
 			}
 		}
 		if (nSaveFlags & FLAG_CS4231)
 		{
 			ret |= statflag_read(sfh, &datalen, sizeof(datalen));
-			if(datalen > sizeof(cs4231)) return STATFLAG_FAILURE; // ‹Œƒo[ƒWƒ‡ƒ“‚Å“Ç‚ß‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¨‚­iƒRƒƒ“ƒgƒAƒEƒg‚·‚é‚Æ“Ç‚ß‚é‚æ‚¤‚É‚È‚é‚ªA‚¿‚á‚ñ‚Æl‚¦‚ÄİŒv‚µ‚È‚¢‚ÆŠëŒ¯j
+			if(datalen > sizeof(cs4231)) return STATFLAG_FAILURE; // æ—§ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§èª­ã‚ãªã„ã‚ˆã†ã«ã—ã¦ãŠãï¼ˆã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã™ã‚‹ã¨èª­ã‚ã‚‹ã‚ˆã†ã«ãªã‚‹ãŒã€ã¡ã‚ƒã‚“ã¨è€ƒãˆã¦è¨­è¨ˆã—ãªã„ã¨å±é™ºï¼‰
 			ret |= statflag_read(sfh, &cs4231, min(datalen, sizeof(cs4231)));
 			if(datalen > sizeof(cs4231)){
 				sfh->pos += datalen - sizeof(cs4231);
 			}else{
-				memset((UINT8*)(&cs4231) + datalen, 0, sizeof(cs4231) - datalen); // ‚È‚¢•”•ª‚Í0–„‚ß
+				memset((UINT8*)(&cs4231) + datalen, 0, sizeof(cs4231) - datalen); // ãªã„éƒ¨åˆ†ã¯0åŸ‹ã‚
 			}
 		}
 		if (nSaveFlags & FLAG_AMD98)
@@ -1087,12 +1087,12 @@ static int flagload_fm(STFLAGH sfh, const SFENTRY *tbl)
 		if (nSaveFlags & FLAG_SB16)
 		{
 			ret |= statflag_read(sfh, &datalen, sizeof(datalen));
-			if(datalen > sizeof(g_sb16)) return STATFLAG_FAILURE; // ‹Œƒo[ƒWƒ‡ƒ“‚Å“Ç‚ß‚È‚¢‚æ‚¤‚É‚µ‚Ä‚¨‚­iƒRƒƒ“ƒgƒAƒEƒg‚·‚é‚Æ“Ç‚ß‚é‚æ‚¤‚É‚È‚é‚ªA‚¿‚á‚ñ‚Æl‚¦‚ÄİŒv‚µ‚È‚¢‚ÆŠëŒ¯j
+			if(datalen > sizeof(g_sb16)) return STATFLAG_FAILURE; // æ—§ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã§èª­ã‚ãªã„ã‚ˆã†ã«ã—ã¦ãŠãï¼ˆã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã™ã‚‹ã¨èª­ã‚ã‚‹ã‚ˆã†ã«ãªã‚‹ãŒã€ã¡ã‚ƒã‚“ã¨è€ƒãˆã¦è¨­è¨ˆã—ãªã„ã¨å±é™ºï¼‰
 			ret |= statflag_read(sfh, &g_sb16, min(datalen, sizeof(g_sb16)));
 			if(datalen > sizeof(g_sb16)){
 				sfh->pos += datalen - sizeof(g_sb16);
 			}else{
-				memset((UINT8*)(&g_sb16) + datalen, 0, sizeof(g_sb16) - datalen); // ‚È‚¢•”•ª‚Í0–„‚ß
+				memset((UINT8*)(&g_sb16) + datalen, 0, sizeof(g_sb16) - datalen); // ãªã„éƒ¨åˆ†ã¯0åŸ‹ã‚
 			}
 		}
 #endif
@@ -1103,7 +1103,7 @@ static int flagload_fm(STFLAGH sfh, const SFENTRY *tbl)
 		{
 			ret |= statflag_read(sfh, &g_musicgen, sizeof(MUSICGEN_OLD));
 			if(sizeof(MUSICGEN_OLD) < sizeof(g_musicgen)){
-				memset((UINT8*)(&g_musicgen) + sizeof(MUSICGEN_OLD), 0, sizeof(g_musicgen) - sizeof(MUSICGEN_OLD)); // ‚È‚¢•”•ª‚Í0–„‚ß
+				memset((UINT8*)(&g_musicgen) + sizeof(MUSICGEN_OLD), 0, sizeof(g_musicgen) - sizeof(MUSICGEN_OLD)); // ãªã„éƒ¨åˆ†ã¯0åŸ‹ã‚
 			}
 			board14_allkeymake();
 		}
@@ -1118,7 +1118,7 @@ static int flagload_fm(STFLAGH sfh, const SFENTRY *tbl)
 		{
 			ret |= statflag_read(sfh, &g_pcm86, sizeof(_PCM86_OLD));
 			if(sizeof(_PCM86_OLD) < sizeof(g_pcm86)){
-				memset((UINT8*)(&g_pcm86) + sizeof(_PCM86_OLD), 0, sizeof(g_pcm86) - sizeof(_PCM86_OLD)); // ‚È‚¢•”•ª‚Í0–„‚ß
+				memset((UINT8*)(&g_pcm86) + sizeof(_PCM86_OLD), 0, sizeof(g_pcm86) - sizeof(_PCM86_OLD)); // ãªã„éƒ¨åˆ†ã¯0åŸ‹ã‚
 			}
 			g_pcm86.lastclock = g_pcm86.lastclock_obsolate;
 			g_pcm86.stepclock = g_pcm86.stepclock_obsolate;
@@ -1127,7 +1127,7 @@ static int flagload_fm(STFLAGH sfh, const SFENTRY *tbl)
 		{
 			ret |= statflag_read(sfh, &cs4231, sizeof(_CS4231_OLD));
 			if(sizeof(_CS4231_OLD) < sizeof(cs4231)){
-				memset((UINT8*)(&cs4231) + sizeof(_CS4231_OLD), 0, sizeof(cs4231) - sizeof(_CS4231_OLD)); // ‚È‚¢•”•ª‚Í0–„‚ß
+				memset((UINT8*)(&cs4231) + sizeof(_CS4231_OLD), 0, sizeof(cs4231) - sizeof(_CS4231_OLD)); // ãªã„éƒ¨åˆ†ã¯0åŸ‹ã‚
 			}
 		}
 		if (nSaveFlags & FLAG_AMD98)
@@ -1168,13 +1168,13 @@ static int flagload_fm(STFLAGH sfh, const SFENTRY *tbl)
 		{
 			ret |= statflag_read(sfh, &g_sb16, sizeof(SB16_OLD));
 			if(sizeof(SB16_OLD) < sizeof(g_sb16)){
-				memset((UINT8*)(&g_sb16) + sizeof(SB16_OLD), 0, sizeof(g_sb16) - sizeof(SB16_OLD)); // ‚È‚¢•”•ª‚Í0–„‚ß
+				memset((UINT8*)(&g_sb16) + sizeof(SB16_OLD), 0, sizeof(g_sb16) - sizeof(SB16_OLD)); // ãªã„éƒ¨åˆ†ã¯0åŸ‹ã‚
 			}
 		}
 #endif
 	}
 
-	// •œŒ³B ‚±‚êˆÚ“®‚·‚é‚±‚ÆI
+	// å¾©å…ƒã€‚ ã“ã‚Œç§»å‹•ã™ã‚‹ã“ã¨ï¼
 	pcm86gen_update();
 	if (nSaveFlags & FLAG_PCM86)
 	{
@@ -1187,7 +1187,7 @@ static int flagload_fm(STFLAGH sfh, const SFENTRY *tbl)
 #ifdef SUPPORT_SOUND_SB16
 	if (nSaveFlags & FLAG_SB16)
 	{
-		g_sb16.dsp_info.dma.chan = dmac.dmach + g_sb16.dmach; // DMAƒ`ƒƒƒlƒ‹•œŒ³
+		g_sb16.dsp_info.dma.chan = dmac.dmach + g_sb16.dmach; // DMAãƒãƒ£ãƒãƒ«å¾©å…ƒ
 	}
 #endif
 	return(ret);
@@ -1282,7 +1282,7 @@ const OEMCHAR	*path;
 	for (i=0; i<NELEMENTS(sds.ide); i++) {
 		if (sds.ide[i] != SXSIDEV_NC) {
 #if defined(SUPPORT_IDEIO)&&defined(SUPPORT_PHYSICAL_CDDRV)
-			if(sds.ide[i]==SXSIDEV_CDROM){ // CD-ROM‚Ìê‡Anp2cfg‚ğ—Dæ
+			if(sds.ide[i]==SXSIDEV_CDROM){ // CD-ROMã®å ´åˆã€np2cfgã‚’å„ªå…ˆ
 				path = np2cfg.idecd[i];
 			}else
 #endif
@@ -1318,7 +1318,7 @@ static int flagcheck_sxsi(STFLAGH sfh, const SFENTRY *tbl) {
 				ret |= statflag_checkpath(sfh, buf);
 			}else{
 				OEMSPRINTF(buf, str_sasix, i+1);
-				statflag_checkpath(sfh, buf); // CD‚ÌAƒtƒ‰ƒO‚É‚Í‰e‹¿‚³‚¹‚È‚¢
+				statflag_checkpath(sfh, buf); // CDã®æ™‚ã€ãƒ•ãƒ©ã‚°ã«ã¯å½±éŸ¿ã•ã›ãªã„
 			}
 		}
 	}
@@ -1329,7 +1329,7 @@ static int flagcheck_sxsi(STFLAGH sfh, const SFENTRY *tbl) {
 				ret |= statflag_checkpath(sfh, buf);
 			}else{
 				OEMSPRINTF(buf, str_scsix, i);
-				statflag_checkpath(sfh, buf); // CD‚ÌAƒtƒ‰ƒO‚É‚Í‰e‹¿‚³‚¹‚È‚¢
+				statflag_checkpath(sfh, buf); // CDã®æ™‚ã€ãƒ•ãƒ©ã‚°ã«ã¯å½±éŸ¿ã•ã›ãªã„
 			}
 		}
 	}
@@ -1711,7 +1711,7 @@ const SFENTRY	*tblterm;
 	sound_reset();
 	fddmtrsnd_bind();
 
-	iocore_reset(&np2cfg);							// ƒTƒEƒ“ƒh‚Åpic‚ğŒÄ‚Ô‚Ì‚Åc
+	iocore_reset(&np2cfg);							// ã‚µã‚¦ãƒ³ãƒ‰ã§picã‚’å‘¼ã¶ã®ã§â€¦
 	cbuscore_reset(&np2cfg);
 	fmboard_reset(&np2cfg, pccore.sound);
 
@@ -1799,7 +1799,7 @@ const SFENTRY	*tblterm;
 	}
 	statflag_close(sffh);
 
-	// ƒXƒe[ƒgƒZ[ƒuŒİŠ·«ˆÛ—p
+	// ã‚¹ãƒ†ãƒ¼ãƒˆã‚»ãƒ¼ãƒ–äº’æ›æ€§ç¶­æŒç”¨
 	if(pccore.maxmultiple == 0) pccore.maxmultiple = pccore.multiple;
 	
 #if defined(SUPPORT_IA32_HAXM)
@@ -1819,21 +1819,21 @@ const SFENTRY	*tblterm;
 	np2haxcore.I_ratio = 0;
 #endif
 
-	// I/Oì‚è’¼‚µ
+	// I/Oä½œã‚Šç›´ã—
 	MEMM_ARCH((pccore.model & PCMODEL_EPSON)?1:0);
 	iocore_build();
 	iocore_bind();
 	cbuscore_bind();
 	fmboard_bind();
 	
-	// DA/UA‚Æ—v‘f”Ô†‚Ì‘Î‰ŠÖŒW‚ğ‰Šú‰»
+	// DA/UAã¨è¦ç´ ç•ªå·ã®å¯¾å¿œé–¢ä¿‚ã‚’åˆæœŸåŒ–
 	for(i=0;i<4;i++){
 		sxsi_unittbl[i] = i;
 	}
 #if defined(SUPPORT_IDEIO)
 	if (pccore.hddif & PCHDD_IDE) {
 		int i, idx, ncidx;
-		// –¢Ú‘±‚Ì‚à‚Ì‚ğ–³‹‚µ‚ÄÚ‘±‡‚ÉDA/UA‚ğŠ„‚è“–‚Ä‚é
+		// æœªæ¥ç¶šã®ã‚‚ã®ã‚’ç„¡è¦–ã—ã¦æ¥ç¶šé †ã«DA/UAã‚’å‰²ã‚Šå½“ã¦ã‚‹
 		ncidx = idx = 0;
 		for(i=0;i<4;i++){
 			if(sxsi_getdevtype(i)==SXSIDEV_HDD){
@@ -1844,7 +1844,7 @@ const SFENTRY	*tblterm;
 			}
 		}
 		for(;idx<4;idx++){
-			sxsi_unittbl[idx] = ncidx; // XXX: —]‚Á‚½DA/UA‚Í‚Æ‚è‚ ‚¦‚¸–¢Ú‘±‚Ì”Ô†‚Éİ’è
+			sxsi_unittbl[idx] = ncidx; // XXX: ä½™ã£ãŸDA/UAã¯ã¨ã‚Šã‚ãˆãšæœªæ¥ç¶šã®ç•ªå·ã«è¨­å®š
 		}
 	}
 #endif
@@ -1872,7 +1872,7 @@ const SFENTRY	*tblterm;
 	pc98_cirrus_vga_load();
 #endif
 	
-	// OPNAƒ{ƒŠƒ…[ƒ€Äİ’è
+	// OPNAãƒœãƒªãƒ¥ãƒ¼ãƒ å†è¨­å®š
 	if(g_nSoundID == SOUNDID_WAVESTAR){
 		opngen_setvol(np2cfg.vol_fm * cs4231.devvolume[0xff] / 15);
 		psggen_setvol(np2cfg.vol_ssg * cs4231.devvolume[0xff] / 15);

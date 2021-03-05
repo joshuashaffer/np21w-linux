@@ -169,7 +169,7 @@ static void rs232c_writeretry() {
 		cm_rs232c->writeretry(cm_rs232c);
 		ret = cm_rs232c->lastwritesuccess(cm_rs232c);
 		if(ret==0){
-			return; // ‘‚«‚İ–³‹
+			return; // æ›¸ãè¾¼ã¿ç„¡è¦–
 		}
 		rs232c.result |= 0x5;
 	}
@@ -216,12 +216,12 @@ void rs232c_callback(void) {
 
 #if defined(SUPPORT_RS232C_FIFO)
 	if(rs232cfifo.port138 & 0x1){
-		rs232c_removecounter = 0; // FIFOƒ‚[ƒh‚Å‚ÍÁ‚³‚È‚¢
+		rs232c_removecounter = 0; // FIFOãƒ¢ãƒ¼ãƒ‰ã§ã¯æ¶ˆã•ãªã„
 		if(bufused == RS232C_BUFFER-1){
-			return; // ƒoƒbƒtƒ@‚ª‚¢‚Á‚Ï‚¢‚È‚ç‘Ò‹@
+			return; // ãƒãƒƒãƒ•ã‚¡ãŒã„ã£ã±ã„ãªã‚‰å¾…æ©Ÿ
 		}
 		if(rs232cfifo.irqflag){
-			return; // Š„‚è‚İŒ´ˆöƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚ê‚Î‘Ò‹@
+			return; // å‰²ã‚Šè¾¼ã¿åŸå› ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ã‚Œã°å¾…æ©Ÿ
 		}
 	}
 #endif
@@ -235,13 +235,13 @@ void rs232c_callback(void) {
 	}
 	rs232c_removecounter = (rs232c_removecounter + 1) % RS232C_BUFFER_CLRC;
 	if (bufused > 0 && rs232c_removecounter==0 || bufused == RS232C_BUFFER-1){
-		rs232c_buf_rpos = (rs232c_buf_rpos+1) & RS232C_BUFFER_MASK; // ˆê”ÔŒÃ‚¢‚à‚Ì‚ğÌ‚Ä‚é
+		rs232c_buf_rpos = (rs232c_buf_rpos+1) & RS232C_BUFFER_MASK; // ä¸€ç•ªå¤ã„ã‚‚ã®ã‚’æ¨ã¦ã‚‹
 	}
 	if ((cm_rs232c) && (cm_rs232c->read(cm_rs232c, &rs232c_buf[rs232c_buf_wpos]))) {
 		rs232c_buf_wpos = (rs232c_buf_wpos+1) & RS232C_BUFFER_MASK;
 	}
 	if (rs232c_buf_rpos != rs232c_buf_wpos) {
-		rs232c.data = rs232c_buf[rs232c_buf_rpos]; // ƒf[ƒ^‚ğ1‚Âæ‚èo‚µ
+		rs232c.data = rs232c_buf[rs232c_buf_rpos]; // ãƒ‡ãƒ¼ã‚¿ã‚’1ã¤å–ã‚Šå‡ºã—
 		//if(!(rs232c.result & 2) || bufused == RS232C_BUFFER-1) {
 			rs232c.result |= 2;
 #if defined(SUPPORT_RS232C_FIFO)
@@ -300,7 +300,7 @@ static void IOOUTCALL rs232c_o30(UINT port, REG8 dat) {
 		ret = cm_rs232c->lastwritesuccess(cm_rs232c);
 		if(!ret){
 			rs232c.result &= ~0x5;
-			return; // ‚Ü‚¾‘‚«‚ß‚È‚¢‚Ì‚Å‘Ò‚Â
+			return; // ã¾ã æ›¸ãè¾¼ã‚ãªã„ã®ã§å¾…ã¤
 		}
 		rs232c.result |= 0x5;
 	}
@@ -388,21 +388,21 @@ static REG8 IOINPCALL rs232c_i30(UINT port) {
 #if defined(SUPPORT_RS232C_FIFO)
 	if(port==0x130){
 		if (rs232c_buf_rpos == rs232c_buf_wpos) {
-			// –³—–î—“Ç‚Ş
+			// ç„¡ç†çŸ¢ç†èª­ã‚€
 			if ((cm_rs232c) && (cm_rs232c->read(cm_rs232c, &rs232c_buf[rs232c_buf_wpos]))) {
 				rs232c_buf_wpos = (rs232c_buf_wpos+1) & RS232C_BUFFER_MASK;
-				rs232c.data = rs232c_buf[rs232c_buf_rpos]; // ƒf[ƒ^‚ğ1‚Âæ‚èo‚µ
+				rs232c.data = rs232c_buf[rs232c_buf_rpos]; // ãƒ‡ãƒ¼ã‚¿ã‚’1ã¤å–ã‚Šå‡ºã—
 			}
 		}
 	}
 #endif
 	if (rs232c_buf_rpos != rs232c_buf_wpos) {
-		rs232c_buf_rpos = (rs232c_buf_rpos+1) & RS232C_BUFFER_MASK; // ƒoƒbƒtƒ@“Ç‚İæ‚èˆÊ’u‚ğ1i‚ß‚é
+		rs232c_buf_rpos = (rs232c_buf_rpos+1) & RS232C_BUFFER_MASK; // ãƒãƒƒãƒ•ã‚¡èª­ã¿å–ã‚Šä½ç½®ã‚’1é€²ã‚ã‚‹
 	}
 #if defined(SUPPORT_RS232C_FIFO)
 	if(port==0x130){
-		if (rs232c_buf_rpos != rs232c_buf_wpos) { // ‘—M‚·‚×‚«ƒf[ƒ^‚ª‚ ‚é‚©Šm”F
-			rs232c.data = rs232c_buf[rs232c_buf_rpos]; // Ÿ‚Ìƒf[ƒ^‚ğæ‚èo‚µ
+		if (rs232c_buf_rpos != rs232c_buf_wpos) { // é€ä¿¡ã™ã¹ããƒ‡ãƒ¼ã‚¿ãŒã‚ã‚‹ã‹ç¢ºèª
+			rs232c.data = rs232c_buf[rs232c_buf_rpos]; // æ¬¡ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–ã‚Šå‡ºã—
 			//if (sysport.c & 1) {
 			//	rs232cfifo.irqflag = 2;
 			//	pic_setirq(4);
@@ -459,7 +459,7 @@ static REG8 IOINPCALL rs232c_i132(UINT port) {
 	}
 }
 
-// FIFOƒ‚[ƒh
+// FIFOãƒ¢ãƒ¼ãƒ‰
 
 #if defined(SUPPORT_RS232C_FIFO)
 static REG8 IOINPCALL rs232c_i134(UINT port) {
@@ -498,7 +498,7 @@ static void IOOUTCALL rs232c_o138(UINT port, REG8 dat) {
 
 	if(dat & 0x2){
 		//int i;
-		//// óMFIFOƒŠƒZƒbƒg
+		//// å—ä¿¡FIFOãƒªã‚»ãƒƒãƒˆ
 		//rs232c_buf_rpos = rs232c_buf_wpos;
 		//if(rs232cfifo.irqflag==2) rs232cfifo.irqflag = 0;
 		//if(cm_rs232c){
@@ -521,7 +521,7 @@ static REG8 IOINPCALL rs232c_i138(UINT port) {
 
 void rs232c_vfast_setrs232cspeed(UINT8 value) {
 	if(value == 0) return;
-	if(!(rs232cfifo.vfast & 0x80)) return; // V FASTƒ‚[ƒh‚Å‚È‚¢ê‡‚Í‚È‚É‚à‚µ‚È‚¢
+	if(!(rs232cfifo.vfast & 0x80)) return; // V FASTãƒ¢ãƒ¼ãƒ‰ã§ãªã„å ´åˆã¯ãªã«ã‚‚ã—ãªã„
 	if (cm_rs232c) {
 		int speedtbl[16] = {
 			0, 115200, 57600, 38400,

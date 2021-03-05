@@ -72,7 +72,7 @@ static void trace_fmt_ex(const char *fmt, ...)
 #ifdef USE_CUSTOM_HOOKINST
 #define BIOS_HOOKINST	bioshookinfo.hookinst
 #else
-#define BIOS_HOOKINST	0x90	// NOP–½—ßiŒÅ’èj
+#define BIOS_HOOKINST	0x90	// NOPå‘½ä»¤ï¼ˆå›ºå®šï¼‰
 #endif
 
 #define	BIOS_SIMULATE
@@ -111,17 +111,17 @@ BIOSIOEMU	biosioemu; // np21w ver0.86 rev46 BIOS I/O emulation
 #endif
 
 #ifdef USE_CUSTOM_HOOKINST
-// BIOSƒtƒbƒN–½—ß‚ğƒfƒtƒHƒ‹ƒgİ’èiNOP–½—ß 0x90j‚©‚ç‘‚«Š·‚¦‚é
+// BIOSãƒ•ãƒƒã‚¯å‘½ä»¤ã‚’ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¨­å®šï¼ˆNOPå‘½ä»¤ 0x90ï¼‰ã‹ã‚‰æ›¸ãæ›ãˆã‚‹
 static void bios_updatehookinst(UINT8 *mem, UINT32 updatesize) {
 
 	UINT32 i;
 
-	if(bioshookinfo.hookinst == HOOKINST_DEFAULT) return; // ‘‚«Š·‚¦•s—v
+	if(bioshookinfo.hookinst == HOOKINST_DEFAULT) return; // æ›¸ãæ›ãˆä¸è¦
 
-	// XXX: –½—ß‚ğ‚¿‚á‚ñ‚ÆŒ©‚Ä‘‚«Š·‚¦‚È‚¢‚Æ‚â‚Î‚¢
+	// XXX: å‘½ä»¤ã‚’ã¡ã‚ƒã‚“ã¨è¦‹ã¦æ›¸ãæ›ãˆãªã„ã¨ã‚„ã°ã„
 	for(i=0;i<updatesize-1;i++){
 		if(*mem == HOOKINST_DEFAULT){
-			// Ÿ‚Ì–½—ß‚ªNOP, STI, RET, IRET‚Á‚Û‚¯‚ê‚Î‘‚«Š·‚¦iŠÔˆá‚Á‚Ä‘‚«Š·‚¦‚é‚Ì‚ğ‰ñ”ğj
+			// æ¬¡ã®å‘½ä»¤ãŒNOP, STI, RET, IRETã£ã½ã‘ã‚Œã°æ›¸ãæ›ãˆï¼ˆé–“é•ã£ã¦æ›¸ãæ›ãˆã‚‹ã®ã‚’å›é¿ï¼‰
 			if(*(mem+1) == 0x90 || *(mem+1) == 0xFB || *(mem+1) == 0xC2 || *(mem+1) == 0xC3 || *(mem+1) == 0xCB || *(mem+1) == 0xCA || *(mem+1) == 0xCF || *(mem+1) == 0xE8 || *(mem+1) == 0xE9 || *(mem+1) == 0xEE){
 				*mem = bioshookinfo.hookinst;
 			}else if(*(mem+1) == 0x51 && *(mem+2) == 0xB9){
@@ -138,7 +138,7 @@ static void bios_updatehookinst(UINT8 *mem, UINT32 updatesize) {
 #endif
 
 //             DA/UA = 80h,00h 81h,01h 82h,01h 83h,01h
-int sxsi_unittbl[4] = {0,      1,      2,      3}; // DA/UA‚ğƒCƒ“ƒfƒbƒNƒX‚É•ÏŠ·‚·‚é
+int sxsi_unittbl[4] = {0,      1,      2,      3}; // DA/UAã‚’ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«å¤‰æ›ã™ã‚‹
 
 #define SXSI_WORKAROUND_BOOTWAIT	50
 int sxsi_workaround_bootwait = 0;
@@ -192,7 +192,7 @@ static void bios_reinitbyswitch(void) {
 
 	if (!(pccore.dipsw[2] & 0x80)) {
 #if defined(CPUCORE_IA32)
-		mem[MEMB_SYS_TYPE] = 0x03;		// 80386`
+		mem[MEMB_SYS_TYPE] = 0x03;		// 80386ã€œ
 #else
 		mem[MEMB_SYS_TYPE] = 0x01;		// 80286
 #endif
@@ -266,15 +266,15 @@ static void bios_reinitbyswitch(void) {
 	mem[MEMB_CRT_BIOS] |= 0x04;		// 05/02/03
 	mem[0x45c] = 0x40;
 	
-	// DA/UA‚Æ—v‘f”Ô†‚Ì‘Î‰ŠÖŒW‚ğ‰Šú‰»
+	// DA/UAã¨è¦ç´ ç•ªå·ã®å¯¾å¿œé–¢ä¿‚ã‚’åˆæœŸåŒ–
 	for(i=0;i<4;i++){
 		sxsi_unittbl[i] = i;
 	}
 #if defined(SUPPORT_IDEIO)
 	if (pccore.hddif & PCHDD_IDE) {
-		int compmode = (sxsi_getdevtype(0)!=SXSIDEV_CDROM && sxsi_getdevtype(1)!=SXSIDEV_CDROM && sxsi_getdevtype(2)==SXSIDEV_CDROM && sxsi_getdevtype(3)!=SXSIDEV_CDROM); // ‹Œ‹@íŒİŠ·ƒ‚[ƒhH
+		int compmode = (sxsi_getdevtype(0)!=SXSIDEV_CDROM && sxsi_getdevtype(1)!=SXSIDEV_CDROM && sxsi_getdevtype(2)==SXSIDEV_CDROM && sxsi_getdevtype(3)!=SXSIDEV_CDROM); // æ—§æ©Ÿç¨®äº’æ›ãƒ¢ãƒ¼ãƒ‰ï¼Ÿ
 
-		// –¢Ú‘±‚Ì‚à‚Ì‚ğ–³‹‚µ‚ÄÚ‘±‡‚ÉDA/UA‚ğŠ„‚è“–‚Ä‚é
+		// æœªæ¥ç¶šã®ã‚‚ã®ã‚’ç„¡è¦–ã—ã¦æ¥ç¶šé †ã«DA/UAã‚’å‰²ã‚Šå½“ã¦ã‚‹
 		ncidx = idx = 0;
 		for(i=0;i<4;i++){
 			if(sxsi_getdevtype(i)==SXSIDEV_HDD){
@@ -285,15 +285,15 @@ static void bios_reinitbyswitch(void) {
 			}
 		}
 		for(;idx<4;idx++){
-			sxsi_unittbl[idx] = ncidx; // XXX: —]‚Á‚½DA/UA‚Í‚Æ‚è‚ ‚¦‚¸–¢Ú‘±‚Ì”Ô†‚Éİ’è
+			sxsi_unittbl[idx] = ncidx; // XXX: ä½™ã£ãŸDA/UAã¯ã¨ã‚Šã‚ãˆãšæœªæ¥ç¶šã®ç•ªå·ã«è¨­å®š
 		}
 		
 		mem[0xF8E80+0x0010] = (sxsi_getdevtype(3)!=SXSIDEV_NC ? 0x8 : 0x0)|(sxsi_getdevtype(2)!=SXSIDEV_NC ? 0x4 : 0x0)|
 								(sxsi_getdevtype(1)!=SXSIDEV_NC ? 0x2 : 0x0)|(sxsi_getdevtype(0)!=SXSIDEV_NC ? 0x1 : 0x0);
 
-		// WinNT4.0‚ÅHDD‚ª”F¯‚·‚é‚æ‚¤‚É‚È‚éBWin9x‚àBIOS I/OƒGƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚Å‘Î‰B@ideio.c‚Ìideio_basereset()‚àQÆ‚Ì‚±‚Æ
+		// WinNT4.0ã§HDDãŒèªè­˜ã™ã‚‹ã‚ˆã†ã«ãªã‚‹ã€‚Win9xã‚‚BIOS I/Oã‚¨ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã§å¯¾å¿œã€‚ã€€ideio.cã®ideio_basereset()ã‚‚å‚ç…§ã®ã“ã¨
 		mem[0x05bb] = (sxsi_getdevtype(3)==SXSIDEV_HDD ? 0x8 : 0x0)|(sxsi_getdevtype(2)==SXSIDEV_HDD ? 0x4 : 0x0)|
-						(sxsi_getdevtype(1)==SXSIDEV_HDD ? 0x2 : 0x0)|(sxsi_getdevtype(0)==SXSIDEV_HDD ? 0x1 : 0x0); // XXX: –¢g—p‚Á‚Ä‘‚¢‚Ä‚ ‚Á‚½‚Ì‚ÅŸè‚ÉØ‚è‚é
+						(sxsi_getdevtype(1)==SXSIDEV_HDD ? 0x2 : 0x0)|(sxsi_getdevtype(0)==SXSIDEV_HDD ? 0x1 : 0x0); // XXX: æœªä½¿ç”¨ã£ã¦æ›¸ã„ã¦ã‚ã£ãŸã®ã§å‹æ‰‹ã«å€Ÿã‚Šã‚‹
 		if(compmode){
 			mem[0x05ba] = mem[0x05bb];
 		}else{
@@ -302,10 +302,10 @@ static void bios_reinitbyswitch(void) {
 		}
 
 		if(np2cfg.winntfix){
-			// WinNT3.50‚Å•K—v
+			// WinNT3.50ã§å¿…è¦
 			if(sxsi_getdevtype(1)==SXSIDEV_NC && sxsi_getdevtype(3)==SXSIDEV_NC){
-				mem[0x0457] = (sxsi_getdevtype(2)==SXSIDEV_HDD ? 0x42 : 0x07)|(sxsi_getdevtype(0)==SXSIDEV_HDD ? 0x90 : 0x38);//0xd2; // Ú‘±‚È‚µ‚Í111‚Å‚È‚¢‚Æ‘Ê–Ú
-				mem[0x05b0] = 0xff; // Ú‘±ó‹µ‚ÉŠÖŒW‚È‚µH
+				mem[0x0457] = (sxsi_getdevtype(2)==SXSIDEV_HDD ? 0x42 : 0x07)|(sxsi_getdevtype(0)==SXSIDEV_HDD ? 0x90 : 0x38);//0xd2; // æ¥ç¶šãªã—ã¯111ã§ãªã„ã¨é§„ç›®
+				mem[0x05b0] = 0xff; // æ¥ç¶šçŠ¶æ³ã«é–¢ä¿‚ãªã—ï¼Ÿ
 			}
 		}
 	}else{
@@ -313,7 +313,7 @@ static void bios_reinitbyswitch(void) {
 		mem[0x05ba] &= ~0x0f;
 	}
 #endif
-	mem[0xF8E80+0x0011] = mem[0xF8E80+0x0011] & ~0x20; // 0x20‚Ìƒrƒbƒg‚ªON‚¾‚ÆWin2000‚Åƒ}ƒEƒX‚ªƒJƒNƒJƒN‚·‚éH
+	mem[0xF8E80+0x0011] = mem[0xF8E80+0x0011] & ~0x20; // 0x20ã®ãƒ“ãƒƒãƒˆãŒONã ã¨Win2000ã§ãƒã‚¦ã‚¹ãŒã‚«ã‚¯ã‚«ã‚¯ã™ã‚‹ï¼Ÿ
 	if(np2cfg.modelnum) mem[0xF8E80+0x003F] = np2cfg.modelnum; // PC-9821 Model Number
 	
 #endif
@@ -338,8 +338,8 @@ static void bios_reinitbyswitch(void) {
 
 		timemng_gettime(&hrtimertime);
 		hrtimertimeuint = (((UINT32)hrtimertime.hour*60 + (UINT32)hrtimertime.minute)*60 + (UINT32)hrtimertime.second)*32 + ((UINT32)hrtimertime.milli*32)/1000;
-		hrtimertimeuint |= 0x400000; // ‚±‚¤‚µ‚È‚¢‚ÆWin98‚ÌŒv‚ª1“ú‚¸‚ê‚é?
-		STOREINTELDWORD(mem+0x04F1, hrtimertimeuint); // XXX: 04F4‚É‚à‘‚¢‚¿‚á‚Á‚Ä‚é‚¯‚Ç·‚µ“–‚½‚Á‚Ä‚Í–â‘è‚È‚³‚»‚¤‚È‚Ì‚Å¥¥¥
+		hrtimertimeuint |= 0x400000; // ã“ã†ã—ãªã„ã¨Win98ã®æ™‚è¨ˆãŒ1æ—¥ãšã‚Œã‚‹?
+		STOREINTELDWORD(mem+0x04F1, hrtimertimeuint); // XXX: 04F4ã«ã‚‚æ›¸ã„ã¡ã‚ƒã£ã¦ã‚‹ã‘ã©å·®ã—å½“ãŸã£ã¦ã¯å•é¡Œãªã•ãã†ãªã®ã§ï½¥ï½¥ï½¥
 	}
 #endif	/* defined(SUPPORT_HRTIMER) */
 
@@ -410,11 +410,11 @@ void bios_initialize(void) {
 #if defined(USE_CUSTOM_HOOKINST)
 #if defined(SUPPORT_IA32_HAXM)
 	if (np2hax.enable) {
-		bioshookinfo.hookinst = 0xCC;//0xF4;//;0xCC;//HOOKINST_DEFAULT; // BIOSƒtƒbƒN‚Ég‚¤–½—ßiƒfƒtƒHƒ‹ƒg‚ÍNOP–½—ß‚ğƒtƒbƒNj
+		bioshookinfo.hookinst = 0xCC;//0xF4;//;0xCC;//HOOKINST_DEFAULT; // BIOSãƒ•ãƒƒã‚¯ã«ä½¿ã†å‘½ä»¤ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯NOPå‘½ä»¤ã‚’ãƒ•ãƒƒã‚¯ï¼‰
 	}else
 #endif
 	{
-		bioshookinfo.hookinst = HOOKINST_DEFAULT; // BIOSƒtƒbƒN‚Ég‚¤–½—ßiƒfƒtƒHƒ‹ƒg‚ÍNOP–½—ß‚ğƒtƒbƒNj
+		bioshookinfo.hookinst = HOOKINST_DEFAULT; // BIOSãƒ•ãƒƒã‚¯ã«ä½¿ã†å‘½ä»¤ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯NOPå‘½ä»¤ã‚’ãƒ•ãƒƒã‚¯ï¼‰
 	}
 #endif
 
@@ -436,7 +436,7 @@ void bios_initialize(void) {
 	if (biosrom) {
 		TRACEOUT(("load bios.rom"));
 		pccore.rom |= PCROM_BIOS;
-		// PnP BIOS‚ğ’×‚·
+		// PnP BIOSã‚’æ½°ã™
 		for (i=0; i<0x10000; i+=0x10) {
 			tmp = LOADINTELDWORD(mem + 0xf0000 + i);
 			if (tmp == 0x506e5024) {
@@ -458,12 +458,12 @@ void bios_initialize(void) {
 	}
 
 #if defined(SUPPORT_PC9821)
-	// ideio.c‚ÖˆÚ“®
+	// ideio.cã¸ç§»å‹•
 	//getbiospath(path, OEMTEXT("bios9821.rom"), NELEMENTS(path));
 	//fh = file_open_rb(path);
 	//if (fh != FILEH_INVALID) {
 	//	if (file_read(fh, mem + 0x0d8000, 0x2000) == 0x2000) {
-	//		// IDE BIOS‚ğ’×‚·
+	//		// IDE BIOSã‚’æ½°ã™
 	//		TRACEOUT(("load bios9821.rom"));
 	//		STOREINTELWORD(mem + 0x0d8009, 0);
 	//	}
@@ -477,7 +477,7 @@ void bios_initialize(void) {
 	mem[0xf8e84] = 0x2c;
 	mem[0xf8e85] = 0xb0;
 
-	// mem[0xf8eaf] = 0x21;		// <- ‚±‚ê‚Á‚Ä‰½‚¾‚Á‚¯H
+	// mem[0xf8eaf] = 0x21;		// <- ã“ã‚Œã£ã¦ä½•ã ã£ã‘ï¼Ÿ
 #endif
 #endif
 
@@ -511,33 +511,33 @@ void bios_initialize(void) {
 	//}
 	CopyMemory(mem + ITF_ADRS, itfrom, sizeof(itfrom)+1);
 #if defined(SUPPORT_FAST_MEMORYCHECK)
-	// ‚‘¬ƒƒ‚ƒŠƒ`ƒFƒbƒN
+	// é«˜é€Ÿãƒ¡ãƒ¢ãƒªãƒã‚§ãƒƒã‚¯
 	if(np2cfg.memcheckspeed > 1){
-		// ”Lƒƒ‚ƒŠƒ`ƒFƒbƒN‚ÌDEC r/m16 ‚ğ‹­§ƒtƒbƒN(Às‚ÍƒAƒhƒŒƒX‚ª•Ï‚í‚é‚Ì‚Å’ˆÓ)
+		// çŒ«ãƒ¡ãƒ¢ãƒªãƒã‚§ãƒƒã‚¯ã®DEC r/m16 ã‚’å¼·åˆ¶ãƒ•ãƒƒã‚¯(å®Ÿè¡Œæ™‚ã¯ã‚¢ãƒ‰ãƒ¬ã‚¹ãŒå¤‰ã‚ã‚‹ã®ã§æ³¨æ„)
 		STOREINTELWORD((mem + ITF_ADRS + 5886), 128 * np2cfg.memcheckspeed);
 		mem[ITF_ADRS + 5924] = BIOS_HOOKINST;
 	}
 #endif
-	np2cfg.memchkmx = 0; // –³Œø‰» (obsolete)
-	if(np2cfg.memchkmx){ // ƒƒ‚ƒŠƒJƒEƒ“ƒgÅ‘å’l•ÏX
-		mem[ITF_ADRS + 6057] = mem[ITF_ADRS + 6061] = (UINT8)max((int)np2cfg.memchkmx-14, 1); // XXX: êŠŒˆ‚ß‘Å‚¿
+	np2cfg.memchkmx = 0; // ç„¡åŠ¹åŒ– (obsolete)
+	if(np2cfg.memchkmx){ // ãƒ¡ãƒ¢ãƒªã‚«ã‚¦ãƒ³ãƒˆæœ€å¤§å€¤å¤‰æ›´
+		mem[ITF_ADRS + 6057] = mem[ITF_ADRS + 6061] = (UINT8)max((int)np2cfg.memchkmx-14, 1); // XXX: å ´æ‰€æ±ºã‚æ‰“ã¡
 	}else{
 #if defined(SUPPORT_LARGE_MEMORY)
-		if(np2cfg.EXTMEM >= 256){ // ‘å—e—Êƒƒ‚ƒŠƒJƒEƒ“ƒg
-			// XXX: êŠŒˆ‚ß‘Å‚¿’ˆÓ
+		if(np2cfg.EXTMEM >= 256){ // å¤§å®¹é‡ãƒ¡ãƒ¢ãƒªã‚«ã‚¦ãƒ³ãƒˆ
+			// XXX: å ´æ‰€æ±ºã‚æ‰“ã¡æ³¨æ„
 			for(i=ITF_ADRS + 6066; i >= ITF_ADRS + 6058; i--){
-				mem[i] = mem[i-1]; // 1byte‚¸‚ç‚µ
+				mem[i] = mem[i-1]; // 1byteãšã‚‰ã—
 			}
-			mem[ITF_ADRS + 6067] = mem[ITF_ADRS + 6068] = BIOS_HOOKINST; // call	WAITVSYNC ‚ğ NOP‰»
-			mem[ITF_ADRS + 6055] = 0x81; // CMP r/m16, imm8 ‚ğ CMP r/m16, imm16 ‚É•Ï‚¦‚é
-			STOREINTELWORD((mem + ITF_ADRS + 6057), (MEMORY_MAXSIZE-14)); // cmp@bx, (EXTMEMORYMAX - 16)‚Ì•”•ª‚ğ‚¢‚¶‚é
-			STOREINTELWORD((mem + ITF_ADRS + 6061+1), (MEMORY_MAXSIZE-14)); // mov@bx, (EXTMEMORYMAX - 16)‚Ì•”•ª‚ğ‚¢‚¶‚éi1byte‚¸‚ç‚µ‚½‚Ì‚ÅƒIƒtƒZƒbƒg’ˆÓj
+			mem[ITF_ADRS + 6067] = mem[ITF_ADRS + 6068] = BIOS_HOOKINST; // call	WAITVSYNC ã‚’ NOPåŒ–
+			mem[ITF_ADRS + 6055] = 0x81; // CMP r/m16, imm8 ã‚’ CMP r/m16, imm16 ã«å¤‰ãˆã‚‹
+			STOREINTELWORD((mem + ITF_ADRS + 6057), (MEMORY_MAXSIZE-14)); // cmpã€€bx, (EXTMEMORYMAX - 16)ã®éƒ¨åˆ†ã‚’ã„ã˜ã‚‹
+			STOREINTELWORD((mem + ITF_ADRS + 6061+1), (MEMORY_MAXSIZE-14)); // movã€€bx, (EXTMEMORYMAX - 16)ã®éƒ¨åˆ†ã‚’ã„ã˜ã‚‹ï¼ˆ1byteãšã‚‰ã—ãŸã®ã§ã‚ªãƒ•ã‚»ãƒƒãƒˆæ³¨æ„ï¼‰
 		}
 #endif
 	}
-	if(np2cfg.sbeeplen || np2cfg.sbeepadj){ // ƒsƒ|‰¹’·‚³•ÏX
-		UINT16 beeplen = (np2cfg.sbeeplen ? np2cfg.sbeeplen : mem[ITF_ADRS + 5553]); // XXX: êŠŒˆ‚ß‘Å‚¿
-		if(np2cfg.sbeepadj){ // ©“®’²ß
+	if(np2cfg.sbeeplen || np2cfg.sbeepadj){ // ãƒ”ãƒéŸ³é•·ã•å¤‰æ›´
+		UINT16 beeplen = (np2cfg.sbeeplen ? np2cfg.sbeeplen : mem[ITF_ADRS + 5553]); // XXX: å ´æ‰€æ±ºã‚æ‰“ã¡
+		if(np2cfg.sbeepadj){ // è‡ªå‹•èª¿ç¯€
 			beeplen = beeplen * np2cfg.multiple / 10;
 			if(beeplen == 0) beeplen = 1;
 			if(beeplen > 255) beeplen = 255;
@@ -547,7 +547,7 @@ void bios_initialize(void) {
 			mem[ITF_ADRS + 5553] = 255;
 		}else
 #endif
-		mem[ITF_ADRS + 5553] = (UINT8)beeplen; // XXX: êŠŒˆ‚ß‘Å‚¿
+		mem[ITF_ADRS + 5553] = (UINT8)beeplen; // XXX: å ´æ‰€æ±ºã‚æ‰“ã¡
 	}
 	mem[ITF_ADRS + 0x7ff0] = 0xea;
 	STOREINTELDWORD(mem + ITF_ADRS + 0x7ff1, 0xf8000000);
@@ -571,7 +571,7 @@ void bios_initialize(void) {
 	CopyMemory(mem + 0x1e8000, mem + 0x0e8000, 0x10000);
 	
 #if defined(SUPPORT_PCI)
-	// PCI BIOS32 Service Directory‚ğ’T‚·
+	// PCI BIOS32 Service Directoryã‚’æ¢ã™
 	for (i=0; i<0x10000; i+=0x4) {
 		tmp = LOADINTELDWORD(mem + 0xf0000 + i);
 		if (tmp == 0x5F32335F) { // "_32_"
@@ -580,7 +580,7 @@ void bios_initialize(void) {
 				checksum += mem[0xf0000 + i + j];
 			}
 			if(checksum==0){
-				// ”­Œ©‚µ‚½ê‡‚Í‚»‚ÌˆÊ’u‚ğg‚¤
+				// ç™ºè¦‹ã—ãŸå ´åˆã¯ãã®ä½ç½®ã‚’ä½¿ã†
 				TRACEOUT(("found BIOS32 Service Directory at %.5x", 0xf0000 + i));
 				pcidev.bios32svcdir = 0xf0000 + i;
 				pcidev_updateBIOS32data();
@@ -592,19 +592,19 @@ void bios_initialize(void) {
 		int emptyflag = 0;
 		TRACEOUT(("BIOS32 Service Directory not found."));
 		
-		// PCI BIOS32 Service Directory‚ğŠ„‚è“–‚Ä‚é
-		// XXX: ‘½•ª‚±‚Ì•Ó‚È‚ç‹ó‚¢‚Ä‚é‚¾‚ë[‚Æ‚¢‚¤‚±‚Æ‚Å¥¥¥
+		// PCI BIOS32 Service Directoryã‚’å‰²ã‚Šå½“ã¦ã‚‹
+		// XXX: å¤šåˆ†ã“ã®è¾ºãªã‚‰ç©ºã„ã¦ã‚‹ã ã‚ãƒ¼ã¨ã„ã†ã“ã¨ã§ï½¥ï½¥ï½¥
 		pcidev.bios32svcdir = 0xffa00;
 		for(i=0;i<0x400;i+=0x10){
 			emptyflag = 1;
-			// 16byte•ª‹ó‚¢‚Ä‚é‚©ƒ`ƒFƒbƒNi0‚¾‚©‚ç‚Æ‚¢‚Á‚Ä‹ó‚¢‚Ä‚é‚Æ‚ÍŒÀ‚ç‚È‚¢‚¯‚Ç¥¥¥j
+			// 16byteåˆ†ç©ºã„ã¦ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ï¼ˆ0ã ã‹ã‚‰ã¨ã„ã£ã¦ç©ºã„ã¦ã‚‹ã¨ã¯é™ã‚‰ãªã„ã‘ã©ï½¥ï½¥ï½¥ï¼‰
 			for(j=0;j<16;j++){
 				if(mem[pcidev.bios32svcdir+i+j] != 0){
 					emptyflag = 0;
 				}
 			}
 			if(emptyflag){
-				// BIOS32 Service Directory‚ğ’u‚­
+				// BIOS32 Service Directoryã‚’ç½®ã
 				TRACEOUT(("Allocate BIOS32 Service Directory at 0x%.5x", pcidev.bios32svcdir));
 				pcidev.bios32svcdir += i;
 				pcidev_updateBIOS32data();
@@ -612,7 +612,7 @@ void bios_initialize(void) {
 			}
 		}
 		if(i==0x400){
-			// ‹ó‚«‚ª‚È‚¢‚Ì‚ÅBIOS32 Service Directory‚ğ’u‚¯‚¸¥¥¥
+			// ç©ºããŒãªã„ã®ã§BIOS32 Service Directoryã‚’ç½®ã‘ãšï½¥ï½¥ï½¥
 			TRACEOUT(("Error: Cannot allocate memory for BIOS32 Service Directory."));
 			pcidev.bios32svcdir = 0;
 		}
@@ -621,7 +621,7 @@ void bios_initialize(void) {
 	
 // np21w ver0.86 rev46-69 BIOS I/O emulation
 #if defined(BIOS_IO_EMULATION)
-	// ƒGƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“—p‚É‘‚«Š·‚¦B‚Æ‚è‚ ‚¦‚¸INT 18H‚ÆINT 1BH‚ÆINT 1CH‚Ì‚İ‘Î‰
+	// ã‚¨ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ç”¨ã«æ›¸ãæ›ãˆã€‚ã¨ã‚Šã‚ãˆãšINT 18Hã¨INT 1BHã¨INT 1CHã®ã¿å¯¾å¿œ
 	if(biosioemu.enable){
 		mem[BIOS_BASE + BIOSOFST_18 + 1] = 0xee; // 0xcf(IRET) -> 0xee(OUT DX, AL)
 		mem[BIOS_BASE + BIOSOFST_18 + 2] = BIOS_HOOKINST; // 0x90(NOP) BIOS hook
@@ -681,7 +681,7 @@ static void bios_itfcall(void) {
 
 // np21w ver0.86 rev46-69 BIOS I/O emulation
 #if defined(BIOS_IO_EMULATION)
-// LIFOiáŠ±‚‘¬‚¾‚ª‹t‡‚Ì‚½‚ß’ˆÓj
+// LIFOï¼ˆè‹¥å¹²é«˜é€Ÿã ãŒé€†é †ã®ãŸã‚æ³¨æ„ï¼‰
 void biosioemu_push8(UINT16 port, UINT8 data) {
 	
 	if(!biosioemu.enable) return;
@@ -800,42 +800,42 @@ void biosioemu_begin(void) {
 	if(!biosioemu.enable) return;
 
 	if(biosioemu.count==0){
-		// ƒf[ƒ^‚ª–³‚¢‚Ì‚ÅI/Oƒ|[ƒgo—Í‚ğƒXƒLƒbƒv
+		// ãƒ‡ãƒ¼ã‚¿ãŒç„¡ã„ã®ã§I/Oãƒãƒ¼ãƒˆå‡ºåŠ›ã‚’ã‚¹ã‚­ãƒƒãƒ—
 		biosioemu.oldEAX = 0;
 		biosioemu.oldEDX = 0;
 		CPU_EIP += 2;
 	}else{
 		int idx = biosioemu.count-1;
-		// ƒŒƒWƒXƒ^‘Ş”ğ
+		// ãƒ¬ã‚¸ã‚¹ã‚¿é€€é¿
 		biosioemu.oldEAX = CPU_EAX;
 		biosioemu.oldEDX = CPU_EDX;
-		// I/Oİ’è
+		// I/Oè¨­å®š
 		if(biosioemu.data[idx].flag & BIOSIOEMU_FLAG_READ){
 			if(biosioemu.data[idx].flag & BIOSIOEMU_FLAG_MB){
-				// I/Oƒ|[ƒgİ’è
+				// I/Oãƒãƒ¼ãƒˆè¨­å®š
 				CPU_DX = biosioemu.data[idx].port;
 				//CPU_EAX = biosioemu.data[idx].data;
-				// “ü—ÍƒTƒCƒYİ’è
+				// å…¥åŠ›ã‚µã‚¤ã‚ºè¨­å®š
 				mem[CPU_EIP + (CPU_CS << 4)] = 0xed;
 			}else{
-				// I/Oƒ|[ƒgİ’è
+				// I/Oãƒãƒ¼ãƒˆè¨­å®š
 				CPU_DX = biosioemu.data[idx].port;
 				//CPU_AL = biosioemu.data[idx].data & 0xff;
-				// “ü—ÍƒTƒCƒYİ’è
+				// å…¥åŠ›ã‚µã‚¤ã‚ºè¨­å®š
 				mem[CPU_EIP + (CPU_CS << 4)] = 0xec;
 			}
 		}else{
 			if(biosioemu.data[idx].flag & BIOSIOEMU_FLAG_MB){
-				// I/Oo—Íƒf[ƒ^İ’è
+				// I/Oå‡ºåŠ›ãƒ‡ãƒ¼ã‚¿è¨­å®š
 				CPU_DX = biosioemu.data[idx].port;
 				CPU_EAX = biosioemu.data[idx].data;
-				// o—ÍƒTƒCƒYİ’è
+				// å‡ºåŠ›ã‚µã‚¤ã‚ºè¨­å®š
 				mem[CPU_EIP + (CPU_CS << 4)] = 0xef;
 			}else{
-				// I/Oo—Íƒf[ƒ^İ’è
+				// I/Oå‡ºåŠ›ãƒ‡ãƒ¼ã‚¿è¨­å®š
 				CPU_DX = biosioemu.data[idx].port;
 				CPU_AL = biosioemu.data[idx].data & 0xff;
-				// o—ÍƒTƒCƒYİ’è
+				// å‡ºåŠ›ã‚µã‚¤ã‚ºè¨­å®š
 				mem[CPU_EIP + (CPU_CS << 4)] = 0xee;
 			}
 		}
@@ -847,42 +847,42 @@ void biosioemu_proc(void) {
 	if(!biosioemu.enable) return;
 
 	if(biosioemu.count==0){
-		// ƒŒƒWƒXƒ^–ß‚·
+		// ãƒ¬ã‚¸ã‚¹ã‚¿æˆ»ã™
 		CPU_EAX = biosioemu.oldEAX;
 		CPU_EDX = biosioemu.oldEDX;
 		biosioemu.oldEAX = 0;
 		biosioemu.oldEDX = 0;
 	}else{
 		int idx = biosioemu.count-1;
-		// –½—ßˆÊ’u‚ğ–ß‚·
+		// å‘½ä»¤ä½ç½®ã‚’æˆ»ã™
 		CPU_EIP -= 2;
-		// I/Oİ’è
+		// I/Oè¨­å®š
 		if(biosioemu.data[idx].flag & BIOSIOEMU_FLAG_READ){
 			if(biosioemu.data[idx].flag & BIOSIOEMU_FLAG_MB){
-				// I/Oƒ|[ƒgİ’è
+				// I/Oãƒãƒ¼ãƒˆè¨­å®š
 				CPU_DX = biosioemu.data[idx].port;
 				//CPU_EAX = biosioemu.data[idx].data;
-				// “ü—ÍƒTƒCƒYİ’è
+				// å…¥åŠ›ã‚µã‚¤ã‚ºè¨­å®š
 				mem[CPU_EIP + (CPU_CS << 4)] = 0xed;
 			}else{
-				// I/Oƒ|[ƒgİ’è
+				// I/Oãƒãƒ¼ãƒˆè¨­å®š
 				CPU_DX = biosioemu.data[idx].port;
 				//CPU_AL = biosioemu.data[idx].data & 0xff;
-				// “ü—ÍƒTƒCƒYİ’è
+				// å…¥åŠ›ã‚µã‚¤ã‚ºè¨­å®š
 				mem[CPU_EIP + (CPU_CS << 4)] = 0xec;
 			}
 		}else{
 			if(biosioemu.data[idx].flag & BIOSIOEMU_FLAG_MB){
-				// I/Oo—Íƒf[ƒ^İ’è
+				// I/Oå‡ºåŠ›ãƒ‡ãƒ¼ã‚¿è¨­å®š
 				CPU_DX = biosioemu.data[idx].port;
 				CPU_EAX = biosioemu.data[idx].data;
-				// o—ÍƒTƒCƒYİ’è
+				// å‡ºåŠ›ã‚µã‚¤ã‚ºè¨­å®š
 				mem[CPU_EIP + (CPU_CS << 4)] = 0xef;
 			}else{
-				// I/Oo—Íƒf[ƒ^İ’è
+				// I/Oå‡ºåŠ›ãƒ‡ãƒ¼ã‚¿è¨­å®š
 				CPU_DX = biosioemu.data[idx].port;
 				CPU_AL = biosioemu.data[idx].data & 0xff;
-				// o—ÍƒTƒCƒYİ’è
+				// å‡ºåŠ›ã‚µã‚¤ã‚ºè¨­å®š
 				mem[CPU_EIP + (CPU_CS << 4)] = 0xee;
 			}
 		}
@@ -901,7 +901,7 @@ UINT MEMCALL biosfunc(UINT32 adrs) {
 #endif
 	
 #if defined(SUPPORT_FAST_MEMORYCHECK)
-	// ‚‘¬ƒƒ‚ƒŠƒ`ƒFƒbƒN
+	// é«˜é€Ÿãƒ¡ãƒ¢ãƒªãƒã‚§ãƒƒã‚¯
 	if (CPU_ITFBANK && adrs == 0xf9724) {
 		UINT16 subvalue = LOADINTELWORD((mem + ITF_ADRS + 5886)) / 128;
 		UINT16 counter = MEMR_READ16(CPU_SS, CPU_EBP + 6);
@@ -946,11 +946,11 @@ UINT MEMCALL biosfunc(UINT32 adrs) {
 #endif
 
 	switch(adrs) {
-		case BIOS_BASE + BIOSOFST_ITF:		// ƒŠƒZƒbƒg
+		case BIOS_BASE + BIOSOFST_ITF:		// ãƒªã‚»ãƒƒãƒˆ
 			bios_itfcall();
 			return(1);
 
-		case BIOS_BASE + BIOSOFST_INIT:		// ƒu[ƒg
+		case BIOS_BASE + BIOSOFST_INIT:		// ãƒ–ãƒ¼ãƒˆ
 #if 1		// for RanceII
 			bios_memclear();
 #endif
@@ -1010,7 +1010,7 @@ UINT MEMCALL biosfunc(UINT32 adrs) {
 #endif
 				break;
 			case 0x1a:
-				// XXX: WAB—LŒø‚Ì‚¾‚¯•Ô‚·
+				// XXX: WABæœ‰åŠ¹ã®æ™‚ã ã‘è¿”ã™
 				if(np2clvga.modex || np2wab.relaystateint || np2wab.relaystateext){
 					if(CPU_AL==0x00){
 						CPU_BH = 0x00;
@@ -1139,7 +1139,7 @@ UINT MEMCALL biosfunc(UINT32 adrs) {
 			CPU_STI;
 			return(bios0x1b_wait());								// ver0.78
 
-		case 0xfffe8:					// ƒu[ƒgƒXƒgƒ‰ƒbƒvƒ[ƒh
+		case 0xfffe8:					// ãƒ–ãƒ¼ãƒˆã‚¹ãƒˆãƒ©ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰
 			CPU_REMCLOCK -= 2000;
 			sxsi_workaround_bootwait = SXSI_WORKAROUND_BOOTWAIT;
 			bootseg = bootstrapload();
@@ -1175,7 +1175,7 @@ UINT MEMCALL biosfunc(UINT32 adrs) {
 #ifdef SUPPORT_PCI
 UINT MEMCALL bios32func(UINT32 adrs) {
 	
-	// ƒAƒhƒŒƒX‚ªBIOS32 Entry Point‚È‚çˆ—
+	// ã‚¢ãƒ‰ãƒ¬ã‚¹ãŒBIOS32 Entry Pointãªã‚‰å‡¦ç†
 	if (pcidev.bios32entrypoint && adrs == pcidev.bios32entrypoint) {
 		CPU_REMCLOCK -= 200;
 		bios0x1a_pci_part(1);

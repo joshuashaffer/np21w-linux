@@ -122,9 +122,9 @@ void upd4990_hrtimer_count(void) {
 		hrtimertimeuint = LOADINTELDWORD(mem+0x04F1);
 		hrtimertimeuint++;
 		if((hrtimertimeuint & 0x3fffff) >= 24*60*60*32){
-			hrtimertimeuint = ((hrtimertimeuint & ~0x3fffff) + 0x400000) & 0xffffff; // “ú•t•Ï‚í‚Á‚½
+			hrtimertimeuint = ((hrtimertimeuint & ~0x3fffff) + 0x400000) & 0xffffff; // æ—¥ä»˜å¤‰ã‚ã£ãŸ
 		}
-		STOREINTELDWORD(mem+0x04F1, hrtimertimeuint); // XXX: 04F4‚É‚à‘‚¢‚¿‚á‚Á‚Ä‚é‚¯‚Ç·‚µ“–‚½‚Á‚Ä‚Í–â‘è‚È‚³‚»‚¤‚È‚Ì‚Å¥¥¥
+		STOREINTELDWORD(mem+0x04F1, hrtimertimeuint); // XXX: 04F4ã«ã‚‚æ›¸ã„ã¡ã‚ƒã£ã¦ã‚‹ã‘ã©å·®ã—å½“ãŸã£ã¦ã¯å•é¡Œãªã•ãã†ãªã®ã§ï½¥ï½¥ï½¥
 	}
 }
 

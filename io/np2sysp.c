@@ -33,22 +33,22 @@
 
 
 #define		NP2SYSP_VER			"C"
-// #define	NP2SYSP_CREDIT		""					// —v‚é‚È‚çEEE
+// #define	NP2SYSP_CREDIT		""					// è¦ã‚‹ãªã‚‰ãƒ»ãƒ»ãƒ»
 
-// NP2ˆË‘¶ƒ|[ƒg
+// NP2ä¾å­˜ãƒãƒ¼ãƒˆ
 // port:07edh	np2 value comm
 // port:07efh	np2 string comm
 
-// Šî–{“I‚É STRING‚Å‚â‚èæ‚è‚·‚é
-// ƒ|[ƒg 7efh ‚É 'NP2' ‚Æo—Í‚Å "NP2"‚ª•Ô‚Á‚Ä‚«‚½‚ç NP2‚Å‚ ‚é
+// åŸºæœ¬çš„ã« STRINGã§ã‚„ã‚Šå–ã‚Šã™ã‚‹
+// ãƒãƒ¼ãƒˆ 7efh ã« 'NP2' ã¨å‡ºåŠ›ã§ "NP2"ãŒè¿”ã£ã¦ããŸã‚‰ NP2ã§ã‚ã‚‹
 
 // verA
-//		out->str: 'ver'				in->str:	ver”Ô† A`
-//		out->str: 'poweroff'		NP2‚ğI—¹
+//		out->str: 'ver'				in->str:	verç•ªå· Aã€œ
+//		out->str: 'poweroff'		NP2ã‚’çµ‚äº†
 
 // verB
-//		out->str: 'cpu'				in->str:	CPUŒ^”Ô
-//		out->str: 'clock'			in->str:	“®ìƒNƒƒbƒN”
+//		out->str: 'cpu'				in->str:	CPUå‹ç•ª
+//		out->str: 'clock'			in->str:	å‹•ä½œã‚¯ãƒ­ãƒƒã‚¯æ•°
 
 
 // ----
@@ -104,7 +104,7 @@ static void np2sysp_poweroff(const void *arg1, long arg2) {
 
 static void np2sysp_cpu(const void *arg1, long arg2) {
 
-	// CPU‚ğ•Ô‚·
+	// CPUã‚’è¿”ã™
 #if !defined(CPUCORE_IA32)							// 80286 or V30
 	if (!(CPU_TYPE & CPUTYPE_V30)) {
 		setoutstr(str_80286);
@@ -113,7 +113,7 @@ static void np2sysp_cpu(const void *arg1, long arg2) {
 		setoutstr(str_v30);
 	}
 #else
-	// 386‹@ˆÈ~‚Ìê‡ V30ƒ‚[ƒh‚ÍƒGƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚¾‚©‚çŒÅ’è(?)
+	// 386æ©Ÿä»¥é™ã®å ´åˆ V30ãƒ¢ãƒ¼ãƒ‰ã¯ã‚¨ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã ã‹ã‚‰å›ºå®š(?)
 	setoutstr(str_pentium);
 #endif
 	(void)arg1;
@@ -219,7 +219,7 @@ static void np2sysp_getconfig(const void *arg1, long arg2) {
 #endif	/* defined(SUPPORT_ASYNC_CPU) */
 		break;
 	case NP21W_SWITCH_DISABLESOUNDROM:
-		configvalue = 0; // í0
+		configvalue = 0; // å¸¸æ™‚0
 		break;
 #if defined(SUPPORT_IDEIO)
 	case NP21W_SWITCH_SETIDEWAIT_R:
@@ -255,8 +255,8 @@ static void np2sysp_cngconfig(const void *arg1, long arg2) {
 
 			timemng_gettime(&hrtimertime);
 			hrtimertimeuint = (((UINT32)hrtimertime.hour*60 + (UINT32)hrtimertime.minute)*60 + (UINT32)hrtimertime.second)*32 + ((UINT32)hrtimertime.milli*32)/1000;
-			hrtimertimeuint |= 0x400000; // ‚±‚¤‚µ‚È‚¢‚ÆWin98‚ÌŒv‚ª1“ú‚¸‚ê‚é?
-			STOREINTELDWORD(mem+0x04F1, hrtimertimeuint); // XXX: 04F4‚É‚à‘‚¢‚¿‚á‚Á‚Ä‚é‚¯‚Ç·‚µ“–‚½‚Á‚Ä‚Í–â‘è‚È‚³‚»‚¤‚È‚Ì‚Å¥¥¥
+			hrtimertimeuint |= 0x400000; // ã“ã†ã—ãªã„ã¨Win98ã®æ™‚è¨ˆãŒ1æ—¥ãšã‚Œã‚‹?
+			STOREINTELDWORD(mem+0x04F1, hrtimertimeuint); // XXX: 04F4ã«ã‚‚æ›¸ã„ã¡ã‚ƒã£ã¦ã‚‹ã‘ã©å·®ã—å½“ãŸã£ã¦ã¯å•é¡Œãªã•ãã†ãªã®ã§ï½¥ï½¥ï½¥
 		}
 #endif	/* defined(SUPPORT_HRTIMER) */
 		break;
@@ -334,7 +334,7 @@ static void np2sysp_cngconfig(const void *arg1, long arg2) {
 				pcidev_reset(&np2cfg);
 				pcidev_bind();
 #if defined(SUPPORT_WAB) && defined(SUPPORT_CL_GD5430)
-				// ì‚è’¼‚µ
+				// ä½œã‚Šç›´ã—
 				pc98_cirrus_vga_unbind();
 				pc98_cirrus_vga_bind();
 				np2clvga.VRAMWindowAddr2 = 0;
@@ -358,7 +358,7 @@ static void np2sysp_cngconfig(const void *arg1, long arg2) {
 		break;
 	case NP21W_SWITCH_DISABLESOUNDROM:
 		if(configvalue == 1){
-			soundrom_reset(); // ƒTƒEƒ“ƒhROM‚ğÁ‚·
+			soundrom_reset(); // ã‚µã‚¦ãƒ³ãƒ‰ROMã‚’æ¶ˆã™
 		}
 		break;
 #if defined(SUPPORT_IDEIO)

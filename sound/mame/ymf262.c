@@ -51,7 +51,7 @@ differences between OPL2 and OPL3 shown in datasheets:
 #define PI 3.14159265358979323846
 #endif
 
-// XXX: statsave connect�ۑ��p
+// XXX: statsave connect保存用
 static INT32 connectBuf[18*2] = {0};
 
 
@@ -2553,14 +2553,14 @@ int YMF262FlagSave(void *chip, void *dstbuf)
 	OPL3* opl3dst = (OPL3*)dstbuf;
 	if(dstbuf!=NULL){
 		*opl3dst = *opl3;
-		// XXX: �C�x���g�n���h���n�i�H�j�̓Z�[�u���Ȃ�
+		// XXX: イベントハンドラ系（？）はセーブしない
 		opl3dst->TimerHandler = NULL;
 		opl3dst->TimerParam = NULL;
 		opl3dst->IRQHandler = NULL;
 		opl3dst->IRQParam = NULL;
 		opl3dst->UpdateHandler = NULL;
 		opl3dst->UpdateParam = NULL;
-		// XXX: connect���ĂȂ�Ń|�C���^�ɂȂ��Ă��ł��傤�H�߂�ǂ��������
+		// XXX: connectってなんでポインタになってるんでしょう？めんどくさい･･･
 		{
 			int ch, slot;
 			INT32 *opl3connect = (INT32 *)(&(opl3dst[1]));
@@ -2594,14 +2594,14 @@ int YMF262FlagLoad(void *chip, void *srcbuf, int size)
 
 	*opl3 = *opl3src;
 	
-	// XXX: �C�x���g�n���h���n�i�H�j�͕ύX���Ȃ�
+	// XXX: イベントハンドラ系（？）は変更しない
 	opl3->TimerHandler = opl3tmp.TimerHandler;
 	opl3->TimerParam = opl3tmp.TimerParam;
 	opl3->IRQHandler = opl3tmp.IRQHandler;
 	opl3->IRQParam = opl3tmp.IRQParam;
 	opl3->UpdateHandler = opl3tmp.UpdateHandler;
 	opl3->UpdateParam = opl3tmp.UpdateParam;
-	// XXX: connect���ĂȂ�Ń|�C���^�ɂȂ��Ă��ł��傤�H�߂�ǂ��������
+	// XXX: connectってなんでポインタになってるんでしょう？めんどくさい･･･
 	{
 		int ch, slot;
 		INT32 *opl3connect = (INT32 *)(&(opl3src[1]));

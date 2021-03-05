@@ -273,7 +273,7 @@ const UINT8	*ptr;
 	if (op == 0xf4) {							// hlt
 		I286_IP++;
 	}
-	REGPUSH0(REAL_FLAGREG)						// ‚±‚±V30‚Å’Òåë‚ª‡‚í‚È‚¢
+	REGPUSH0(REAL_FLAGREG)						// ã“ã“V30ã§è¾»è¤„ãŒåˆã‚ãªã„
 	REGPUSH0(I286_CS)
 	REGPUSH0(I286_IP)
 
@@ -347,7 +347,7 @@ void i286c(void) {
 			GET_PCBYTE(opcode);
 			i286op[opcode]();
 			
-			// ”ñ“¯ŠúCPUˆ—
+			// éžåŒæœŸCPUå‡¦ç†
 			realclock = 0;
 			if(CPU_REMCLOCK >= 0 && !realclock && (remclkcnt > 0x7)){
 				remclkcnt = 0;

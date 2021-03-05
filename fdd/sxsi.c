@@ -227,7 +227,7 @@ UINT8 sxsi_getdevtype(REG8 drv) {
 	}
 }
 
-// CD“ü‚ê‘Ö‚¦‚Ìƒ^ƒCƒ€ƒAƒEƒgi“Š‚°‚â‚èj
+// CDå…¥ã‚Œæ›¿ãˆã®ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆï¼ˆæŠ•ã’ã‚„ã‚Šï¼‰
 char cdchange_flag = 0;
 DWORD cdchange_reqtime = 0;
 REG8 cdchange_drv;
@@ -277,9 +277,9 @@ BRESULT sxsi_devopen(REG8 drv, const OEMCHAR *fname) {
 		case SXSIDEV_CDROM:
 #if defined(SUPPORT_IDEIO)
 			if (cdchange_flag) {
-				// CDŒğŠ·’†
+				// CDäº¤æ›ä¸­
 				if(GetTickCount()-cdchange_reqtime>5000){
-					// ‹­§ŒğŠ·
+					// å¼·åˆ¶äº¤æ›
 					cdchange_timeoutproc(NULL);
 				}
 				return(FAILURE);
@@ -301,7 +301,7 @@ BRESULT sxsi_devopen(REG8 drv, const OEMCHAR *fname) {
 			}
 			else {
 				if((sxsi->flag & SXSIFLAG_READY) && (_tcsnicmp(sxsi->fname, OEMTEXT("\\\\.\\"), 4)!=0 || _tcsicmp(sxsi->fname, np2cfg.idecd[drv & 0x0f])==0) ){
-					// ‚¢‚Á‚½‚ñæ‚èo‚·
+					// ã„ã£ãŸã‚“å–ã‚Šå‡ºã™
 					if (sxsi->flag & SXSIFLAG_FILEOPENED) {
 						ideio_notify(sxsi->drv, 0);
 						(*sxsi->close)(sxsi);
@@ -318,7 +318,7 @@ BRESULT sxsi_devopen(REG8 drv, const OEMCHAR *fname) {
 					cdchange_timeoutset();
 					cdchange_reqtime = GetTickCount();
 					sysmng_updatecaption(SYS_UPDATECAPTION_FDD);
-					return(FAILURE); // XXX: ‚±‚±‚Å¸”s•Ô‚µ‚Ä‚¦‚¦‚ÌH
+					return(FAILURE); // XXX: ã“ã“ã§å¤±æ•—è¿”ã—ã¦ãˆãˆã®ï¼Ÿ
 				}
 				r = sxsicd_open(sxsi, fname);
 				if (r == SUCCESS || _tcsnicmp(fname, OEMTEXT("\\\\.\\"), 4)==0) {

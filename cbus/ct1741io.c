@@ -254,7 +254,7 @@ static void ct1741_exec_command()
 		break;
 	case 0x10:	/* Direct DAC */
 		ct1741_change_mode(DSP_MODE_DAC);
-		// PIOÄ¶‚Ì‚Â‚à‚è‚¾‚ªƒm[ƒ`ƒFƒbƒN
+		// PIOå†ç”Ÿã®ã¤ã‚‚ã‚Šã ãŒãƒãƒ¼ãƒã‚§ãƒƒã‚¯
 		if(g_sb16.dsp_info.dma.bufdatas < DMA_BUFSIZE){
 			g_sb16.dsp_info.dma.buffer[g_sb16.dsp_info.dma.bufpos] = g_sb16.dsp_info.in.data[0];
 			g_sb16.dsp_info.dma.bufpos++;
@@ -546,7 +546,7 @@ printf("read 2cd2 g_sb16.dsp_info.state = %x g_sb16.dsp_info.write_busy =%x\n",g
 			break;
 		case 2:
 			return 0;
-		default://????•Ï‚È”’l‚Æ‚é‚Æ‚«‚ª‚ ‚é@ˆÓ–¡•s–¾
+		default://????å¤‰ãªæ•°å€¤ã¨ã‚‹ã¨ããŒã‚ã‚‹ã€€æ„å‘³ä¸æ˜
 			return 0;
 	}
 	return 0xff;
@@ -556,17 +556,17 @@ printf("read 2cd2 g_sb16.dsp_info.state = %x g_sb16.dsp_info.write_busy =%x\n",g
 static REG8 IOINPCALL ct1741_read_rstatus(UINT port)
 {
 printf("read 2ed2 g_sb16.dsp_info.out.used =%x mixer[82] = %x cmd = %x\n",g_sb16.dsp_info.out.used,g_sb16.mixreg[0x82],g_sb16.dsp_info.cmd_o);
-	// bit7‚ª0‚È‚çDSPƒoƒbƒtƒ@‚Í‹ó
+	// bit7ãŒ0ãªã‚‰DSPãƒãƒƒãƒ•ã‚¡ã¯ç©º
 	if(g_sb16.dsp_info.cmd_o == 0xf2){g_sb16.dsp_info.cmd_o =0;return 0;}
-	if(g_sb16.mixreg[0x82] & 1){ // ˆê’è—Ê‚Ì“]‘—‚ªI‚í‚é‚ÆŠ„‚è‚İ‚ª—ˆ‚é‚ç‚µ‚¢Bbit0‚Í8-bit—p
+	if(g_sb16.mixreg[0x82] & 1){ // ä¸€å®šé‡ã®è»¢é€ãŒçµ‚ã‚ã‚‹ã¨å‰²ã‚Šè¾¼ã¿ãŒæ¥ã‚‹ã‚‰ã—ã„ã€‚bit0ã¯8-bitç”¨
 		g_sb16.mixreg[0x82] &= ~1;
 		ct1741_resetpicirq(g_sb16.dmairq);
-		if(g_sb16.dsp_info.dma.lastautoinit || g_sb16.dsp_info.dma.autoinit){ // ©“®‚ÅDMA“]‘—‚ğŒJ‚è•Ô‚·‚ç‚µ‚¢
+		if(g_sb16.dsp_info.dma.lastautoinit || g_sb16.dsp_info.dma.autoinit){ // è‡ªå‹•ã§DMAè»¢é€ã‚’ç¹°ã‚Šè¿”ã™ã‚‰ã—ã„
 			if (!(g_sb16.dsp_info.dma.chan->leng.w)) {
 				g_sb16.dsp_info.dma.laststartaddr = g_sb16.dsp_info.dma.chan->startaddr;
 				g_sb16.dsp_info.dma.laststartcount = g_sb16.dsp_info.dma.chan->startcount;
-				g_sb16.dsp_info.dma.chan->leng.w = g_sb16.dsp_info.dma.chan->startcount; // –ß‚·
-				g_sb16.dsp_info.dma.chan->adrs.d = g_sb16.dsp_info.dma.chan->startaddr; // –ß‚·
+				g_sb16.dsp_info.dma.chan->leng.w = g_sb16.dsp_info.dma.chan->startcount; // æˆ»ã™
+				g_sb16.dsp_info.dma.chan->adrs.d = g_sb16.dsp_info.dma.chan->startaddr; // æˆ»ã™
 				g_sb16.dsp_info.smpcounter2 = 0;
 				g_sb16.dsp_info.smpcounter = 0;
 			}
@@ -582,24 +582,24 @@ printf("read 2ed2 g_sb16.dsp_info.out.used =%x mixer[82] = %x cmd = %x\n",g_sb16
 static REG8 IOINPCALL ct1741_read_rstatus16(UINT port)
 {
 printf("read 2ed2 g_sb16.dsp_info.out.used =%x mixer[82] = %x cmd = %x\n",g_sb16.dsp_info.out.used,g_sb16.mixreg[0x82],g_sb16.dsp_info.cmd_o);
-	// bit7‚ª0‚È‚çDSPƒoƒbƒtƒ@‚Í‹ó
-	if(g_sb16.mixreg[0x82] & 2){ // ˆê’è—Ê‚Ì“]‘—‚ªI‚í‚é‚ÆŠ„‚è‚İ‚ª—ˆ‚é‚ç‚µ‚¢Bbit1‚Í16-bit—p
+	// bit7ãŒ0ãªã‚‰DSPãƒãƒƒãƒ•ã‚¡ã¯ç©º
+	if(g_sb16.mixreg[0x82] & 2){ // ä¸€å®šé‡ã®è»¢é€ãŒçµ‚ã‚ã‚‹ã¨å‰²ã‚Šè¾¼ã¿ãŒæ¥ã‚‹ã‚‰ã—ã„ã€‚bit1ã¯16-bitç”¨
 		g_sb16.mixreg[0x82] &= ~2;
 		ct1741_resetpicirq(g_sb16.dmairq);
-		if(g_sb16.dsp_info.dma.lastautoinit || g_sb16.dsp_info.dma.autoinit){ // ©“®‚ÅDMA“]‘—‚ğŒJ‚è•Ô‚·‚ç‚µ‚¢
+		if(g_sb16.dsp_info.dma.lastautoinit || g_sb16.dsp_info.dma.autoinit){ // è‡ªå‹•ã§DMAè»¢é€ã‚’ç¹°ã‚Šè¿”ã™ã‚‰ã—ã„
 			if (!(g_sb16.dsp_info.dma.chan->leng.w)) {
 				g_sb16.dsp_info.dma.laststartaddr = g_sb16.dsp_info.dma.chan->startaddr;
 				g_sb16.dsp_info.dma.laststartcount = g_sb16.dsp_info.dma.chan->startcount;
 				if((g_sb16.dsp_info.dmach & 0x20) && g_sb16.dsp_info.dma.mode==DSP_DMA_16){
-					// ‚È‚¼‚Ì1ƒrƒbƒg‚¸‚ç‚µ
+					// ãªãã®1ãƒ“ãƒƒãƒˆãšã‚‰ã—
 					testflag = !testflag;
 					g_sb16.dsp_info.dma.chan->adrs.d = (g_sb16.dsp_info.dma.chan->startaddr & 0xffff0000) | ((g_sb16.dsp_info.dma.chan->startaddr << 1) & 0xffff);
 					g_sb16.dsp_info.dma.chan->lastaddr = g_sb16.dsp_info.dma.chan->adrs.d + g_sb16.dsp_info.dma.chan->startcount;
-					g_sb16.dsp_info.dma.last16mode = 1; // 16bit“]‘—ƒ‚[ƒh
+					g_sb16.dsp_info.dma.last16mode = 1; // 16bitè»¢é€ãƒ¢ãƒ¼ãƒ‰
 				}else{
-					g_sb16.dsp_info.dma.chan->adrs.d = g_sb16.dsp_info.dma.chan->startaddr; // –ß‚·
+					g_sb16.dsp_info.dma.chan->adrs.d = g_sb16.dsp_info.dma.chan->startaddr; // æˆ»ã™
 				}
-				g_sb16.dsp_info.dma.chan->leng.w = g_sb16.dsp_info.dma.chan->startcount; // –ß‚·
+				g_sb16.dsp_info.dma.chan->leng.w = g_sb16.dsp_info.dma.chan->startcount; // æˆ»ã™
 				g_sb16.dsp_info.smpcounter2 = 0;
 				g_sb16.dsp_info.smpcounter = 0;
 			}
@@ -609,7 +609,7 @@ printf("read 2ed2 g_sb16.dsp_info.out.used =%x mixer[82] = %x cmd = %x\n",g_sb16
 	return 0xff;
 }
 
-// ‹C‹x‚ß‚ÌƒAƒ‰ƒCƒƒ“ƒg’²®iˆÓ–¡‚ª‚ ‚é‚Ì‚©‚Í‚æ‚­•ª‚©‚ç‚È‚¢j
+// æ°—ä¼‘ã‚ã®ã‚¢ãƒ©ã‚¤ãƒ¡ãƒ³ãƒˆèª¿æ•´ï¼ˆæ„å‘³ãŒã‚ã‚‹ã®ã‹ã¯ã‚ˆãåˆ†ã‹ã‚‰ãªã„ï¼‰
 static int BUF_ALIGN[] = {
 			1,		// 0: STOP
 			1,
@@ -629,7 +629,7 @@ static int BUF_ALIGN[] = {
 			1,
 			1
 };
-// «‚È‚ñ‚â‚±‚ê
+// â†“ãªã‚“ã‚„ã“ã‚Œ
 #define DMAPLAY_ADJUST_VALUE	((soundcfg.rate < 22050 ? 192 : 96) * 44100 / soundcfg.rate)
 void ct1741_dma(NEVENTITEM item)
 {
@@ -640,7 +640,7 @@ void ct1741_dma(NEVENTITEM item)
 	UINT	size;
 	UINT8	dmabuf[DMA_BUFSIZE];
 	int i;
-	static int zerocounter = 0; // DMA“]‘—‚ªI—¹‚µ‚Ä‚©‚çct1741_dma‚ªŒÄ‚Î‚ê‚½‰ñ”ƒJƒEƒ“ƒg
+	static int zerocounter = 0; // DMAè»¢é€ãŒçµ‚äº†ã—ã¦ã‹ã‚‰ct1741_dmaãŒå‘¼ã°ã‚ŒãŸå›æ•°ã‚«ã‚¦ãƒ³ãƒˆ
 	//static int timingshift = 65535;
 	//if(GetKeyState(VK_SHIFT)<0){
 	//	timingshift -= 128;
@@ -657,8 +657,8 @@ void ct1741_dma(NEVENTITEM item)
 			if (g_sb16.dsp_info.mode == DSP_MODE_DMA || g_sb16.dsp_info.mode == DSP_MODE_DMA_MASKED) {
 				g_sb16.dsp_info.write_busy = 1;
 
-				// “]‘—`
-				// DMA‚Åƒf[ƒ^‚ğæ‚é‚Ì‚ª‘¬‚·‚¬‚é‚Æ‚¢‚©‚ê‚é‚Ì‚Åƒoƒbƒtƒ@ƒTƒCƒY‚É§ŒÀ‚ğİ‚¯‚½•û‚ª—Ç‚¢‚Ì‚©‚È‚Æv‚¢‚Ü‚µ‚½i–³ˆÓ–¡‚È‹C‚à‚·‚éj
+				// è»¢é€ã€œ
+				// DMAã§ãƒ‡ãƒ¼ã‚¿ã‚’å–ã‚‹ã®ãŒé€Ÿã™ãã‚‹ã¨ã„ã‹ã‚Œã‚‹ã®ã§ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚ºã«åˆ¶é™ã‚’è¨­ã‘ãŸæ–¹ãŒè‰¯ã„ã®ã‹ãªã¨æ€ã„ã¾ã—ãŸï¼ˆç„¡æ„å‘³ãªæ°—ã‚‚ã™ã‚‹ï¼‰
 				//if(g_sb16.dsp_info.dma.bufsize * BUF_ALIGN[g_sb16.dsp_info.dma.mode|g_sb16.dsp_info.dma.stereo <<3] / 4 * g_sb16.dsp_info.freq / 44100 < g_sb16.dsp_info.dma.bufdatas){
 				//	rem = 0;
 				//}else{
@@ -670,12 +670,12 @@ void ct1741_dma(NEVENTITEM item)
 					rem = g_sb16.dsp_info.dma.bufsize - g_sb16.dsp_info.dma.bufdatas;
 				}
 				pos = (g_sb16.dsp_info.dma.bufpos + g_sb16.dsp_info.dma.bufdatas) & (DMA_BUFSIZE -1);
-				size = rem;//min(rem, (g_sb16.dsp_info.freq==8000 ? 64 : 512) * (g_sb16.dsp_info.dma.stereo ? 2 : 1)); // DMA‚Ì“]‘——Ê‚ğ­—Ê‚É•ÏXi’l‚Éª‹’‚Í‚È‚¢j
+				size = rem;//min(rem, (g_sb16.dsp_info.freq==8000 ? 64 : 512) * (g_sb16.dsp_info.dma.stereo ? 2 : 1)); // DMAã®è»¢é€é‡ã‚’å°‘é‡ã«å¤‰æ›´ï¼ˆå€¤ã«æ ¹æ‹ ã¯ãªã„ï¼‰
 				r = dmac_getdatas(g_sb16.dsp_info.dma.chan, dmabuf, size);
 				if(r!=0){
 					zerocounter = 0;
 				}
-				// ‚È‚º‚©ƒoƒbƒtƒ@‚ğ‚Í‚İo‚µ‚Ä‘—‚ç‚ê‚Ä‚­‚é‚±‚Æ‚ª‚ ‚é‚æ‚¤‚È‚Ì‚Åg_sb16.dsp_info.dma.chan->startcount‚Ì”ÍˆÍ“à‚µ‚©“]‘—‚µ‚È‚¢i”ÍˆÍŠO‚ÍÌ‚Ä‚éj
+				// ãªãœã‹ãƒãƒƒãƒ•ã‚¡ã‚’ã¯ã¿å‡ºã—ã¦é€ã‚‰ã‚Œã¦ãã‚‹ã“ã¨ãŒã‚ã‚‹ã‚ˆã†ãªã®ã§g_sb16.dsp_info.dma.chan->startcountã®ç¯„å›²å†…ã—ã‹è»¢é€ã—ãªã„ï¼ˆç¯„å›²å¤–ã¯æ¨ã¦ã‚‹ï¼‰
 				for(i=0;i<r;i++){
 					int dstpos = (pos + i) & (DMA_BUFSIZE -1);
 					if(g_sb16.dsp_info.smpcounter2 < (g_sb16.dsp_info.dma.chan->startcount & ~(BUF_ALIGN[g_sb16.dsp_info.dma.mode|g_sb16.dsp_info.dma.stereo <<3] - 1))){
@@ -684,7 +684,7 @@ void ct1741_dma(NEVENTITEM item)
 						g_sb16.dsp_info.dma.bufdatas++;
 					}
 				}
-				// Ä¶ŠJn‚ğƒfƒBƒŒƒC‚³‚¹‚éiƒoƒbƒtƒ@•s‘«‚Å‹ó‚É‚È‚é‚Ì‚ğ–h‚¬‚½‚¢‚¾‚¯‚Ì‹C‹x‚ßj
+				// å†ç”Ÿé–‹å§‹ã‚’ãƒ‡ã‚£ãƒ¬ã‚¤ã•ã›ã‚‹ï¼ˆãƒãƒƒãƒ•ã‚¡ä¸è¶³ã§ç©ºã«ãªã‚‹ã®ã‚’é˜²ããŸã„ã ã‘ã®æ°—ä¼‘ã‚ï¼‰
 				if(playwaitcounter>0){
 					playwaitcounter -= r;
 					if(playwaitcounter < 0){
@@ -694,7 +694,7 @@ void ct1741_dma(NEVENTITEM item)
 				printf("g_sb16.dsp_info.dma.mode = %x\n",g_sb16.dsp_info.dma.mode);
 				//g_sb16.dsp_info.dma.bufdatas += r;
 
-				// ˆê’è‚Ìƒf[ƒ^—Ê‚ğ“]‘—‚µ‚½‚çŠ„‚è‚İ‚ğ”­¶‚³‚¹‚éiƒtƒH[ƒ}ƒbƒg‚É‚æ‚Á‚Ä‚È‚º‚©ˆá‚¢‚Ü‚·‚ª‰½ŒÌ‚È‚Ì‚©‚Í•s–¾j
+				// ä¸€å®šã®ãƒ‡ãƒ¼ã‚¿é‡ã‚’è»¢é€ã—ãŸã‚‰å‰²ã‚Šè¾¼ã¿ã‚’ç™ºç”Ÿã•ã›ã‚‹ï¼ˆãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã«ã‚ˆã£ã¦ãªãœã‹é•ã„ã¾ã™ãŒä½•æ•…ãªã®ã‹ã¯ä¸æ˜ï¼‰
 				g_sb16.dsp_info.smpcounter += r;
 				if(g_sb16.dsp_info.smpcounter >= (int)g_sb16.dsp_info.dma.total * (g_sb16.dsp_info.dma.last16mode  ? 2 : 1)){
 					g_sb16.dsp_info.smpcounter -= (int)g_sb16.dsp_info.dma.total * (g_sb16.dsp_info.dma.last16mode  ? 2 : 1);
@@ -705,7 +705,7 @@ void ct1741_dma(NEVENTITEM item)
 				}
 				
 				if ((g_sb16.dsp_info.dma.chan->leng.w) && (g_sb16.dsp_info.freq)) {
-					// Ä“xƒCƒxƒ“ƒgİ’è
+					// å†åº¦ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
 					cnt = pccore.realclock / g_sb16.dsp_info.freq * g_sb16.dsp_info.dma.rate2 / g_sb16.dsp_info.freq * (DMAPLAY_ADJUST_VALUE * g_sb16.dsp_info.freq / 44100);
 						//if(g_sb16.dsp_info.dma.mode==DSP_DMA_16 || g_sb16.dsp_info.dma.mode==DSP_DMA_16_ALIASED){
 						//}else{
@@ -714,13 +714,13 @@ void ct1741_dma(NEVENTITEM item)
 					if(cnt != 0){
 						nevent_set(NEVENT_CT1741, cnt, ct1741_dma, NEVENT_RELATIVE);
 					}else{
-						nevent_setbyms(NEVENT_CT1741, 1, ct1741_dma, NEVENT_RELATIVE); // nevent‚ğ0‚ÅƒZƒbƒg‚·‚é‚Æ”L‚ªƒtƒŠ[ƒY‚·‚é‚Ì‚Å‰ñ”ğiŠî–{‚Í‚±‚±‚É‚Í—ˆ‚È‚¢‚Í‚¸j
+						nevent_setbyms(NEVENT_CT1741, 1, ct1741_dma, NEVENT_RELATIVE); // neventã‚’0ã§ã‚»ãƒƒãƒˆã™ã‚‹ã¨çŒ«ãŒãƒ•ãƒªãƒ¼ã‚ºã™ã‚‹ã®ã§å›é¿ï¼ˆåŸºæœ¬ã¯ã“ã“ã«ã¯æ¥ãªã„ã¯ãšï¼‰
 					}
 				}else{
-					// DMA“]‘—I‚í‚Á‚½
+					// DMAè»¢é€çµ‚ã‚ã£ãŸ
 					g_sb16.dsp_info.write_busy = 0;
 					if(zerocounter == 0){
-						// I‚í‚Á‚½’¼ŒãBƒtƒ‰ƒO‚ğ—§‚Ä‚½‚èŠ„‚è‚İ‚µ‚½‚è‚·‚éB
+						// çµ‚ã‚ã£ãŸç›´å¾Œã€‚ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ãŸã‚Šå‰²ã‚Šè¾¼ã¿ã—ãŸã‚Šã™ã‚‹ã€‚
 						g_sb16.mixreg[0x82] |= (g_sb16.dsp_info.dma.last16mode  ? 2 : 1);
 						ct1741_setpicirq(g_sb16.dmairq);
 						if (g_sb16.dmach != 0xff) {
@@ -733,7 +733,7 @@ void ct1741_dma(NEVENTITEM item)
 							nevent_setbyms(NEVENT_CT1741, 1, ct1741_dma, NEVENT_RELATIVE);
 						}
 					}else{
-						// –³”½‰‚È‚çÄ‘—BI‚í‚Á‚½’¼Œã‚Éo‚µ‚½Š„‚è‚İ‚ªƒXƒ‹[‚³‚ê‚éê‡‚ª‚ ‚é‚Ì‚Å–³—–î—
+						// ç„¡åå¿œãªã‚‰å†é€ã€‚çµ‚ã‚ã£ãŸç›´å¾Œã«å‡ºã—ãŸå‰²ã‚Šè¾¼ã¿ãŒã‚¹ãƒ«ãƒ¼ã•ã‚Œã‚‹å ´åˆãŒã‚ã‚‹ã®ã§ç„¡ç†çŸ¢ç†
 						if((zerocounter % 4) == 2 || zerocounter>32){
 							if(g_sb16.dsp_info.dma.bufdatas < DMA_BUFSIZE/4){
 								g_sb16.mixreg[0x82] |= (g_sb16.dsp_info.dma.last16mode  ? 2 : 1);
@@ -743,11 +743,11 @@ void ct1741_dma(NEVENTITEM item)
 								}
 							}
 						}
-						// ‚»‚ê‚Å‚à–³”½‰‚È‚ç‚²‚è‰Ÿ‚µ
+						// ãã‚Œã§ã‚‚ç„¡åå¿œãªã‚‰ã”ã‚ŠæŠ¼ã—
 						if(zerocounter>32){
 							if(g_sb16.dsp_info.dma.lastautoinit || g_sb16.dsp_info.dma.autoinit){
-								g_sb16.dsp_info.dma.chan->leng.w = g_sb16.dsp_info.dma.chan->startcount; // –ß‚·
-								g_sb16.dsp_info.dma.chan->adrs.d = g_sb16.dsp_info.dma.chan->startaddr; // –ß‚·
+								g_sb16.dsp_info.dma.chan->leng.w = g_sb16.dsp_info.dma.chan->startcount; // æˆ»ã™
+								g_sb16.dsp_info.dma.chan->adrs.d = g_sb16.dsp_info.dma.chan->startaddr; // æˆ»ã™
 								g_sb16.dsp_info.smpcounter2 = 0;
 							}else{
 								g_sb16.dsp_info.smpcounter2 = 0;
@@ -764,7 +764,7 @@ void ct1741_dma(NEVENTITEM item)
 					}
 				}
 			}else{
-				// DMA“]‘—I—¹
+				// DMAè»¢é€çµ‚äº†
 				g_sb16.dsp_info.write_busy = 0;
 				g_sb16.mixreg[0x82] |= (g_sb16.dsp_info.dma.last16mode  ? 2 : 1);
 				ct1741_setpicirq(g_sb16.dmairq);
@@ -786,18 +786,18 @@ REG8 DMACCALL ct1741dmafunc(REG8 func)
 
 	switch(func) {
 		case DMAEXT_START:
-			// DMA“]‘—ŠJn
+			// DMAè»¢é€é–‹å§‹
 			g_sb16.dsp_info.dma.laststartaddr = g_sb16.dsp_info.dma.chan->startaddr;
 			g_sb16.dsp_info.dma.laststartcount = g_sb16.dsp_info.dma.chan->startcount;
 			if((g_sb16.dsp_info.dmach & 0x20) && (g_sb16.dsp_info.dma.mode==DSP_DMA_16 || g_sb16.dsp_info.dma.mode==DSP_DMA_NONE)){
-				// ‚È‚¼‚Ì1ƒrƒbƒg‚¸‚ç‚µ
+				// ãªãã®1ãƒ“ãƒƒãƒˆãšã‚‰ã—
 				testflag = 1;
-				g_sb16.dsp_info.dma.chan->startcount *= 2; // ƒf[ƒ^”‚à2”{
+				g_sb16.dsp_info.dma.chan->startcount *= 2; // ãƒ‡ãƒ¼ã‚¿æ•°ã‚‚2å€
 				g_sb16.dsp_info.dma.chan->adrs.d = (g_sb16.dsp_info.dma.chan->startaddr & 0xffff0000) | ((g_sb16.dsp_info.dma.chan->startaddr << 1) & 0xffff);
 				g_sb16.dsp_info.dma.chan->lastaddr = g_sb16.dsp_info.dma.chan->adrs.d + g_sb16.dsp_info.dma.chan->startcount;
-				g_sb16.dsp_info.dma.chan->leng.w = g_sb16.dsp_info.dma.chan->startcount; // –ß‚·
+				g_sb16.dsp_info.dma.chan->leng.w = g_sb16.dsp_info.dma.chan->startcount; // æˆ»ã™
 			}
-			g_sb16.dsp_info.dma.last16mode = (g_sb16.dsp_info.dma.mode==DSP_DMA_16 || g_sb16.dsp_info.dma.mode==DSP_DMA_NONE) ? 1 : 0; // 16bit“]‘—ƒ‚[ƒhƒtƒ‰ƒO
+			g_sb16.dsp_info.dma.last16mode = (g_sb16.dsp_info.dma.mode==DSP_DMA_16 || g_sb16.dsp_info.dma.mode==DSP_DMA_NONE) ? 1 : 0; // 16bitè»¢é€ãƒ¢ãƒ¼ãƒ‰ãƒ•ãƒ©ã‚°
 			g_sb16.mixreg[0x82] &= ~3;
 			ct1741_resetpicirq(g_sb16.dmairq);
 			g_sb16.dsp_info.write_busy = 0;
@@ -815,11 +815,11 @@ REG8 DMACCALL ct1741dmafunc(REG8 func)
 			break;
 
 		case DMAEXT_END:
-			// DMA“]‘—Š®—¹B–{“–‚Í‚±‚±‚ÅŠ„‚è‚Ş‚Ì‚Å‚ÍH‚Æv‚¢‚Ü‚µ‚½‚ª‚±‚±‚ÅŠ„‚è‚Ş‚Æ‰½‚¾‚©‚¨‚©‚µ‚­‚È‚è‚Ü‚·B“ä
+			// DMAè»¢é€å®Œäº†ã€‚æœ¬å½“ã¯ã“ã“ã§å‰²ã‚Šè¾¼ã‚€ã®ã§ã¯ï¼Ÿã¨æ€ã„ã¾ã—ãŸãŒã“ã“ã§å‰²ã‚Šè¾¼ã‚€ã¨ä½•ã ã‹ãŠã‹ã—ããªã‚Šã¾ã™ã€‚è¬
 			break;
 
 		case DMAEXT_BREAK:
-			// DMA“]‘—’†’f
+			// DMAè»¢é€ä¸­æ–­
 			nevent_reset(NEVENT_CT1741);
 			g_sb16.mixreg[0x82] &= ~3;
 			ct1741_resetpicirq(g_sb16.dmairq);
@@ -838,7 +838,7 @@ REG8 DMACCALL ct1741dmafunc(REG8 func)
 	return(0);
 }
 
-// PIO 8bit ƒ‚ƒmƒ‰ƒ‹
+// PIO 8bit ãƒ¢ãƒãƒ©ãƒ«
 static void SOUNDCALL pcm8mPIO(DMA_INFO *cs, SINT32 *pcm, UINT count) {
 	UINT32	leng;
 	UINT32	pos12;
@@ -880,7 +880,7 @@ const UINT8	*ptr2;
 	}
 }
 
-// 8bit ƒ‚ƒmƒ‰ƒ‹
+// 8bit ãƒ¢ãƒãƒ©ãƒ«
 static void SOUNDCALL pcm8m(DMA_INFO *cs, SINT32 *pcm, UINT count) {
 	UINT32	leng;
 	UINT32	pos12;
@@ -893,7 +893,7 @@ const UINT8	*ptr2;
 	int i;
 	int	samplen_dst = soundcfg.rate;
 	int	samplen_src;
-	//// ‰½ŒÌ‚©DMA‚Å‘—‚ç‚ê‚Ä‚«‚½ƒf[ƒ^‚ÌƒTƒ“ƒvƒŠƒ“ƒOƒŒ[ƒg‚ª‚¢‚©‚ê‚Ä‚¢‚é‚Ì‚Å–³—–î—C³‚·‚éB“ä
+	//// ä½•æ•…ã‹DMAã§é€ã‚‰ã‚Œã¦ããŸãƒ‡ãƒ¼ã‚¿ã®ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ãƒ¬ãƒ¼ãƒˆãŒã„ã‹ã‚Œã¦ã„ã‚‹ã®ã§ç„¡ç†çŸ¢ç†ä¿®æ­£ã™ã‚‹ã€‚è¬
 	//if(g_sb16.dsp_info.freq==44100){
 	//	samplen_src = g_sb16.dsp_info.freq * 110/ 100;
 	//}else if(g_sb16.dsp_info.freq==8000){
@@ -928,7 +928,7 @@ const UINT8	*ptr2;
 	cs->bufpos = (cs->bufpos + (leng << 0)) & DMA_BUFMASK;
 }
 
-// 8bit ƒXƒeƒŒƒI
+// 8bit ã‚¹ãƒ†ãƒ¬ã‚ª
 static void SOUNDCALL pcm8s(DMA_INFO *cs, SINT32 *pcm, UINT count) {
 	
 	UINT32	leng;
@@ -942,7 +942,7 @@ const UINT8	*ptr2;
 	int i;
 	int	samplen_dst = soundcfg.rate;
 	int	samplen_src;
-	//// ‰½ŒÌ‚©DMA‚Å‘—‚ç‚ê‚Ä‚«‚½ƒf[ƒ^‚ÌƒTƒ“ƒvƒŠƒ“ƒOƒŒ[ƒg‚ª‚¢‚©‚ê‚Ä‚¢‚é‚Ì‚Å–³—–î—C³‚·‚éB“ä
+	//// ä½•æ•…ã‹DMAã§é€ã‚‰ã‚Œã¦ããŸãƒ‡ãƒ¼ã‚¿ã®ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ãƒ¬ãƒ¼ãƒˆãŒã„ã‹ã‚Œã¦ã„ã‚‹ã®ã§ç„¡ç†çŸ¢ç†ä¿®æ­£ã™ã‚‹ã€‚è¬
 	//if(g_sb16.dsp_info.freq==44100){
 	//	samplen_src = g_sb16.dsp_info.freq * 110/ 100;
 	//}else{
@@ -976,7 +976,7 @@ const UINT8	*ptr2;
 }
 
 
-// 16bit ƒ‚ƒmƒ‰ƒ‹
+// 16bit ãƒ¢ãƒãƒ©ãƒ«
 static void SOUNDCALL Spcm16m(DMA_INFO *cs, SINT32 *pcm, UINT count) {
 	
 	UINT32	leng;
@@ -990,7 +990,7 @@ const UINT8	*ptr2;
 	int i;
 	int	samplen_dst = soundcfg.rate;
 	int	samplen_src;
-	//// ‰½ŒÌ‚©DMA‚Å‘—‚ç‚ê‚Ä‚«‚½ƒf[ƒ^‚ÌƒTƒ“ƒvƒŠƒ“ƒOƒŒ[ƒg‚ª‚¢‚©‚ê‚Ä‚¢‚é‚Ì‚Å–³—–î—C³‚·‚éB“ä
+	//// ä½•æ•…ã‹DMAã§é€ã‚‰ã‚Œã¦ããŸãƒ‡ãƒ¼ã‚¿ã®ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ãƒ¬ãƒ¼ãƒˆãŒã„ã‹ã‚Œã¦ã„ã‚‹ã®ã§ç„¡ç†çŸ¢ç†ä¿®æ­£ã™ã‚‹ã€‚è¬
 	//if(g_sb16.dsp_info.freq==44100){
 	//	samplen_src = g_sb16.dsp_info.freq * 130/ 100;
 	//}else{
@@ -1023,7 +1023,7 @@ const UINT8	*ptr2;
 	cs->bufpos = (cs->bufpos + (leng << 0)) & DMA_BUFMASK;
 }
 
-// 16bit ƒXƒeƒŒƒI(little endian)
+// 16bit ã‚¹ãƒ†ãƒ¬ã‚ª(little endian)
 static void SOUNDCALL Spcm16s(DMA_INFO *cs, SINT32 *pcm, UINT count) {
 	
 	UINT32	leng;
@@ -1037,7 +1037,7 @@ const UINT8	*ptr2;
 	int i;
 	int	samplen_dst = soundcfg.rate;
 	int	samplen_src;
-	//// ‰½ŒÌ‚©DMA‚Å‘—‚ç‚ê‚Ä‚«‚½ƒf[ƒ^‚ÌƒTƒ“ƒvƒŠƒ“ƒOƒŒ[ƒg‚ª‚¢‚©‚ê‚Ä‚¢‚é‚Ì‚Å–³—–î—C³‚·‚éB“ä
+	//// ä½•æ•…ã‹DMAã§é€ã‚‰ã‚Œã¦ããŸãƒ‡ãƒ¼ã‚¿ã®ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ãƒ¬ãƒ¼ãƒˆãŒã„ã‹ã‚Œã¦ã„ã‚‹ã®ã§ç„¡ç†çŸ¢ç†ä¿®æ­£ã™ã‚‹ã€‚è¬
 	//if(g_sb16.dsp_info.freq==44100){
 	//	samplen_src = g_sb16.dsp_info.freq * 125/ 100;
 	//}else{
@@ -1097,7 +1097,7 @@ static const CT1741FN ct1741fn[16] = {
 };
 
 static void SOUNDCALL ct1741_getpcm(DMA_INFO *ct, SINT32 *pcm, UINT count) {
-	// Ä¶—pƒoƒbƒtƒ@‚É‘—‚é
+	// å†ç”Ÿç”¨ãƒãƒƒãƒ•ã‚¡ã«é€ã‚‹
 	if(playwaitcounter <= 0){
 		int idx = g_sb16.dsp_info.dma.mode|g_sb16.dsp_info.dma.stereo << 3;
 		if(idx!=0){
@@ -1122,7 +1122,7 @@ void ct1741io_reset(void)
 
 void ct1741io_bind(void)
 {
-	sound_streamregist(&g_sb16.dsp_info.dma, (SOUNDCB)ct1741_getpcm); // CT1741—p ƒI[ƒfƒBƒIÄ¶ƒXƒgƒŠ[ƒ€
+	sound_streamregist(&g_sb16.dsp_info.dma, (SOUNDCB)ct1741_getpcm); // CT1741ç”¨ ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªå†ç”Ÿã‚¹ãƒˆãƒªãƒ¼ãƒ 
 
 	iocore_attachout(0x2600 + g_sb16.base, ct1741_write_reset);	/* DSP Reset */
 	iocore_attachout(0x2C00 + g_sb16.base, ct1741_write_data);	/* DSP Write Command/Data */
@@ -1134,7 +1134,7 @@ void ct1741io_bind(void)
 	iocore_attachinp(0x2e00 + g_sb16.base, ct1741_read_rstatus);	/* DSP Read Buffer Status (Bit 7) */
 	iocore_attachinp(0x2f00 + g_sb16.base, ct1741_read_rstatus16);	/* DSP Read Buffer Status (Bit 7) */
 	
-	// Canopus PowerWindow T64S/98 ‰¹Œ¹•”ƒeƒXƒg
+	// Canopus PowerWindow T64S/98 éŸ³æºéƒ¨ãƒ†ã‚¹ãƒˆ
 	//iocore_attachout(0x6600 + g_sb16.base, ct1741_write_reset);	/* DSP Reset */
 	//iocore_attachout(0x6C00 + g_sb16.base, ct1741_write_data);	/* DSP Write Command/Data */
 
@@ -1145,7 +1145,7 @@ void ct1741io_bind(void)
 	//iocore_attachinp(0x6e00 + g_sb16.base, ct1741_read_rstatus);	/* DSP Read Buffer Status (Bit 7) */
 	//iocore_attachinp(0x6f00 + g_sb16.base, ct1741_read_rstatus16);	/* DSP Read Buffer Status (Bit 7) */
 	
-	// PC/ATŒİŠ·‹@ƒeƒXƒg
+	// PC/ATäº’æ›æ©Ÿãƒ†ã‚¹ãƒˆ
 	if(np2cfg.sndsb16at){
 		iocore_attachout(0x226, ct1741_write_reset);	/* DSP Reset */
 		iocore_attachout(0x22C, ct1741_write_data);		/* DSP Write Command/Data */
@@ -1169,7 +1169,7 @@ void ct1741io_unbind(void)
 	iocore_detachinp(0x2e00 + g_sb16.base);	/* DSP Read Buffer Status (Bit 7) */
 	iocore_detachinp(0x2f00 + g_sb16.base);	/* DSP Read Buffer Status (Bit 7) */
 	
-	// PC/ATŒİŠ·‹@ƒeƒXƒg
+	// PC/ATäº’æ›æ©Ÿãƒ†ã‚¹ãƒˆ
 	if(np2cfg.sndsb16at){
 		iocore_detachout(0x226);	/* DSP Reset */
 		iocore_detachout(0x22C);	/* DSP Write Command/Data */

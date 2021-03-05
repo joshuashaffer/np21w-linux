@@ -417,7 +417,7 @@ void vga_mem_writeb(void *opaque, target_phys_addr_t addr, uint32_t_ val){
         mask = s->sr[2];
         s->plane_updated |= mask; /* only used to detect font change */
         write_mask = mask16[mask];
-		write_mask = ((write_mask & 0xff) << 24) | ((write_mask & 0xff00) << 8) | ((write_mask & 0xff0000) >> 8) | ((write_mask & 0xff000000) >> 24); // XXX: ‚È‚ñ‚©‚Ð‚Á‚­‚è•Ô‚³‚È‚¢‚Æ‘Ê–Ú
+		write_mask = ((write_mask & 0xff) << 24) | ((write_mask & 0xff00) << 8) | ((write_mask & 0xff0000) >> 8) | ((write_mask & 0xff000000) >> 24); // XXX: ãªã‚“ã‹ã²ã£ãã‚Šè¿”ã•ãªã„ã¨é§„ç›®
         ((uint32_t_ *)s->vram_ptr)[addr] = (((uint32_t_ *)s->vram_ptr)[addr] & ~write_mask) | (val & write_mask);
 #ifdef DEBUG_VGA_MEM
             printf("vga: latch: [0x%x] mask=0x%08x val=0x%08x\n",

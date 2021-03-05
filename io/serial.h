@@ -34,7 +34,7 @@ typedef struct {
 
 #if defined(SUPPORT_RS232C_FIFO)
 typedef struct {
-	UINT8 irqflag; // FIFO���[�h ���荞�݂̌���  0:�Ȃ�, 1:���M�\�ɂȂ���, 2:��M���ׂ��f�[�^������
+	UINT8 irqflag; // FIFOモード 割り込みの原因  0:なし, 1:送信可能になった, 2:受信すべきデータがある
 	UINT8 port136;
 	UINT8 port138;
 	UINT8 vfast;

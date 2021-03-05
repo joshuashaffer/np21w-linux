@@ -1025,7 +1025,7 @@ void MEMCALL memp_write8(UINT32 address, REG8 value) {
 		}
 	}
 #endif
-	if (address==0x0457) return; // XXX: IDE‚Ìƒf[ƒ^”j‰ó‰ñ”ğ‚Ì‚½‚ß‚Ìb’è
+	if (address==0x0457) return; // XXX: IDEã®ãƒ‡ãƒ¼ã‚¿ç ´å£Šå›é¿ã®ãŸã‚ã®æš«å®š
 	if (address < I286_MEMWRITEMAX) {
 		mem[address] = (UINT8)value;
 	}
@@ -1052,7 +1052,7 @@ void MEMCALL memp_write8(UINT32 address, REG8 value) {
 			//	printf("%d: %d\n", address, value);
 			//}
 #if defined(SUPPORT_VGA_MODEX)
-			// PC/ATŒİŠ·‹@ •W€VGA‘Š“– ‘‚«‚İŒÀ’è‚Å‹–‰Â
+			// PC/ATäº’æ›æ©Ÿ æ¨™æº–VGAç›¸å½“ æ›¸ãè¾¼ã¿é™å®šã§è¨±å¯
 			if(np2clvga.modex && vramWndAddr3==0xa0000){
 				UINT32 addr3 = address;
 				if(vramWndAddr3 <= addr3 && addr3 < vramWndAddr3 + VRA3WINDOW_SIZEX){
@@ -1178,7 +1178,7 @@ void MEMCALL memp_write16(UINT32 address, REG16 value) {
 				//	printf("%d: %d\n", address, value);
 				//}
 #if defined(SUPPORT_VGA_MODEX)
-				// PC/ATŒİŠ·‹@ •W€VGA‘Š“– ‘‚«‚İŒÀ’è‚Å‹–‰Â
+				// PC/ATäº’æ›æ©Ÿ æ¨™æº–VGAç›¸å½“ æ›¸ãè¾¼ã¿é™å®šã§è¨±å¯
 				if(np2clvga.modex && vramWndAddr3==0xa0000){
 					UINT32 addr3 = address;
 					if(vramWndAddr3 <= addr3 && addr3 < vramWndAddr3 + VRA3WINDOW_SIZEX){
@@ -1311,7 +1311,7 @@ void MEMCALL memp_write32(UINT32 address, UINT32 value) {
 				//	printf("%d: %d\n", address, value);
 				//}
 #if defined(SUPPORT_VGA_MODEX)
-				// PC/ATŒİŠ·‹@ •W€VGA‘Š“– ‘‚«‚İŒÀ’è‚Å‹–‰Â
+				// PC/ATäº’æ›æ©Ÿ æ¨™æº–VGAç›¸å½“ æ›¸ãè¾¼ã¿é™å®šã§è¨±å¯
 				if(np2clvga.modex && vramWndAddr3==0xa0000){
 					UINT32 addr3 = address;
 					if(vramWndAddr3 <= addr3 && addr3 < vramWndAddr3 + VRA3WINDOW_SIZEX){
@@ -1403,7 +1403,7 @@ void MEMCALL memp_write32(UINT32 address, UINT32 value) {
 
 void MEMCALL memp_write8_paging(UINT32 address, REG8 value) {
 	
-	//if (address==0x0457) return; // XXX: IDE‚Ìƒf[ƒ^”j‰ó‰ñ”ğ‚Ì‚½‚ß‚Ìb’è
+	//if (address==0x0457) return; // XXX: IDEã®ãƒ‡ãƒ¼ã‚¿ç ´å£Šå›é¿ã®ãŸã‚ã®æš«å®š
 	if (address < I286_MEMWRITEMAX) {
 		mem[address] = (UINT8)value;
 	}

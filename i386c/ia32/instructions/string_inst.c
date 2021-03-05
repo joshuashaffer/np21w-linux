@@ -1053,7 +1053,7 @@ STOSD_YdEAX(void)
 	}
 }
 
-// rep‚Ì‚İ
+// repã®ã¿
 void
 STOSB_YbAL_rep(int reptype)
 {

@@ -46,10 +46,10 @@ typedef struct {
 	DMACH	chan;
 	UINT32 remain_size;
 
-	UINT		bufsize; // �T�E���h�Đ��p�̏z�o�b�t�@�T�C�Y�B�f�[�^��read/write��4byte�P�ʁi16bit�X�e���I��1�T���v���P�ʁj�ōs������
+	UINT		bufsize; // サウンド再生用の循環バッファサイズ。データのread/writeは4byte単位（16bitステレオの1サンプル単位）で行うこと
 	UINT		bufdatas; // = (bufwpos-bufpos)&CS4231_BUFMASK
-	UINT		bufpos; // �o�b�t�@�̓ǂݎ��ʒu�Bbufwpos�ƈ�v���Ă��悢���ǂ��z���Ă͂����Ȃ�
-	UINT		bufwpos; // �o�b�t�@�̏������݈ʒu�B����x���bufpos�ɒǂ����Ă͂����Ȃ��i��v���s�j
+	UINT		bufpos; // バッファの読み取り位置。bufwposと一致してもよいが追い越してはいけない
+	UINT		bufwpos; // バッファの書き込み位置。周回遅れのbufposに追いついてはいけない（一致も不可）
 	UINT32		pos12;
 	UINT32		step12;
 	UINT8		buffer[DMA_BUFSIZE];
@@ -80,14 +80,14 @@ typedef struct {
 	UINT8 dmach;
 	UINT8 cmd_o;
 	
-	int smpcounter2; // DMA�]���J�n�ȍ~�ɑ���ꂽ�L���ȃf�[�^���̍��v
-	int smpcounter; // DMA�]���J�n�ȍ~�ɑ���ꂽDMA�f�[�^���̍��v�i�����ȃf�[�^���܂ށj
+	int smpcounter2; // DMA転送開始以降に送られた有効なデータ数の合計
+	int smpcounter; // DMA転送開始以降に送られたDMAデータ数の合計（無効なデータも含む）
 	
 	UINT8 speaker;
 	UINT8 uartmode;
 } DSP_INFO;
 
-typedef struct { // �X�e�[�g�Z�[�u�݊����ێ��p�i�ύX�֎~�j
+typedef struct { // ステートセーブ互換性維持用（変更禁止）
 	BOOL stereo,sign,autoinit;
 	DMA_MODES mode;
 	UINT32 rate,mul;
@@ -101,10 +101,10 @@ typedef struct { // �X�e�[�g�Z�[�u�݊����ێ��p�i�ύX�֎~�j
 	DMACH	chan;
 	UINT32 remain_size;
 
-	UINT		bufsize; // �T�E���h�Đ��p�̏z�o�b�t�@�T�C�Y�B�f�[�^��read/write��4byte�P�ʁi16bit�X�e���I��1�T���v���P�ʁj�ōs������
+	UINT		bufsize; // サウンド再生用の循環バッファサイズ。データのread/writeは4byte単位（16bitステレオの1サンプル単位）で行うこと
 	UINT		bufdatas; // = (bufwpos-bufpos)&CS4231_BUFMASK
-	UINT		bufpos; // �o�b�t�@�̓ǂݎ��ʒu�Bbufwpos�ƈ�v���Ă��悢���ǂ��z���Ă͂����Ȃ�
-	UINT		bufwpos; // �o�b�t�@�̏������݈ʒu�B����x���bufpos�ɒǂ����Ă͂����Ȃ��i��v���s�j
+	UINT		bufpos; // バッファの読み取り位置。bufwposと一致してもよいが追い越してはいけない
+	UINT		bufwpos; // バッファの書き込み位置。周回遅れのbufposに追いついてはいけない（一致も不可）
 	UINT32		pos12;
 	UINT32		step12;
 	UINT8		buffer[DMA_BUFSIZE];
@@ -116,7 +116,7 @@ typedef struct { // �X�e�[�g�Z�[�u�݊����ێ��p�i�ύX�֎~�j
 	UINT32 laststartaddr;
 } DMA_INFO_OLD;
 
-typedef struct { // �X�e�[�g�Z�[�u�݊����ێ��p�i�ύX�֎~�j
+typedef struct { // ステートセーブ互換性維持用（変更禁止）
 	DMA_INFO_OLD dma;
 	UINT8 state;
 	UINT8 cmd;
@@ -135,8 +135,8 @@ typedef struct { // �X�e�[�g�Z�[�u�݊����ێ��p�i�ύX�֎~�j
 	UINT8 dmach;
 	UINT8 cmd_o;
 	
-	int smpcounter2; // DMA�]���J�n�ȍ~�ɑ���ꂽ�L���ȃf�[�^���̍��v
-	int smpcounter; // DMA�]���J�n�ȍ~�ɑ���ꂽDMA�f�[�^���̍��v�i�����ȃf�[�^���܂ށj
+	int smpcounter2; // DMA転送開始以降に送られた有効なデータ数の合計
+	int smpcounter; // DMA転送開始以降に送られたDMAデータ数の合計（無効なデータも含む）
 	
 	UINT8 speaker;
 	UINT8 uartmode;

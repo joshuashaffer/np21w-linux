@@ -10,52 +10,52 @@ extern "C" {
 	
 #if defined(_WIN32)
 typedef struct {
-	UINT8	available; // HAXMg—p‰Â”\
-	UINT8	enable; // HAXM—LŒø
-	UINT8	emumode; // ”LCPU‚Å‘ã‘Öˆ—’†
-	HANDLE	hDevice; // HAXMƒfƒoƒCƒX‚Ìƒnƒ“ƒhƒ‹
-	HANDLE	hVMDevice; // HAXM‰¼‘zƒ}ƒVƒ“ƒfƒoƒCƒX‚Ìƒnƒ“ƒhƒ‹
-	HANDLE	hVCPUDevice; // HAXM‰¼‘zCPUƒfƒoƒCƒX‚Ìƒnƒ“ƒhƒ‹
-	UINT32	vm_id; // HAXM‰¼‘zƒ}ƒVƒ“ID
-	HAX_TUNNEL_INFO	tunnel; // HAXM‰¼‘zƒ}ƒVƒ“‚Æ‚Ìƒf[ƒ^‚â‚è‚Æ‚è—ptunnel
+	UINT8	available; // HAXMä½¿ç”¨å¯èƒ½
+	UINT8	enable; // HAXMæœ‰åŠ¹
+	UINT8	emumode; // çŒ«CPUã§ä»£æ›¿å‡¦ç†ä¸­
+	HANDLE	hDevice; // HAXMãƒ‡ãƒã‚¤ã‚¹ã®ãƒãƒ³ãƒ‰ãƒ«
+	HANDLE	hVMDevice; // HAXMä»®æƒ³ãƒã‚·ãƒ³ãƒ‡ãƒã‚¤ã‚¹ã®ãƒãƒ³ãƒ‰ãƒ«
+	HANDLE	hVCPUDevice; // HAXMä»®æƒ³CPUãƒ‡ãƒã‚¤ã‚¹ã®ãƒãƒ³ãƒ‰ãƒ«
+	UINT32	vm_id; // HAXMä»®æƒ³ãƒã‚·ãƒ³ID
+	HAX_TUNNEL_INFO	tunnel; // HAXMä»®æƒ³ãƒã‚·ãƒ³ã¨ã®ãƒ‡ãƒ¼ã‚¿ã‚„ã‚Šã¨ã‚Šç”¨tunnel
 
-	UINT8 bioshookenable; // ƒfƒoƒbƒOƒŒƒWƒXƒ^‚É‚æ‚éƒGƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“BIOSƒtƒbƒN—LŒø
+	UINT8 bioshookenable; // ãƒ‡ãƒãƒƒã‚°ãƒ¬ã‚¸ã‚¹ã‚¿ã«ã‚ˆã‚‹ã‚¨ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³BIOSãƒ•ãƒƒã‚¯æœ‰åŠ¹
 } NP2_HAX;
 typedef struct {
-	HAX_VCPU_STATE	state; // HAXM‰¼‘zCPU‚ÌƒŒƒWƒXƒ^
-	HAX_FX_LAYOUT	fpustate; // HAXM‰¼‘zCPU‚ÌFPUƒŒƒWƒXƒ^
-	HAX_MSR_DATA	msrstate; // HAXM‰¼‘zCPU‚ÌMSR
-	HAX_VCPU_STATE	default_state; // HAXM‰¼‘zCPU‚ÌƒŒƒWƒXƒ^iƒfƒtƒHƒ‹ƒg’lj
-	HAX_FX_LAYOUT	default_fpustate; // HAXM‰¼‘zCPU‚ÌFPUƒŒƒWƒXƒ^iƒfƒtƒHƒ‹ƒg’lj
-	HAX_MSR_DATA	default_msrstate; // HAXM‰¼‘zCPU‚ÌMSRiƒfƒtƒHƒ‹ƒg’lj
-	UINT8 update_regs; // —vƒŒƒWƒXƒ^XV
-	UINT8 update_segment_regs; // —vƒZƒOƒƒ“ƒgƒŒƒWƒXƒ^XV
-	UINT8 update_fpu; // —vFPUƒŒƒWƒXƒ^XV
+	HAX_VCPU_STATE	state; // HAXMä»®æƒ³CPUã®ãƒ¬ã‚¸ã‚¹ã‚¿
+	HAX_FX_LAYOUT	fpustate; // HAXMä»®æƒ³CPUã®FPUãƒ¬ã‚¸ã‚¹ã‚¿
+	HAX_MSR_DATA	msrstate; // HAXMä»®æƒ³CPUã®MSR
+	HAX_VCPU_STATE	default_state; // HAXMä»®æƒ³CPUã®ãƒ¬ã‚¸ã‚¹ã‚¿ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ï¼‰
+	HAX_FX_LAYOUT	default_fpustate; // HAXMä»®æƒ³CPUã®FPUãƒ¬ã‚¸ã‚¹ã‚¿ï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ï¼‰
+	HAX_MSR_DATA	default_msrstate; // HAXMä»®æƒ³CPUã®MSRï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ï¼‰
+	UINT8 update_regs; // è¦ãƒ¬ã‚¸ã‚¹ã‚¿æ›´æ–°
+	UINT8 update_segment_regs; // è¦ã‚»ã‚°ãƒ¡ãƒ³ãƒˆãƒ¬ã‚¸ã‚¹ã‚¿æ›´æ–°
+	UINT8 update_fpu; // è¦FPUãƒ¬ã‚¸ã‚¹ã‚¿æ›´æ–°
 
-	UINT8 irq_req[256]; // Š„‚è‚İ‘Ò‹@ƒoƒbƒtƒ@B‘å‹C’†‚ÌŠ„‚è‚İƒxƒNƒ^‚ªŠi”[‚³‚ê‚é
-	UINT8 irq_reqidx_cur; // Š„‚è‚İ‘Ò‹@ƒoƒbƒtƒ@‚Ì“Ç‚İæ‚èˆÊ’u
-	UINT8 irq_reqidx_end; // Š„‚è‚İ‘Ò‹@ƒoƒbƒtƒ@‚Ì‘‚«‚İˆÊ’u
+	UINT8 irq_req[256]; // å‰²ã‚Šè¾¼ã¿å¾…æ©Ÿãƒãƒƒãƒ•ã‚¡ã€‚å¤§æ°—ä¸­ã®å‰²ã‚Šè¾¼ã¿ãƒ™ã‚¯ã‚¿ãŒæ ¼ç´ã•ã‚Œã‚‹
+	UINT8 irq_reqidx_cur; // å‰²ã‚Šè¾¼ã¿å¾…æ©Ÿãƒãƒƒãƒ•ã‚¡ã®èª­ã¿å–ã‚Šä½ç½®
+	UINT8 irq_reqidx_end; // å‰²ã‚Šè¾¼ã¿å¾…æ©Ÿãƒãƒƒãƒ•ã‚¡ã®æ›¸ãè¾¼ã¿ä½ç½®
 } NP2_HAX_STAT;
 typedef struct {
-	UINT8 running; // HAXM CPUÀs’†ƒtƒ‰ƒO
+	UINT8 running; // HAXM CPUå®Ÿè¡Œä¸­ãƒ•ãƒ©ã‚°
 
-	// ƒ^ƒCƒ~ƒ“ƒO’²®—piperformance counterg—pj
-	LARGE_INTEGER lastclock; // ‘O‰ñ‚ÌƒNƒƒbƒN
-	LARGE_INTEGER clockpersec; // 1•b‚ ‚½‚èƒNƒƒbƒN”
-	LARGE_INTEGER clockcount; // Œ»İ‚ÌƒNƒƒbƒN
+	// ã‚¿ã‚¤ãƒŸãƒ³ã‚°èª¿æ•´ç”¨ï¼ˆperformance counterä½¿ç”¨ï¼‰
+	LARGE_INTEGER lastclock; // å‰å›ã®ã‚¯ãƒ­ãƒƒã‚¯
+	LARGE_INTEGER clockpersec; // 1ç§’ã‚ãŸã‚Šã‚¯ãƒ­ãƒƒã‚¯æ•°
+	LARGE_INTEGER clockcount; // ç¾åœ¨ã®ã‚¯ãƒ­ãƒƒã‚¯
 
 	UINT8 I_ratio;
 
-	UINT32 lastA20en; // ‘O‰ñA20ƒ‰ƒCƒ“‚ª—LŒø‚¾‚Á‚½‚©
-	UINT32 lastITFbank; // ‘O‰ñITFƒoƒ“ƒN‚ğg—p‚µ‚Ä‚¢‚½‚©
-	UINT32 lastVGA256linear; // ‘O‰ñ256Fƒ‚[ƒh‚ÌƒŠƒjƒAƒAƒhƒŒƒX‚ğg—p‚µ‚Ä‚¢‚½‚©
-	UINT32 lastVRAMMMIO; // VRAM‚Ìƒƒ‚ƒŠƒAƒhƒŒƒX‚ªMMIOƒ‚[ƒh‚©
+	UINT32 lastA20en; // å‰å›A20ãƒ©ã‚¤ãƒ³ãŒæœ‰åŠ¹ã ã£ãŸã‹
+	UINT32 lastITFbank; // å‰å›ITFãƒãƒ³ã‚¯ã‚’ä½¿ç”¨ã—ã¦ã„ãŸã‹
+	UINT32 lastVGA256linear; // å‰å›256è‰²ãƒ¢ãƒ¼ãƒ‰ã®ãƒªãƒ‹ã‚¢ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ä½¿ç”¨ã—ã¦ã„ãŸã‹
+	UINT32 lastVRAMMMIO; // VRAMã®ãƒ¡ãƒ¢ãƒªã‚¢ãƒ‰ãƒ¬ã‚¹ãŒMMIOãƒ¢ãƒ¼ãƒ‰ã‹
 	
-	UINT8 hurryup; // ƒ^ƒCƒ~ƒ“ƒO‚ª’x‚ê‚Ä‚¢‚é‚Ì‚Å‹}‚®‚×‚µ
+	UINT8 hurryup; // ã‚¿ã‚¤ãƒŸãƒ³ã‚°ãŒé…ã‚Œã¦ã„ã‚‹ã®ã§æ€¥ãã¹ã—
 
-	UINT8 hltflag; // HLT–½—ß‚Å’â~’†ƒtƒ‰ƒO
+	UINT8 hltflag; // HLTå‘½ä»¤ã§åœæ­¢ä¸­ãƒ•ãƒ©ã‚°
 
-	UINT8 allocwabmem; // WAB vramptr“o˜^Ï‚İ‚È‚ç1
+	UINT8 allocwabmem; // WAB vramptrç™»éŒ²æ¸ˆã¿ãªã‚‰1
 
 	UINT8 ready_for_reset;
 } NP2_HAX_CORE;
@@ -72,29 +72,29 @@ extern	NP2_HAX_CORE	np2haxcore;
 }
 #endif
 
-UINT8 i386hax_check(void); // HAXMg—p‰Â”\ƒ`ƒFƒbƒN
-void i386hax_initialize(void); // HAXM‰Šú‰»
-void i386hax_createVM(void); // HAXM‰¼‘zƒ}ƒVƒ“ì¬
-void i386hax_resetVMMem(void); // HAXM‰¼‘zƒ}ƒVƒ“ƒŠƒZƒbƒgiƒƒ‚ƒŠü‚èj
-void i386hax_resetVMCPU(void); // HAXM‰¼‘zƒ}ƒVƒ“ƒŠƒZƒbƒgiCPUü‚èj
-void i386hax_disposeVM(void); // HAXM‰¼‘zƒ}ƒVƒ“”jŠü
-void i386hax_deinitialize(void); // HAXM‰ğ•ú
+UINT8 i386hax_check(void); // HAXMä½¿ç”¨å¯èƒ½ãƒã‚§ãƒƒã‚¯
+void i386hax_initialize(void); // HAXMåˆæœŸåŒ–
+void i386hax_createVM(void); // HAXMä»®æƒ³ãƒã‚·ãƒ³ä½œæˆ
+void i386hax_resetVMMem(void); // HAXMä»®æƒ³ãƒã‚·ãƒ³ãƒªã‚»ãƒƒãƒˆï¼ˆãƒ¡ãƒ¢ãƒªå‘¨ã‚Šï¼‰
+void i386hax_resetVMCPU(void); // HAXMä»®æƒ³ãƒã‚·ãƒ³ãƒªã‚»ãƒƒãƒˆï¼ˆCPUå‘¨ã‚Šï¼‰
+void i386hax_disposeVM(void); // HAXMä»®æƒ³ãƒã‚·ãƒ³ç ´æ£„
+void i386hax_deinitialize(void); // HAXMè§£æ”¾
 
-void i386hax_vm_exec(void); // HAXM‰¼‘zCPU‚ÌÀs
+void i386hax_vm_exec(void); // HAXMä»®æƒ³CPUã®å®Ÿè¡Œ
 
-void i386hax_vm_allocmemory(void); // ƒƒ‚ƒŠ—Ìˆæ‚ğ“o˜^iŠî–{—Ìˆæj
-void i386hax_vm_allocmemoryex(UINT8 *vramptr, UINT32 size); // ƒƒ‚ƒŠ—Ìˆæ‚ğ“o˜^i”Ä—pj
+void i386hax_vm_allocmemory(void); // ãƒ¡ãƒ¢ãƒªé ˜åŸŸã‚’ç™»éŒ²ï¼ˆåŸºæœ¬é ˜åŸŸï¼‰
+void i386hax_vm_allocmemoryex(UINT8 *vramptr, UINT32 size); // ãƒ¡ãƒ¢ãƒªé ˜åŸŸã‚’ç™»éŒ²ï¼ˆæ±ç”¨ï¼‰
 
-// ƒQƒXƒg•¨—ƒAƒhƒŒƒX(Guest Physical Address; GPA)‚ÉƒzƒXƒg‚Ì‰¼‘zƒAƒhƒŒƒX(Host Virtual Address; HVA)‚ğŠ„‚è“–‚Ä
-void i386hax_vm_setmemory(void); // 00000h`BFFFFh‚Ü‚Å
-void i386hax_vm_setbankmemory(void); // A0000h`F7FFFh‚Ü‚Å
-void i386hax_vm_setitfmemory(UINT8 isitfbank); // F8000h`FFFFFh‚Ü‚Å
-void i386hax_vm_sethmemory(UINT8 a20en); // 100000h`10FFFFh‚Ü‚Å
-void i386hax_vm_setextmemory(void); // 110000hˆÈ~
-void i386hax_vm_setvga256linearmemory(void); // 0xF00000`0xF80000
+// ã‚²ã‚¹ãƒˆç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹(Guest Physical Address; GPA)ã«ãƒ›ã‚¹ãƒˆã®ä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹(Host Virtual Address; HVA)ã‚’å‰²ã‚Šå½“ã¦
+void i386hax_vm_setmemory(void); // 00000hã€œBFFFFhã¾ã§
+void i386hax_vm_setbankmemory(void); // A0000hã€œF7FFFhã¾ã§
+void i386hax_vm_setitfmemory(UINT8 isitfbank); // F8000hã€œFFFFFhã¾ã§
+void i386hax_vm_sethmemory(UINT8 a20en); // 100000hã€œ10FFFFhã¾ã§
+void i386hax_vm_setextmemory(void); // 110000hä»¥é™
+void i386hax_vm_setvga256linearmemory(void); // 0xF00000ã€œ0xF80000
 //void i386hax_vm_setwabmemory(UINT8 *vramptr, UINT32 addr, UINT32 size);
 
-// ”Ä—p ƒƒ‚ƒŠ—ÌˆæŠ„‚è“–‚Ä
+// æ±ç”¨ ãƒ¡ãƒ¢ãƒªé ˜åŸŸå‰²ã‚Šå½“ã¦
 void i386hax_vm_setmemoryarea(UINT8 *vramptr, UINT32 addr, UINT32 size);
 void i386hax_vm_removememoryarea(UINT8 *vramptr, UINT32 addr, UINT32 size);
 

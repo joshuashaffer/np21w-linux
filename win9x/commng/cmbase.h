@@ -1,6 +1,6 @@
 /**
  * @file	cmbase.h
- * @brief	commng Šî’êƒNƒ‰ƒX‚ÌéŒ¾‚¨‚æ‚ÑƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ì’è‹`‚ğ‚µ‚Ü‚·
+ * @brief	commng åŸºåº•ã‚¯ãƒ©ã‚¹ã®å®£è¨€ãŠã‚ˆã³ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã®å®šç¾©ã‚’ã—ã¾ã™
  */
 
 #pragma once
@@ -8,7 +8,7 @@
 #include "commng.h"
 
 /**
- * @brief commng Šî’êƒNƒ‰ƒX
+ * @brief commng åŸºåº•ã‚¯ãƒ©ã‚¹
  */
 class CComBase : public _commng
 {
@@ -35,7 +35,7 @@ protected:
 	 * @return result
 	 */
 	virtual UINT WriteRetry(){
-		return 1; // í¬Œ÷ˆµ‚¢
+		return 1; // å¸¸æ™‚æˆåŠŸæ‰±ã„
 	}
 	
 	/**
@@ -43,20 +43,20 @@ protected:
 	 * @return result
 	 */
 	virtual UINT LastWriteSuccess(){
-		return 1; // í¬Œ÷ˆµ‚¢
+		return 1; // å¸¸æ™‚æˆåŠŸæ‰±ã„
 	}
 
 	/**
-	 * ƒXƒe[ƒ^ƒX‚ğ“¾‚é
-	 * @return ƒXƒe[ƒ^ƒX
+	 * ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’å¾—ã‚‹
+	 * @return ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 	 */
 	virtual UINT8 GetStat() = 0;
 
 	/**
-	 * ƒƒbƒZ[ƒW
-	 * @param[in] nMessage ƒƒbƒZ[ƒW
-	 * @param[in] nParam ƒpƒ‰ƒƒ^
-	 * @return ƒŠƒUƒ‹ƒg ƒR[ƒh
+	 * ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
+	 * @param[in] nMessage ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
+	 * @param[in] nParam ãƒ‘ãƒ©ãƒ¡ã‚¿
+	 * @return ãƒªã‚¶ãƒ«ãƒˆ ã‚³ãƒ¼ãƒ‰
 	 */
 	virtual INTPTR Message(UINT nMessage, INTPTR nParam) = 0;
 

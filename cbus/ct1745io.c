@@ -115,13 +115,13 @@ static void IOOUTCALL sb16_o2500_AT(UINT port, REG8 dat) {
 	if(g_sb16.mixsel==0x80){
 		switch (dat) {
 		case 1: // IRQ2
-			// •ÏŠ·•s”\
+			// å¤‰æ›ä¸èƒ½
 			break;
 		case 2: // IRQ5
 			dat = 8;
 			break;
 		case 4: // IRQ7 (IRQ2)
-			// •ÏŠ·•s”\
+			// å¤‰æ›ä¸èƒ½
 			break;
 		case 8: // IRQ10
 			dat = 2;
@@ -133,10 +133,10 @@ static void IOOUTCALL sb16_o2500_AT(UINT port, REG8 dat) {
 			dat = 1;
 			break;
 		case 2: // DMA1
-			// •ÏŠ·•s”\
+			// å¤‰æ›ä¸èƒ½
 			break;
 		case 4: // NONE
-			// •ÏŠ·•s”\
+			// å¤‰æ›ä¸èƒ½
 			break;
 		case 8: // DMA3
 			dat = 2;
@@ -172,7 +172,7 @@ static REG8 IOINPCALL sb16_i2500(UINT port) {
 			return ct1741_get_dma_irq();
 		case 0x81:			// Read dma num
 			return ct1741_get_dma_ch();
-		case 0x82:			// Irq pending(98‚É‚Í•s—v)@diagnose—p@‘¼‚æ‚­‚í‚©‚ç‚¸
+		case 0x82:			// Irq pending(98ã«ã¯ä¸è¦)ã€€diagnoseç”¨ã€€ä»–ã‚ˆãã‚ã‹ã‚‰ãš
 			if(g_sb16.mixreg[0x82] == 0x41)return 0x1;
 			if(g_sb16.mixreg[0x82] == 0x42)return 0x2;
 			if(g_sb16.mixreg[0x82] == 0x43)return 0x3;
@@ -187,13 +187,13 @@ static REG8 IOINPCALL sb16_i2500_AT(UINT port) {
 	if(g_sb16.mixsel==0x80){
 		switch (ret) {
 		case 1: // IRQ3
-			// •ÏŠ·•s”\
+			// å¤‰æ›ä¸èƒ½
 			break;
 		case 2: // IRQ10
 			ret = 8;
 			break;
 		case 4: // IRQ12
-			// •ÏŠ·•s”\
+			// å¤‰æ›ä¸èƒ½
 			break;
 		case 8: // IRQ5
 			ret = 2;
@@ -208,10 +208,10 @@ static REG8 IOINPCALL sb16_i2500_AT(UINT port) {
 			ret = 8;
 			break;
 		case 4: // NONE
-			// •ÏŠ·•s”\
+			// å¤‰æ›ä¸èƒ½
 			break;
 		case 8: // NONE
-			// •ÏŠ·•s”\
+			// å¤‰æ›ä¸èƒ½
 			break;
 		}
 	}
@@ -230,7 +230,7 @@ void ct1745io_bind(void)
 	iocore_attachinp(0x2400 + g_sb16.base, sb16_i2400);	/* Mixer Chip Register Address Port */
 	iocore_attachinp(0x2500 + g_sb16.base, sb16_i2500);	/* Mixer Chip Data Port */
 	
-	// PC/ATŒİŠ·‹@ƒeƒXƒg
+	// PC/ATäº’æ›æ©Ÿãƒ†ã‚¹ãƒˆ
 	if(np2cfg.sndsb16at){
 		iocore_attachout(0x224, sb16_o2400);	/* Mixer Chip Register Address Port */
 		iocore_attachout(0x225, sb16_o2500_AT);	/* Mixer Chip Data Port */
@@ -245,7 +245,7 @@ void ct1745io_unbind(void)
 	iocore_detachinp(0x2400 + g_sb16.base);	/* Mixer Chip Register Address Port */
 	iocore_detachinp(0x2500 + g_sb16.base);	/* Mixer Chip Data Port */
 
-	// PC/ATŒİŠ·‹@ƒeƒXƒg
+	// PC/ATäº’æ›æ©Ÿãƒ†ã‚¹ãƒˆ
 	if(np2cfg.sndsb16at){
 		iocore_detachout(0x224);	/* Mixer Chip Register Address Port */
 		iocore_detachout(0x225);	/* Mixer Chip Data Port */

@@ -64,7 +64,7 @@ p90_err:
 static REG8 bios0x1f_CC(void) {
 	
 #if defined(SUPPORT_PCI)
-	// int 1Ah AH=B1‚Æ“¯‚¶H
+	// int 1Ah AH=B1ã¨åŒã˜ï¼Ÿ
 	if(pcidev.enable){
 		bios0x1a_pci_part(0);
 	}

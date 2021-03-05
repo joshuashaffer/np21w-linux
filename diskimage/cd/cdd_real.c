@@ -40,7 +40,7 @@ struct sptdreadcapacityinfo
 
 
 //	----
-//	�C���[�W�t�@�C�����S�g���b�N�Z�N�^��2048byte�p
+//	イメージファイル内全トラックセクタ長2048byte用
 REG8 sec2048_read_SPTI(SXSIDEV sxsi, FILEPOS pos, UINT8 *buf, UINT size) {
 
 	CDINFO	cdinfo;
@@ -187,7 +187,7 @@ REG8 sec2048_read_SPTI(SXSIDEV sxsi, FILEPOS pos, UINT8 *buf, UINT size) {
 	return(0xd0);
 }
 
-//	�C���[�W�t�@�C���̎��̂��J���A�e����\�z
+//	イメージファイルの実体を開き、各種情報構築
 BRESULT setsxsidev_SPTI(SXSIDEV sxsi, const OEMCHAR *path, const _CDTRK *trk, UINT trks) {
 
 	FILEH	fh;
@@ -201,7 +201,7 @@ BRESULT setsxsidev_SPTI(SXSIDEV sxsi, const OEMCHAR *path, const _CDTRK *trk, UI
 	TEXTFILEH	tfh;
 #endif
 
-	//	trk�Atrks�͗L���Ȓl���ݒ�ς݂Ȃ̂��O��
+	//	trk、trksは有効な値が設定済みなのが前提
 	if ((trk == NULL) || (trks == 0)) {
 		goto sxsiope_err1;
 	}
@@ -267,7 +267,7 @@ BRESULT setsxsidev_SPTI(SXSIDEV sxsi, const OEMCHAR *path, const _CDTRK *trk, UI
 		sxsi->totals = totals;
 	}
 #else
-	totals = issec(fh, cdinfo->trk, trks);	//	�Ƃ肠����
+	totals = issec(fh, cdinfo->trk, trks);	//	とりあえず
 	sxsi->read = sec2048_read;
 	totals = issec2048(cdinfo->fh);
 	if (totals < 0) {
@@ -297,7 +297,7 @@ BRESULT setsxsidev_SPTI(SXSIDEV sxsi, const OEMCHAR *path, const _CDTRK *trk, UI
 		}
 	}
 
-	//	���[�h�A�E�g�g���b�N�𐶐�
+	//	リードアウトトラックを生成
 	cdinfo->trk[trks].adr_ctl	= 0x10;
 	cdinfo->trk[trks].point		= 0xaa;
 //	cdinfo->trk[trks].pos		= totals;
@@ -369,7 +369,7 @@ sxsiope_err1:
 }
 
 //	----
-//	�Z�N�^���擾�p�i�ł�READ CAPACITY�R�}���h�ɕԎ����Ă���Ȃ��ꍇ������悤�ȥ���j
+//	セクタ長取得用（でもREAD CAPACITYコマンドに返事してくれない場合があるような･･･）
 UINT32 readcapacity_SPTI(FILEH fh) {
 
 	//CDINFO	cdinfo;
@@ -423,7 +423,7 @@ UINT32 readcapacity_SPTI(FILEH fh) {
 	return 0;
 }
 
-//	���h���C�u���J��
+//	実ドライブを開く
 BRESULT openrealcdd(SXSIDEV sxsi, const OEMCHAR *path) {
 
 	_CDTRK	trk[99];
@@ -446,7 +446,7 @@ BRESULT openrealcdd(SXSIDEV sxsi, const OEMCHAR *path) {
 		goto openiso_err1;
 	}
 	
-	//	�Z�N�^�T�C�Y��2048byte�A2352byte�A2448byte�̂ǂꂩ���`�F�b�N
+	//	セクタサイズが2048byte、2352byte、2448byteのどれかをチェック
 	DeviceIoControl(fh, IOCTL_CDROM_GET_DRIVE_GEOMETRY,
 				NULL, 0, &dgCDROM, sizeof(DISK_GEOMETRY),
 				&dwNotUsed, NULL);
@@ -475,7 +475,7 @@ BRESULT openrealcdd(SXSIDEV sxsi, const OEMCHAR *path) {
 		goto openiso_err2;
 	}
 	
-	//	�g���b�N�����E��
+	//	トラック情報を拾う
 	DeviceIoControl(fh, IOCTL_CDROM_READ_TOC,
 				NULL, 0, &tocCDROM, sizeof(tocCDROM),
 				&dwNotUsed, NULL);
@@ -580,7 +580,7 @@ openiso_err1:
 //		goto openiso_err1;
 //	}
 //
-//	//	�Z�N�^�T�C�Y��2048byte�A2352byte�A2448byte�̂ǂꂩ���`�F�b�N
+//	//	セクタサイズが2048byte、2352byte、2448byteのどれかをチェック
 //	DeviceIoControl(fh, IOCTL_CDROM_GET_DRIVE_GEOMETRY,
 //				NULL, 0, &dgCDROM, sizeof(DISK_GEOMETRY),
 //				&dwNotUsed, NULL);
@@ -604,7 +604,7 @@ openiso_err1:
 //		goto openiso_err2;
 //	}
 //	
-//	//	�g���b�N�����E��
+//	//	トラック情報を拾う
 //	DeviceIoControl(fh, IOCTL_CDROM_READ_TOC_EX,
 //				&TOCEx, sizeof(TOCEx), &tocCDROMtmp, sizeof(tocCDROMtmp),
 //				&dwNotUsed, NULL);

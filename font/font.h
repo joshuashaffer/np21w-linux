@@ -6,7 +6,7 @@
  * @date	$Date: 2011/02/23 10:11:44 $
  */
 
-#define	FONTMEMORYBIND				// 520KB‚­‚ç‚¢ƒƒ‚ƒŠíœ(‚§‚¡
+#define	FONTMEMORYBIND				// 520KBãã‚‰ã„ãƒ¡ãƒ¢ãƒªå‰Šé™¤(ã‰ãƒ
 
 #define FONTMEMORYSIZE 0x84000
 

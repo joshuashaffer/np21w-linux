@@ -18,7 +18,7 @@ struct musicgen_t
 	int		sync;
 	int		ch;
 };
-struct musicgen_old_t // ƒXƒe[ƒgƒZ[ƒuŒİŠ·«ˆÛ—pi•ÏX‹Ö~j
+struct musicgen_old_t // ã‚¹ãƒ†ãƒ¼ãƒˆã‚»ãƒ¼ãƒ–äº’æ›æ€§ç¶­æŒç”¨ï¼ˆå¤‰æ›´ç¦æ­¢ï¼‰
 {
 	UINT8	porta;
 	UINT8	portb;

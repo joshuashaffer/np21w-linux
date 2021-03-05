@@ -28,13 +28,13 @@ typedef struct {
 static	MOUSEMNG	mousemng;
 static  int mousecaptureflg = 0;
 
-static  int mouseMul = 1; // ƒ}ƒEƒXƒXƒs[ƒh”{—¦i•ªqj
-static  int mouseDiv = 1; // ƒ}ƒEƒXƒXƒs[ƒh”{—¦i•ª•êj
+static  int mouseMul = 1; // ãƒã‚¦ã‚¹ã‚¹ãƒ”ãƒ¼ãƒ‰å€ç‡ï¼ˆåˆ†å­ï¼‰
+static  int mouseDiv = 1; // ãƒã‚¦ã‚¹ã‚¹ãƒ”ãƒ¼ãƒ‰å€ç‡ï¼ˆåˆ†æ¯ï¼‰
 
-static  int mousebufX = 0; // ƒ}ƒEƒXˆÚ“®ƒoƒbƒtƒ@(X)
-static  int mousebufY = 0; // ƒ}ƒEƒXˆÚ“®ƒoƒbƒtƒ@(Y)
+static  int mousebufX = 0; // ãƒã‚¦ã‚¹ç§»å‹•ãƒãƒƒãƒ•ã‚¡(X)
+static  int mousebufY = 0; // ãƒã‚¦ã‚¹ç§»å‹•ãƒãƒƒãƒ•ã‚¡(Y)
 
-// RAWƒ}ƒEƒX“ü—Í‘Î‰ np21w ver0.86 rev13
+// RAWãƒã‚¦ã‚¹å…¥åŠ›å¯¾å¿œ np21w ver0.86 rev13
 static  LPDIRECTINPUT8 dinput = NULL; 
 static  LPDIRECTINPUTDEVICE8 diRawMouse = NULL; 
 static  int mouseRawDeltaX = 0;
@@ -46,7 +46,7 @@ static  HMODULE hModuleDI8 = NULL;
 static  FN_DIRECTINPUT8CREATE fndi8create = NULL;
 
 BRESULT mousemng_checkdinput8(){
-	// DirectInput8‚ªg—p‚Å‚«‚é‚©ƒ`ƒFƒbƒN
+	// DirectInput8ãŒä½¿ç”¨ã§ãã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	LPDIRECTINPUT8 test_dinput = NULL; 
 	LPDIRECTINPUTDEVICE8 test_didevice = NULL;
 
@@ -68,7 +68,7 @@ BRESULT mousemng_checkdinput8(){
 		goto scre_err3;
 	}
 
-	// ƒfƒoƒCƒXì¬‚Ü‚Åo—ˆ‚»‚¤‚È‚çOK‚Æ‚·‚é
+	// ãƒ‡ãƒã‚¤ã‚¹ä½œæˆã¾ã§å‡ºæ¥ãã†ãªã‚‰OKã¨ã™ã‚‹
 	test_didevice->Release();
 	test_dinput->Release();
 
@@ -168,45 +168,45 @@ static void initDirectInput(){
 
 	if(fndi8create && !dinput){
 		//hr = DirectInputCreateEx(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput7, (void**)&dinput, NULL);
-		//hr = DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (LPVOID*)&dinput, NULL); // ŠÖ”–¼•Ï‚¦‚Ä‚â‚ª‚Á‚½( ß„tß)
+		//hr = DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (LPVOID*)&dinput, NULL); // é–¢æ•°åå¤‰ãˆã¦ã‚„ãŒã£ãŸ( ï¾ŸĞ´ï¾Ÿ)
 		hr = fndi8create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (LPVOID*)&dinput, NULL);
 		if (!FAILED(hr)){
 			hr = dinput->CreateDevice(GUID_SysMouse, &diRawMouse, NULL);
 			if (!FAILED(hr)){
-				// ƒf[ƒ^ƒtƒH[ƒ}ƒbƒgİ’è
+				// ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆè¨­å®š
 				hr = diRawMouse->SetDataFormat(&dimouse_format);
 				if (!FAILED(hr)){
-					// ‹¦’²ƒŒƒxƒ‹İ’è
+					// å”èª¿ãƒ¬ãƒ™ãƒ«è¨­å®š
 					hr = diRawMouse->SetCooperativeLevel(g_hWndMain, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
 				}
 				if (!FAILED(hr)){
-					// ƒfƒoƒCƒXİ’è
+					// ãƒ‡ãƒã‚¤ã‚¹è¨­å®š
 					DIPROPDWORD		diprop;
 					diprop.diph.dwSize = sizeof(diprop);
 					diprop.diph.dwHeaderSize = sizeof(diprop.diph);
 					diprop.diph.dwObj = 0;
 					diprop.diph.dwHow = DIPH_DEVICE;
-					diprop.dwData = DIPROPAXISMODE_REL;	// ‘Š‘Î’lƒ‚[ƒh
+					diprop.dwData = DIPROPAXISMODE_REL;	// ç›¸å¯¾å€¤ãƒ¢ãƒ¼ãƒ‰
 					hr = diRawMouse->SetProperty(DIPROP_AXISMODE, &diprop.diph);
 				}
 				if (!FAILED(hr)) {
-					// “ü—ÍŠJn
+					// å…¥åŠ›é–‹å§‹
 					hr = diRawMouse->Acquire();
 				}else{
-					// ¸”s¥¥¥
+					// å¤±æ•—ï½¥ï½¥ï½¥
 					diRawMouse->Release();
 					diRawMouse = NULL;
 					dinput->Release();
 					dinput = NULL;
 				}
 			}else{
-				// ¸”s¥¥¥
+				// å¤±æ•—ï½¥ï½¥ï½¥
 				diRawMouse = NULL;
 				dinput->Release();
 				dinput = NULL;
 			}
 		}else{
-			// ¸”s¥¥¥
+			// å¤±æ•—ï½¥ï½¥ï½¥
 			diRawMouse = NULL;
 			dinput = NULL;
 		}
@@ -403,6 +403,6 @@ void mousemng_toggle(UINT proc) {
 void mousemng_updateclip(){
 	if(mousecaptureflg){
 		mousecapture(FALSE);
-		mousecapture(TRUE); // ƒLƒƒƒvƒ`ƒƒ‚µ’¼‚µ
+		mousecapture(TRUE); // ã‚­ãƒ£ãƒ—ãƒãƒ£ã—ç›´ã—
 	}
 }

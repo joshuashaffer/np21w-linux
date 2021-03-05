@@ -38,7 +38,7 @@ typedef struct {
 	DSP_INFO dsp_info;
 } SB16;
 
-typedef struct { // ƒXƒe[ƒgƒZ[ƒuŒİŠ·«ˆÛ—pi•ÏX‹Ö~j
+typedef struct { // ã‚¹ãƒ†ãƒ¼ãƒˆã‚»ãƒ¼ãƒ–äº’æ›æ€§ç¶­æŒç”¨ï¼ˆå¤‰æ›´ç¦æ­¢ï¼‰
 	UINT8	dmairq;
 	UINT8	dmach;
 	UINT16	base;

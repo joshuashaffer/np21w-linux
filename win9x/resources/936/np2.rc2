@@ -43,20 +43,20 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "\0"
             VALUE "FileVersion", "0, 8, 6, 0\0"
-            VALUE "LegalCopyright", "’G˜ŸƒIŒA‹Ñ\0"
+            VALUE "LegalCopyright", "ç«ªå¼Œç´”è•çªŸéŒ¦\0"
 
             VALUE "ProductVersion", "0, 8, 6, 0\0"
 #ifdef _USRDLL
-            VALUE "FileDescription", "PC-98x1˜T‘o’¡’à“õœiš²—Âü\0"
-            VALUE "ProductName", "Neko Project II œiš²—Âü\0"
+            VALUE "FileDescription", "PC-98x1ç‹¼åŒåºäº­åŒ‚å½¿å¿çŒŸå‘¨\0"
+            VALUE "ProductName", "Neko Project II å½¿å¿çŒŸå‘¨\0"
             VALUE "InternalName", "np2_936\0"
             VALUE "OriginalFilename", "np2_936.dll\0"
 #else
 #ifdef SUPPORT_PC9821
-            VALUE "FileDescription", "PC-9821˜T‘o’¡’à“õ\0"
+            VALUE "FileDescription", "PC-9821ç‹¼åŒåºäº­åŒ‚\0"
             VALUE "ProductName", "Neko Project 21\0"
 #else
-            VALUE "FileDescription", "PC-9801˜T‘o’¡’à“õ\0"
+            VALUE "FileDescription", "PC-9801ç‹¼åŒåºäº­åŒ‚\0"
             VALUE "ProductName", "Neko Project II\0"
 #endif
 #ifdef SUPPORT_PC9821

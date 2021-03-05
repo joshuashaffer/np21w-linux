@@ -41,15 +41,15 @@
 
 static INLINE void
 SSE_check_NM_EXCEPTION(){
-	// SSE�Ȃ��Ȃ�UD(�����I�y�R�[�h��O)�𔭐�������
-	if(!(i386cpuid.cpu_feature & CPU_FEATURE_SSE) && !(i386cpuid.cpu_feature_ex & CPU_FEATURE_EX_E3DNOW)){ // XXX: SSE���߂�Enhanced 3DNow!���߂��ꕔ����̂ŗ�O�I�ɔF�߂�
+	// SSEなしならUD(無効オペコード例外)を発生させる
+	if(!(i386cpuid.cpu_feature & CPU_FEATURE_SSE) && !(i386cpuid.cpu_feature_ex & CPU_FEATURE_EX_E3DNOW)){ // XXX: SSE命令にEnhanced 3DNow!命令が一部あるので例外的に認める
 		EXCEPTION(UD_EXCEPTION, 0);
 	}
-	// �G�~�����[�V�����Ȃ�UD(�����I�y�R�[�h��O)�𔭐�������
+	// エミュレーションならUD(無効オペコード例外)を発生させる
 	if(CPU_CR0 & CPU_CR0_EM){
 		EXCEPTION(UD_EXCEPTION, 0);
 	}
-	// �^�X�N�X�C�b�`����NM(�f�o�C�X�g�p�s��O)�𔭐�������
+	// タスクスイッチ時にNM(デバイス使用不可例外)を発生させる
 	if (CPU_CR0 & CPU_CR0_TS) {
 		EXCEPTION(NM_EXCEPTION, 0);
 	}
@@ -76,7 +76,7 @@ SSE_setTag(void)
 //	FPU_STATUSWORD |= (FPU_STAT_TOP&7)<<11;
 }
 
-// mmx.c�̂��̂Ɠ���
+// mmx.cのものと同じ
 static INLINE void
 MMX_setTag(void)
 {
@@ -105,14 +105,14 @@ float SSE_ROUND(float val){
 	case 0:	
 		floorval = (float)floor(val);
 		if (val - floorval > 0.5){
-			return (floorval + 1); // �؂�グ
+			return (floorval + 1); // 切り上げ
 		}else if (val - floorval < 0.5){
-			return (floorval); // �؂�̂�
+			return (floorval); // 切り捨て
 		}else{
 			if(floor(floorval / 2) == floorval/2){
-				return (floorval); // ����
+				return (floorval); // 偶数
 			}else{
-				return (floorval+1); // �
+				return (floorval+1); // 奇数
 			}
 		}
 		break;
@@ -122,9 +122,9 @@ float SSE_ROUND(float val){
 		return (float)ceil(val);
 	case 3:
 		if(val < 0){
-			return (float)ceil(val); // �[�������ւ̐؂�̂�
+			return (float)ceil(val); // ゼロ方向への切り捨て
 		}else{
-			return (float)floor(val); // �[�������ւ̐؂�̂�
+			return (float)floor(val); // ゼロ方向への切り捨て
 		}
 		break;
 	default:
@@ -136,7 +136,7 @@ float SSE_ROUND(float val){
  * SSE interface
  */
 
-// �R�[�h�������Ȃ�̂ł�⋭���ɋ��ʉ�
+// コードが長くなるのでやや強引に共通化
 // xmm/m128 -> xmm
 static INLINE void SSE_PART_GETDATA1DATA2_P(float **data1, float **data2, float *data2buf){
 	UINT32 op;
@@ -359,7 +359,7 @@ static INLINE void SSE_PART_GETDATA1DATA2_P_MMX2MMX_UD(UINT32 **data1, UINT32 **
 }
 
 
-// ���ۂ̖��ߌQ
+// 実際の命令群
 
 void SSE_ADDPS(void)
 {
@@ -905,11 +905,11 @@ void SSE_MOVSSxmm2mem(void)
 }
 void SSE_MOVUPSmem2xmm(void)
 {
-	SSE_MOVAPSmem2xmm(); // �G�~�����[�V�����ł̓A���C�����g�������Ȃ��̂�MOVAPS�Ɠ���
+	SSE_MOVAPSmem2xmm(); // エミュレーションではアライメント制限がないのでMOVAPSと同じ
 }
 void SSE_MOVUPSxmm2mem(void)
 {
-	SSE_MOVAPSxmm2mem(); // �G�~�����[�V�����ł̓A���C�����g�������Ȃ��̂�MOVAPS�Ɠ���
+	SSE_MOVAPSxmm2mem(); // エミュレーションではアライメント制限がないのでMOVAPSと同じ
 }
 void SSE_MULPS(void)
 {
@@ -1047,7 +1047,7 @@ void SSE_SUBSS(void)
 }
 void SSE_UCOMISS(void)
 {
-	SSE_COMISS(); // XXX: �Ƃ肠������O�͍l���Ȃ��̂�COMISS�Ɠ���
+	SSE_COMISS(); // XXX: とりあえず例外は考えないのでCOMISSと同じ
 }
 void SSE_UNPCKHPS(void)
 {
@@ -1317,7 +1317,7 @@ void SSE_MASKMOVQ(void)
 			CPU_EDI += 1;
 		}
 	}
-	// �߂�
+	// 戻す
 	if (!CPU_INST_AS32) {
 		CPU_DI -= 8;
 	} else {
@@ -1340,7 +1340,7 @@ void SSE_MOVNTPS(void)
 	sub = (op & 7);
 	data1 = (float*)(&(FPU_STAT.xmm_reg[idx]));
 	if ((op) >= 0xc0) {
-		// XXX: �����͂ǂ�����?
+		// XXX: ここはどう扱う?
 		EXCEPTION(UD_EXCEPTION, 0);
 		//data2 = (float*)(&(FPU_STAT.xmm_reg[sub]));
 		//for(i=0;i<4;i++){
@@ -1372,7 +1372,7 @@ void SSE_MOVNTQ(void)
 	sub = (op & 7);
 	data1 = (UINT32*)(&(FPU_STAT.reg[idx]));
 	if ((op) >= 0xc0) {
-		// XXX: �����͂ǂ�����?
+		// XXX: ここはどう扱う?
 		EXCEPTION(UD_EXCEPTION, 0);
 		//data2 = (float*)(&(FPU_STAT.xmm_reg[sub]));
 		//for(i=0;i<4;i++){
@@ -1397,7 +1397,7 @@ void SSE_PREFETCHTx(void)
 	idx = (op >> 3) & 7;
 	sub = (op & 7);
 	if ((op) >= 0xc0) {
-		// XXX: �����͂ǂ�����?
+		// XXX: ここはどう扱う?
 		//EXCEPTION(UD_EXCEPTION, 0);
 	} else {
 		UINT32 maddr;
@@ -1419,7 +1419,7 @@ void SSE_PREFETCHTx(void)
 			//EXCEPTION(UD_EXCEPTION, 0);
 			break;
 		}
-		// XXX: �������Ȃ�
+		// XXX: 何もしない
 	}
 }
 void SSE_NOPPREFETCH(void)
@@ -1434,12 +1434,12 @@ void SSE_NOPPREFETCH(void)
 	idx = (op >> 3) & 7;
 	sub = (op & 7);
 	if ((op) >= 0xc0) {
-		// XXX: �����͂ǂ�����?
+		// XXX: ここはどう扱う?
 		//EXCEPTION(UD_EXCEPTION, 0);
 	} else {
 		UINT32 maddr;
 		maddr = calc_ea_dst((op));
-		// XXX: �������Ȃ�
+		// XXX: 何もしない
 	}
 }
 void SSE_SFENCE(void)
@@ -1461,12 +1461,12 @@ void SSE_CLFLUSH(UINT32 op)
 	idx = (op >> 3) & 7;
 	sub = (op & 7);
 	if ((op) >= 0xc0) {
-		// XXX: �����͂ǂ�����?
+		// XXX: ここはどう扱う?
 		//EXCEPTION(UD_EXCEPTION, 0);
 	} else {
 		UINT32 maddr;
 		maddr = calc_ea_dst((op));
-		// XXX: �������Ȃ�
+		// XXX: 何もしない
 	}
 }
 

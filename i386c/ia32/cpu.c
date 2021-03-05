@@ -534,7 +534,7 @@ exec_allstep(void)
 		}
 cpucontinue:
 #if defined(SUPPORT_ASYNC_CPU)
-		// ”ñ“¯ŠúCPUˆ—
+		// éåŒæœŸCPUå‡¦ç†
 		if(np2cfg.asynccpu){
 #define LATECOUNTER_THRESHOLD	6
 #define LATECOUNTER_THRESHOLDM	2

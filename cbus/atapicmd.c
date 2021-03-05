@@ -5,7 +5,7 @@
 #define	TRACEOUT(s)	(void)(s)
 #endif	/* 1 */
 
-// ‚±‚êAscsicmd‚Æ‚Ç‚¤“‡‚·‚é‚Ì‚æH
+// ã“ã‚Œã€scsicmdã¨ã©ã†çµ±åˆã™ã‚‹ã®ã‚ˆï¼Ÿ
 
 #if defined(SUPPORT_IDEIO)
 #if defined(_WINDOWS)
@@ -33,13 +33,13 @@ static HANDLE atapi_thread = NULL;
 static IDEDRV atapi_thread_drv = NULL;
 static HANDLE atapi_thread_main = NULL;
 #else
-	// TODO: ”ñWindows—pƒR[ƒh‚ğ‘‚­
+	// TODO: éWindowsç”¨ã‚³ãƒ¼ãƒ‰ã‚’æ›¸ã
 #endif
 
 // INQUIRY
 static const UINT8 cdrom_inquiry[] = {
 #ifdef YUIDEBUG
-	// ‚¤‚¿‚Ìƒhƒ‰ƒCƒu‚Ì“z NECCD‚Í Product Level 3.00ˆÈã‚Å modesense10‚ÌƒR[ƒh‚ª‚¿‚°[
+	// ã†ã¡ã®ãƒ‰ãƒ©ã‚¤ãƒ–ã®å¥´ NECCDã¯ Product Level 3.00ä»¥ä¸Šã§ modesense10ã®ã‚³ãƒ¼ãƒ‰ãŒã¡ã’ãƒ¼
 	0x05,	// CD-ROM
 	0x80,	// bit7: Removable Medium Bit, other: Reserved
 	0x00,	// version [7-6: ISO, ECMA: 5-3, 2-0: ANSI(00)]
@@ -183,7 +183,7 @@ static void atapi_cmd_pauseresume(IDEDRV drv);
 static void atapi_cmd_seek(IDEDRV drv, UINT32 lba);
 static void atapi_cmd_mechanismstatus(IDEDRV drv);
 
-#define MEDIA_CHANGE_WAIT	6	// Wait‚ğ“ü‚ê‚È‚¢‚ÆWinNTŒn‚Å³‚µ‚­ƒƒfƒBƒAŒğŠ·o—ˆ‚È‚¢
+#define MEDIA_CHANGE_WAIT	6	// Waitã‚’å…¥ã‚Œãªã„ã¨WinNTç³»ã§æ­£ã—ããƒ¡ãƒ‡ã‚£ã‚¢äº¤æ›å‡ºæ¥ãªã„
 static int mediachangeflag = 0;
 
 extern REG8 cdchange_drv;
@@ -204,9 +204,9 @@ void atapicmd_a0(IDEDRV drv) {
 			drv->asc = ATAPI_ASC_MEDIUM_NOT_PRESENT;
 			if(drv->sxsidrv==cdchange_drv && g_nevent.item[NEVENT_CDWAIT].clock > 0){
 				if(mediachangeflag==MEDIA_CHANGE_WAIT){
-					nevent_set(NEVENT_CDWAIT, 1, cdchange_timeoutproc, NEVENT_ABSOLUTE); // OS‘¤‚ªCD‚ğÃ‘£‚µ‚Ä‚¢‚é‚æ‚¤‚È‚Ì‚ÅX‚É‹}‚¢‚ÅŒğŠ·
+					nevent_set(NEVENT_CDWAIT, 1, cdchange_timeoutproc, NEVENT_ABSOLUTE); // OSå´ãŒCDã‚’å‚¬ä¿ƒã—ã¦ã„ã‚‹ã‚ˆã†ãªã®ã§æ›´ã«æ€¥ã„ã§äº¤æ›
 				}else if(mediachangeflag==0){
-					nevent_setbyms(NEVENT_CDWAIT, 1000, cdchange_timeoutproc, NEVENT_ABSOLUTE); // OS‘¤‚ªCD‚ª–³‚¢‚Æ”F¯‚µ‚½‚æ‚¤‚È‚Ì‚Å‹}‚¢‚ÅŒğŠ·
+					nevent_setbyms(NEVENT_CDWAIT, 1000, cdchange_timeoutproc, NEVENT_ABSOLUTE); // OSå´ãŒCDãŒç„¡ã„ã¨èªè­˜ã—ãŸã‚ˆã†ãªã®ã§æ€¥ã„ã§äº¤æ›
 				}
 			}
 			if(mediachangeflag < MEDIA_CHANGE_WAIT) mediachangeflag++;
@@ -376,7 +376,7 @@ void atapi_cmd_traycmd_eject_threadfunc(void* vdParam) {
 		CloseHandle(handle);
 	}
 #else
-	// TODO: WindowsˆÈŠO‚ÌƒR[ƒh‚ğ‘‚­
+	// TODO: Windowsä»¥å¤–ã®ã‚³ãƒ¼ãƒ‰ã‚’æ›¸ã
 #endif
 }
 void atapi_cmd_traycmd_close_threadfunc(void* vdParam) {
@@ -389,7 +389,7 @@ void atapi_cmd_traycmd_close_threadfunc(void* vdParam) {
 		CloseHandle(handle);
 	}
 #else
-	// TODO: WindowsˆÈŠO‚ÌƒR[ƒh‚ğ‘‚­
+	// TODO: Windowsä»¥å¤–ã®ã‚³ãƒ¼ãƒ‰ã‚’æ›¸ã
 #endif
 }
 #endif
@@ -424,7 +424,7 @@ static void atapi_cmd_start_stop_unit(IDEDRV drv) {
 #if defined(_WINDOWS)
 			_beginthread(atapi_cmd_traycmd_eject_threadfunc, 0, (void*)sxsi->drv);
 #else
-			// TODO: WindowsˆÈŠO‚ÌƒR[ƒh‚ğ‘‚­
+			// TODO: Windowsä»¥å¤–ã®ã‚³ãƒ¼ãƒ‰ã‚’æ›¸ã
 #endif
 		}else
 #endif
@@ -440,7 +440,7 @@ static void atapi_cmd_start_stop_unit(IDEDRV drv) {
 #if defined(_WINDOWS)
 			_beginthread(atapi_cmd_traycmd_close_threadfunc, 0, (void*)sxsi->drv);
 #else
-			// TODO: WindowsˆÈŠO‚ÌƒR[ƒh‚ğ‘‚­
+			// TODO: Windowsä»¥å¤–ã®ã‚³ãƒ¼ãƒ‰ã‚’æ›¸ã
 #endif
 		}else
 #endif
@@ -557,7 +557,7 @@ void atapi_dataread_threadfunc_part(IDEDRV drv) {
 	}
 	sxsi->cdflag_ecc = (sxsi->cdflag_ecc & ~CD_ECC_BITMASK) | CD_ECC_NOERROR;
 
-	drv->status &= ~(IDESTAT_BSY); // ”O‚Ì‚½‚ß’¼‘O‚Å‰ğœ
+	drv->status &= ~(IDESTAT_BSY); // å¿µã®ãŸã‚ç›´å‰ã§è§£é™¤
 	if (!(drv->ctrl & IDECTRL_NIEN)) {
 		//TRACEOUT(("atapicmd: senddata()"));
 		ideio.bank[0] = ideio.bank[1] | 0x80;			// ????
@@ -588,7 +588,7 @@ void atapi_dataread(IDEDRV drv) {
 		return;
 	}
 
-	// ƒGƒ‰[ˆ—–Ú’ƒ‹ê’ƒ`
+	// ã‚¨ãƒ©ãƒ¼å‡¦ç†ç›®èŒ¶è‹¦èŒ¶ã€œ
 	if (drv->nsectors == 0) {
 		sendabort(drv);
 		return;
@@ -600,7 +600,7 @@ void atapi_dataread(IDEDRV drv) {
 	if(np2cfg.useasynccd){
 		if(atapi_thread){
 			atapi_thread_drv = drv;
-			SleepEx(0, TRUE); // ƒLƒ…[‚É—­‚Ü‚Á‚Ä‚¢‚é•¨‚ğÌ‚Ä‚é
+			SleepEx(0, TRUE); // ã‚­ãƒ¥ãƒ¼ã«æºœã¾ã£ã¦ã„ã‚‹ç‰©ã‚’æ¨ã¦ã‚‹
 			ResumeThread(atapi_thread);
 			SleepEx(2, TRUE);
 		}else{
@@ -616,7 +616,7 @@ void atapi_dataread(IDEDRV drv) {
 #else
 void atapi_dataread(IDEDRV drv) {
 
-	// ƒGƒ‰[ˆ—–Ú’ƒ‹ê’ƒ`
+	// ã‚¨ãƒ©ãƒ¼å‡¦ç†ç›®èŒ¶è‹¦èŒ¶ã€œ
 	if (drv->nsectors == 0) {
 		sendabort(drv);
 		return;
@@ -838,7 +838,7 @@ static void atapi_cmd_mode_sense(IDEDRV drv) {
 		if (cnt > leng) {
 			goto length_exceeded;
 		}
-		drv->damsfbcd = 1; // XXX: NEC CD-ROMƒRƒ}ƒ“ƒh‚ğ”ò‚Î‚µ‚Ä‚«‚½‚çBCDƒ‚[ƒh‚É‚·‚é¥¥¥ib’èneccdd.sys”»’èj
+		drv->damsfbcd = 1; // XXX: NEC CD-ROMã‚³ãƒãƒ³ãƒ‰ã‚’é£›ã°ã—ã¦ããŸã‚‰BCDãƒ¢ãƒ¼ãƒ‰ã«ã™ã‚‹ï½¥ï½¥ï½¥ï¼ˆæš«å®šneccdd.sysåˆ¤å®šï¼‰
 		break;
 #endif
 	case 0x3f:
@@ -1064,7 +1064,7 @@ static void atapi_cmd_readtoc(IDEDRV drv) {
 	UINT8	*ptr;
 	UINT	i;
 #ifdef SUPPORT_KAI_IMAGES
-	UINT8	time;	//	’Ç‰Á(kaiD)
+	UINT8	time;	//	è¿½åŠ (kaiD)
 #endif
 	UINT8	strack;
 
@@ -1078,13 +1078,13 @@ static void atapi_cmd_readtoc(IDEDRV drv) {
 	
 #ifdef SUPPORT_KAI_IMAGES
 
-#if 0	//	C³(kaiD)
+#if 0	//	ä¿®æ­£(kaiD)
 	leng = (drv->buf[7] << 8) + drv->buf[8];
 	format = (drv->buf[9] >> 6);
 	TRACEOUT(("atapi_cmd_readtoc fmt=%d leng=%d", format, leng));
 #else
 #if 0
-	//	‚±‚Á‚¿‚ª³‚µ‚¢‚Æv‚¤‚ñ‚¾‚¯‚Çcƒhƒ‰ƒCƒo‚Ìˆá‚¢H
+	//	ã“ã£ã¡ãŒæ­£ã—ã„ã¨æ€ã†ã‚“ã ã‘ã©â€¦ãƒ‰ãƒ©ã‚¤ãƒã®é•ã„ï¼Ÿ
 	time = (drv->buf[1] & 0x02) >> 0x01;
 	format = (drv->buf[2] & 0x0f);
 	leng = (drv->buf[6] << 8) + drv->buf[7];
@@ -1278,7 +1278,7 @@ static void atapi_cmd_mechanismstatus(IDEDRV drv) {
 	//drv->buf[5] = 0x01;
 	//drv->buf[6] = 0x00;
 	//drv->buf[7] = 0x04;
-	//drv->buf[8] = (sxsi->flag & SXSIFLAG_READY) ? 0x80 : 0x00; // XXX: CD‘}“üó‘Ô‚Æ‚©“ü‚ê‚Ä‚â‚é‚×‚«H
+	//drv->buf[8] = (sxsi->flag & SXSIFLAG_READY) ? 0x80 : 0x00; // XXX: CDæŒ¿å…¥çŠ¶æ…‹ã¨ã‹å…¥ã‚Œã¦ã‚„ã‚‹ã¹ãï¼Ÿ
 	//drv->buf[9] = 0x00;
 	//drv->buf[10] = 0x00;
 	//drv->buf[11] = 0x00;
@@ -1303,7 +1303,7 @@ void atapi_initialize(void) {
 		}
 	}
 #else
-	// TODO: ”ñWindows—pƒR[ƒh‚ğ‘‚­
+	// TODO: éWindowsç”¨ã‚³ãƒ¼ãƒ‰ã‚’æ›¸ã
 #endif
 }
 
@@ -1321,7 +1321,7 @@ void atapi_deinitialize(void) {
 		atapi_thread_main = NULL;
 	}
 #else
-	// TODO: ”ñWindows—pƒR[ƒh‚ğ‘‚­
+	// TODO: éWindowsç”¨ã‚³ãƒ¼ãƒ‰ã‚’æ›¸ã
 #endif
 }
 #endif	/* SUPPORT_IDEIO */

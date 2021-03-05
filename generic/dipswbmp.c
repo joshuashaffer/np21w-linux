@@ -367,7 +367,7 @@ UINT8 *dipswbmp_getsmpu(UINT8 cfg) {
 	if (ret) {
 		for (i=0; i<4; i++) {
 			x = (i + 2) * 9 + 1;
-			y = (1 * 9) + ((cfg & (0x10 << i))?5:9); // ¶‰E‹t‚È‚¾‚¯‚Á‚Û‚¢
+			y = (1 * 9) + ((cfg & (0x10 << i))?5:9); // å·¦å³é€†ãªã ã‘ã£ã½ã„
 			l = 0;
 			do {
 				line4x(&dipbmp, x, y + l, 7, 2);
@@ -386,8 +386,8 @@ UINT8 *dipswbmp_getsnd118(UINT16 snd118io, UINT8 snd118dma, UINT8 snd118irqf, UI
 	ret = getbmpres(OEMTEXT("JUMPER118"), &dipbmp);
 	if (ret) {
 		int jmpflag[2];
-		setjumperyex(&dipbmp, 18, 9, 0, 0, 15); // #12 íŽžOFF ‚Ç‚±‚É‚à‰e‹¿‚µ‚È‚¢H
-		setjumperyex(&dipbmp, 18, 9, 1, 0, 15); // #11 YMF297‚Ì§ŒäH
+		setjumperyex(&dipbmp, 18, 9, 0, 0, 15); // #12 å¸¸æ™‚OFF ã©ã“ã«ã‚‚å½±éŸ¿ã—ãªã„ï¼Ÿ
+		setjumperyex(&dipbmp, 18, 9, 1, 0, 15); // #11 YMF297ã®åˆ¶å¾¡ï¼Ÿ
 		setjumperyex(&dipbmp, 18, 9, 2, snd118irqm==0xff ? 1 : 0, 15); // #10
 		
 		// PCM INT (#8,#9)=(OFF,OFF):INT5(IRQ12), (OFF,ON):INT1(IRQ5), (ON,OFF):INT41(IRQ10), (ON,ON):INT0(IRQ3)
@@ -436,7 +436,7 @@ UINT8 *dipswbmp_getsnd118(UINT16 snd118io, UINT8 snd118dma, UINT8 snd118irqf, UI
 
 		setjumperyex(&dipbmp, 18, 9, 8,  snd118rom ? 0 : 1, 15); // #4  ON:Sound BIOS Disable, OFF:Sound BIOS Enable
 		
-		// (#2,#3)=(OFF,OFF):Normal, (OFF,ON):CS4231&OPNA Disable, (ON,OFF):CS4231 Disable, (ON,ON):‹ÖŽ~
+		// (#2,#3)=(OFF,OFF):Normal, (OFF,ON):CS4231&OPNA Disable, (ON,OFF):CS4231 Disable, (ON,ON):ç¦æ­¢
 		setjumperyex(&dipbmp, 18, 9, 9,  0, 15); // #3
 		setjumperyex(&dipbmp, 18, 9, 10, 0, 15); // #2
 

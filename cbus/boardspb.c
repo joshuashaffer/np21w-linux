@@ -164,7 +164,7 @@ void boardspb_reset(const NP2CFG *pConfig, int opnaidx)
 		opna_timer(&g_opna[opna_idx], (pConfig->spbopt & 0xc0) | 0x10, NEVENT_FMTIMERA, NEVENT_FMTIMERB);
 	}
 
-	g_opna[opna_idx].s.extend = 1; // ÇÕÇ∂ÇﬂÇ©ÇÁFM6âπ
+	g_opna[opna_idx].s.extend = 1; // „ÅØ„Åò„ÇÅ„Åã„ÇâFM6Èü≥
 
 	opngen_setcfg(&g_opna[opna_idx].opngen, 6, OPN_STEREO | 0x3f);
 	soundrom_loadex(pConfig->spbopt & 7, OEMTEXT("SPB"));
@@ -205,8 +205,8 @@ void boardspr_reset(const NP2CFG *pConfig)
 	opna_timer(&g_opna[0], (pConfig->spbopt & 0xc0) | 0x10, NEVENT_FMTIMERA, NEVENT_FMTIMERB);
 	opna_reset(&g_opna[1], OPNA_MODE_3438 | OPNA_HAS_VR);
 	
-	g_opna[0].s.extend = 1; // ÇÕÇ∂ÇﬂÇ©ÇÁFM6âπ
-	g_opna[1].s.extend = 1; // ÇÕÇ∂ÇﬂÇ©ÇÁFM6âπ
+	g_opna[0].s.extend = 1; // „ÅØ„Åò„ÇÅ„Åã„ÇâFM6Èü≥
+	g_opna[1].s.extend = 1; // „ÅØ„Åò„ÇÅ„Åã„ÇâFM6Èü≥
 
 	opngen_setcfg(&g_opna[0].opngen, 6, OPN_STEREO | 0x0f);
 	opngen_setcfg(&g_opna[1].opngen, 6, OPN_STEREO | 0x0f);

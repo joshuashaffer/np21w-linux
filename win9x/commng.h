@@ -1,6 +1,6 @@
 /**
  * @file	commng.h
- * @brief	COM �}�l�[�W���̐錾����уC���^�[�t�F�C�X�̒�`�����܂�
+ * @brief	COM マネージャの宣言およびインターフェイスの定義をします
  */
 
 #pragma once
@@ -112,7 +112,7 @@ enum {
 	COMSIG_COM3				= 0x334d4f43,
 	COMSIG_COM4				= 0x344d4f43,
 	COMSIG_MIDI				= 0x4944494d,
-	COMSIG_TABLET			= 0x5944494d // XXX: �Ȃ�
+	COMSIG_TABLET			= 0x5944494d // XXX: なぞ
 };
 
 enum {

@@ -16,7 +16,7 @@
 //#define	TRACEOUT(s)	trace_fmt_ex s
 #endif	/* 1 */
 
-// win‚Åidentify‚Ü‚Å‚Íæ“¾‚És‚­‚ñ‚¾‚¯‚Ç‚Èc‚Á‚ÄAnex86‚à“¯‚¶‚©
+// winã§identifyã¾ã§ã¯å–å¾—ã«è¡Œãã‚“ã ã‘ã©ãªâ€¦ã£ã¦Anex86ã‚‚åŒã˜ã‹
 
 #if defined(SUPPORT_IDEIO)
 
@@ -86,7 +86,7 @@ static BRESULT setidentify(IDEDRV drv) {
 	}
 
 	ZeroMemory(tmp, sizeof(tmp));
-	// ‚Æ‚è‚ ‚¦‚¸g‚Á‚Ä‚é•”•ª‚¾‚¯
+	// ã¨ã‚Šã‚ãˆãšä½¿ã£ã¦ã‚‹éƒ¨åˆ†ã ã‘
 	if (drv->device == IDETYPE_HDD) {
 		tmp[0] = 0x0040;		// non removable device
 		tmp[1] = sxsi->cylinders;
@@ -96,7 +96,7 @@ static BRESULT setidentify(IDEDRV drv) {
 		for (i=0; i<10; i++) {
 			tmp[10+i] = (serial[i*2] << 8) + serial[i*2+1];
 		}
-		tmp[10+2] = '0'+drv->sxsidrv; // ƒVƒŠƒAƒ‹”Ô†‚Íƒ†ƒj[ƒN‚É‚µ‚Ä‚¨‚©‚È‚¢‚Æ‘Ê–Ú‚Á‚Û‚¢
+		tmp[10+2] = '0'+drv->sxsidrv; // ã‚·ãƒªã‚¢ãƒ«ç•ªå·ã¯ãƒ¦ãƒ‹ãƒ¼ã‚¯ã«ã—ã¦ãŠã‹ãªã„ã¨é§„ç›®ã£ã½ã„
 		tmp[22] = 4;
 		for (i=0; i<4; i++) {
 			tmp[23+i] = (firm[i*2] << 8) + firm[i*2+1];
@@ -166,7 +166,7 @@ static BRESULT setidentify(IDEDRV drv) {
 		for (i=0; i<10; i++) {
 			tmp[10+i] = (cdrom_serial[i*2] << 8) + cdrom_serial[i*2+1];
 		}
-		tmp[10+2] = '0'+drv->sxsidrv; // ƒVƒŠƒAƒ‹”Ô†‚Íƒ†ƒj[ƒN‚É‚µ‚Ä‚¨‚©‚È‚¢‚Æ‘Ê–Ú‚Á‚Û‚¢
+		tmp[10+2] = '0'+drv->sxsidrv; // ã‚·ãƒªã‚¢ãƒ«ç•ªå·ã¯ãƒ¦ãƒ‹ãƒ¼ã‚¯ã«ã—ã¦ãŠã‹ãªã„ã¨é§„ç›®ã£ã½ã„
 		for (i=0; i<4; i++) {
 			tmp[23+i] = (cdrom_firm[i*2] << 8) + cdrom_firm[i*2+1];
 		}
@@ -211,13 +211,13 @@ static void setintr(IDEDRV drv) {
 	}
 }
 
-// Š„‚è‚İŒã‚ÉBSY‚ğ‰ğœ‚µADRQ‚ğƒZƒbƒg‚·‚éiƒRƒ}ƒ“ƒhŒp‘±’†‚È‚Çj
+// å‰²ã‚Šè¾¼ã¿å¾Œã«BSYã‚’è§£é™¤ã—ã€DRQã‚’ã‚»ãƒƒãƒˆã™ã‚‹ï¼ˆã‚³ãƒãƒ³ãƒ‰ç¶™ç¶šä¸­ãªã©ï¼‰
 void ideioint(NEVENTITEM item) {
 	
 	IDEDRV	drv;
 	IDEDEV  dev;
 
-	//ƒhƒ‰ƒCƒu‚ª‚ ‚é‚©
+	//ãƒ‰ãƒ©ã‚¤ãƒ–ãŒã‚ã‚‹ã‹
 	dev = getidedev();
 	if (dev == NULL) {
 		return;
@@ -228,7 +228,7 @@ void ideioint(NEVENTITEM item) {
 		return;
 	}
 
-	//BUSY‰ğœ
+	//BUSYè§£é™¤
 	if(dev->drv[0].status != 0xFF){
 		dev->drv[0].status |= IDESTAT_DRQ;
 		dev->drv[0].status &= ~IDESTAT_BSY;
@@ -238,7 +238,7 @@ void ideioint(NEVENTITEM item) {
 		dev->drv[1].status &= ~IDESTAT_BSY;
 	}
 
-	//Š„‚è‚İÀs//(Š„‚è‚İ‚Íƒhƒ‰ƒCƒu–ˆ‚É‚Íw’è‚Å‚«‚È‚¢d—l)
+	//å‰²ã‚Šè¾¼ã¿å®Ÿè¡Œ//(å‰²ã‚Šè¾¼ã¿ã¯ãƒ‰ãƒ©ã‚¤ãƒ–æ¯ã«ã¯æŒ‡å®šã§ããªã„ä»•æ§˜)
 	if(!(dev->drv[0].ctrl & IDECTRL_NIEN) || !(dev->drv[1].ctrl & IDECTRL_NIEN)){
 		TRACEOUT(("ideio: run setdintr()"));
 		pic_setirq(IDE_IRQ);
@@ -246,13 +246,13 @@ void ideioint(NEVENTITEM item) {
 	}
    (void)item;
 }
-// Š„‚è‚İŒã‚ÉBSY‚ğ‰ğœ‚µADRQ‚à‰ğœ‚·‚éiƒRƒ}ƒ“ƒhI—¹‚È‚Çj
+// å‰²ã‚Šè¾¼ã¿å¾Œã«BSYã‚’è§£é™¤ã—ã€DRQã‚‚è§£é™¤ã™ã‚‹ï¼ˆã‚³ãƒãƒ³ãƒ‰çµ‚äº†æ™‚ãªã©ï¼‰
 void ideioint2(NEVENTITEM item) {
 	
 	IDEDRV	drv;
 	IDEDEV  dev;
 
-	//ƒhƒ‰ƒCƒu‚ª‚ ‚é‚©
+	//ãƒ‰ãƒ©ã‚¤ãƒ–ãŒã‚ã‚‹ã‹
 	dev = getidedev();
 	if (dev == NULL) {
 		return;
@@ -263,7 +263,7 @@ void ideioint2(NEVENTITEM item) {
 		return;
 	}
 
-	//BUSY‰ğœ
+	//BUSYè§£é™¤
 	if(dev->drv[0].status != 0xFF){
 		dev->drv[0].status &= ~IDESTAT_DRQ;
 		dev->drv[0].status &= ~IDESTAT_BSY;
@@ -273,7 +273,7 @@ void ideioint2(NEVENTITEM item) {
 		dev->drv[1].status &= ~IDESTAT_BSY;
 	}
 
-	//Š„‚è‚İÀs//(Š„‚è‚İ‚Íƒhƒ‰ƒCƒu–ˆ‚É‚Íw’è‚Å‚«‚È‚¢d—l)
+	//å‰²ã‚Šè¾¼ã¿å®Ÿè¡Œ//(å‰²ã‚Šè¾¼ã¿ã¯ãƒ‰ãƒ©ã‚¤ãƒ–æ¯ã«ã¯æŒ‡å®šã§ããªã„ä»•æ§˜)
 	if(!(dev->drv[0].ctrl & IDECTRL_NIEN) || !(dev->drv[1].ctrl & IDECTRL_NIEN)){
 		TRACEOUT(("ideio: run setdintr()"));
 		pic_setirq(IDE_IRQ);
@@ -282,7 +282,7 @@ void ideioint2(NEVENTITEM item) {
    (void)item;
 }
 
-// ’x‰„•t‚«Š„‚è‚İ
+// é…å»¶ä»˜ãå‰²ã‚Šè¾¼ã¿
 static void setdintr(IDEDRV drv, UINT8 errno, UINT8 status, UINT32 delay) {
 
 	if (!(drv->ctrl & IDECTRL_NIEN)) {
@@ -290,10 +290,10 @@ static void setdintr(IDEDRV drv, UINT8 errno, UINT8 status, UINT32 delay) {
 		ideio.bank[0] = ideio.bank[1] | 0x80;           // ????
 		TRACEOUT(("ideio: reg setdintr()"));
 
-		//// w’è‚µ‚½ŠÔ’x‰„iƒ}ƒCƒNƒ•bj
+		//// æŒ‡å®šã—ãŸæ™‚é–“é…å»¶ï¼ˆãƒã‚¤ã‚¯ãƒ­ç§’ï¼‰
 		//nevent_set(NEVENT_SASIIO, (pccore.realclock / 1000 / 1000) * delay, ideioint, NEVENT_ABSOLUTE);
 
-		// w’è‚µ‚½ŠÔ’x‰„iƒNƒƒbƒN”j
+		// æŒ‡å®šã—ãŸæ™‚é–“é…å»¶ï¼ˆã‚¯ãƒ­ãƒƒã‚¯æ•°ï¼‰
 		nevent_set(NEVENT_SASIIO, delay, ideioint, NEVENT_ABSOLUTE);
 	}
 }
@@ -304,10 +304,10 @@ static void setdintr2(IDEDRV drv, UINT8 errno, UINT8 status, UINT32 delay) {
 		ideio.bank[0] = ideio.bank[1] | 0x80;           // ????
 		TRACEOUT(("ideio: reg setdintr()"));
 
-		//// w’è‚µ‚½ŠÔ’x‰„iƒ}ƒCƒNƒ•bj
+		//// æŒ‡å®šã—ãŸæ™‚é–“é…å»¶ï¼ˆãƒã‚¤ã‚¯ãƒ­ç§’ï¼‰
 		//nevent_set(NEVENT_SASIIO, (pccore.realclock / 1000 / 1000) * delay, ideioint, NEVENT_ABSOLUTE);
 
-		// w’è‚µ‚½ŠÔ’x‰„iƒNƒƒbƒN”j
+		// æŒ‡å®šã—ãŸæ™‚é–“é…å»¶ï¼ˆã‚¯ãƒ­ãƒƒã‚¯æ•°ï¼‰
 		nevent_set(NEVENT_SASIIO, delay, ideioint2, NEVENT_ABSOLUTE);
 	}
 }
@@ -483,7 +483,7 @@ static void readsec(IDEDRV drv) {
 	drv->buftc = IDETC_TRANSFEREND;
 	drv->bufpos = 0;
 	drv->bufsize = 512;
-	// READ‚ÍI/Oƒ|[ƒg‚Å“Ç‚İæ‚éƒf[ƒ^‚ª€”õ‚Å‚«‚½‚çŠ„‚è‚İ
+	// READã¯I/Oãƒãƒ¼ãƒˆã§èª­ã¿å–ã‚‹ãƒ‡ãƒ¼ã‚¿ãŒæº–å‚™ã§ããŸã‚‰å‰²ã‚Šè¾¼ã¿
 	if ((drv->mulcnt & (drv->multhr - 1)) == 0) {
 		drv->status = IDESTAT_DRDY | IDESTAT_DSC | IDESTAT_DRQ;
 		drv->error = 0;
@@ -534,7 +534,7 @@ static void writesec(IDEDRV drv) {
 	drv->bufpos = 0;
 	drv->bufsize = 512;
 	
-	// WRITE‚Íƒf[ƒ^‘‚«‚İ‚ªŠ®—¹‚µ‚½‚çŠ„‚è‚İ
+	// WRITEã¯ãƒ‡ãƒ¼ã‚¿æ›¸ãè¾¼ã¿ãŒå®Œäº†ã—ãŸã‚‰å‰²ã‚Šè¾¼ã¿
 	if ((drv->mulcnt & (drv->multhr - 1)) == 0) {
 		drv->status = IDESTAT_DRDY | IDESTAT_DSC | IDESTAT_DRQ;
 		drv->error = 0;
@@ -589,13 +589,13 @@ static REG8 IOINPCALL ideio_i430(UINT port) {
 	}
 	else {
 		// 430h
-		int compmode = (sxsi_getdevtype(0)!=SXSIDEV_CDROM && sxsi_getdevtype(1)!=SXSIDEV_CDROM && sxsi_getdevtype(2)==SXSIDEV_CDROM && sxsi_getdevtype(3)!=SXSIDEV_CDROM); // ‹Œ‹@íŒİŠ·ƒ‚[ƒhH
+		int compmode = (sxsi_getdevtype(0)!=SXSIDEV_CDROM && sxsi_getdevtype(1)!=SXSIDEV_CDROM && sxsi_getdevtype(2)==SXSIDEV_CDROM && sxsi_getdevtype(3)!=SXSIDEV_CDROM); // æ—§æ©Ÿç¨®äº’æ›ãƒ¢ãƒ¼ãƒ‰ï¼Ÿ
 		IDEDEV	dev;
 		dev = getidedev();
 		if(dev){
 			ret = (compmode ? 0 : 1);
 			//
-			// Win2000‚Íbit6‚ª1‚ÌƒXƒŒ[ƒuƒfƒoƒCƒX‚ğŒ©‚És‚­
+			// Win2000ã¯bit6ãŒ1ã®æ™‚ã‚¹ãƒ¬ãƒ¼ãƒ–ãƒ‡ãƒã‚¤ã‚¹ã‚’è¦‹ã«è¡Œã
 			//
 			if (dev->drv[1].device != IDETYPE_NONE) {
 				ret |= 0x40;
@@ -978,7 +978,7 @@ static void IOOUTCALL ideio_o64e(UINT port, REG8 dat) {
 
 		case 0xe1:		// idle immediate
 			TRACEOUT(("ideio: idle immediate dr = %.2x", drv->dr));
-			//•K‚¸¬Œ÷‚·‚é‚Í‚¸
+			//å¿…ãšæˆåŠŸã™ã‚‹ã¯ãš
 			if(drv->status & IDESTAT_DRDY){
 				drv->status = IDESTAT_DRDY | IDESTAT_DSC;
 				drv->error = 0;
@@ -1457,7 +1457,7 @@ void IOOUTCALL ideio_w16(UINT port, REG16 value) {
 						if (drv->lba48sc) {
 							writesec(drv);
 						}else{
-							// ƒZƒNƒ^‘‚«‚İŠ®—¹
+							// ã‚»ã‚¯ã‚¿æ›¸ãè¾¼ã¿å®Œäº†
 							if(ideio.bios == IDETC_BIOS && ideio.wwait > 0){
 								setdintr2(drv, 0, 0, ideio.wwait);
 							}else{
@@ -1473,7 +1473,7 @@ void IOOUTCALL ideio_w16(UINT port, REG16 value) {
 						if (drv->sc) {
 							writesec(drv);
 						}else{
-							// ƒZƒNƒ^‘‚«‚İŠ®—¹
+							// ã‚»ã‚¯ã‚¿æ›¸ãè¾¼ã¿å®Œäº†
 							if(ideio.bios == IDETC_BIOS && ideio.wwait > 0){
 								setdintr2(drv, 0, 0, ideio.wwait);
 							}else{
@@ -1530,7 +1530,7 @@ REG16 IOINPCALL ideio_r16(UINT port) {
 						if (drv->lba48sc) {
 							readsec(drv);
 						}else{
-							// “Ç‚İæ‚èI‚í‚è
+							// èª­ã¿å–ã‚Šçµ‚ã‚ã‚Š
 							drv->lba48mode = 0;
 						}
 					}else
@@ -1539,7 +1539,7 @@ REG16 IOINPCALL ideio_r16(UINT port) {
 						if (drv->sc) {
 							readsec(drv);
 						}else{
-							// “Ç‚İæ‚èI‚í‚è
+							// èª­ã¿å–ã‚Šçµ‚ã‚ã‚Š
 						}
 					}
 					break;
@@ -1588,7 +1588,7 @@ static SINT32	sampcount2_n = 0;
 	samplen_n = soundcfg.rate;
 	samplen_d = 44100;
 	//if(samplen_n > samplen_d){
-	//	// XXX: ƒTƒ“ƒvƒŠƒ“ƒOƒŒ[ƒg‚ª‘å‚«‚¢ê‡‚ÌƒI[ƒo[ƒtƒ[‘Îô¥¥¥
+	//	// XXX: ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ãƒ¬ãƒ¼ãƒˆãŒå¤§ãã„å ´åˆã®ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼å¯¾ç­–ï½¥ï½¥ï½¥
 	//	samplen_n /= 100;
 	//	samplen_d /= 100;
 	//}
@@ -1688,7 +1688,7 @@ static SINT32	sampcount2_n = 0;
 			}
 			if(trk[r].adr_ctl!=TRACKTYPE_AUDIO){
 				if(drv->dacurpos != 0){
-					// ƒI[ƒfƒBƒIƒgƒ‰ƒbƒN‚Å‚È‚¢ê‡‚Í‹­§“I‚ÉŸ‚É”ò‚Î‚·
+					// ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªãƒˆãƒ©ãƒƒã‚¯ã§ãªã„å ´åˆã¯å¼·åˆ¶çš„ã«æ¬¡ã«é£›ã°ã™
 					if(r==tracks-1){
 						drv->dacurpos = trk[0].pos;
 					}else{
@@ -1795,9 +1795,9 @@ void ideio_basereset() {
 	}
 
 	if (pccore.hddif & PCHDD_IDE) {
-		int compmode = (sxsi_getdevtype(0)!=SXSIDEV_CDROM && sxsi_getdevtype(1)!=SXSIDEV_CDROM && sxsi_getdevtype(2)==SXSIDEV_CDROM && sxsi_getdevtype(3)!=SXSIDEV_CDROM); // ‹Œ‹@íŒİŠ·ƒ‚[ƒhH
+		int compmode = (sxsi_getdevtype(0)!=SXSIDEV_CDROM && sxsi_getdevtype(1)!=SXSIDEV_CDROM && sxsi_getdevtype(2)==SXSIDEV_CDROM && sxsi_getdevtype(3)!=SXSIDEV_CDROM); // æ—§æ©Ÿç¨®äº’æ›ãƒ¢ãƒ¼ãƒ‰ï¼Ÿ
 
-		// WinNT4.0‚ÅHDD‚ª”F¯‚·‚é‚æ‚¤‚É‚È‚éBWin9x‚àBIOS I/OƒGƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚Å‘Î‰B
+		// WinNT4.0ã§HDDãŒèªè­˜ã™ã‚‹ã‚ˆã†ã«ãªã‚‹ã€‚Win9xã‚‚BIOS I/Oã‚¨ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã§å¯¾å¿œã€‚
 		if(compmode){
 			mem[0x05ba] = (sxsi_getdevtype(3)==SXSIDEV_HDD ? 0x8 : 0x0)|(sxsi_getdevtype(2)==SXSIDEV_HDD ? 0x4 : 0x0)|
 							(sxsi_getdevtype(1)==SXSIDEV_HDD ? 0x2 : 0x0)|(sxsi_getdevtype(0)==SXSIDEV_HDD ? 0x1 : 0x0);
@@ -1921,8 +1921,8 @@ void ideio_bind(void) {
 		iocore_attachinp(0x074c, ideio_i74c);
 		iocore_attachinp(0x074e, ideio_i74e);
 
-		iocore_attachout(0x1e8e, ideio_o1e8e); // ˆê•”IDE BIOS‚Í‚±‚ê‚ª‚È‚¢‚Æ‹N“®‚ÉƒtƒŠ[ƒY‚µ‚½‚èƒVƒŠƒ“ƒ_”‚ª0‚É‚È‚é
-		iocore_attachinp(0x1e8e, ideio_i1e8e); // ˆê•”IDE BIOS‚Í‚±‚ê‚ª‚È‚¢‚Æ‹N“®‚ÉƒtƒŠ[ƒY‚µ‚½‚èƒVƒŠƒ“ƒ_”‚ª0‚É‚È‚é
+		iocore_attachout(0x1e8e, ideio_o1e8e); // ä¸€éƒ¨IDE BIOSã¯ã“ã‚ŒãŒãªã„ã¨èµ·å‹•æ™‚ã«ãƒ•ãƒªãƒ¼ã‚ºã—ãŸã‚Šã‚·ãƒªãƒ³ãƒ€æ•°ãŒ0ã«ãªã‚‹
+		iocore_attachinp(0x1e8e, ideio_i1e8e); // ä¸€éƒ¨IDE BIOSã¯ã“ã‚ŒãŒãªã„ã¨èµ·å‹•æ™‚ã«ãƒ•ãƒªãƒ¼ã‚ºã—ãŸã‚Šã‚·ãƒªãƒ³ãƒ€æ•°ãŒ0ã«ãªã‚‹
 		
 		iocore_attachout(0x0433, ideio_o433);
 		iocore_attachinp(0x0433, ideio_i433);
@@ -1991,7 +1991,7 @@ void ideio_mediachange(REG8 sxsidrv) {
 	//
 	//drv->status |= IDESTAT_ERR;
 	//drv->error |= IDEERR_MCNG;
-	//drv->error &= ~IDEERR_MCNG; // ˆê’Uƒtƒ‰ƒOƒNƒŠƒA
+	//drv->error &= ~IDEERR_MCNG; // ä¸€æ—¦ãƒ•ãƒ©ã‚°ã‚¯ãƒªã‚¢
 	//drv->media |= IDEIO_MEDIA_CHANGED;
 	//setintr(drv);
 	//ideio_mediachangeflag[sxsidrv] = 1;

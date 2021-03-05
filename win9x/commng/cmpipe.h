@@ -1,6 +1,6 @@
 /**
  * @file	cmpipe.h
- * @brief	–¼‘O•t‚«ƒpƒCƒv ƒVƒŠƒAƒ‹ ƒNƒ‰ƒX‚ÌéŒ¾‚¨‚æ‚ÑƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ì’è‹`‚ğ‚µ‚Ü‚·
+ * @brief	åå‰ä»˜ããƒ‘ã‚¤ãƒ— ã‚·ãƒªã‚¢ãƒ« ã‚¯ãƒ©ã‚¹ã®å®£è¨€ãŠã‚ˆã³ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ã®å®šç¾©ã‚’ã—ã¾ã™
  */
 
 #pragma once
@@ -10,7 +10,7 @@
 #if defined(SUPPORT_NAMED_PIPE)
 
 /**
- * @brief commng ƒVƒŠƒAƒ‹ ƒfƒoƒCƒX ƒNƒ‰ƒX
+ * @brief commng ã‚·ãƒªã‚¢ãƒ« ãƒ‡ãƒã‚¤ã‚¹ ã‚¯ãƒ©ã‚¹
  */
 class CComPipe : public CComBase
 {
@@ -22,19 +22,19 @@ protected:
 	virtual ~CComPipe();
 	virtual UINT Read(UINT8* pData);
 	virtual UINT Write(UINT8 cData);
-	virtual UINT WriteRetry(); // ‘‚«‚İ‘¹‚È‚Á‚Ä‚¢‚½‚çÄ‘‚«‚İ‚·‚é
-	virtual UINT LastWriteSuccess(); // ÅŒã‚Ì‘‚«‚İ‚ª¬Œ÷‚µ‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+	virtual UINT WriteRetry(); // æ›¸ãè¾¼ã¿æãªã£ã¦ã„ãŸã‚‰å†æ›¸ãè¾¼ã¿ã™ã‚‹
+	virtual UINT LastWriteSuccess(); // æœ€å¾Œã®æ›¸ãè¾¼ã¿ãŒæˆåŠŸã—ã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	virtual UINT8 GetStat();
 	virtual INTPTR Message(UINT nMessage, INTPTR nParam);
 
 private:
-	HANDLE m_hSerial;		/*!< –¼‘O•t‚«ƒpƒCƒv ƒnƒ“ƒhƒ‹ */
-	bool m_isserver;		/*!< ƒT[ƒo[‚©‚Ç‚¤‚© */
+	HANDLE m_hSerial;		/*!< åå‰ä»˜ããƒ‘ã‚¤ãƒ— ãƒãƒ³ãƒ‰ãƒ« */
+	bool m_isserver;		/*!< ã‚µãƒ¼ãƒãƒ¼ã‹ã©ã†ã‹ */
 	OEMCHAR	m_pipename[MAX_PATH]; // The name of the named-pipe
 	OEMCHAR	m_pipeserv[MAX_PATH]; // The server name of the named-pipe
-	UINT8 m_lastdata; // ÅŒã‚É‘—‚ë‚¤‚Æ‚µ‚½ƒf[ƒ^
-	UINT8 m_lastdatafail; // ƒf[ƒ^‚ğ‘—‚é‚Ì‚É¸”s‚µ‚Ä‚¢‚½‚ç0ˆÈŠO
-	DWORD m_lastdatatime; // ƒf[ƒ^‚ğ‘—‚é‚Ì‚É¸”s‚µ‚½ŠÔi‚ ‚Ü‚è‚É‚à¸”s‚µ‘±‚¯‚é‚æ‚¤‚È‚ç–³‹‚·‚éj
+	UINT8 m_lastdata; // æœ€å¾Œã«é€ã‚ã†ã¨ã—ãŸãƒ‡ãƒ¼ã‚¿
+	UINT8 m_lastdatafail; // ãƒ‡ãƒ¼ã‚¿ã‚’é€ã‚‹ã®ã«å¤±æ•—ã—ã¦ã„ãŸã‚‰0ä»¥å¤–
+	DWORD m_lastdatatime; // ãƒ‡ãƒ¼ã‚¿ã‚’é€ã‚‹ã®ã«å¤±æ•—ã—ãŸæ™‚é–“ï¼ˆã‚ã¾ã‚Šã«ã‚‚å¤±æ•—ã—ç¶šã‘ã‚‹ã‚ˆã†ãªã‚‰ç„¡è¦–ã™ã‚‹ï¼‰
 
 	bool Initialize(LPCTSTR pipename, LPCTSTR servername);
 };

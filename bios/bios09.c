@@ -97,7 +97,7 @@ void bios0x09(void) {
 					code = 0xffff;
 				}
 			}
-			else if (key == 0x70 || key == 0x7d) { // ƒVƒtƒgƒL[‚Ìê‡¶‰E‚Ì‹æ•Ê‚ð‚µ‚È‚¢
+			else if (key == 0x70 || key == 0x7d) { // ã‚·ãƒ•ãƒˆã‚­ãƒ¼ã®å ´åˆå·¦å³ã®åŒºåˆ¥ã‚’ã—ãªã„
 				mem[MEMB_SHIFT_STS] |= 0x1;
 				updateshiftkey();
 			}
@@ -122,7 +122,7 @@ void bios0x09(void) {
 	else {
 		mem[MEMX_KB_KY_STS + pos] &= ~bit;
 		if (((key >= 0xf0) && (key < 0xf5)) || key == 0xfd) {
-			if (key == 0xf0 || key == 0xfd) { // ƒVƒtƒgƒL[‚Ìê‡¶‰E‚Ì‹æ•Ê‚ð‚µ‚È‚¢
+			if (key == 0xf0 || key == 0xfd) { // ã‚·ãƒ•ãƒˆã‚­ãƒ¼ã®å ´åˆå·¦å³ã®åŒºåˆ¥ã‚’ã—ãªã„
 				mem[MEMB_SHIFT_STS] &= ~0x1;
 			}else{
 				mem[MEMB_SHIFT_STS] &= ~bit;

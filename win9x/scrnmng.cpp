@@ -47,7 +47,7 @@ int d3davailable = 0;
 UINT8 scrnmng_current_drawtype = DRAWTYPE_INVALID;
 
 /**
- * İ’è
+ * è¨­å®š
  */
 static const PFTBL s_scrnresini[] =
 {
@@ -58,7 +58,7 @@ static const PFTBL s_scrnresini[] =
 };
 
 /**
- * İ’è“Ç‚İ‚İ
+ * è¨­å®šèª­ã¿è¾¼ã¿
  */
 void scrnres_readini()
 {
@@ -84,7 +84,7 @@ void scrnres_readini_res(int width, int height)
 }
 
 /**
- * İ’è‘‚«‚İ
+ * è¨­å®šæ›¸ãè¾¼ã¿
  */
 void scrnres_writeini()
 {
@@ -106,7 +106,7 @@ void scrnmng_setwindowsize(HWND hWnd, int width, int height)
 	const int scx = GetSystemMetrics(SM_CXSCREEN);
 	const int scy = GetSystemMetrics(SM_CYSCREEN);
 
-	// ƒ}ƒ‹ƒ`ƒ‚ƒjƒ^b’è‘Î‰ ver0.86 rev30
+	// ãƒãƒ«ãƒãƒ¢ãƒ‹ã‚¿æš«å®šå¯¾å¿œ ver0.86 rev30
 	workrc.right = GetSystemMetrics(SM_CXVIRTUALSCREEN);
 	workrc.bottom = GetSystemMetrics(SM_CYVIRTUALSCREEN);
 
@@ -115,7 +115,7 @@ void scrnmng_setwindowsize(HWND hWnd, int width, int height)
 	{
 		RECT rectwindow;
 		int marginX, marginY;
-		winloc_getDWMmargin(hWnd, &marginX, &marginY); // Win10ŠÂ‹«—p‚Ì‘Îô
+		winloc_getDWMmargin(hWnd, &marginX, &marginY); // Win10ç’°å¢ƒç”¨ã®å¯¾ç­–
 		GetWindowRect(hWnd, &rectwindow);
 		RECT rectclient;
 		GetClientRect(hWnd, &rectclient);
@@ -501,7 +501,7 @@ void scrnmng_exitsizing(void)
 	}
 }
 
-// ƒtƒ‹ƒXƒNƒŠ[ƒ“‰ğ‘œ“x’²®
+// ãƒ•ãƒ«ã‚¹ã‚¯ãƒªãƒ¼ãƒ³è§£åƒåº¦èª¿æ•´
 void scrnmng_updatefsres(void) {
 #ifdef SUPPORT_SCRN_DIRECT3D
 	if(scrnmng_current_drawtype==DRAWTYPE_DIRECT3D){
@@ -513,7 +513,7 @@ void scrnmng_updatefsres(void) {
 	}
 }
 
-// ƒEƒBƒ“ƒhƒEƒAƒNƒZƒ‰ƒŒ[ƒ^‰æ–Ê“]‘—
+// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¢ã‚¯ã‚»ãƒ©ãƒ¬ãƒ¼ã‚¿ç”»é¢è»¢é€
 void scrnmng_blthdc(HDC hdc) {
 #ifdef SUPPORT_SCRN_DIRECT3D
 	if(scrnmng_current_drawtype==DRAWTYPE_DIRECT3D){

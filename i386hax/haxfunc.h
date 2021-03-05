@@ -43,16 +43,16 @@
         CTL_CODE(HAX_DEVICE_TYPE, 0x917, METHOD_BUFFERED, FILE_ANY_ACCESS)
 
 
-// hax_capabilityinfo wstatus—p
+// hax_capabilityinfo wstatusç”¨
 #define HAX_CAP_STATUS_WORKING     (1 << 0)
 #define HAX_CAP_MEMQUOTA           (1 << 1)
 #define HAX_CAP_WORKSTATUS_MASK    0x01
 
-// hax_capabilityinfo winfo—piHAXMŽg—p•s‰Â‚Èê‡j
+// hax_capabilityinfo winfoç”¨ï¼ˆHAXMä½¿ç”¨ä¸å¯ãªå ´åˆï¼‰
 #define HAX_CAP_FAILREASON_VT      (1 << 0)
 #define HAX_CAP_FAILREASON_NX      (1 << 1)
 
-// hax_capabilityinfo winfo—piHAXMŽg—p‰Â”\‚Èê‡j
+// hax_capabilityinfo winfoç”¨ï¼ˆHAXMä½¿ç”¨å¯èƒ½ãªå ´åˆï¼‰
 #define HAX_CAP_EPT                (1 << 0)
 #define HAX_CAP_FASTMMIO           (1 << 1)
 #define HAX_CAP_UG                 (1 << 2)
@@ -73,71 +73,71 @@ extern "C" {
 #if defined(_WIN32)
 #pragma pack(1)
 typedef struct {
-    UINT32 compat_version; // ŒÝŠ·«‚Ì‚ ‚éƒo[ƒWƒ‡ƒ“H
-    UINT32 current_version; // Œ»Ý‚Ìƒo[ƒWƒ‡ƒ“H
+    UINT32 compat_version; // äº’æ›æ€§ã®ã‚ã‚‹ãƒãƒ¼ã‚¸ãƒ§ãƒ³ï¼Ÿ
+    UINT32 current_version; // ç¾åœ¨ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ï¼Ÿ
 } HAX_MODULE_VERSION;
 
 typedef struct hax_capabilityinfo {
-    UINT16 wstatus; // Žg—p‰Â”Û‚Ìƒtƒ‰ƒO‚È‚Ç
-    UINT16 winfo; // wstatus‚ÅŽg—p‰Â‚Ìê‡FHAXM‚ÅŽg—p‚Å‚«‚é‹@”\‚Ìƒtƒ‰ƒOAŽg—p•s‰Â‚Ìê‡FŽg—p•s‰Â‚Ì——Rƒtƒ‰ƒO
-    UINT32 win_refcount; // “ä
-    UINT64 mem_quota; // ‰¼‘zƒ}ƒVƒ“(VM)‚ÅŽg—p‰Â”\‚Èƒƒ‚ƒŠ‚ÌãŒÀH
+    UINT16 wstatus; // ä½¿ç”¨å¯å¦ã®ãƒ•ãƒ©ã‚°ãªã©
+    UINT16 winfo; // wstatusã§ä½¿ç”¨å¯ã®å ´åˆï¼šHAXMã§ä½¿ç”¨ã§ãã‚‹æ©Ÿèƒ½ã®ãƒ•ãƒ©ã‚°ã€ä½¿ç”¨ä¸å¯ã®å ´åˆï¼šä½¿ç”¨ä¸å¯ã®ç†ç”±ãƒ•ãƒ©ã‚°
+    UINT32 win_refcount; // è¬Ž
+    UINT64 mem_quota; // ä»®æƒ³ãƒžã‚·ãƒ³(VM)ã§ä½¿ç”¨å¯èƒ½ãªãƒ¡ãƒ¢ãƒªã®ä¸Šé™ï¼Ÿ
 } HAX_CAPINFO;
 
 typedef struct hax_set_memlimit {
-    UINT8 enable_memlimit; // ƒƒ‚ƒŠ§ŒÀ—LŒøH
-    UINT8 pad[7]; // –³Ž‹
-    UINT64 memory_limit; // ƒƒ‚ƒŠ§ŒÀƒTƒCƒYH
+    UINT8 enable_memlimit; // ãƒ¡ãƒ¢ãƒªåˆ¶é™æœ‰åŠ¹ï¼Ÿ
+    UINT8 pad[7]; // ç„¡è¦–
+    UINT64 memory_limit; // ãƒ¡ãƒ¢ãƒªåˆ¶é™ã‚µã‚¤ã‚ºï¼Ÿ
 } HAX_SET_MEMLIMIT;
 
 typedef struct hax_alloc_ram_info {
-    UINT32 size; // “o˜^‚·‚éƒƒ‚ƒŠ‚ÌƒTƒCƒY
-    UINT32 pad; // –³Ž‹
-    UINT64 va; // “o˜^‚µ‚½‚¢ƒzƒXƒg‚Ìƒƒ‚ƒŠƒAƒhƒŒƒXB4KB‹«ŠE‚Å‚È‚¢‚Æ‘Ê–ÚBva‚ÍVirtual Address‚Ì—ªH
+    UINT32 size; // ç™»éŒ²ã™ã‚‹ãƒ¡ãƒ¢ãƒªã®ã‚µã‚¤ã‚º
+    UINT32 pad; // ç„¡è¦–
+    UINT64 va; // ç™»éŒ²ã—ãŸã„ãƒ›ã‚¹ãƒˆã®ãƒ¡ãƒ¢ãƒªã‚¢ãƒ‰ãƒ¬ã‚¹ã€‚4KBå¢ƒç•Œã§ãªã„ã¨é§„ç›®ã€‚vaã¯Virtual Addressã®ç•¥ï¼Ÿ
 } HAX_ALLOC_RAM_INFO;
 
 typedef struct hax_ramblock_info {
-    UINT64 start_va; // “o˜^‚µ‚½‚¢ƒzƒXƒg‚Ìƒƒ‚ƒŠƒAƒhƒŒƒXB4KB‹«ŠE‚Å‚È‚¢‚Æ‘Ê–ÚBva‚ÍVirtual Address‚Ì—ªH
-    UINT64 size; // “o˜^‚·‚éƒƒ‚ƒŠ‚ÌƒTƒCƒY
-    UINT32 reserved; // –³Ž‹
+    UINT64 start_va; // ç™»éŒ²ã—ãŸã„ãƒ›ã‚¹ãƒˆã®ãƒ¡ãƒ¢ãƒªã‚¢ãƒ‰ãƒ¬ã‚¹ã€‚4KBå¢ƒç•Œã§ãªã„ã¨é§„ç›®ã€‚vaã¯Virtual Addressã®ç•¥ï¼Ÿ
+    UINT64 size; // ç™»éŒ²ã™ã‚‹ãƒ¡ãƒ¢ãƒªã®ã‚µã‚¤ã‚º
+    UINT32 reserved; // ç„¡è¦–
 } HAX_RAMBLOCK_INFO;
 
 typedef struct hax_set_ram_info {
-    UINT64 pa_start; // Š„“–æ‚ÌƒQƒXƒg•¨—ƒAƒhƒŒƒX(Guest Physical Address; GPA)BŠù‚É“o˜^‚³‚ê‚Ä‚¢‚éê‡‚Íã‘‚«B4KB‹«ŠE‚Å‚È‚¢‚Æ‘Ê–Ú
-    UINT32 size; // Š„“–‚·‚éƒTƒCƒY
-    UINT8 flags; // 0:’Êí‚ÌRAMAHAX_RAM_INFO_ROM:ROM—ÌˆæAHAX_RAM_INFO_INVALID:Š„‚è“–‚Ä‰ðœiva‚Í0‚É‚·‚éj
-    UINT8 pad[3]; // –³Ž‹
-    UINT64 va; // Š„“–‚µ‚½‚¢ƒzƒXƒg‚Ìƒƒ‚ƒŠƒAƒhƒŒƒX(Host Virtual Address; HVA)Bæ‚Éi386haxfunc_allocRAM‚Å“o˜^‚µ‚Ä‚¨‚©‚È‚¢‚Æ‘Ê–ÚB4KB‹«ŠE‚Å‚È‚¢‚Æ‘Ê–Ú
+    UINT64 pa_start; // å‰²å½“å…ˆã®ã‚²ã‚¹ãƒˆç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹(Guest Physical Address; GPA)ã€‚æ—¢ã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯ä¸Šæ›¸ãã€‚4KBå¢ƒç•Œã§ãªã„ã¨é§„ç›®
+    UINT32 size; // å‰²å½“ã™ã‚‹ã‚µã‚¤ã‚º
+    UINT8 flags; // 0:é€šå¸¸ã®RAMã€HAX_RAM_INFO_ROM:ROMé ˜åŸŸã€HAX_RAM_INFO_INVALID:å‰²ã‚Šå½“ã¦è§£é™¤ï¼ˆvaã¯0ã«ã™ã‚‹ï¼‰
+    UINT8 pad[3]; // ç„¡è¦–
+    UINT64 va; // å‰²å½“ã—ãŸã„ãƒ›ã‚¹ãƒˆã®ãƒ¡ãƒ¢ãƒªã‚¢ãƒ‰ãƒ¬ã‚¹(Host Virtual Address; HVA)ã€‚å…ˆã«i386haxfunc_allocRAMã§ç™»éŒ²ã—ã¦ãŠã‹ãªã„ã¨é§„ç›®ã€‚4KBå¢ƒç•Œã§ãªã„ã¨é§„ç›®
 } HAX_SET_RAM_INFO;
 
 typedef struct hax_tunnel_info {
-    UINT64 va; // struct hax_tunnel‚ÌƒAƒhƒŒƒXiƒLƒƒƒXƒg‚µ‚ÄŽg‚¤j
-    UINT64 io_va; // ƒf[ƒ^‚â‚è‚Æ‚è—pBexit_status‚É‚æ‚Á‚Ä“à—e‚ª•Ï‚í‚é
-    UINT16 size; // struct hax_tunnel‚ÌƒTƒCƒY
-    UINT16 pad[3]; // –³Ž‹
+    UINT64 va; // struct hax_tunnelã®ã‚¢ãƒ‰ãƒ¬ã‚¹ï¼ˆã‚­ãƒ£ã‚¹ãƒˆã—ã¦ä½¿ã†ï¼‰
+    UINT64 io_va; // ãƒ‡ãƒ¼ã‚¿ã‚„ã‚Šã¨ã‚Šç”¨ã€‚exit_statusã«ã‚ˆã£ã¦å†…å®¹ãŒå¤‰ã‚ã‚‹
+    UINT16 size; // struct hax_tunnelã®ã‚µã‚¤ã‚º
+    UINT16 pad[3]; // ç„¡è¦–
 } HAX_TUNNEL_INFO;
 
 typedef struct hax_qemu_version {
-    UINT32 cur_version; // ŽÀs’†‚ÌQEMUƒo[ƒWƒ‡ƒ“H
-    UINT32 least_version; // Å’áŒÀ•K—v‚ÈQEMU APIƒo[ƒWƒ‡ƒ“H
+    UINT32 cur_version; // å®Ÿè¡Œä¸­ã®QEMUãƒãƒ¼ã‚¸ãƒ§ãƒ³ï¼Ÿ
+    UINT32 least_version; // æœ€ä½Žé™å¿…è¦ãªQEMU APIãƒãƒ¼ã‚¸ãƒ§ãƒ³ï¼Ÿ
 } HAX_QEMU_VERSION;
 
 #define HAX_IO_OUT 0
 #define HAX_IO_IN  1
 
-// VMŽÀs’†’f‚ÌŒ´ˆö
+// VMå®Ÿè¡Œä¸­æ–­ã®åŽŸå› 
 enum exit_status {
-    HAX_EXIT_IO = 1, // I/Oƒ|[ƒgƒAƒNƒZƒX
-    HAX_EXIT_MMIO, // ƒƒ‚ƒŠƒ}ƒbƒvƒhIOƒAƒNƒZƒXiÅ‹ß‚ÍFAST_MMIO‚ªŽg‚í‚ê‚Ä‚¢‚éB”pŽ~Hj
-    HAX_EXIT_REALMODE, // ƒŠƒAƒ‹ƒ‚[ƒh‚Ìê‡
-    HAX_EXIT_INTERRUPT, // Š„‚èž‚Ý”­¶H
-    HAX_EXIT_UNKNOWN, // Œ´ˆö•s–¾
-    HAX_EXIT_HLT, // HLT–½—ß‚ªŽÀs‚³‚ê‚½
-    HAX_EXIT_STATECHANGE, // ƒVƒƒƒbƒgƒ_ƒEƒ“‚âCPUƒpƒjƒbƒN‚È‚Ç‚ÅƒŠƒZƒbƒgˆÈŠO‚Ì‘I‘ðŽˆ‚ª–³‚¢‚Æ‚«
-    HAX_EXIT_PAUSED, // ˆêŽž’âŽ~H
-    HAX_EXIT_FAST_MMIO, // ƒƒ‚ƒŠƒ}ƒbƒvƒhIOƒAƒNƒZƒXiHAX_EXIT_MMIO‚ð‚‘¬‚É‚µ‚½‚à‚Ì‚ç‚µ‚¢jtunnel‚Ìio_va‚Íhax_fastmmio\‘¢‘Ì‚ÌƒAƒhƒŒƒX
-    HAX_EXIT_PAGEFAULT, // ƒy[ƒWƒtƒH[ƒ‹ƒg”­¶H
-    HAX_EXIT_DEBUG // ƒfƒoƒbƒO
+    HAX_EXIT_IO = 1, // I/Oãƒãƒ¼ãƒˆã‚¢ã‚¯ã‚»ã‚¹
+    HAX_EXIT_MMIO, // ãƒ¡ãƒ¢ãƒªãƒžãƒƒãƒ—ãƒ‰IOã‚¢ã‚¯ã‚»ã‚¹ï¼ˆæœ€è¿‘ã¯FAST_MMIOãŒä½¿ã‚ã‚Œã¦ã„ã‚‹ã€‚å»ƒæ­¢ï¼Ÿï¼‰
+    HAX_EXIT_REALMODE, // ãƒªã‚¢ãƒ«ãƒ¢ãƒ¼ãƒ‰ã®å ´åˆ
+    HAX_EXIT_INTERRUPT, // å‰²ã‚Šè¾¼ã¿ç™ºç”Ÿï¼Ÿ
+    HAX_EXIT_UNKNOWN, // åŽŸå› ä¸æ˜Ž
+    HAX_EXIT_HLT, // HLTå‘½ä»¤ãŒå®Ÿè¡Œã•ã‚ŒãŸ
+    HAX_EXIT_STATECHANGE, // ã‚·ãƒ£ãƒƒãƒˆãƒ€ã‚¦ãƒ³ã‚„CPUãƒ‘ãƒ‹ãƒƒã‚¯ãªã©ã§ãƒªã‚»ãƒƒãƒˆä»¥å¤–ã®é¸æŠžè‚¢ãŒç„¡ã„ã¨ã
+    HAX_EXIT_PAUSED, // ä¸€æ™‚åœæ­¢ï¼Ÿ
+    HAX_EXIT_FAST_MMIO, // ãƒ¡ãƒ¢ãƒªãƒžãƒƒãƒ—ãƒ‰IOã‚¢ã‚¯ã‚»ã‚¹ï¼ˆHAX_EXIT_MMIOã‚’é«˜é€Ÿã«ã—ãŸã‚‚ã®ã‚‰ã—ã„ï¼‰tunnelã®io_vaã¯hax_fastmmioæ§‹é€ ä½“ã®ã‚¢ãƒ‰ãƒ¬ã‚¹
+    HAX_EXIT_PAGEFAULT, // ãƒšãƒ¼ã‚¸ãƒ•ã‚©ãƒ¼ãƒ«ãƒˆç™ºç”Ÿï¼Ÿ
+    HAX_EXIT_DEBUG // ãƒ‡ãƒãƒƒã‚°
 };
 enum run_flag {
     HAX_EXIT = 0,
@@ -146,33 +146,33 @@ enum run_flag {
 
 typedef struct hax_tunnel {
 	UINT32 _exit_reason; // ???
-    UINT32 pad0; // –³Ž‹
-    UINT32 _exit_status; // HAX_EXIT_‚È‚ñ‚½‚ç
+    UINT32 pad0; // ç„¡è¦–
+    UINT32 _exit_status; // HAX_EXIT_ãªã‚“ãŸã‚‰
     UINT32 user_event_pending; // ???
-    int ready_for_interrupt_injection; // i386haxfunc_vcpu_interrupt‚ÅŠ„‚èž‚Ý‚ðŽó‚¯“ü‚ê‚é€”õ‚ªo—ˆ‚½
-    int request_interrupt_window; // Š„‚èž‚Ý‚µ‚½‚¢‚Ì‚Å€”õ‚µ‚Ä‰º‚³‚¢ƒtƒ‰ƒOi•K—v‚È‚Æ‚«‚ÉŽ©•ª‚Å1‚ÉÝ’è‚·‚éj
+    int ready_for_interrupt_injection; // i386haxfunc_vcpu_interruptã§å‰²ã‚Šè¾¼ã¿ã‚’å—ã‘å…¥ã‚Œã‚‹æº–å‚™ãŒå‡ºæ¥ãŸ
+    int request_interrupt_window; // å‰²ã‚Šè¾¼ã¿ã—ãŸã„ã®ã§æº–å‚™ã—ã¦ä¸‹ã•ã„ãƒ•ãƒ©ã‚°ï¼ˆå¿…è¦ãªã¨ãã«è‡ªåˆ†ã§1ã«è¨­å®šã™ã‚‹ï¼‰
 
     union {
         struct {
-			// tunnel.io_va‚Íƒ|[ƒg‚Ö‚Ìo—Íƒf[ƒ^A‚ ‚é‚¢‚Íƒ|[ƒg‚©‚ç‚Ì“ü—Íƒf[ƒ^‚Ì‘‚«ž‚Ýæƒƒ‚ƒŠƒAƒhƒŒƒX
-            UINT8 _direction; // “ü—Í‚©o—Í‚©‚Ì”»’èBHAX_IO_OUT‚Ü‚½‚ÍHAX_IO_IN
-            UINT8 _df; // _count‚ª2ˆÈã‚Ìê‡Aƒƒ‚ƒŠ‚ð“Ç‚ÝŽæ‚é‡”ÔB0‚ÍƒCƒ“ƒNƒŠƒƒ“ƒgA1‚ÍƒfƒNƒŠƒƒ“ƒgiI/Oƒ|[ƒg”Ô†‚Í‚»‚Ì‚Ü‚Üj
-            UINT16 _size; // ƒ|[ƒgƒAƒNƒZƒXŽž‚ÌƒTƒCƒYiƒoƒCƒg”j
-            UINT16 _port; // o—Íæƒ|[ƒg
-            UINT16 _count; // ˜A‘±o—Í‚·‚éƒf[ƒ^”
+			// tunnel.io_vaã¯ãƒãƒ¼ãƒˆã¸ã®å‡ºåŠ›ãƒ‡ãƒ¼ã‚¿ã€ã‚ã‚‹ã„ã¯ãƒãƒ¼ãƒˆã‹ã‚‰ã®å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®æ›¸ãè¾¼ã¿å…ˆãƒ¡ãƒ¢ãƒªã‚¢ãƒ‰ãƒ¬ã‚¹
+            UINT8 _direction; // å…¥åŠ›ã‹å‡ºåŠ›ã‹ã®åˆ¤å®šã€‚HAX_IO_OUTã¾ãŸã¯HAX_IO_IN
+            UINT8 _df; // _countãŒ2ä»¥ä¸Šã®å ´åˆã€ãƒ¡ãƒ¢ãƒªã‚’èª­ã¿å–ã‚‹é †ç•ªã€‚0ã¯ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€1ã¯ãƒ‡ã‚¯ãƒªãƒ¡ãƒ³ãƒˆï¼ˆI/Oãƒãƒ¼ãƒˆç•ªå·ã¯ãã®ã¾ã¾ï¼‰
+            UINT16 _size; // ãƒãƒ¼ãƒˆã‚¢ã‚¯ã‚»ã‚¹æ™‚ã®ã‚µã‚¤ã‚ºï¼ˆãƒã‚¤ãƒˆæ•°ï¼‰
+            UINT16 _port; // å‡ºåŠ›å…ˆãƒãƒ¼ãƒˆ
+            UINT16 _count; // é€£ç¶šå‡ºåŠ›ã™ã‚‹ãƒ‡ãƒ¼ã‚¿æ•°
             /* Followed owned by HAXM, QEMU should not touch them */
             /* bit 1 is 1 means string io */
             UINT8 _flags; // ???
-            UINT8 _pad0; // –³Ž‹
-            UINT16 _pad1; // –³Ž‹
-            UINT32 _pad2; // –³Ž‹
-            UINT64 _vaddr; // ƒzƒXƒg‰¼‘zƒAƒhƒŒƒXH
+            UINT8 _pad0; // ç„¡è¦–
+            UINT16 _pad1; // ç„¡è¦–
+            UINT32 _pad2; // ç„¡è¦–
+            UINT64 _vaddr; // ãƒ›ã‚¹ãƒˆä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹ï¼Ÿ
         } io;
         struct {
-            UINT64 gla; // ƒQƒXƒgƒŠƒjƒAƒAƒhƒŒƒX‚Ì—ªH‚à‚¤Žg‚í‚ê‚Ä‚¢‚È‚¢‚æ‚¤‚È‚Ì‚Å•ª‚©‚ç‚È‚¢
+            UINT64 gla; // ã‚²ã‚¹ãƒˆãƒªãƒ‹ã‚¢ã‚¢ãƒ‰ãƒ¬ã‚¹ã®ç•¥ï¼Ÿã‚‚ã†ä½¿ã‚ã‚Œã¦ã„ãªã„ã‚ˆã†ãªã®ã§åˆ†ã‹ã‚‰ãªã„
         } mmio;
         struct {
-            UINT64 gpa; // ƒQƒXƒg•¨—ƒAƒhƒŒƒXH
+            UINT64 gpa; // ã‚²ã‚¹ãƒˆç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹ï¼Ÿ
 #define HAX_PAGEFAULT_ACC_R  (1 << 0)
 #define HAX_PAGEFAULT_ACC_W  (1 << 1)
 #define HAX_PAGEFAULT_ACC_X  (1 << 2)
@@ -195,19 +195,19 @@ typedef struct hax_tunnel {
 	UINT64 apic_base;
 } HAX_TUNNEL;
 typedef struct hax_fastmmio {
-    UINT64 gpa; // ƒQƒXƒg•¨—ƒAƒhƒŒƒX
+    UINT64 gpa; // ã‚²ã‚¹ãƒˆç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹
     union {
-        UINT64 value; // ‘‚«ž‚ÝŽž‚Ío—Í‚·‚é’lA“Ç‚ÝŽæ‚èŽž‚Í’l‚ÌŠi”[æ•Ï”
+        UINT64 value; // æ›¸ãè¾¼ã¿æ™‚ã¯å‡ºåŠ›ã™ã‚‹å€¤ã€èª­ã¿å–ã‚Šæ™‚ã¯å€¤ã®æ ¼ç´å…ˆå¤‰æ•°
         UINT64 gpa2;  /* since API v4 */
     };
-    UINT8 size; // ƒf[ƒ^ƒoƒCƒg”i1, 2, 4 byte‚Ì‚¢‚¸‚ê‚©j
-    UINT8 direction; // READ=0AWRITE=1AREAD&WRITE=2 (I/Oƒ|[ƒg‚ÌŽž‚Æ‰½ŒÌ‚©‹t‚È‚Ì‚Å’ˆÓBŽQl: I/Oƒ|[ƒg‚Å‚ÍREAD=1, WRITE=0)
+    UINT8 size; // ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒˆæ•°ï¼ˆ1, 2, 4 byteã®ã„ãšã‚Œã‹ï¼‰
+    UINT8 direction; // READ=0ã€WRITE=1ã€READ&WRITE=2 (I/Oãƒãƒ¼ãƒˆã®æ™‚ã¨ä½•æ•…ã‹é€†ãªã®ã§æ³¨æ„ã€‚å‚è€ƒ: I/Oãƒãƒ¼ãƒˆã§ã¯READ=1, WRITE=0)
     UINT16 reg_index;  /* obsolete */
-    UINT32 pad0; // –³Ž‹
-    UINT64 _cr0; // CR0ƒŒƒWƒXƒ^H
-    UINT64 _cr2; // CR2ƒŒƒWƒXƒ^H
-    UINT64 _cr3; // CR3ƒŒƒWƒXƒ^H
-    UINT64 _cr4; // CR4ƒŒƒWƒXƒ^H
+    UINT32 pad0; // ç„¡è¦–
+    UINT64 _cr0; // CR0ãƒ¬ã‚¸ã‚¹ã‚¿ï¼Ÿ
+    UINT64 _cr2; // CR2ãƒ¬ã‚¸ã‚¹ã‚¿ï¼Ÿ
+    UINT64 _cr3; // CR3ãƒ¬ã‚¸ã‚¹ã‚¿ï¼Ÿ
+    UINT64 _cr4; // CR4ãƒ¬ã‚¸ã‚¹ã‚¿ï¼Ÿ
 } HAX_FASTMMIO;
 
 
@@ -295,7 +295,7 @@ typedef struct segment_desc_t {
     UINT32 ipad;
 } SEGMENT_DESC;
 
-// CPUƒŒƒWƒXƒ^
+// CPUãƒ¬ã‚¸ã‚¹ã‚¿
 typedef struct vcpu_state_t {
     union {
         UINT64 _regs[16];
@@ -469,35 +469,35 @@ typedef struct hax_cpuid_t {
 #endif
 
 /***
-  HAXM IOCTL—pŠÖ”ŒQ
+  HAXM IOCTLç”¨é–¢æ•°ç¾¤
  ***/
 
 // HAXM IOCTL
-UINT8 i386haxfunc_getversion(HAX_MODULE_VERSION *version); // HAXM‚Ìƒo[ƒWƒ‡ƒ“‚ðŽæ“¾‚·‚é
-UINT8 i386haxfunc_getcapability(HAX_CAPINFO *cap); // HAXM‚ÅŽg—p‰Â”\‚È‹@”\‚ðŽæ“¾‚·‚é
-UINT8 i386haxfunc_setmemlimit(HAX_SET_MEMLIMIT *memlimit); // HAXM‚Ìƒƒ‚ƒŠ—e—Ê§ŒÀ‚ðƒZƒbƒg‚·‚éiÅ‹ß‚Ì”Å‚Å‚ÍˆÓ–¡‚È‚µHj
-UINT8 i386haxfunc_createVM(UINT32 *vm_id); // HAXM‚Ì‰¼‘zƒ}ƒVƒ“‚ðì¬‚µ‚Ä‰¼‘zƒ}ƒVƒ“ID‚ð•Ô‚·
+UINT8 i386haxfunc_getversion(HAX_MODULE_VERSION *version); // HAXMã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’å–å¾—ã™ã‚‹
+UINT8 i386haxfunc_getcapability(HAX_CAPINFO *cap); // HAXMã§ä½¿ç”¨å¯èƒ½ãªæ©Ÿèƒ½ã‚’å–å¾—ã™ã‚‹
+UINT8 i386haxfunc_setmemlimit(HAX_SET_MEMLIMIT *memlimit); // HAXMã®ãƒ¡ãƒ¢ãƒªå®¹é‡åˆ¶é™ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ï¼ˆæœ€è¿‘ã®ç‰ˆã§ã¯æ„å‘³ãªã—ï¼Ÿï¼‰
+UINT8 i386haxfunc_createVM(UINT32 *vm_id); // HAXMã®ä»®æƒ³ãƒžã‚·ãƒ³ã‚’ä½œæˆã—ã¦ä»®æƒ³ãƒžã‚·ãƒ³IDã‚’è¿”ã™
 
 // HAXM VM IOCTL
-UINT8 i386haxfunc_notifyQEMUversion(HAX_QEMU_VERSION *hax_qemu_ver); // QEMUƒo[ƒWƒ‡ƒ“‚Ì’Ê’miFast MMIO‚Ì‹““®‚ª•Ï‚í‚éH’Ê’m‚µ‚È‚­‚Ä‚à–â‘è‚Í‚È‚³‚»‚¤j
-UINT8 i386haxfunc_VCPUcreate(UINT32 vcpu_id); // HAXM‰¼‘zƒ}ƒVƒ“‚ÉŽw’è‚µ‚½ID‚Ì‰¼‘zCPU‚ðì¬‚·‚éiCPU ID‚Í0`15‚ÅŽw’èj
-UINT8 i386haxfunc_allocRAM(HAX_ALLOC_RAM_INFO *allocraminfo); // HAXM‰¼‘zƒ}ƒVƒ“‚ÅŽg—p‚·‚éƒzƒXƒg‚Ìƒƒ‚ƒŠ”ÍˆÍ‚ð“o˜^
-UINT8 i386haxfunc_addRAMblock(HAX_RAMBLOCK_INFO *ramblkinfo); // HAXM‰¼‘zƒ}ƒVƒ“‚ÅŽg—p‚·‚éƒzƒXƒg‚Ìƒƒ‚ƒŠ”ÍˆÍ‚ð“o˜^
-UINT8 i386haxfunc_setRAM(HAX_SET_RAM_INFO *setraminfo); // HAXM‰¼‘zƒ}ƒVƒ“‚Ì•¨—ƒAƒhƒŒƒX‚ÉƒzƒXƒg‚Ìƒƒ‚ƒŠ‚ðŠ„‚è“–‚Äiƒƒ‚ƒŠ‚ÍŽ–‘O‚Éi386haxfunc_allocRAM‚Å“o˜^‚ª•K—vjB–¢Š„‚è“–‚Ä‚ÌƒAƒhƒŒƒX‚ÍMMIOˆµ‚¢‚É‚È‚éB
+UINT8 i386haxfunc_notifyQEMUversion(HAX_QEMU_VERSION *hax_qemu_ver); // QEMUãƒãƒ¼ã‚¸ãƒ§ãƒ³ã®é€šçŸ¥ï¼ˆFast MMIOã®æŒ™å‹•ãŒå¤‰ã‚ã‚‹ï¼Ÿé€šçŸ¥ã—ãªãã¦ã‚‚å•é¡Œã¯ãªã•ãã†ï¼‰
+UINT8 i386haxfunc_VCPUcreate(UINT32 vcpu_id); // HAXMä»®æƒ³ãƒžã‚·ãƒ³ã«æŒ‡å®šã—ãŸIDã®ä»®æƒ³CPUã‚’ä½œæˆã™ã‚‹ï¼ˆCPU IDã¯0ã€œ15ã§æŒ‡å®šï¼‰
+UINT8 i386haxfunc_allocRAM(HAX_ALLOC_RAM_INFO *allocraminfo); // HAXMä»®æƒ³ãƒžã‚·ãƒ³ã§ä½¿ç”¨ã™ã‚‹ãƒ›ã‚¹ãƒˆã®ãƒ¡ãƒ¢ãƒªç¯„å›²ã‚’ç™»éŒ²
+UINT8 i386haxfunc_addRAMblock(HAX_RAMBLOCK_INFO *ramblkinfo); // HAXMä»®æƒ³ãƒžã‚·ãƒ³ã§ä½¿ç”¨ã™ã‚‹ãƒ›ã‚¹ãƒˆã®ãƒ¡ãƒ¢ãƒªç¯„å›²ã‚’ç™»éŒ²
+UINT8 i386haxfunc_setRAM(HAX_SET_RAM_INFO *setraminfo); // HAXMä»®æƒ³ãƒžã‚·ãƒ³ã®ç‰©ç†ã‚¢ãƒ‰ãƒ¬ã‚¹ã«ãƒ›ã‚¹ãƒˆã®ãƒ¡ãƒ¢ãƒªã‚’å‰²ã‚Šå½“ã¦ï¼ˆãƒ¡ãƒ¢ãƒªã¯äº‹å‰ã«i386haxfunc_allocRAMã§ç™»éŒ²ãŒå¿…è¦ï¼‰ã€‚æœªå‰²ã‚Šå½“ã¦ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã¯MMIOæ‰±ã„ã«ãªã‚‹ã€‚
 
 // HAXM VCPU IOCTL
-UINT8 i386haxfunc_vcpu_run(); // ‰¼‘zƒ}ƒVƒ“ŽÀsŠJŽnBI/Oƒ|[ƒgƒAƒNƒZƒXEŠ„‚èž‚Ý”­¶“™‚ÅŽÀsŒp‘±‚Å‚«‚È‚­‚È‚Á‚½‚çŽÀs’†’f‚·‚é
-UINT8 i386haxfunc_vcpu_setup_tunnel(HAX_TUNNEL_INFO *info); // ‰¼‘zƒ}ƒVƒ“‚Æƒf[ƒ^‚ð‚â‚è‚Æ‚è‚·‚é‚½‚ß‚Ìƒƒ‚ƒŠ—Ìˆæ(tunnel)‚ðŠm•Û
-UINT8 i386haxfunc_vcpu_setMSRs(HAX_MSR_DATA *inbuf, HAX_MSR_DATA *outbuf); // ƒ‚ƒfƒ‹ŒÅ—LƒŒƒWƒXƒ^iModel Specific Register; MSRj‚ðÝ’è
-UINT8 i386haxfunc_vcpu_getMSRs(HAX_MSR_DATA *outbuf); // ƒ‚ƒfƒ‹ŒÅ—LƒŒƒWƒXƒ^‚ðŽæ“¾
-UINT8 i386haxfunc_vcpu_setFPU(HAX_FX_LAYOUT *inbuf); // FPUƒŒƒWƒXƒ^‚ðÝ’è
-UINT8 i386haxfunc_vcpu_getFPU(HAX_FX_LAYOUT *outbuf); // FPUƒŒƒWƒXƒ^‚ðŽæ“¾
-UINT8 i386haxfunc_vcpu_setREGs(HAX_VCPU_STATE *inbuf); // ƒŒƒWƒXƒ^‚ðÝ’è
-UINT8 i386haxfunc_vcpu_getREGs(HAX_VCPU_STATE *outbuf); // ƒŒƒWƒXƒ^‚ðŽæ“¾
-UINT8 i386haxfunc_vcpu_interrupt(UINT32 vector); // Žw’è‚µ‚½ƒxƒNƒ^‚ÌŠ„‚èž‚Ý‚ð”­¶‚³‚¹‚é
-UINT8 i386haxfunc_vcpu_kickoff(); // “ä
-UINT8 i386haxfunc_vcpu_debug(HAX_DEBUG *inbuf); // ƒfƒoƒbƒO‚Ì—LŒø/–³Œø‚âƒfƒoƒbƒO•û–@‚ðÝ’è‚·‚é
-UINT8 i386haxfunc_vcpu_setCPUID(HAX_CPUID *inbuf); // CPUID‚ðÝ’è‚·‚é
+UINT8 i386haxfunc_vcpu_run(); // ä»®æƒ³ãƒžã‚·ãƒ³å®Ÿè¡Œé–‹å§‹ã€‚I/Oãƒãƒ¼ãƒˆã‚¢ã‚¯ã‚»ã‚¹ãƒ»å‰²ã‚Šè¾¼ã¿ç™ºç”Ÿç­‰ã§å®Ÿè¡Œç¶™ç¶šã§ããªããªã£ãŸã‚‰å®Ÿè¡Œä¸­æ–­ã™ã‚‹
+UINT8 i386haxfunc_vcpu_setup_tunnel(HAX_TUNNEL_INFO *info); // ä»®æƒ³ãƒžã‚·ãƒ³ã¨ãƒ‡ãƒ¼ã‚¿ã‚’ã‚„ã‚Šã¨ã‚Šã™ã‚‹ãŸã‚ã®ãƒ¡ãƒ¢ãƒªé ˜åŸŸ(tunnel)ã‚’ç¢ºä¿
+UINT8 i386haxfunc_vcpu_setMSRs(HAX_MSR_DATA *inbuf, HAX_MSR_DATA *outbuf); // ãƒ¢ãƒ‡ãƒ«å›ºæœ‰ãƒ¬ã‚¸ã‚¹ã‚¿ï¼ˆModel Specific Register; MSRï¼‰ã‚’è¨­å®š
+UINT8 i386haxfunc_vcpu_getMSRs(HAX_MSR_DATA *outbuf); // ãƒ¢ãƒ‡ãƒ«å›ºæœ‰ãƒ¬ã‚¸ã‚¹ã‚¿ã‚’å–å¾—
+UINT8 i386haxfunc_vcpu_setFPU(HAX_FX_LAYOUT *inbuf); // FPUãƒ¬ã‚¸ã‚¹ã‚¿ã‚’è¨­å®š
+UINT8 i386haxfunc_vcpu_getFPU(HAX_FX_LAYOUT *outbuf); // FPUãƒ¬ã‚¸ã‚¹ã‚¿ã‚’å–å¾—
+UINT8 i386haxfunc_vcpu_setREGs(HAX_VCPU_STATE *inbuf); // ãƒ¬ã‚¸ã‚¹ã‚¿ã‚’è¨­å®š
+UINT8 i386haxfunc_vcpu_getREGs(HAX_VCPU_STATE *outbuf); // ãƒ¬ã‚¸ã‚¹ã‚¿ã‚’å–å¾—
+UINT8 i386haxfunc_vcpu_interrupt(UINT32 vector); // æŒ‡å®šã—ãŸãƒ™ã‚¯ã‚¿ã®å‰²ã‚Šè¾¼ã¿ã‚’ç™ºç”Ÿã•ã›ã‚‹
+UINT8 i386haxfunc_vcpu_kickoff(); // è¬Ž
+UINT8 i386haxfunc_vcpu_debug(HAX_DEBUG *inbuf); // ãƒ‡ãƒãƒƒã‚°ã®æœ‰åŠ¹/ç„¡åŠ¹ã‚„ãƒ‡ãƒãƒƒã‚°æ–¹æ³•ã‚’è¨­å®šã™ã‚‹
+UINT8 i386haxfunc_vcpu_setCPUID(HAX_CPUID *inbuf); // CPUIDã‚’è¨­å®šã™ã‚‹
 
 #endif
 
