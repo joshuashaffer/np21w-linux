@@ -12,109 +12,109 @@ $ make
 
 ```
 
-// ---- ﾂ津ｨﾂ義
+// ---- 定義
 
 
 
-  ﾂ催ﾂ適ﾂ可ｻﾂづ個暗猟づ個δﾂδつδ環使ﾂ用ﾂ療環づ個抑ﾂ青ｧ
+  最適化の為のメモリ使用量の抑制
 
-    MEMOPTIMIZE = 0ﾂ〜2
-
-
-
-    CPUﾂづ可づｦﾂづｨﾂ暗按可ｺﾂづ個青板値ﾂづｰﾂセﾂッﾂトﾂつｳﾂづｪﾂづｩﾂつｱﾂづﾂづｰﾂ甘ｺﾂ妥陳つｵﾂづﾂつ｢ﾂづｩ
-
-      MEMOPTIMIZEﾂ鳴｢ﾂ津ｨﾂ義 ﾂ… Celeron333Aﾂ暗按降ﾂづ個セﾂカﾂδ督ドﾂキﾂδδッﾂシﾂδﾂ有ﾂ古ｸﾂ機
-
-      MEMOPTIMIZE = 0   ﾂ… x86
-
-      MEMOPTIMIZE = 1   ﾂ… PowerPCﾂ督卍づ個デﾂスﾂクﾂトﾂッﾂプﾂ用RISC
-
-      MEMOPTIMIZE = 2   ﾂ… StrongARMﾂ督卍づ個組ﾂづ敖債楪づ敖用RISC
+    MEMOPTIMIZE = 0〜2
 
 
 
+    CPUにより以下の数値をセットされることを期待している
 
+      MEMOPTIMIZE未定義 … Celeron333A以降のセカンドキャッシュ有効機
 
-  ﾂコﾂδ督パﾂイﾂδ可づ個暗ｸﾂつｫﾂ青板・ﾂ姪淞づｨﾂ値ﾂづ個催ﾂ適ﾂ可ｻ
+      MEMOPTIMIZE = 0   … x86
 
-    ﾂ暗ｸﾂつｫﾂ青板・ﾂ姪淞づｨﾂ値ﾂづintﾂ型ﾂ暗按外ﾂづｰﾂ指ﾂ津ｨﾂつｵﾂつｽﾂ湘ｪﾂ債ﾂづ可、ﾂ催ﾂ適ﾂ可ｻﾂつｪﾂ有ﾂ古ｸﾂづ可督ｭﾂつｩﾂづ按つ｢
+      MEMOPTIMIZE = 1   … PowerPC等のデスクトップ用RISC
 
-    ﾂコﾂδ督パﾂイﾂδ可古ｼﾂつｯﾂづ個津ｨﾂ義ﾂづﾂつｷﾂ。
-
-    ﾂ津環湘ｭﾂづ common.h ﾂづ個閉ｨﾂづｰﾂ使ﾂ用ﾂつｵﾂづ慊つｷﾂ。
-
-      REG8 ﾂ… UINT8ﾂ型 / (sizeof(REG8) != 1)ﾂづ個湘ｪﾂ債 ﾂ湘｣ﾂ暗環ビﾂッﾂトﾂづｰ0fillﾂつｷﾂづｩﾂ篠
-
-      REG16 ﾂ… UINT16ﾂ型 / (sizeof(REG16) != 2)ﾂづ個湘ｪﾂ債 ﾂ湘｣ﾂ暗環ビﾂッﾂトﾂづｰ0fillﾂつｷﾂづｩﾂ篠
-
-ﾂ　ﾂ　ﾂ　ﾂつ｢ﾂつｸﾂづｪﾂづﾂ値ﾂづｰﾂセﾂッﾂトﾂつｷﾂづｩﾂ堕､ﾂつｪ0fillﾂつｵﾂ、ﾂ参ﾂ湘ﾂ堕､ﾂづ0fillﾂつｵﾂつｽﾂづﾂづ個づﾂ個ｩﾂづ按つｵﾂづ慊つｷﾂ。
+      MEMOPTIMIZE = 2   … StrongARM等の組み込み用RISC
 
 
 
 
 
-  OSﾂづ個個ｾﾂ古ｪﾂづ個選ﾂ妥ｰ
+  コンパイラの引き数・戻り値の最適化
 
-    OSLANG_SJIS ﾂ… Shift-JISﾂづ個環ｿﾂ篠堋コﾂーﾂドﾂづｰﾂ嘉ｰﾂ偲淞つｷﾂづｩ
+    引き数・戻り値でint型以外を指定した場合に、最適化が有効に働かない
 
-    OSLANG_EUC  ﾂ… EUCﾂづ個環ｿﾂ篠堋コﾂーﾂドﾂづｰﾂ嘉ｰﾂ偲淞つｷﾂづｩ
+    コンパイラ向けの定義です。
 
+    通常は common.h の物を使用します。
 
+      REG8 … UINT8型 / (sizeof(REG8) != 1)の場合 上位ビットを0fillする事
 
-    OSLINEBREAK_CR   ﾂ… MacOS   "\r"
+      REG16 … UINT16型 / (sizeof(REG16) != 2)の場合 上位ビットを0fillする事
 
-    OSLINEBREAK_LF   ﾂ… Unix    "\n"
-
-    OSLINEBREAK_CRLF ﾂ… Windows "\r\n"
-
-
-
-      ﾂﾂｦﾂ個ｻﾂ催敖づ債暗按可ｺﾂづ個ソﾂーﾂスﾂコﾂーﾂドﾂ禿ﾂづﾂ古つ陛環づ可静敖津ｨﾂつｵﾂづﾂつ｢ﾂづ慊つｷﾂ。
-
-        (Windowsﾂつｪ APIﾂづ可づｦﾂづﾂづ \r\nﾂづ個湘ｪﾂ債ﾂづ\nﾂづ個湘ｪﾂ債ﾂつｪﾂつﾂづｩﾂづ個づﾂ…)
-
-        ﾂ・common/_memory.c
-
-        ﾂ・debugsub.c
-
-        ﾂ・statsave.c
-
-
-
-    (milstr.hﾂ選ﾂ妥ｰﾂ用)
-
-    SUPPORT_ANK      ﾂ… ANKﾂ閉ｶﾂ篠堋療ｱﾂ堕ﾂ催ｬﾂ甘鳴青板づｰﾂδ環δ督クﾂつｷﾂづｩ
-
-    SUPPORT_SJIS     ﾂ… SJISﾂ閉ｶﾂ篠堋療ｱﾂ堕ﾂ催ｬﾂ甘鳴青板づｰﾂδ環δ督クﾂつｷﾂづｩ
-
-    SUPPORT_EUC      ﾂ… EUCﾂ閉ｶﾂ篠堋療ｱﾂ堕ﾂ催ｬﾂ甘鳴青板づｰﾂδ環δ督クﾂつｷﾂづｩ
-
-
-
-      ﾂﾂｦﾂ個ｻﾂ催拯ilstr.hﾂづﾂつｷﾂづ猟づﾂ津ｨﾂ義ﾂつｳﾂづｪﾂつｽﾂづ慊づ慊づ可づ按づﾂづﾂつ｢ﾂづ慊つｷﾂ。
-
-        ver0.73ﾂづmilstr.hﾂづ個津ｨﾂ義ﾂづｰﾂ外ﾂつｵ compiler.hﾂづﾂ指ﾂ津ｨﾂつｵﾂつｽﾂ閉ｨﾂづﾂづ按づｨﾂづ慊つｷﾂ。
+　　　いずれも値をセットする側が0fillし、参照側は0fillしたものと見なします。
 
 
 
 
 
-ﾂ　CPUCORE_IA32
+  OSの言語の選択
 
-ﾂ　ﾂ　IA32ﾂアﾂーﾂキﾂテﾂクﾂチﾂδδづｰﾂ催個用
+    OSLANG_SJIS … Shift-JISの漢字コードを解釈する
 
-ﾂ　ﾂ　ﾂ　i386cﾂづｰﾂ使ﾂ用ﾂつｷﾂづｩﾂ湘ｪﾂ債ﾂづ個陳債暗督点
+    OSLANG_EUC  … EUCの漢字コードを解釈する
 
-ﾂ　ﾂ　  ﾂ・CPU panic ﾂづ｢ﾂ警ﾂ債青表ﾂ篠ｦﾂ篠楪づ msgbox() ﾂづﾂつ｢ﾂつ､ API ﾂづｰﾂ使ﾂ用ﾂつｵﾂづ慊つｷﾂ。
 
-ﾂ　ﾂ　ﾂ　ﾂ　compiler.h ﾂつﾂつｽﾂづｨﾂづﾂ適ﾂ督鳴づ可津ｨﾂ義ﾂつｵﾂづﾂつｭﾂつｾﾂつｳﾂつ｢ﾂ。
 
-ﾂ　ﾂ　ﾂ　ﾂ・sigsetjmp(3), siglongjmp(3) ﾂつｪﾂ鳴ｳﾂつ｢ﾂアﾂーﾂキﾂテﾂクﾂチﾂδδづ債暗按可ｺﾂづ define ﾂづｰ
+    OSLINEBREAK_CR   … MacOS   "\r"
 
-ﾂ　ﾂ　ﾂ　ﾂ　compiler.h ﾂつﾂつｽﾂづｨﾂづ可津ﾂ嘉ﾂつｵﾂづﾂつｭﾂつｾﾂつｳﾂつ｢ﾂ。
+    OSLINEBREAK_LF   … Unix    "\n"
 
-ﾂ　ﾂ　ﾂ　ﾂ　----------------------------------------------------------------------
+    OSLINEBREAK_CRLF … Windows "\r\n"
+
+
+
+      ※現在は以下のソースコード内で個別に設定しています。
+
+        (Windowsが APIによって \r\nの場合と\nの場合があるので…)
+
+        ・common/_memory.c
+
+        ・debugsub.c
+
+        ・statsave.c
+
+
+
+    (milstr.h選択用)
+
+    SUPPORT_ANK      … ANK文字列操作関数をリンクする
+
+    SUPPORT_SJIS     … SJIS文字列操作関数をリンクする
+
+    SUPPORT_EUC      … EUC文字列操作関数をリンクする
+
+
+
+      ※現在milstr.hですべて定義されたままになっています。
+
+        ver0.73でmilstr.hの定義を外し compiler.hで指定した物となります。
+
+
+
+
+
+　CPUCORE_IA32
+
+　　IA32アーキテクチャを採用
+
+　　　i386cを使用する場合の注意点
+
+　　  ・CPU panic や警告表示時に msgbox() という API を使用します。
+
+　　　　compiler.h あたりで適当に定義してください。
+
+　　　・sigsetjmp(3), siglongjmp(3) が無いアーキテクチャは以下の define を
+
+　　　　compiler.h あたりに追加してください。
+
+　　　　----------------------------------------------------------------------
 
         #define sigjmp_buf              jmp_buf
 
@@ -122,79 +122,79 @@ $ make
 
         #define siglongjmp(env, val)    longjmp(env, val)
 
-ﾂ　ﾂ　ﾂ　ﾂ　----------------------------------------------------------------------
+　　　　----------------------------------------------------------------------
 
 
 
   CPUSTRUC_MEMWAIT
 
-ﾂ　ﾂ　ﾂ　cpucoreﾂ構ﾂ堕｢ﾂ妥個づ可δﾂδつδ環ウﾂェﾂイﾂトﾂ値ﾂづｰﾂ暗堋督ｮﾂつｷﾂづｩ(vramop)
+　　　cpucore構造体にメモリウェイト値を移動する(vramop)
 
 
 
-ﾂ　SUPPORT_CRT15KHZ
+　SUPPORT_CRT15KHZ
 
-ﾂ　ﾂ　ﾂ　ﾂ青ﾂ閉ｽﾂ堕鳴債ｸ15.98kHzﾂづｰﾂサﾂポﾂーﾂトﾂつｷﾂづｩ(DIPSW1-1)
-
-
-
-ﾂ　SUPPORT_CRT31KHZ
-
-ﾂ　ﾂ　ﾂ　ﾂ青ﾂ閉ｽﾂ堕鳴債ｸ31.47kHzﾂづｰﾂサﾂポﾂーﾂトﾂつｷﾂづｩ
-
-ﾂ　ﾂ　ﾂ　Fellowﾂタﾂイﾂプﾂづ債つｱﾂづｪ
+　　　水平走査15.98kHzをサポートする(DIPSW1-1)
 
 
 
-ﾂ　SUPPORT_PC9821
+　SUPPORT_CRT31KHZ
 
-ﾂ　ﾂ　ﾂ　PC-9821ﾂ拡ﾂ陳｣ﾂづ個サﾂポﾂーﾂト
+　　　水平走査31.47kHzをサポートする
 
-ﾂ　ﾂ　ﾂ　ﾂ督鳴然ﾂづﾂつｷﾂつｪ 386ﾂ必ﾂ須ﾂづﾂつｷﾂ。
-
-ﾂ　ﾂ　ﾂ　ﾂづ慊つｽ SUPPORT_CRT31KHZﾂづﾂ必ﾂ要ﾂづﾂつｷ(ﾂハﾂイﾂδ個ゾBIOSﾂづｰﾂ使ﾂ用ﾂつｷﾂづｩﾂ暗)
+　　　Fellowタイプはこれ
 
 
 
-ﾂ　SUPPORT_PC9861K
+　SUPPORT_PC9821
 
-ﾂ　ﾂ　ﾂ　PC-9861K(RS-232Cﾂ拡ﾂ陳｣I/F)ﾂづｰﾂサﾂポﾂーﾂト
+　　　PC-9821拡張のサポート
 
+　　　当然ですが 386必須です。
 
-
-ﾂ　SUPPORT_IDEIO
-
-ﾂ　ﾂ　ﾂ　IDEﾂづ I/Oﾂδ個ベﾂδ仰づﾂづ個サﾂポﾂーﾂト
-
-ﾂ　ﾂ　ﾂ　ﾂづﾂづ ATAﾂづ個δ環ーﾂドﾂ津ｶﾂ度ﾂつｵﾂつｩﾂづﾂつｫﾂづ按つ｢ﾂ…
+　　　また SUPPORT_CRT31KHZも必要です(ハイレゾBIOSを使用する為)
 
 
 
-ﾂ　SUPPORT_SASI
+　SUPPORT_PC9861K
 
-ﾂ　ﾂ　ﾂ　SASI HDDﾂづｰﾂサﾂポﾂーﾂト
-
-ﾂ　ﾂ　ﾂ　ﾂ津ｨﾂ義ﾂつｪﾂづ按つｯﾂづｪﾂづ篠湘ｭﾂ篠曵DEﾂづﾂつｵﾂづﾂ催ｬﾂ督ｮﾂつｵﾂづ慊つｷﾂ。
+　　　PC-9861K(RS-232C拡張I/F)をサポート
 
 
 
-ﾂ　SUPPORT_SCSI
+　SUPPORT_IDEIO
 
-ﾂ　ﾂ　ﾂ　SCSI HDDﾂづｰﾂサﾂポﾂーﾂトﾂ…ﾂ全ﾂ然ﾂ督ｮﾂつｩﾂづ按つ｢
+　　　IDEの I/Oレベルでのサポート
 
-
-
-ﾂ　SUPPORT_S98
-
-ﾂ　ﾂ　ﾂ　S98ﾂδ債グﾂづｰﾂ偲ｦﾂ督ｾ
+　　　でも ATAのリード程度しかできない…
 
 
 
-ﾂ　SUPPORT_WAVEREC
+　SUPPORT_SASI
 
-ﾂ　ﾂ　Soundﾂδ個ベﾂδ仰づ waveﾂフﾂァﾂイﾂδ仰づ個渉堕つｫﾂ出ﾂつｵﾂ甘鳴青板づｰﾂサﾂポﾂーﾂト
+　　　SASI HDDをサポート
 
-ﾂ　ﾂ　ﾂ但ﾂつｵﾂ渉堕つｫﾂ出ﾂつｵﾂ陳ﾂづ ﾂサﾂウﾂδ督ドﾂ出ﾂ療債つｪﾂ止ﾂづ慊づｩﾂづ個づﾂ　ﾂづ卍づ堋デﾂバﾂグﾂ用
+　　　定義がなければ常時IDEとして作動します。
+
+
+
+　SUPPORT_SCSI
+
+　　　SCSI HDDをサポート…全然動かない
+
+
+
+　SUPPORT_S98
+
+　　　S98ログを取得
+
+
+
+　SUPPORT_WAVEREC
+
+　　Soundレベルで waveファイルの書き出し関数をサポート
+
+　　但し書き出し中は サウンド出力が止まるので　ほぼデバグ用
 
 
 
@@ -204,11 +204,11 @@ $ make
 
 
 
-  PC-9801ﾂシﾂδ環ーﾂズﾂづ個嘉ｦﾂ姪環サﾂイﾂズﾂづ債標ﾂ渉ﾂづ 641x400ﾂ。
+  PC-9801シリーズの画面サイズは標準で 641x400。
 
-  VGAﾂづﾂづ債偲ｻﾂづ慊づｧﾂづ按つ｢ﾂづ個づ ﾂ仰ｭﾂ青ｧﾂ的ﾂづ鰻GAﾂづ可偲ｻﾂづ淞づｩﾂ暗猟づ ﾂ嘉ｦﾂ姪環可｡ﾂサﾂイﾂズﾂづ width + extend
+  VGAでは収まらないので 強制的にVGAに収める為に 画面横サイズは width + extend
 
-ﾂづﾂつｷﾂづｩﾂ。
+とする。
 
   8 < width < 640
 
@@ -220,25 +220,25 @@ $ make
 
 typedef struct {
 
-	BYTE	*ptr;		// VRAMﾂポﾂイﾂδ督タ
+	BYTE	*ptr;		// VRAMポインタ
 
-	int		xalign;		// xﾂ陛ｻﾂ古ｼﾂオﾂフﾂセﾂッﾂト
+	int		xalign;		// x方向オフセット
 
-	int		yalign;		// yﾂ陛ｻﾂ古ｼﾂオﾂフﾂセﾂッﾂト
+	int		yalign;		// y方向オフセット
 
-	int		width;		// ﾂ可｡ﾂ閉
+	int		width;		// 横幅
 
-	int		height;		// ﾂ縦ﾂ閉
+	int		height;		// 縦幅
 
-	UINT	bpp;		// ﾂスﾂクﾂδ環ーﾂδ督色ﾂビﾂッﾂト
+	UINT	bpp;		// スクリーン色ビット
 
-	int		extend;		// ﾂ閉敖拡ﾂ陳｣
+	int		extend;		// 幅拡張
 
 } SCRNSURF;
 
 
 
-  ﾂサﾂーﾂフﾂェﾂスﾂサﾂイﾂズﾂづ (width + extern) x heightﾂ。
+  サーフェスサイズは (width + extern) x height。
 
 
 
@@ -246,13 +246,13 @@ typedef struct {
 
 const SCRNSURF *scrnmng_surflock(void);
 
-  ﾂ嘉ｦﾂ姪環描ﾂ嘉ｦﾂ開ﾂ始
+  画面描画開始
 
 
 
 void scrnmng_surfunlock(const SCRNSURF *surf);
 
-  ﾂ嘉ｦﾂ姪環描ﾂ嘉ｦﾂ終ﾂ猟ｹ(ﾂつｱﾂづ個タﾂイﾂミﾂδ督グﾂづﾂ描ﾂ嘉ｦ)
+  画面描画終了(このタイミングで描画)
 
 
 
@@ -264,51 +264,51 @@ void scrnmng_setextend(int extend)
 
 void scrnmng_setheight(int posy, int height)
 
-  ﾂ描ﾂ嘉ｦﾂサﾂイﾂズﾂづ個陛渉更
+  描画サイズの変更
 
-  ﾂウﾂィﾂδ督ドﾂウﾂサﾂイﾂズﾂづ個陛渉更ﾂつｷﾂづｩ
+  ウィンドウサイズの変更する
 
-  ﾂフﾂδ仰スﾂクﾂδ環ーﾂδ督陳ﾂづﾂつﾂづｪﾂづ ﾂ表ﾂ篠ｦﾂ療個暗ｦﾂづｰﾂ陛渉更ﾂ。
+  フルスクリーン中であれば 表示領域を変更。
 
-  SCRNSURFﾂづﾂづ債つｱﾂづ個値ﾂづｰﾂ陛板つｷﾂづｦﾂつ､ﾂづ可つｷﾂづｩ
+  SCRNSURFではこの値を返すようにする
 
-  posx, widthﾂづ 8ﾂづ個倍ﾂ青
+  posx, widthは 8の倍数
 
 
 
-BOOL scrnmng_isfullscreen(void) ﾂ… NP2ﾂコﾂアﾂづﾂづ債鳴｢ﾂ使ﾂ用
+BOOL scrnmng_isfullscreen(void) … NP2コアでは未使用
 
-  ﾂフﾂδ仰スﾂクﾂδ環ーﾂδ督湘ｳﾂ妥板づ個偲ｦﾂ督ｾ
+  フルスクリーン状態の取得
 
-    return: ﾂ氾ｱ0ﾂづﾂフﾂδ仰スﾂクﾂδ環ーﾂδ
+    return: 非0でフルスクリーン
 
 
 
 BOOL scrnmng_haveextend(void)
 
-  ﾂ可｡ﾂ閉敖湘ｳﾂ妥板づ個偲ｦﾂ督ｾ
+  横幅状態の取得
 
-    return: ﾂ氾ｱ0ﾂづ ﾂ可｡ﾂ閉敖拡ﾂ陳｣ﾂサﾂポﾂーﾂト
+    return: 非0で 横幅拡張サポート
 
 
 
 UINT scrnmng_getbpp(void)
 
-  ﾂスﾂクﾂδ環ーﾂδ督色ﾂビﾂッﾂトﾂ青板づ個偲ｦﾂ督ｾ
+  スクリーン色ビット数の取得
 
-    return: ﾂビﾂッﾂトﾂ青(8/16/24/32)
+    return: ビット数(8/16/24/32)
 
 
 
 void scrnmng_palchanged(void)
 
-  ﾂパﾂδ個ッﾂトﾂ更ﾂ新ﾂづ個津環知(8bitﾂスﾂクﾂδ環ーﾂδ督サﾂポﾂーﾂトﾂ篠楪づ個づ)
+  パレット更新の通知(8bitスクリーンサポート時のみ)
 
 
 
 RGB16 scrnmng_makepal16(RGB32 pal32)
 
-  RGB32ﾂつｩﾂづｧ 16bitﾂ色ﾂづｰﾂ催ｬﾂ青ｬﾂつｷﾂづｩﾂ。(16bitﾂスﾂクﾂδ環ーﾂδ督サﾂポﾂーﾂトﾂ篠楪づ個づ)
+  RGB32から 16bit色を作成する。(16bitスクリーンサポート時のみ)
 
 
 
@@ -320,7 +320,7 @@ RGB16 scrnmng_makepal16(RGB32 pal32)
 
 
 
-NP2ﾂづ個サﾂウﾂδ督ドﾂデﾂーﾂタﾂづ sound.cﾂづ個暗按可ｺﾂづ個甘鳴青板づｦﾂづｨﾂ偲ｦﾂ督ｾ
+NP2のサウンドデータは sound.cの以下の関数より取得
 
   const SINT32 *sound_pcmlock(void)
 
@@ -330,17 +330,17 @@ NP2ﾂづ個サﾂウﾂδ督ドﾂデﾂーﾂタﾂづ sound.cﾂづ個暗按�
 
 
 
-SOUND_CRITICAL  ﾂセﾂマﾂフﾂォﾂづｰﾂ禿ｼﾂづｪﾂづｩ(see sndcsec.c)
+SOUND_CRITICAL  セマフォを入れる(see sndcsec.c)
 
-SOUNDRESERVE    ﾂ予ﾂ姪ｱﾂバﾂッﾂフﾂァﾂづ個サﾂイﾂズ(ﾂミﾂδ環秒)
+SOUNDRESERVE    予約バッファのサイズ(ミリ秒)
 
-  ﾂサﾂウﾂδ督ドﾂづｰﾂ環ﾂづｨﾂ債楪づ敖渉按猟敖つｷﾂづｩﾂ湘ｪﾂ債ﾂづ個指ﾂ津ｨﾂ。
+  サウンドを割り込み処理する場合の指定。
 
-  ﾂ環ﾂづｨﾂ債楪づ敖づ個催ﾂ妥･ﾂ可ﾂ妥伉篠楪甘板づｰSOUNDRESERVEﾂづﾂ指ﾂ津ｨﾂ。
+  割り込みの最大延滞時間をSOUNDRESERVEで指定。
 
-  (Win9xﾂづ個湘ｪﾂ債ﾂ、ﾂ篠ｩﾂ前ﾂづﾂδ環δ督グﾂバﾂッﾂフﾂァﾂづｰﾂ個ｩﾂ陳｣ﾂづｩﾂづ個づ ﾂ環ﾂづｨﾂ債楪づ敖鳴ｳﾂつｵﾂ・ﾂ指ﾂ津ｨﾂ篠楪甘板津環づｨﾂづ
+  (Win9xの場合、自前でリングバッファを見張るので 割り込み無し・指定時間通りに
 
-  ﾂサﾂウﾂδ督ドﾂδ可イﾂトﾂつｪﾂ猟按づｩﾂづ個づﾂ、ﾂつｱﾂづ個渉按猟敖づ債不ﾂ要ﾂつｾﾂづﾂつｽ)
+  サウンドライトが来るので、この処理は不要だった)
 
 
 
@@ -348,19 +348,19 @@ SOUNDRESERVE    ﾂ予ﾂ姪ｱﾂバﾂッﾂフﾂァﾂづ個サﾂイﾂズ(
 
 UINT soundmng_create(UINT rate, UINT ms)
 
-  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個確ﾂ陛
+  サウンドストリームの確保
 
-    input:  rate    ﾂサﾂδ督プﾂδ環δ督グﾂδ個ーﾂト(11025/22050/44100)
+    input:  rate    サンプリングレート(11025/22050/44100)
 
-            ms      ﾂサﾂδ督プﾂδ環δ督グﾂバﾂッﾂフﾂァﾂサﾂイﾂズ(ﾂミﾂδ環秒)
+            ms      サンプリングバッファサイズ(ミリ秒)
 
-    return: ﾂ獲ﾂ督ｾﾂつｵﾂつｽﾂバﾂッﾂフﾂァﾂづ個サﾂδ督プﾂδ環δ督グﾂ青
+    return: 獲得したバッファのサンプリング数
 
 
 
-            msﾂづ可従ﾂつ､ﾂ必ﾂ要ﾂづ債づ按つ｢(SDLﾂづﾂつｩﾂバﾂッﾂフﾂァﾂサﾂイﾂズﾂつｪﾂ古ﾂ津ｨﾂつｳﾂづｪﾂづｩﾂづ個づ)
+            msに従う必要はない(SDLとかバッファサイズが限定されるので)
 
-            NP2ﾂづ個サﾂウﾂδ督ドﾂバﾂッﾂフﾂァﾂ堕ﾂ催ｬﾂづ ﾂ陛板づｨﾂ値ﾂづ個づ敖づｰﾂ猟伉用ﾂつｵﾂづﾂつ｢ﾂづ慊つｷﾂ。
+            NP2のサウンドバッファ操作は 返り値のみを利用しています。
 
 
 
@@ -368,57 +368,57 @@ UINT soundmng_create(UINT rate, UINT ms)
 
 void soundmng_destroy(void)
 
-  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個終ﾂ猟ｹ
+  サウンドストリームの終了
 
 
 
 void soundmng_reset(void)
 
-  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個δ環セﾂッﾂト
+  サウンドストリームのリセット
 
 
 
 void soundmng_play(void)
 
-  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個催ﾂ青ｶ
+  サウンドストリームの再生
 
 
 
 void soundmng_stop(void)
 
-  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個津｢ﾂ止
+  サウンドストリームの停止
 
 
 
 void soundmng_sync(void)
 
-  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個コﾂーﾂδ仰バﾂッﾂク
+  サウンドストリームのコールバック
 
 
 
 void soundmng_setreverse(BOOL reverse)
 
-  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個出ﾂ療債板ｽﾂ転ﾂ静敖津ｨ
+  サウンドストリームの出力反転設定
 
-    input:  reverse ﾂ氾ｱ0ﾂづﾂ債ｶﾂ右ﾂ板ｽﾂ転
+    input:  reverse 非0で左右反転
 
 
 
 BOOL soundmng_pcmplay(UINT num, BOOL loop)
 
-  PCMﾂ催ﾂ青ｶ
+  PCM再生
 
-    input:  num     PCMﾂ氾板債
+    input:  num     PCM番号
 
-            loop    ﾂ氾ｱ0ﾂづﾂδ仰ーﾂプ
+            loop    非0でループ
 
 
 
 void soundmng_pcmstop(UINT num)
 
-  PCMﾂ津｢ﾂ止
+  PCM停止
 
-    input:  num     PCMﾂ氾板債
+    input:  num     PCM番号
 
 
 
@@ -432,17 +432,17 @@ void soundmng_pcmstop(UINT num)
 
 BYTE mousemng_getstat(SINT16 *x, SINT16 *y, int clear)
 
-  ﾂマﾂウﾂスﾂづ個湘ｳﾂ妥板偲ｦﾂ督ｾ
+  マウスの状態取得
 
-    input:  clear   ﾂ氾ｱ0ﾂづ ﾂ湘ｳﾂ妥板づｰﾂ偲ｦﾂ督ｾﾂ古｣ﾂづ可カﾂウﾂδ督タﾂづｰﾂδ環セﾂッﾂトﾂつｷﾂづｩ
+    input:  clear   非0で 状態を取得後にカウンタをリセットする
 
-    output: *x      clearﾂつｩﾂづｧﾂづ警ﾂ陛ｻﾂ古ｼﾂカﾂウﾂδ督ト
+    output: *x      clearからのx方向カウント
 
-            *y      clearﾂつｩﾂづｧﾂづ軽ﾂ陛ｻﾂ古ｼﾂカﾂウﾂδ督ト
+            *y      clearからのy方向カウント
 
-    return: bit7    ﾂ債ｶﾂボﾂタﾂδ督づ個湘ｳﾂ妥 (0:ﾂ可淞可ｺ)
+    return: bit7    左ボタンの状態 (0:押下)
 
-            bit5    ﾂ右ﾂボﾂタﾂδ督づ個湘ｳﾂ妥 (0:ﾂ可淞可ｺ)
+            bit5    右ボタンの状態 (0:押下)
 
 
 
@@ -456,11 +456,11 @@ BYTE mousemng_getstat(SINT16 *x, SINT16 *y, int clear)
 
 COMMNG commng_create(UINT device)
 
-  ﾂシﾂδ環アﾂδ仰オﾂーﾂプﾂδ
+  シリアルオープン
 
-    input:  ﾂデﾂバﾂイﾂスﾂ氾板債
+    input:  デバイス番号
 
-    return: ﾂハﾂδ督ドﾂδ (ﾂ篠ｸﾂ敗ﾂ篠朦ULL)
+    return: ハンドル (失敗時NULL)
 
 
 
@@ -468,9 +468,9 @@ COMMNG commng_create(UINT device)
 
 void commng_destroy(COMMNG hdl)
 
-  ﾂシﾂδ環アﾂδ仰クﾂδ債ーﾂズ
+  シリアルクローズ
 
-    input:  ﾂハﾂδ督ドﾂδ (ﾂ篠ｸﾂ敗ﾂ篠朦ULL)
+    input:  ハンドル (失敗時NULL)
 
 
 
@@ -484,25 +484,25 @@ void commng_destroy(COMMNG hdl)
 
 BYTE joymng_getstat(void)
 
-  ﾂジﾂδﾂイﾂスﾂテﾂィﾂッﾂクﾂづ個湘ｳﾂ妥板偲ｦﾂ督ｾ
+  ジョイスティックの状態取得
 
 
 
-    return: bit0    ﾂ湘｣ﾂボﾂタﾂδ督づ個湘ｳﾂ妥 (0:ﾂ可淞可ｺ)
+    return: bit0    上ボタンの状態 (0:押下)
 
-            bit1    ﾂ可ｺﾂボﾂタﾂδ督づ個湘ｳﾂ妥
+            bit1    下ボタンの状態
 
-            bit2    ﾂ債ｶﾂボﾂタﾂδ督づ個湘ｳﾂ妥
+            bit2    左ボタンの状態
 
-            bit3    ﾂ右ﾂボﾂタﾂδ督づ個湘ｳﾂ妥
+            bit3    右ボタンの状態
 
-            bit4    ﾂ連ﾂ偲仰ボﾂタﾂδ督１ﾂづ個湘ｳﾂ妥
+            bit4    連射ボタン１の状態
 
-            bit5    ﾂ連ﾂ偲仰ボﾂタﾂδ督２ﾂづ個湘ｳﾂ妥
+            bit5    連射ボタン２の状態
 
-            bit6    ﾂボﾂタﾂδ督１ﾂづ個湘ｳﾂ妥
+            bit6    ボタン１の状態
 
-            bit7    ﾂボﾂタﾂδ督２ﾂづ個湘ｳﾂ妥
+            bit7    ボタン２の状態
 
 
 
@@ -514,13 +514,13 @@ BYTE joymng_getstat(void)
 
 void sysmng_update(UINT bitmap)
 
-  ﾂ湘ｳﾂ妥板つｪﾂ陛渉可ｻﾂつｵﾂつｽﾂ湘ｪﾂ債ﾂづ可コﾂーﾂδ仰つｳﾂづｪﾂづｩﾂ。
+  状態が変化した場合にコールされる。
 
 
 
 void sysmng_cpureset(void)
 
-  ﾂδ環セﾂッﾂトﾂ篠楪づ可コﾂーﾂδ仰つｳﾂづｪﾂづｩ
+  リセット時にコールされる
 
 
 
@@ -530,7 +530,7 @@ void sysmng_cpureset(void)
 
 void taskmng_exit(void)
 
-  ﾂシﾂスﾂテﾂδﾂづｰﾂ終ﾂ猟ｹﾂつｷﾂづｩﾂ。
+  システムを終了する。
 
 
 
