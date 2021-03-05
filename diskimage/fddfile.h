@@ -2,6 +2,7 @@
 #ifdef SUPPORT_KAI_IMAGES
 
 #define	MAX_FDDFILE		4							// ver0.31
+#define DEFAULT_SECSIZE 128
 
 #include	"diskimage/fd/fdd_head_d88.h"
 #include	"diskimage/fd/fdd_head_dcp.h"	//	堤蚊(kai1)

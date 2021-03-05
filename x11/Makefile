@@ -249,7 +249,6 @@ am__objects_2 = $(real_topsrcdir)/x11/xnp2-main.$(OBJEXT) \
 	$(real_topsrcdir)/generic/xnp2-cmndraw.$(OBJEXT) \
 	$(real_topsrcdir)/generic/xnp2-keydisp.$(OBJEXT) \
 	$(real_topsrcdir)/generic/xnp2-cmjasts.$(OBJEXT) \
-	$(real_topsrcdir)/generic/xnp2-hostdrv.$(OBJEXT) \
 	$(real_topsrcdir)/generic/xnp2-hostdrvs.$(OBJEXT) \
 	$(real_topsrcdir)/generic/xnp2-unasm.$(OBJEXT) \
 	$(real_topsrcdir)/generic/xnp2-np2info.$(OBJEXT) \
@@ -1239,7 +1238,7 @@ AM_CPPFLAGS = -I$(real_topsrcdir) -I$(real_topsrcdir)/x11 \
 xnp2_CPPFLAGS = $(AM_CPPFLAGS) $(am__append_5) $(am__append_7) \
 	$(am__append_9)
 AM_CFLAGS = -fsigned-char -fno-strict-aliasing
-AM_CXXFLAGS = $(AM_CFLAGS) -std=c++11
+AM_CXXFLAGS = $(AM_CFLAGS) -std=c++2a
 LDADD = $(GTK_LIBS) $(SDL_LIBS) $(LIBUSB1_LIBS) \
 		$(X11_LIBS) $(XEXT_LIBS) \
 		$(X_LIBS) $(X_PRE_LIBS) $(XLIB) $(X_EXTRA_LIBS)

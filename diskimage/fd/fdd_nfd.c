@@ -305,6 +305,7 @@ BRESULT fdd_read_nfd(FDDFILE fdd) {
 	long	seekp;
 	UINT	i;
 
+    secsize = DEFAULT_SECSIZE;
 	fddlasterror = 0x00;
 //	変更(kaiE)
 //	if (fdd_seeksector_common(fdd)) {
@@ -702,6 +703,8 @@ BRESULT fdd_read_nfd1(FDDFILE fdd) {
 	NFD_SECT_ID1	sec_id;
 	NFD_SECT_ID1	sec_idx;
 	NFD_DIAG_ID1	dia_id;
+
+    secsize = DEFAULT_SECSIZE;
 
 	//	RetryData有の対応…いいのか？これで
 	rcnt++;
