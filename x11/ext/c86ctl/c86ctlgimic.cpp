@@ -132,12 +132,11 @@ size_t CGimic::getNumberOfChip()
  */
 C86CtlErr CGimic::getChipInterface(size_t id, IID riid, void** ppi)
 {
-	if (ppi == NULL)
-	{
-		return C86CTL_ERR_INVALID_PARAM;
-	}
+  if (ppi == nullptr) {
+    return C86CTL_ERR_INVALID_PARAM;
+  }
 
-	if (id != 0)
+        if (id != 0)
 	{
 		return C86CTL_ERR_NODEVICE;
 	}
@@ -180,12 +179,12 @@ C86CtlErr CGimic::Transaction(const void* lpOutput, int cbOutput, void* lpInput,
 	}
 
 	char sBuffer[64];
-	if ((lpOutput == NULL) || (cbOutput <= 0) || (cbOutput >= sizeof(sBuffer)))
-	{
-		return C86CTL_ERR_INVALID_PARAM;
-	}
+        if ((lpOutput == nullptr) || (cbOutput <= 0) ||
+            (cbOutput >= sizeof(sBuffer))) {
+          return C86CTL_ERR_INVALID_PARAM;
+        }
 
-	::memcpy(sBuffer, lpOutput, cbOutput);
+        ::memcpy(sBuffer, lpOutput, cbOutput);
 	::memset(sBuffer + cbOutput, 0xff, sizeof(sBuffer) - cbOutput);
 
 	m_usbGuard.Enter();
@@ -201,12 +200,11 @@ C86CtlErr CGimic::Transaction(const void* lpOutput, int cbOutput, void* lpInput,
 		return C86CTL_ERR_UNKNOWN;
 	}
 
-	if ((lpInput != NULL) && (cbInput > 0))
-	{
-		cbInput = (std::min)(cbInput, static_cast<int>(sizeof(sBuffer)));
-		::memcpy(lpInput, sBuffer, cbInput);
-	}
-	return C86CTL_ERR_NONE;
+        if ((lpInput != nullptr) && (cbInput > 0)) {
+          cbInput = (std::min)(cbInput, static_cast<int>(sizeof(sBuffer)));
+          ::memcpy(lpInput, sBuffer, cbInput);
+        }
+        return C86CTL_ERR_NONE;
 }
 
 /**
@@ -222,12 +220,11 @@ C86CtlErr CGimic::GetInfo(UINT8 cParam, Devinfo* pInfo)
 	sData[1] = 0x91;
 	sData[2] = cParam;
 	const C86CtlErr ret = Transaction(sData, sizeof(sData), pInfo, sizeof(*pInfo));
-	if ((ret == C86CTL_ERR_NONE) && (pInfo != NULL))
-	{
-		TailZeroFill(pInfo->Devname, sizeof(pInfo->Devname));
-		TailZeroFill(pInfo->Serial, sizeof(pInfo->Serial));
-	}
-	return ret;
+        if ((ret == C86CTL_ERR_NONE) && (pInfo != nullptr)) {
+          TailZeroFill(pInfo->Devname, sizeof(pInfo->Devname));
+          TailZeroFill(pInfo->Serial, sizeof(pInfo->Serial));
+        }
+        return ret;
 }
 
 /**
@@ -426,23 +423,23 @@ C86CtlErr CGimic::Gimic2::getFWVer(UINT* pnMajor, UINT* pnMinor, UINT* pnRev, UI
 	const C86CtlErr ret = GetDevice()->Transaction(sData, sizeof(sData), sRecv, sizeof(sRecv));
 	if (ret == C86CTL_ERR_NONE)
 	{
-		if (pnMajor != NULL)
-		{
-			*pnMajor = (sRecv[0] << 0) | (sRecv[1] << 8) | (sRecv[2] << 16) | (sRecv[3] << 24);
-		}
-		if (pnMinor != NULL)
-		{
-			*pnMinor = (sRecv[4] << 0) | (sRecv[5] << 8) | (sRecv[6] << 16) | (sRecv[7] << 24);
-		}
-		if (pnRev != NULL)
-		{
-			*pnRev = (sRecv[8] << 0) | (sRecv[9] << 8) | (sRecv[10] << 16) | (sRecv[11] << 24);
-		}
-		if (pnBuild != NULL)
-		{
-			*pnBuild = (sRecv[12] << 0) | (sRecv[13] << 8) | (sRecv[14] << 16) | (sRecv[15] << 24);
-		}
-	}
+          if (pnMajor != nullptr) {
+            *pnMajor = (sRecv[0] << 0) | (sRecv[1] << 8) | (sRecv[2] << 16) |
+                       (sRecv[3] << 24);
+          }
+          if (pnMinor != nullptr) {
+            *pnMinor = (sRecv[4] << 0) | (sRecv[5] << 8) | (sRecv[6] << 16) |
+                       (sRecv[7] << 24);
+          }
+          if (pnRev != nullptr) {
+            *pnRev = (sRecv[8] << 0) | (sRecv[9] << 8) | (sRecv[10] << 16) |
+                     (sRecv[11] << 24);
+          }
+          if (pnBuild != nullptr) {
+            *pnBuild = (sRecv[12] << 0) | (sRecv[13] << 8) | (sRecv[14] << 16) |
+                       (sRecv[15] << 24);
+          }
+        }
 	return ret;
 }
 
@@ -540,11 +537,11 @@ C86CtlErr CGimic::Gimic2::getPLLClock(UINT* pnClock)
 	static const UINT8 sData[2] = {0xfd, 0x85};
 	UINT8 sRecv[4];
 	const C86CtlErr ret = GetDevice()->Transaction(sData, sizeof(sData), sRecv, sizeof(sRecv));
-	if ((ret == C86CTL_ERR_NONE) && (pnClock != NULL))
-	{
-		*pnClock = (sRecv[0] << 0) | (sRecv[1] << 8) | (sRecv[2] << 16) | (sRecv[3] << 24);
-	}
-	return ret;
+        if ((ret == C86CTL_ERR_NONE) && (pnClock != nullptr)) {
+          *pnClock = (sRecv[0] << 0) | (sRecv[1] << 8) | (sRecv[2] << 16) |
+                     (sRecv[3] << 24);
+        }
+        return ret;
 }
 
 /**
@@ -554,11 +551,10 @@ C86CtlErr CGimic::Gimic2::getPLLClock(UINT* pnClock)
  */
 C86CtlErr CGimic::Gimic2::getModuleType(ChipType* pnType)
 {
-	if (pnType != NULL)
-	{
-		*pnType = GetDevice()->m_nChipType;
-	}
-	return C86CTL_ERR_NONE;
+  if (pnType != nullptr) {
+    *pnType = GetDevice()->m_nChipType;
+  }
+        return C86CTL_ERR_NONE;
 }
 
 /* IRealChip3 */
@@ -654,11 +650,10 @@ C86CtlErr CGimic::Chip3::getChipStatus(UINT nAddr, UINT8* pcStatus)
 	sData[2] = static_cast<UINT8>(nAddr & 1);
 	UINT8 sRecv[4];
 	const C86CtlErr ret = GetDevice()->Transaction(sData, sizeof(sData), sRecv, sizeof(sRecv));
-	if ((ret == C86CTL_ERR_NONE) && (pcStatus != NULL))
-	{
-		*pcStatus = sRecv[0];
-	}
-	return ret;
+        if ((ret == C86CTL_ERR_NONE) && (pcStatus != nullptr)) {
+          *pcStatus = sRecv[0];
+        }
+        return ret;
 }
 
 /**
@@ -699,11 +694,10 @@ void CGimic::Chip3::directOut(UINT nAddr, UINT8 cData)
  */
 C86CtlErr CGimic::Chip3::getChipType(ChipType* pnType)
 {
-	if (pnType != NULL)
-	{
-		*pnType = GetDevice()->m_nChipType;
-	}
-	return C86CTL_ERR_NONE;
+  if (pnType != nullptr) {
+    *pnType = GetDevice()->m_nChipType;
+  }
+        return C86CTL_ERR_NONE;
 }
 
 }	// namespace c86ctl

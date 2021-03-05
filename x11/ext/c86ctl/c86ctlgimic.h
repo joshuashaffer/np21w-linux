@@ -117,8 +117,9 @@ private:
 	Chip3 m_chip3;			/*!< chip3 */
 	FMDATA m_que[0x400];	/*!< que */
 
-	C86CtlErr Transaction(const void* lpOutput, int cbOutput, void* lpInput = NULL, int cbInput = 0);
-	C86CtlErr Reset();
+        C86CtlErr Transaction(const void *lpOutput, int cbOutput,
+                              void *lpInput = nullptr, int cbInput = 0);
+        C86CtlErr Reset();
 	C86CtlErr GetInfo(UINT8 cParam, c86ctl::Devinfo* pInfo);
 	static void TailZeroFill(char* lpBuffer, size_t cbBuffer);
 	UINT GetChipAddr(UINT nAddr) const;

@@ -32,9 +32,9 @@ void opl3_construct(POPL3 opl3)
  */
 void opl3_destruct(POPL3 opl3)
 {
-	CExternalOpl3* pExt = reinterpret_cast<CExternalOpl3*>(opl3->userdata);
-	CExternalChipManager::GetInstance()->Release(pExt);
-	opl3->userdata = 0;
+  auto *pExt = reinterpret_cast<CExternalOpl3 *>(opl3->userdata);
+  CExternalChipManager::GetInstance()->Release(pExt);
+  opl3->userdata = 0;
 }
 
 /**
@@ -53,11 +53,10 @@ void opl3_reset(POPL3 opl3, REG8 cCaps)
 
 	if (cCaps == 0)
 	{
-		CExternalOpl3* pExt = reinterpret_cast<CExternalOpl3*>(opl3->userdata);
-		if (pExt)
-		{
-			CExternalChipManager::GetInstance()->Release(pExt);
-			opl3->userdata = 0;
+          auto *pExt = reinterpret_cast<CExternalOpl3 *>(opl3->userdata);
+          if (pExt) {
+            CExternalChipManager::GetInstance()->Release(pExt);
+            opl3->userdata = 0;
 		}
 	}
 }
@@ -108,28 +107,24 @@ void opl3_bind(POPL3 opl3)
 
 	nBaseClock = (cCaps & OPL3_HAS_OPL3) ? 3579545 : 3993600;
 
-	CExternalOpl3* pExt = reinterpret_cast<CExternalOpl3*>(opl3->userdata);
-	if (pExt == NULL)
-	{
-		IExternalChip::ChipType nChipType = IExternalChip::kNone;
-		UINT nClock = nBaseClock;
-		if (cCaps & OPL3_HAS_OPL3)
-		{
-			nChipType = IExternalChip::kYMF262;
-			nClock *= 4;
-		}
-		else if (cCaps & OPL3_HAS_OPL2)
-		{
-			nChipType = IExternalChip::kYM3812;
-		}
-		else
-		{
-			nChipType = IExternalChip::kY8950;
-		}
-		pExt = static_cast<CExternalOpl3*>(CExternalChipManager::GetInstance()->GetInterface(nChipType, nClock));
-		opl3->userdata = reinterpret_cast<INTPTR>(pExt);
-	}
-	if (pExt)
+        auto *pExt = reinterpret_cast<CExternalOpl3 *>(opl3->userdata);
+        if (pExt == nullptr) {
+          IExternalChip::ChipType nChipType = IExternalChip::kNone;
+          UINT nClock = nBaseClock;
+          if (cCaps & OPL3_HAS_OPL3) {
+            nChipType = IExternalChip::kYMF262;
+            nClock *= 4;
+          } else if (cCaps & OPL3_HAS_OPL2) {
+            nChipType = IExternalChip::kYM3812;
+          } else {
+            nChipType = IExternalChip::kY8950;
+          }
+          pExt = static_cast<CExternalOpl3 *>(
+              CExternalChipManager::GetInstance()->GetInterface(nChipType,
+                                                                nClock));
+          opl3->userdata = reinterpret_cast<INTPTR>(pExt);
+        }
+        if (pExt)
 	{
 		pExt->Reset();
 	}
@@ -139,12 +134,11 @@ void opl3_bind(POPL3 opl3)
 	}
 	restore(opl3);
 
-	if (pExt == NULL)
-	{
-		sound_streamregist(&opl3->oplgen, (SOUNDCB)oplgen_getpcm);
-	}
+        if (pExt == nullptr) {
+          sound_streamregist(&opl3->oplgen, (SOUNDCB)oplgen_getpcm);
+        }
 
-	keydisp_bindopl3(opl3->s.reg, (cCaps & OPL3_HAS_OPL3) ? 18 : 9, nBaseClock);
+        keydisp_bindopl3(opl3->s.reg, (cCaps & OPL3_HAS_OPL3) ? 18 : 9, nBaseClock);
 }
 
 /**
@@ -232,8 +226,8 @@ static void writeRegister(POPL3 opl3, UINT nAddress, REG8 cData)
 			return;
 	}
 
-	CExternalOpl3* pExt = reinterpret_cast<CExternalOpl3*>(opl3->userdata);
-	if (pExt)
+        auto *pExt = reinterpret_cast<CExternalOpl3 *>(opl3->userdata);
+        if (pExt)
 	{
 		pExt->WriteRegister(nAddress, cData);
 	}
@@ -310,8 +304,8 @@ static void writeExtendedRegister(POPL3 opl3, UINT nAddress, REG8 cData)
 			return;
 	}
 
-	CExternalOpl3* pExt = reinterpret_cast<CExternalOpl3*>(opl3->userdata);
-	if (pExt)
+        auto *pExt = reinterpret_cast<CExternalOpl3 *>(opl3->userdata);
+        if (pExt)
 	{
 		pExt->WriteRegister(nAddress + 0x100, cData);
 	}

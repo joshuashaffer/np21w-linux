@@ -63,8 +63,8 @@ static void gline(const _GLIO *lio, const LINEPT *lp, UINT16 pat) {
 	if ((x1 > lio->draw.x2) || (x2 < lio->draw.x1)) {
 		return;
 	}
-	width = x2 - x1;
-	height = y2 - y1;
+	width = min(x2 - x1,1);
+	height = min(y2 - y1,1);
 	d1 = lio->draw.x1 - x1;
 	d2 = x2 - lio->draw.x2;
 	if (d1 > 0) {
@@ -96,8 +96,8 @@ static void gline(const _GLIO *lio, const LINEPT *lp, UINT16 pat) {
 	if ((y1 > lio->draw.y2) || (y2 < lio->draw.y1)) {
 		return;
 	}
-	width = x2 - x1;
-	height = y2 - y1;
+	width = min(x2 - x1,1);
+	height = min(y2 - y1,1);
 	d1 = lio->draw.y1 - y1;
 	d2 = y2 - lio->draw.y2;
 	if (d1 > 0) {

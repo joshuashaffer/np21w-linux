@@ -89,15 +89,13 @@ static const BoardName s_names[] =
  */
 static const char* GetBoardName(CBUS_BOARD_TYPE nType)
 {
-	const CBUS_BOARD_TYPE nId = static_cast<CBUS_BOARD_TYPE>(nType & 0xffff);
-	for (UINT i = 0; i < NELEMENTS(s_names); i++)
-	{
-		if (s_names[i].nId == nId)
-		{
-			return s_names[i].lpName;
-		}
-	}
-	return "UNKNOWN";
+  const auto nId = static_cast<CBUS_BOARD_TYPE>(nType & 0xffff);
+  for (auto s_name : s_names) {
+    if (s_name.nId == nId) {
+      return s_name.lpName;
+    }
+  }
+        return "UNKNOWN";
 }
 
 /**
@@ -188,11 +186,10 @@ C86CtlErr CC86Box::deinitialize()
 	Stop();
 	m_usb.Close();
 
-	for (std::vector<Chip3*>::iterator it = m_chips.begin(); it != m_chips.end(); ++it)
-	{
-		delete *it;
-	}
-	m_chips.clear();
+        for (auto &m_chip : m_chips) {
+          delete m_chip;
+        }
+        m_chips.clear();
 
 	return C86CTL_ERR_NONE;
 }
@@ -215,18 +212,17 @@ size_t CC86Box::getNumberOfChip()
  */
 C86CtlErr CC86Box::getChipInterface(size_t id, IID riid, void** ppi)
 {
-	if (ppi == NULL)
-	{
-		return C86CTL_ERR_INVALID_PARAM;
-	}
+  if (ppi == nullptr) {
+    return C86CTL_ERR_INVALID_PARAM;
+  }
 
-	if (id >= m_chips.size())
+        if (id >= m_chips.size())
 	{
 		return C86CTL_ERR_NODEVICE;
 	}
 
-	IRealUnknown* pUnknown = NULL;
-	switch (riid)
+        IRealUnknown *pUnknown = nullptr;
+        switch (riid)
 	{
 		case IID_IRealChip:
 		case IID_IRealChip2:
@@ -238,12 +234,11 @@ C86CtlErr CC86Box::getChipInterface(size_t id, IID riid, void** ppi)
 			break;
 	}
 
-	if (pUnknown == NULL)
-	{
-		return C86CTL_ERR_UNSUPPORTED;
-	}
+        if (pUnknown == nullptr) {
+          return C86CTL_ERR_UNSUPPORTED;
+        }
 
-	pUnknown->AddRef();
+        pUnknown->AddRef();
 	*ppi = pUnknown;
 	return C86CTL_ERR_NONE;
 }
@@ -264,12 +259,12 @@ C86CtlErr CC86Box::Transaction(const void* lpOutput, int cbOutput, void* lpInput
 	}
 
 	char sBuffer[64];
-	if ((lpOutput == NULL) || (cbOutput <= 0) || (cbOutput >= sizeof(sBuffer)))
-	{
-		return C86CTL_ERR_INVALID_PARAM;
-	}
+        if ((lpOutput == nullptr) || (cbOutput <= 0) ||
+            (cbOutput >= sizeof(sBuffer))) {
+          return C86CTL_ERR_INVALID_PARAM;
+        }
 
-	::memcpy(sBuffer, lpOutput, cbOutput);
+        ::memcpy(sBuffer, lpOutput, cbOutput);
 	if (cbOutput < sizeof(sBuffer))
 	{
 		::memset(sBuffer + cbOutput, 0xff, sizeof(sBuffer) - cbOutput);
@@ -288,12 +283,11 @@ C86CtlErr CC86Box::Transaction(const void* lpOutput, int cbOutput, void* lpInput
 		return C86CTL_ERR_UNKNOWN;
 	}
 
-	if ((lpInput != NULL) && (cbInput > 0))
-	{
-		cbInput = (std::min)(cbInput, static_cast<int>(sizeof(sBuffer)));
-		::memcpy(lpInput, sBuffer, cbInput);
-	}
-	return C86CTL_ERR_NONE;
+        if ((lpInput != nullptr) && (cbInput > 0)) {
+          cbInput = (std::min)(cbInput, static_cast<int>(sizeof(sBuffer)));
+          ::memcpy(lpInput, sBuffer, cbInput);
+        }
+        return C86CTL_ERR_NONE;
 }
 
 /**
@@ -496,11 +490,10 @@ void CC86Box::Chip3::directOut(UINT nAddr, UINT8 cData)
  */
 C86CtlErr CC86Box::Chip3::getChipType(ChipType* pnType)
 {
-	if (pnType != NULL)
-	{
-		*pnType = m_nChipType;
-	}
-	return C86CTL_ERR_NONE;
+  if (pnType != nullptr) {
+    *pnType = m_nChipType;
+  }
+        return C86CTL_ERR_NONE;
 }
 
 }	// namespace c86ctl

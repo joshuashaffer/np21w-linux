@@ -114,11 +114,10 @@ size_t CSpfmLight::Release()
  */
 void CSpfmLight::Add(const SCCI_SOUND_CHIP_INFO& info)
 {
-	std::map<UINT, CSoundChip*>::iterator it = m_chips.find(info.dBusID);
-	if (it == m_chips.end())
-	{
-		m_chips[info.dBusID] = new Chip(this, info);
-		m_info.iSoundChipCount++;
+  auto it = m_chips.find(info.dBusID);
+  if (it == m_chips.end()) {
+    m_chips[info.dBusID] = new Chip(this, info);
+    m_info.iSoundChipCount++;
 	}
 }
 

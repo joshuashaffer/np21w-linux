@@ -47,14 +47,14 @@ bool FileIO::Open(const char* filename, uint flg)
 
 	pfile = fopen(filename, mode);
 
-	flags = (flg & readonly) | (pfile == NULL ? 0 : open);
+        flags = (flg & readonly) | (pfile == nullptr ? 0 : open);
 
-	if (pfile == NULL)
-		error = file_not_found;
+        if (pfile == nullptr)
+          error = file_not_found;
 
 	SetLogicalOrigin(0);
 
-	return !(pfile == NULL);
+        return !(pfile == nullptr);
 }
 
 // ---------------------------------------------------------------------------
@@ -107,7 +107,7 @@ int32 FileIO::Read(void* dest, int32 size)
 	DWORD readsize;
 	if (!(readsize = fread(dest, 1, size, pfile)))
 		return -1;
-	return size;
+	return readsize;
 }
 
 // ---------------------------------------------------------------------------

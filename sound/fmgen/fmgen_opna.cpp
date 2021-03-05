@@ -204,11 +204,10 @@ OPN::OPN()
 
 	csmch = &ch[2];
 
-	for (int i=0; i<3; i++)
-	{
-		ch[i].SetChip(&chip);
-		ch[i].SetType(typeN);
-	}
+        for (auto &i : ch) {
+          i.SetChip(&chip);
+          i.SetType(typeN);
+        }
 }
 
 //	������
@@ -370,11 +369,10 @@ void OPN::DataLoad(struct OPNData* data) {
 		ch[i].DataLoad(&data->ch[i]);
 	}
 	csmch = &ch[2];
-	for (int i=0; i<3; i++)
-	{
-		ch[i].SetChip(&chip);
-		ch[i].SetType(typeN);
-	}
+        for (auto &i : ch) {
+          i.SetChip(&chip);
+          i.SetType(typeN);
+        }
 }
 
 //	����(2ch)
@@ -434,21 +432,20 @@ bool OPNABase::tablehasmade = false;
 
 OPNABase::OPNABase()
 {
-	adpcmbuf = NULL;
-	memaddr = 0;
-	startaddr = 0;
-	deltan = 256;
+  adpcmbuf = nullptr;
+  memaddr = 0;
+  startaddr = 0;
+  deltan = 256;
 
-	adpcmvol = 0;
-	control2 = 0;
+  adpcmvol = 0;
+  control2 = 0;
 
-	MakeTable2();
-	BuildLFOTable();
-	for (int i=0; i<6; i++)
-	{
-		ch[i].SetChip(&chip);
-		ch[i].SetType(typeN);
-	}
+  MakeTable2();
+  BuildLFOTable();
+  for (auto &i : ch) {
+    i.SetChip(&chip);
+    i.SetType(typeN);
+        }
 }
 
 OPNABase::~OPNABase()
@@ -562,10 +559,10 @@ void OPNABase::DataSave(struct OPNABaseData* data) {
 	data->lfodcount = lfodcount;
 	memcpy(data->fnum, fnum, sizeof(uint) * 6);
 	memcpy(data->fnum3, fnum3, sizeof(uint) * 3);
-	data->is_adpcmbuf = 0;
-	if(adpcmbuf) {
-		data->is_adpcmbuf = 1;
-		memcpy(data->adpcmbuf, adpcmbuf, 0x40000);
+        data->is_adpcmbuf = false;
+        if(adpcmbuf) {
+          data->is_adpcmbuf = true;
+          memcpy(data->adpcmbuf, adpcmbuf, 0x40000);
 	}
 	data->adpcmmask = adpcmmask;
 	data->adpcmnotice = adpcmnotice;
@@ -1325,14 +1322,13 @@ void OPNABase::Mix6(Sample* buffer, int nsamples, int activech)
 //
 OPNA::OPNA()
 {
-	for (int i=0; i<6; i++)
-	{
-		rhythm[i].sample = NULL;
-		rhythm[i].pos = 0;
-		rhythm[i].size = 0;
-		rhythm[i].volume = 0;
-	}
-	rhythmtvol = 0;
+  for (auto &i : rhythm) {
+    i.sample = nullptr;
+    i.pos = 0;
+    i.size = 0;
+    i.volume = 0;
+  }
+        rhythmtvol = 0;
 	adpcmmask = 0x3ffff;
 	adpcmnotice = 4;
 	csmch = &ch[2];
@@ -1344,14 +1340,14 @@ OPNA::~OPNA()
 {
 	if(adpcmbuf){
 		delete[] adpcmbuf;
-		adpcmbuf = NULL;
-	}
-	for (int i=0; i<6; i++){
-		if(rhythm[i].sample){
-			delete[] rhythm[i].sample;
-			rhythm[i].sample = NULL;
-		}
-	}
+                adpcmbuf = nullptr;
+        }
+        for (auto &i : rhythm) {
+          if (i.sample) {
+            delete[] i.sample;
+            i.sample = nullptr;
+          }
+        }
 }
 
 
@@ -1402,11 +1398,10 @@ bool OPNA::SetRate(uint c, uint r, bool ipflag)
 	if (!OPNABase::SetRate(c, r, ipflag))
 		return false;
 
-	for (int i=0; i<6; i++)
-	{
-		rhythm[i].step = rhythm[i].rate * 1024 / r;
-	}
-	return true;
+        for (auto &i : rhythm) {
+          i.step = i.rate * 1024 / r;
+        }
+        return true;
 }
 
 
@@ -1492,8 +1487,8 @@ bool OPNA::LoadRhythmSample(const char* path)
 		for (i=0; i<6; i++)
 		{
 			delete[] rhythm[i].sample;
-			rhythm[i].sample = NULL;
-		}
+                        rhythm[i].sample = nullptr;
+                }
 		return false;
 	}
 	return true;
@@ -1669,22 +1664,21 @@ void OPNA::Mix(Sample* buffer, int nsamples)
 //
 OPNB::OPNB()
 {
-	adpcmabuf = NULL;
-	adpcmasize = 0;
-	for (int i=0; i<6; i++)
-	{
-		adpcma[i].pan = 0;
-		adpcma[i].level = 0;
-		adpcma[i].volume = 0;
-		adpcma[i].pos = 0;
-		adpcma[i].step = 0;
-		adpcma[i].volume = 0;
-		adpcma[i].start = 0;
-		adpcma[i].stop = 0;
-		adpcma[i].adpcmx = 0;
-		adpcma[i].adpcmd = 0;
-	}
-	adpcmatl = 0;
+  adpcmabuf = nullptr;
+  adpcmasize = 0;
+  for (auto &i : adpcma) {
+    i.pan = 0;
+    i.level = 0;
+    i.volume = 0;
+    i.pos = 0;
+    i.step = 0;
+    i.volume = 0;
+    i.start = 0;
+    i.stop = 0;
+    i.adpcmx = 0;
+    i.adpcmd = 0;
+        }
+        adpcmatl = 0;
 	adpcmakey = 0;
 	adpcmatvol = 0;
 	adpcmmask = 0;
@@ -1750,20 +1744,19 @@ void OPNB::Reset()
 	stmask = ~0;
 	adpcmakey = 0;
 	reg29 = ~0;
-	
-	for (int i=0; i<6; i++) 
-	{
-		adpcma[i].pan = 0;
-		adpcma[i].level = 0;
-		adpcma[i].volume = 0;
-		adpcma[i].pos = 0;
-		adpcma[i].step = 0;
-		adpcma[i].volume = 0;
-		adpcma[i].start = 0;
-		adpcma[i].stop = 0;
-		adpcma[i].adpcmx = 0;
-		adpcma[i].adpcmd = 0;
-	}
+
+        for (auto &i : adpcma) {
+          i.pan = 0;
+          i.level = 0;
+          i.volume = 0;
+          i.pos = 0;
+          i.step = 0;
+          i.volume = 0;
+          i.start = 0;
+          i.stop = 0;
+          i.adpcmx = 0;
+          i.adpcmd = 0;
+        }
 }
 
 // ---------------------------------------------------------------------------

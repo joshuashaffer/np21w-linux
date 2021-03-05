@@ -25,11 +25,10 @@ OPM::OPM()
 	lfo_count_ = 0;
 	lfo_count_prev_ = ~0;
 	BuildLFOTable();
-	for (int i=0; i<8; i++)
-	{
-		ch[i].SetChip(&chip);
-		ch[i].SetType(typeM);
-	}
+        for (auto &i : ch) {
+          i.SetChip(&chip);
+          i.SetType(typeM);
+        }
 }
 
 // ---------------------------------------------------------------------------
@@ -116,12 +115,11 @@ void OPM::TimerA()
 {
 	if (regtc & 0x80)
 	{
-		for (int i=0; i<8; i++)
-		{
-			ch[i].KeyControl(0);
-			ch[i].KeyControl(0xf);
-		}
-	}
+          for (auto &i : ch) {
+            i.KeyControl(0);
+            i.KeyControl(0xf);
+          }
+        }
 }
 
 // ---------------------------------------------------------------------------
@@ -460,10 +458,10 @@ void OPM::Mix(Sample* buffer, int nsamples)
 	
 	// odd bits - active, even bits - lfo
 	uint activech=0;
-	for (int i=0; i<8; i++)
-		activech = (activech << 2) | ch[i].Prepare();
+        for (auto &i : ch)
+          activech = (activech << 2) | i.Prepare();
 
-	if (activech & 0x5555)
+        if (activech & 0x5555)
 	{
 		// LFO 波形初期化ビット = 1 ならば LFO はかからない?
 		if (reg01 & 0x02)

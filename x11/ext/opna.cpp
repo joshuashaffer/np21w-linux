@@ -32,9 +32,9 @@ void opna_construct(POPNA opna)
  */
 void opna_destruct(POPNA opna)
 {
-	CExternalOpna* pExt = reinterpret_cast<CExternalOpna*>(opna->userdata);
-	CExternalChipManager::GetInstance()->Release(pExt);
-	opna->userdata = 0;
+  auto *pExt = reinterpret_cast<CExternalOpna *>(opna->userdata);
+  CExternalChipManager::GetInstance()->Release(pExt);
+  opna->userdata = 0;
 }
 
 /**
@@ -69,11 +69,10 @@ void opna_reset(POPNA opna, REG8 cCaps)
 
 	if (cCaps == 0)
 	{
-		CExternalOpna* pExt = reinterpret_cast<CExternalOpna*>(opna->userdata);
-		if (pExt)
-		{
-			CExternalChipManager::GetInstance()->Release(pExt);
-			opna->userdata = 0;
+          auto *pExt = reinterpret_cast<CExternalOpna *>(opna->userdata);
+          if (pExt) {
+            CExternalChipManager::GetInstance()->Release(pExt);
+            opna->userdata = 0;
 		}
 	}
 }
@@ -153,27 +152,24 @@ void opna_bind(POPNA opna)
 		keydisp_bindpsg(opna->s.reg, nClock);
 	}
 
-	CExternalOpna* pExt = reinterpret_cast<CExternalOpna*>(opna->userdata);
-	if (pExt == NULL)
-	{
-		IExternalChip::ChipType nChipType = IExternalChip::kYM2203;
-		if (cCaps & OPNA_HAS_EXTENDEDFM)
-		{
-			nChipType = IExternalChip::kYMF288;
-			nClock *= 2;
-			if (cCaps & OPNA_HAS_ADPCM)
-			{
-				nChipType = IExternalChip::kYM2608;
-			}
-			else if (cCaps == OPNA_MODE_3438)
-			{
-				nChipType = IExternalChip::kYM3438;
-			}
-		}
-		pExt = static_cast<CExternalOpna*>(CExternalChipManager::GetInstance()->GetInterface(nChipType, nClock));
-		opna->userdata = reinterpret_cast<INTPTR>(pExt);
-	}
-	if (pExt)
+        auto *pExt = reinterpret_cast<CExternalOpna *>(opna->userdata);
+        if (pExt == nullptr) {
+          IExternalChip::ChipType nChipType = IExternalChip::kYM2203;
+          if (cCaps & OPNA_HAS_EXTENDEDFM) {
+            nChipType = IExternalChip::kYMF288;
+            nClock *= 2;
+            if (cCaps & OPNA_HAS_ADPCM) {
+              nChipType = IExternalChip::kYM2608;
+            } else if (cCaps == OPNA_MODE_3438) {
+              nChipType = IExternalChip::kYM3438;
+            }
+          }
+          pExt = static_cast<CExternalOpna *>(
+              CExternalChipManager::GetInstance()->GetInterface(nChipType,
+                                                                nClock));
+          opna->userdata = reinterpret_cast<INTPTR>(pExt);
+        }
+        if (pExt)
 	{
 		pExt->Reset();
 		pExt->WriteRegister(0x22, 0x00);
@@ -295,9 +291,9 @@ void opna_writeRegister(POPNA opna, UINT nAddress, REG8 cData)
 static void writeRegister(POPNA opna, UINT nAddress, REG8 cData)
 {
 	const UINT8 cCaps = opna->s.cCaps;
-	CExternalOpna* pExt = reinterpret_cast<CExternalOpna*>(opna->userdata);
+        auto *pExt = reinterpret_cast<CExternalOpna *>(opna->userdata);
 
-	if (nAddress < 0x10)
+        if (nAddress < 0x10)
 	{
 		if (cCaps & OPNA_HAS_PSG)
 		{
@@ -441,9 +437,9 @@ void opna_writeExtendedRegister(POPNA opna, UINT nAddress, REG8 cData)
 static void writeExtendedRegister(POPNA opna, UINT nAddress, REG8 cData)
 {
 	const UINT8 cCaps = opna->s.cCaps;
-	CExternalOpna* pExt = reinterpret_cast<CExternalOpna*>(opna->userdata);
+        auto *pExt = reinterpret_cast<CExternalOpna *>(opna->userdata);
 
-	if (nAddress < 0x12)
+        if (nAddress < 0x12)
 	{
 		if (cCaps & OPNA_HAS_ADPCM)
 		{

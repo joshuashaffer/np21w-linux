@@ -267,9 +267,12 @@ namespace FM
 		void Mute(bool);
 		void Refresh();
 
-		void dbgStopPG() { for (int i=0; i<4; i++) op[i].dbgStopPG(); }
-		
-		void DataSave(struct Channel4Data* data);
+		void dbgStopPG() {
+                  for (auto &i : op)
+                    i.dbgStopPG();
+                }
+
+                void DataSave(struct Channel4Data* data);
 		void DataLoad(struct Channel4Data* data);
 	
 	private:

@@ -22,12 +22,11 @@ CRealChipBase CRealChipBase::sm_instance;
  */
 C86CtlErr CreateInstance(IID riid, void** ppi)
 {
-	if (ppi == NULL)
-	{
-		return C86CTL_ERR_INVALID_PARAM;
-	}
+  if (ppi == nullptr) {
+    return C86CTL_ERR_INVALID_PARAM;
+  }
 
-	if (riid != IID_IRealChipBase)
+        if (riid != IID_IRealChipBase)
 	{
 		return C86CTL_ERR_UNSUPPORTED;
 	}
@@ -81,24 +80,22 @@ C86CtlErr CRealChipBase::initialize()
 {
 	for (UINT i = 0; i < 1; i++)
 	{
-		CGimic* pGimic = new CGimic(i);
-		if (pGimic->initialize() != C86CTL_ERR_NONE)
-		{
-			pGimic->deinitialize();
-			delete pGimic;
-			continue;
+          auto *pGimic = new CGimic(i);
+          if (pGimic->initialize() != C86CTL_ERR_NONE) {
+            pGimic->deinitialize();
+            delete pGimic;
+            continue;
 		}
 		m_devices.push_back(pGimic);
 	}
 
 	for (UINT i = 0; i < 1; i++)
 	{
-		CC86Box* pC86Box = new CC86Box(i);
-		if (pC86Box->initialize() != C86CTL_ERR_NONE)
-		{
-			pC86Box->deinitialize();
-			delete pC86Box;
-			continue;
+          auto *pC86Box = new CC86Box(i);
+          if (pC86Box->initialize() != C86CTL_ERR_NONE) {
+            pC86Box->deinitialize();
+            delete pC86Box;
+            continue;
 		}
 		m_devices.push_back(pC86Box);
 	}
@@ -112,13 +109,11 @@ C86CtlErr CRealChipBase::initialize()
  */
 C86CtlErr CRealChipBase::deinitialize()
 {
-	for (std::vector<CDevice*>::iterator it = m_devices.begin(); it != m_devices.end(); ++it)
-	{
-		CDevice* pDevice = *it;
-		pDevice->deinitialize();
-		delete pDevice;
-	}
-	m_devices.clear();
+  for (auto pDevice : m_devices) {
+    pDevice->deinitialize();
+    delete pDevice;
+  }
+        m_devices.clear();
 
 	return C86CTL_ERR_NONE;
 }
@@ -130,11 +125,10 @@ C86CtlErr CRealChipBase::deinitialize()
 size_t CRealChipBase::getNumberOfChip()
 {
 	size_t nChips = 0;
-	for (std::vector<CDevice*>::iterator it = m_devices.begin(); it != m_devices.end(); ++it)
-	{
-		nChips += (*it)->getNumberOfChip();
-	}
-	return nChips;
+        for (auto &m_device : m_devices) {
+          nChips += m_device->getNumberOfChip();
+        }
+        return nChips;
 }
 
 /**
@@ -146,22 +140,18 @@ size_t CRealChipBase::getNumberOfChip()
  */
 C86CtlErr CRealChipBase::getChipInterface(size_t id, IID riid, void** ppi)
 {
-	if (ppi == NULL)
-	{
-		return C86CTL_ERR_INVALID_PARAM;
-	}
+  if (ppi == nullptr) {
+    return C86CTL_ERR_INVALID_PARAM;
+  }
 
-	for (std::vector<CDevice*>::iterator it = m_devices.begin(); it != m_devices.end(); ++it)
-	{
-		CDevice* pDevice = *it;
-		const size_t nChips = pDevice->getNumberOfChip();
-		if (id < nChips)
-		{
-			return pDevice->getChipInterface(id, riid, ppi);
-		}
-		id -= nChips;
-	}
-	return C86CTL_ERR_NODEVICE;
+        for (auto pDevice : m_devices) {
+          const size_t nChips = pDevice->getNumberOfChip();
+          if (id < nChips) {
+            return pDevice->getChipInterface(id, riid, ppi);
+          }
+          id -= nChips;
+        }
+        return C86CTL_ERR_NODEVICE;
 }
 
 /**

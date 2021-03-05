@@ -15,8 +15,9 @@ class CTty
 public:
 	CTty();
 	~CTty();
-	bool Open(const char* dev, unsigned int speed = 0, const char* param = NULL);
-	void Close();
+        bool Open(const char *dev, unsigned int speed = 0,
+                  const char *param = nullptr);
+        void Close();
 	ssize_t Read(void* data_ptr, ssize_t data_size);
 	ssize_t Write(const void* data_ptr, ssize_t data_size);
 	bool IsOpened() const;

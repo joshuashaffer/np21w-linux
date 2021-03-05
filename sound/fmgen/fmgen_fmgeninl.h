@@ -196,8 +196,8 @@ inline void Operator::SetMS(uint ms)
 //	オペレータの種類 (LFO) を設定
 inline void Channel4::SetType(OpType type)
 {
-	for (int i=0; i<4; i++)
-		op[i].type_ = type;
+  for (auto &i : op)
+    i.type_ = type;
 }
 
 //	セルフ・フィードバックレートの設定 (0-7)
@@ -218,23 +218,23 @@ inline void Channel4::SetMS(uint ms)
 //	チャンネル・マスク
 inline void Channel4::Mute(bool m)
 {
-	for (int i=0; i<4; i++)
-		op[i].Mute(m);
+  for (auto &i : op)
+    i.Mute(m);
 }
 
 //	内部パラメータを再計算
 inline void Channel4::Refresh()
 {
-	for (int i=0; i<4; i++)
-		op[i].param_changed_ = true;
-	PARAMCHANGE(3);
+  for (auto &i : op)
+    i.param_changed_ = true;
+  PARAMCHANGE(3);
 }
 
 inline void Channel4::SetChip(Chip* chip)
 {
 	chip_ = chip;
-	for (int i=0; i<4; i++)
-		op[i].SetChip(chip);
+        for (auto &i : op)
+          i.SetChip(chip);
 }
 
 // ---------------------------------------------------------------------------

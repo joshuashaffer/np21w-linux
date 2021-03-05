@@ -62,8 +62,8 @@ void CThreadBase::Stop()
 	if (m_bCreated)
 	{
 		m_bDone = true;
-		::pthread_join(m_thread, NULL);
-		m_bCreated = false;
+                ::pthread_join(m_thread, nullptr);
+                m_bCreated = false;
 	}
 }
 
@@ -79,5 +79,5 @@ void* CThreadBase::StartRoutine(void* arg)
 	{
 	}
 
-	return 0;
+        return nullptr;
 }

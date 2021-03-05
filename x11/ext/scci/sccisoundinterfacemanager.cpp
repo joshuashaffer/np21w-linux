@@ -47,10 +47,9 @@ CSoundInterfaceManager::~CSoundInterfaceManager()
  */
 void CSoundInterfaceManager::Delete(CSoundInterface* pInterface)
 {
-	std::vector<CSoundInterface*>::iterator it = std::find(m_interfaces.begin(), m_interfaces.end(), pInterface);
-	if (it != m_interfaces.end())
-	{
-		m_interfaces.erase(it);
+  auto it = std::find(m_interfaces.begin(), m_interfaces.end(), pInterface);
+  if (it != m_interfaces.end()) {
+    m_interfaces.erase(it);
 	}
 }
 
@@ -76,8 +75,8 @@ const SCCI_INTERFACE_INFO* CSoundInterfaceManager::getInterfaceInfo(size_t iInte
 	}
 	else
 	{
-		return NULL;
-	}
+          return nullptr;
+        }
 }
 
 /**
@@ -96,8 +95,8 @@ SoundInterface* CSoundInterfaceManager::getInterface(size_t iInterfaceNo)
 	}
 	else
 	{
-		return NULL;
-	}
+          return nullptr;
+        }
 }
 
 /**
@@ -108,12 +107,12 @@ SoundInterface* CSoundInterfaceManager::getInterface(size_t iInterfaceNo)
  */
 bool CSoundInterfaceManager::releaseInterface(SoundInterface* pSoundInterface)
 {
-	std::vector<CSoundInterface*>::iterator it = std::find(m_attachedInterfaces.begin(), m_attachedInterfaces.end(), pSoundInterface);
-	if (it != m_attachedInterfaces.end())
-	{
-		m_attachedInterfaces.erase(it);
-		static_cast<CSoundInterface*>(pSoundInterface)->Release();
-		return true;
+  auto it = std::find(m_attachedInterfaces.begin(), m_attachedInterfaces.end(),
+                      pSoundInterface);
+  if (it != m_attachedInterfaces.end()) {
+    m_attachedInterfaces.erase(it);
+    static_cast<CSoundInterface *>(pSoundInterface)->Release();
+    return true;
 	}
 	else
 	{
@@ -145,18 +144,16 @@ SoundChip* CSoundInterfaceManager::getSoundChip(SC_CHIP_TYPE iSoundChipType, UIN
 {
 	if (iSoundChipType == SC_TYPE_NONE)
 	{
-		return NULL;
-	}
+          return nullptr;
+        }
 
-	for (std::vector<CSoundInterface*>::iterator it = m_interfaces.begin(); it != m_interfaces.end(); ++it)
-	{
-		SoundChip* pChip = (*it)->GetSoundChip(iSoundChipType, dClock);
-		if (pChip)
-		{
-			return pChip;
-		}
-	}
-	return NULL;
+        for (auto &m_interface : m_interfaces) {
+          SoundChip *pChip = m_interface->GetSoundChip(iSoundChipType, dClock);
+          if (pChip) {
+            return pChip;
+          }
+        }
+        return nullptr;
 }
 
 /**
@@ -195,11 +192,10 @@ bool CSoundInterfaceManager::setDelay(UINT dMSec)
 	}
 	m_nDelayTime = dMSec;
 
-	for (std::vector<CSoundInterface*>::iterator it = m_interfaces.begin(); it != m_interfaces.end(); ++it)
-	{
-		(*it)->setDelay(dMSec);
-	}
-	return true;
+        for (auto &m_interface : m_interfaces) {
+          m_interface->setDelay(dMSec);
+        }
+        return true;
 }
 
 /**
@@ -219,14 +215,12 @@ UINT CSoundInterfaceManager::getDelay()
 bool CSoundInterfaceManager::reset()
 {
 	bool err = false;
-	for (std::vector<CSoundInterface*>::iterator it = m_interfaces.begin(); it != m_interfaces.end(); ++it)
-	{
-		if (!(*it)->reset())
-		{
-			err = true;
-		}
-	}
-	return !err;
+        for (auto &m_interface : m_interfaces) {
+          if (!m_interface->reset()) {
+            err = true;
+          }
+        }
+        return !err;
 }
 
 /**

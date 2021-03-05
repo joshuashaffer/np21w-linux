@@ -21,8 +21,9 @@ public:
 	~CUsbDev();
 	bool Open(unsigned int vid, unsigned int pid, unsigned int nIndex = 0);
 	void Close();
-	int CtrlXfer(int nType, int nRequest, int nValue = 0, int nIndex = 0, void* lpBuffer = NULL, int cbBuffer = 0);
-	int WriteBulk(const void* lpBuffer, int cbBuffer);
+        int CtrlXfer(int nType, int nRequest, int nValue = 0, int nIndex = 0,
+                     void *lpBuffer = nullptr, int cbBuffer = 0);
+        int WriteBulk(const void* lpBuffer, int cbBuffer);
 	int ReadBulk(void* lpBuffer, int cbBuffer);
 	bool IsOpened() const;
 
@@ -42,8 +43,8 @@ private:
 inline bool CUsbDev::IsOpened() const
 {
 #ifdef USE_LIBUSB1
-	if (m_handle != NULL)
-		return true;
+  if (m_handle != nullptr)
+    return true;
 #endif
 	return false;
 }

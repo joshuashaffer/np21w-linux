@@ -66,10 +66,9 @@ size_t CSoundInterface::Release()
  */
 void CSoundInterface::ReleaseAllChips()
 {
-	for (std::map<UINT, CSoundChip*>::iterator it = m_chips.begin(); it != m_chips.end(); ++it)
-	{
-		it->second->Release();
-	}
+  for (auto &m_chip : m_chips) {
+    m_chip.second->Release();
+  }
 }
 
 /**
@@ -80,24 +79,21 @@ void CSoundInterface::ReleaseAllChips()
  */
 SoundChip* CSoundInterface::GetSoundChip(SC_CHIP_TYPE iSoundChipType, UINT dClock)
 {
-	for (std::map<UINT, CSoundChip*>::iterator it = m_chips.begin(); it != m_chips.end(); ++it)
-	{
-		CSoundChip* pChip = it->second;
-		if (!pChip->IsMatch(iSoundChipType, dClock))
-		{
-			continue;
-		}
+  for (auto &m_chip : m_chips) {
+    CSoundChip *pChip = m_chip.second;
+    if (!pChip->IsMatch(iSoundChipType, dClock)) {
+      continue;
+    }
 
-		SCCI_SOUND_CHIP_INFO* pInfo = pChip->GetSoundChipInfo();
-		if (pInfo->bIsUsed)
-		{
-			continue;
-		}
-		pInfo->bIsUsed = true;
-		AddRef();
-		return pChip;
-	}
-	return NULL;
+    SCCI_SOUND_CHIP_INFO *pInfo = pChip->GetSoundChipInfo();
+    if (pInfo->bIsUsed) {
+      continue;
+    }
+    pInfo->bIsUsed = true;
+    AddRef();
+    return pChip;
+  }
+  return nullptr;
 }
 
 /**
@@ -106,11 +102,10 @@ SoundChip* CSoundInterface::GetSoundChip(SC_CHIP_TYPE iSoundChipType, UINT dCloc
  */
 void CSoundInterface::Delete(UINT dBusID)
 {
-	std::map<UINT, CSoundChip*>::iterator it = m_chips.find(dBusID);
-	if (it != m_chips.end())
-	{
-		m_chips.erase(it);
-		m_info.iSoundChipCount--;
+  auto it = m_chips.find(dBusID);
+  if (it != m_chips.end()) {
+    m_chips.erase(it);
+    m_info.iSoundChipCount--;
 	}
 }
 

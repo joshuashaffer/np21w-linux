@@ -315,10 +315,10 @@ ssize_t CTty::Read(void* data_ptr, ssize_t data_size)
 	if (m_fd < 0) {
 		return 0;
 	}
-	if ((data_ptr == NULL) || (data_size <= 0)) {
-		return 0;
-	}
-	return ::read(m_fd, data_ptr, data_size);
+        if ((data_ptr == nullptr) || (data_size <= 0)) {
+          return 0;
+        }
+        return ::read(m_fd, data_ptr, data_size);
 }
 
 /**
@@ -332,10 +332,10 @@ ssize_t CTty::Write(const void* data_ptr, ssize_t data_size)
 	if (m_fd < 0) {
 		return 0;
 	}
-	if ((data_ptr == NULL) || (data_size <= 0)) {
-		return 0;
-	}
-	return ::write(m_fd, data_ptr, data_size);
+        if ((data_ptr == nullptr) || (data_size <= 0)) {
+          return 0;
+        }
+        return ::write(m_fd, data_ptr, data_size);
 }
 
 /**
@@ -348,64 +348,64 @@ ssize_t CTty::Write(const void* data_ptr, ssize_t data_size)
 bool CTty::SetParam(const char* param, tcflag_t* cflag_ptr)
 {
 	tcflag_t cflag = 0;
-	if (cflag_ptr != NULL) {
-		cflag = *cflag_ptr;
-	}
+        if (cflag_ptr != nullptr) {
+          cflag = *cflag_ptr;
+        }
 
-	if (param != NULL) {
-		cflag &= ~CSIZE;
-		switch (param[0]) {
-		case '5':
-			cflag |= CS5;
-			break;
+        if (param != nullptr) {
+          cflag &= ~CSIZE;
+          switch (param[0]) {
+          case '5':
+            cflag |= CS5;
+            break;
 
-		case '6':
-			cflag |= CS6;
-			break;
+          case '6':
+            cflag |= CS6;
+            break;
 
-		case '7':
-			cflag |= CS7;
-			break;
+          case '7':
+            cflag |= CS7;
+            break;
 
-		case '8':
-			cflag |= CS8;
-			break;
+          case '8':
+            cflag |= CS8;
+            break;
 
-		case '4':
-		default:
-			return false;
-		}
+          case '4':
+          default:
+            return false;
+          }
 
-		switch (param[1]) {
-		case 'N':		// for no parity
-			cflag &= ~(PARENB | PARODD);
-			break;
+          switch (param[1]) {
+          case 'N': // for no parity
+            cflag &= ~(PARENB | PARODD);
+            break;
 
-		case 'E':		// for even parity
-			cflag |= PARENB;
-			break;
+          case 'E': // for even parity
+            cflag |= PARENB;
+            break;
 
-		case 'O':		// for odd parity
-			cflag |= PARENB | PARODD;
-			break;
+          case 'O': // for odd parity
+            cflag |= PARENB | PARODD;
+            break;
 
-		case 'M':		// for mark parity
-		case 'S':		// for space parity
-		default:
-			return false;
-		}
+          case 'M': // for mark parity
+          case 'S': // for space parity
+          default:
+            return false;
+          }
 
-		if (::strcmp(param + 2, "1") == 0) {
-			cflag &= ~CSTOPB;
-		} else if (::strcmp(param + 2, "2") == 0) {
-			cflag |= CSTOPB;
-		} else {
-			return false;
-		}
-	}
+          if (::strcmp(param + 2, "1") == 0) {
+            cflag &= ~CSTOPB;
+          } else if (::strcmp(param + 2, "2") == 0) {
+            cflag |= CSTOPB;
+          } else {
+            return false;
+          }
+        }
 
-	if (cflag_ptr != NULL) {
-		*cflag_ptr = cflag;
-	}
-	return true;
+        if (cflag_ptr != nullptr) {
+          *cflag_ptr = cflag;
+        }
+        return true;
 }

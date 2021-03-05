@@ -37,10 +37,7 @@ private:
  */
 CUsbDev::CUsbDev()
 #ifdef USE_LIBUSB1
-    : m_ctx(NULL)
-    , m_handle(NULL)
-    , m_readEp(0)
-    , m_writeEp(0)
+    : m_ctx(nullptr), m_handle(nullptr), m_readEp(0), m_writeEp(0)
 #endif
 {
 #ifdef USE_LIBUSB1
@@ -55,10 +52,10 @@ CUsbDev::CUsbDev()
 CUsbDev::~CUsbDev()
 {
 #ifdef USE_LIBUSB1
-	if (m_ctx != NULL) {
-		libusb_exit(m_ctx);
-		m_ctx = NULL;
-	}
+  if (m_ctx != nullptr) {
+    libusb_exit(m_ctx);
+    m_ctx = nullptr;
+  }
 #endif
 }
 
@@ -73,18 +70,17 @@ CUsbDev::~CUsbDev()
 bool CUsbDev::Open(unsigned int vid, unsigned int pid, unsigned int nIndex)
 {
 #ifdef USE_LIBUSB1
-	libusb_device **list = NULL;
-	libusb_device_handle *handle = NULL;
-	struct libusb_config_descriptor *conf = NULL;
+  libusb_device **list = nullptr;
+  libusb_device_handle *handle = nullptr;
+  struct libusb_config_descriptor *conf = nullptr;
 
-	if (m_ctx == NULL)
-		return false;
+  if (m_ctx == nullptr)
+    return false;
 
-	ssize_t ndevs = libusb_get_device_list(m_ctx, &list);
-	if (ndevs < 0) {
-		printf("Error: Couldn't get device list: %s\n",
-		    libusb_error_name(ndevs));
-		return false;
+  ssize_t ndevs = libusb_get_device_list(m_ctx, &list);
+  if (ndevs < 0) {
+    printf("Error: Couldn't get device list: %s\n", libusb_error_name(ndevs));
+    return false;
 	}
 
 	unsigned int idx = 0;
@@ -168,12 +164,12 @@ bool CUsbDev::Open(unsigned int vid, unsigned int pid, unsigned int nIndex)
 		return true;
 	}
 
-	if (conf != NULL)
-		libusb_free_config_descriptor(conf);
-	if (handle != NULL)
-		libusb_close(handle);
-	if (list != NULL)
-		libusb_free_device_list(list, 1);
+        if (conf != nullptr)
+          libusb_free_config_descriptor(conf);
+        if (handle != nullptr)
+          libusb_close(handle);
+        if (list != nullptr)
+          libusb_free_device_list(list, 1);
 #endif
 	return false;
 }
@@ -184,13 +180,13 @@ bool CUsbDev::Open(unsigned int vid, unsigned int pid, unsigned int nIndex)
 void CUsbDev::Close()
 {
 #ifdef USE_LIBUSB1
-	if (m_handle != NULL) {
+  if (m_handle != nullptr) {
 #if 1
 		libusb_release_interface(m_handle, 0);
 #endif
 		libusb_close(m_handle);
-		m_handle = NULL;
-	}
+                m_handle = nullptr;
+  }
 #endif
 }
 
@@ -207,19 +203,18 @@ void CUsbDev::Close()
 int CUsbDev::CtrlXfer(int nType, int nRequest, int nValue, int nIndex, void* lpBuffer, int cbBuffer)
 {
 #ifdef USE_LIBUSB1
-	if (m_handle != NULL) {
-//		USBDeviceLock lock(m_handle);
-		int numBytesXfer = libusb_control_transfer(m_handle, nType,
-		    nRequest, nValue, nIndex,
-		    static_cast<unsigned char *>(lpBuffer), cbBuffer,
-		    XFER_TIMEOUT);
-		if (numBytesXfer == cbBuffer)
-			return cbBuffer;
+  if (m_handle != nullptr) {
+    //		USBDeviceLock lock(m_handle);
+    int numBytesXfer = libusb_control_transfer(
+        m_handle, nType, nRequest, nValue, nIndex,
+        static_cast<unsigned char *>(lpBuffer), cbBuffer, XFER_TIMEOUT);
+    if (numBytesXfer == cbBuffer)
+      return cbBuffer;
 #ifdef DEBUG
 		printf("Error: control transfer failed: xfer size: %d\n",
 		    numBytesXfer);
 #endif
-	}
+  }
 #endif
 	return -1;
 }
@@ -233,19 +228,20 @@ int CUsbDev::CtrlXfer(int nType, int nRequest, int nValue, int nIndex, void* lpB
 int CUsbDev::WriteBulk(const void* lpBuffer, int cbBuffer)
 {
 #ifdef USE_LIBUSB1
-	if (m_handle != NULL) {
-//		USBDeviceLock lock(m_handle);
-		int numBytesWrite;
-		int error = libusb_bulk_transfer(m_handle, m_writeEp,
-		    static_cast<unsigned char *>(const_cast<void *>(lpBuffer)),
-		    cbBuffer, &numBytesWrite, XFER_TIMEOUT);
-		if (error == 0)
-			return numBytesWrite;
+  if (m_handle != nullptr) {
+    //		USBDeviceLock lock(m_handle);
+    int numBytesWrite;
+    int error = libusb_bulk_transfer(
+        m_handle, m_writeEp,
+        static_cast<unsigned char *>(const_cast<void *>(lpBuffer)), cbBuffer,
+        &numBytesWrite, XFER_TIMEOUT);
+    if (error == 0)
+      return numBytesWrite;
 #ifdef DEBUG
 		printf("Error: bulk write failed: %s\n",
 		    libusb_error_name(error));
 #endif
-	}
+  }
 #endif
 	return -1;
 }
@@ -259,19 +255,19 @@ int CUsbDev::WriteBulk(const void* lpBuffer, int cbBuffer)
 int CUsbDev::ReadBulk(void* lpBuffer, int cbBuffer)
 {
 #ifdef USE_LIBUSB1
-	if (m_handle != NULL) {
-//		USBDeviceLock lock(m_handle);
-		int numBytesRead;
-		int error = libusb_bulk_transfer(m_handle, m_readEp,
-		    static_cast<unsigned char *>(lpBuffer), cbBuffer,
-		    &numBytesRead, XFER_TIMEOUT);
-		if (error == 0)
-			return numBytesRead;
+  if (m_handle != nullptr) {
+    //		USBDeviceLock lock(m_handle);
+    int numBytesRead;
+    int error = libusb_bulk_transfer(m_handle, m_readEp,
+                                     static_cast<unsigned char *>(lpBuffer),
+                                     cbBuffer, &numBytesRead, XFER_TIMEOUT);
+    if (error == 0)
+      return numBytesRead;
 #ifdef DEBUG
 		printf("Error: bulk read failed: %s\n",
 		    libusb_error_name(error));
 #endif
-	}
+  }
 #endif
 	return -1;
 }

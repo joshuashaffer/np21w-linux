@@ -295,9 +295,9 @@ namespace FM
 	public:
 		OPN();
 		virtual ~OPN() {}
-		
-		bool	Init(uint c, uint r, bool=false, const char* =0);
-		bool	SetRate(uint c, uint r, bool=false);
+
+                bool Init(uint c, uint r, bool = false, const char * = nullptr);
+                bool	SetRate(uint c, uint r, bool=false);
 		
 		void	Reset();
 		void 	Mix(Sample* buffer, int nsamples);
@@ -354,9 +354,10 @@ namespace FM
 	public:
 		OPNA();
 		virtual ~OPNA();
-		
-		bool	Init(uint c, uint r, bool  = false, const char* rhythmpath=0);
-		bool	LoadRhythmSample(const char*);
+
+                bool Init(uint c, uint r, bool = false,
+                          const char *rhythmpath = nullptr);
+                bool	LoadRhythmSample(const char*);
 	
 		bool	SetRate(uint c, uint r, bool = false);
 		void 	Mix(Sample* buffer, int nsamples);
@@ -422,12 +423,12 @@ namespace FM
 	public:
 		OPNB();
 		virtual ~OPNB();
-		
-		bool	Init(uint c, uint r, bool = false,
-					 uint8 *_adpcma = 0, int _adpcma_size = 0,
-					 uint8 *_adpcmb = 0, int _adpcmb_size = 0);
-	
-		bool	SetRate(uint c, uint r, bool = false);
+
+                bool Init(uint c, uint r, bool = false,
+                          uint8 *_adpcma = nullptr, int _adpcma_size = 0,
+                          uint8 *_adpcmb = nullptr, int _adpcmb_size = 0);
+
+                bool	SetRate(uint c, uint r, bool = false);
 		void 	Mix(Sample* buffer, int nsamples);
 
 		void	Reset();
@@ -470,9 +471,9 @@ namespace FM
 	public:
 		OPN2();
 		virtual ~OPN2() {}
-		
-		bool	Init(uint c, uint r, bool=false, const char* =0);
-		bool	SetRate(uint c, uint r, bool);
+
+                bool Init(uint c, uint r, bool = false, const char * = nullptr);
+                bool	SetRate(uint c, uint r, bool);
 		
 		void	Reset();
 		void 	Mix(Sample* buffer, int nsamples);

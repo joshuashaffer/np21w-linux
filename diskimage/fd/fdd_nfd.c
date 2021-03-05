@@ -395,7 +395,8 @@ BRESULT fdd_write_nfd(FDDFILE fdd) {
 	UINT	secsize;
 	long	seekp;
 	UINT	i;
-
+  
+    secsize = DEFAULT_SECSIZE;
 	fddlasterror = 0x00;
 //	変更(kaiE)
 //	if (fdd_seeksector_common(fdd)) {
@@ -513,6 +514,7 @@ BRESULT fdd_formatinit_nfd(FDDFILE fdd) {
 	UINT    size;
 	UINT	i;
 
+    secsize = DEFAULT_SECSIZE;
 	if (fdd->protect) {
 		fddlasterror = 0x70;
 		return(FAILURE);
@@ -823,7 +825,8 @@ BRESULT fdd_write_nfd1(FDDFILE fdd) {
 	UINT	i;
 	NFD_TRACK_ID1	trk_id;
 	NFD_SECT_ID1	sec_id;
-
+ 
+    secsize = DEFAULT_SECSIZE;
 	fddlasterror = 0x00;
 	if (fdd_seeksector_nfd1(fdd)) {
 		fddlasterror = 0xe0;

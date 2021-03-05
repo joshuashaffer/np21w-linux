@@ -12,10 +12,7 @@ using namespace c86ctl;
 /**
  * コンストラクタ
  */
-C86CtlIf::C86CtlIf()
-	: m_pChipBase(NULL)
-{
-}
+C86CtlIf::C86CtlIf() : m_pChipBase(nullptr) {}
 
 /**
  * デストラクタ
@@ -41,21 +38,20 @@ bool C86CtlIf::Initialize()
 	{
 		/* インスタンス作成 */
 		CreateInstance(IID_IRealChipBase, reinterpret_cast<void**>(&m_pChipBase));
-		if (m_pChipBase == NULL)
-		{
-			break;
-		}
+                if (m_pChipBase == nullptr) {
+                  break;
+                }
 
-		/* 初期化 */
+                /* 初期化 */
 		if (m_pChipBase->initialize() != C86CTL_ERR_NONE)
 		{
 			break;
 		}
 		return true;
 
-	} while (0 /*CONSTCOND*/);
+        } while (false /*CONSTCOND*/);
 
-	Deinitialize();
+        Deinitialize();
 	return false;
 }
 
@@ -68,13 +64,13 @@ void C86CtlIf::Deinitialize()
 	{
 		while (!m_chips.empty())
 		{
-			std::map<int, Chip*>::iterator it = m_chips.begin();
-			delete it->second;
+                  auto it = m_chips.begin();
+                  delete it->second;
 		}
 
 		m_pChipBase->deinitialize();
-		m_pChipBase = NULL;
-	}
+                m_pChipBase = nullptr;
+        }
 }
 
 /**
@@ -96,12 +92,11 @@ IExternalChip* C86CtlIf::GetInterface(IExternalChip::ChipType nChipType, UINT nC
 
 	do
 	{
-		if (m_pChipBase == NULL)
-		{
-			break;
-		}
+          if (m_pChipBase == nullptr) {
+            break;
+          }
 
-		/* 音源を探す */
+                /* 音源を探す */
 		const int nDeviceCount = static_cast<int>(m_pChipBase->getNumberOfChip());
 		for (int i = 0; i < nDeviceCount; i++)
 		{
@@ -112,16 +107,15 @@ IExternalChip* C86CtlIf::GetInterface(IExternalChip::ChipType nChipType, UINT nC
 			}
 
 			/* チップを探す */
-			IRealChip* pRealChip = NULL;
-			m_pChipBase->getChipInterface(i, IID_IRealChip, reinterpret_cast<void**>(&pRealChip));
-			if (pRealChip == NULL)
-			{
-				continue;
-			}
+                        IRealChip *pRealChip = nullptr;
+                        m_pChipBase->getChipInterface(i, IID_IRealChip, reinterpret_cast<void**>(&pRealChip));
+                        if (pRealChip == nullptr) {
+                          continue;
+                        }
 
-			/* G.I.M.I.C 判定 */
-			IGimic* pGimic = NULL;
-			m_pChipBase->getChipInterface(i, IID_IGimic, reinterpret_cast<void**>(&pGimic));
+                        /* G.I.M.I.C 判定 */
+                        IGimic *pGimic = nullptr;
+                        m_pChipBase->getChipInterface(i, IID_IGimic, reinterpret_cast<void**>(&pGimic));
 			if (pGimic)
 			{
 				Devinfo info;
@@ -156,46 +150,40 @@ IExternalChip* C86CtlIf::GetInterface(IExternalChip::ChipType nChipType, UINT nC
 			}
 
 			/* その他の判定 */
-			IRealChip3* pChip3 = NULL;
-			m_pChipBase->getChipInterface(i, IID_IRealChip3, reinterpret_cast<void**>(&pChip3));
-			if (pChip3 != NULL)
-			{
-				c86ctl::ChipType nType = CHIP_UNKNOWN;
-				pChip3->getChipType(&nType);
+                        IRealChip3 *pChip3 = nullptr;
+                        m_pChipBase->getChipInterface(i, IID_IRealChip3, reinterpret_cast<void**>(&pChip3));
+                        if (pChip3 != nullptr) {
+                          c86ctl::ChipType nType = CHIP_UNKNOWN;
+                          pChip3->getChipType(&nType);
 
-				IExternalChip::ChipType nRealChipType = IExternalChip::kNone;
-				if (nType == CHIP_YM2203)
-				{
-					nRealChipType = IExternalChip::kYM2203;
-				}
-				else if (nType == CHIP_OPNA)
-				{
-					nRealChipType = IExternalChip::kYM2608;
-				}
-				else if ((nType == CHIP_YM2608NOADPCM) || (nType == CHIP_OPN3L))
-				{
-					nRealChipType = IExternalChip::kYMF288;
-				}
-				else if (nType == CHIP_Y8950ADPCM)
-				{
-					nRealChipType = IExternalChip::kY8950;
-				}
-				if (nChipType == nRealChipType)
-				{
-					/* サウンドチップ取得できた */
-					Chip* pChip = new Chip(this, pChip3, NULL, nRealChipType, nClock);
-					m_chips[i] = pChip;
-					return pChip;
-				}
-			}
-		}
+                          IExternalChip::ChipType nRealChipType =
+                              IExternalChip::kNone;
+                          if (nType == CHIP_YM2203) {
+                            nRealChipType = IExternalChip::kYM2203;
+                          } else if (nType == CHIP_OPNA) {
+                            nRealChipType = IExternalChip::kYM2608;
+                          } else if ((nType == CHIP_YM2608NOADPCM) ||
+                                     (nType == CHIP_OPN3L)) {
+                            nRealChipType = IExternalChip::kYMF288;
+                          } else if (nType == CHIP_Y8950ADPCM) {
+                            nRealChipType = IExternalChip::kY8950;
+                          }
+                          if (nChipType == nRealChipType) {
+                            /* サウンドチップ取得できた */
+                            Chip *pChip = new Chip(this, pChip3, nullptr,
+                                                   nRealChipType, nClock);
+                            m_chips[i] = pChip;
+                            return pChip;
+                          }
+                        }
+                }
 	} while (false /*CONSTCOND*/);
 
 	if (bInitialized)
 	{
 //		Deinitialize();
 	}
-	return NULL;
+        return nullptr;
 }
 
 /**
@@ -204,17 +192,13 @@ IExternalChip* C86CtlIf::GetInterface(IExternalChip::ChipType nChipType, UINT nC
  */
 void C86CtlIf::Detach(C86CtlIf::Chip* pChip)
 {
-	std::map<int, Chip*>::iterator it = m_chips.begin();
-	while (it != m_chips.end())
-	{
-		if (it->second == pChip)
-		{
-			it = m_chips.erase(it);
-		}
-		else
-		{
-			++it;
-		}
+  auto it = m_chips.begin();
+  while (it != m_chips.end()) {
+    if (it->second == pChip) {
+      it = m_chips.erase(it);
+    } else {
+      ++it;
+    }
 	}
 }
 

@@ -296,29 +296,27 @@ uint FM::Operator::sinetable[1024];
 int32 FM::Operator::cltable[FM_CLENTS];
 
 //	構築
-FM::Operator::Operator()
-: chip_(0)
-{
-	if (!tablehasmade)
-		MakeTable();
+FM::Operator::Operator() : chip_(nullptr) {
+  if (!tablehasmade)
+    MakeTable();
 
-	// EG Part
-	ar_ = dr_ = sr_ = rr_ = key_scale_rate_ = 0;
-	ams_ = amtable[0][0];
-	mute_ = false;
-	keyon_ = false;
-	tl_out_ = false;
-	ssg_type_ = 0;
+  // EG Part
+  ar_ = dr_ = sr_ = rr_ = key_scale_rate_ = 0;
+  ams_ = amtable[0][0];
+  mute_ = false;
+  keyon_ = false;
+  tl_out_ = false;
+  ssg_type_ = 0;
 
-	// PG Part
-	multiple_ = 0;
-	detune_ = 0;
-	detune2_ = 0;
+  // PG Part
+  multiple_ = 0;
+  detune_ = 0;
+  detune2_ = 0;
 
-	// LFO
-	ms_ = 0;
-	
-//	Reset();
+  // LFO
+  ms_ = 0;
+
+  //	Reset();
 }
 
 //	初期化
@@ -856,8 +854,8 @@ int Channel4::Prepare()
 //	F-Number/BLOCK を設定
 void Channel4::SetFNum(uint f)
 {
-	for (int i=0; i<4; i++)
-		op[i].SetFNum(f);
+  for (auto &i : op)
+    i.SetFNum(f);
 }
 
 //	KC/KF を設定
@@ -922,7 +920,7 @@ void Channel4::SetAlgorithm(uint algo)
 //  合成
 ISample Channel4::Calc()
 {
-	int r;
+	int r = 0;
 	switch (algo_)
 	{
 	case 0:
@@ -982,7 +980,7 @@ ISample Channel4::CalcL()
 {
 	chip_->SetPMV(pms[chip_->GetPML()]);
 
-	int r;
+	int r = 0;
 	switch (algo_)
 	{
 	case 0:

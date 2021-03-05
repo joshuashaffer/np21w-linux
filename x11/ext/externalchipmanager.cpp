@@ -32,14 +32,13 @@ void CExternalChipManager::Initialize()
  */
 void CExternalChipManager::Deinitialize()
 {
-	std::vector<IExternalChip*>::iterator it = m_chips.begin();
-	while (it != m_chips.end())
-	{
-		IExternalChip* pChip = *it;
-		it = m_chips.erase(it);
+  auto it = m_chips.begin();
+  while (it != m_chips.end()) {
+    IExternalChip *pChip = *it;
+    it = m_chips.erase(it);
 
-		pChip->Reset();
-		delete pChip;
+    pChip->Reset();
+    delete pChip;
 	}
 
 	m_c86ctl.Deinitialize();
@@ -55,39 +54,37 @@ void CExternalChipManager::Deinitialize()
 IExternalChip* CExternalChipManager::GetInterface(IExternalChip::ChipType nChipType, UINT nClock)
 {
 	IExternalChip* pChip = GetInterfaceInner(nChipType, nClock);
-	if (pChip == NULL)
-	{
-		switch (nChipType)
-		{
-			case IExternalChip::kAY8910:
-				pChip = GetInterface(IExternalChip::kYM2203, nClock);
-				break;
+        if (pChip == nullptr) {
+          switch (nChipType) {
+          case IExternalChip::kAY8910:
+            pChip = GetInterface(IExternalChip::kYM2203, nClock);
+            break;
 
-			case IExternalChip::kYM2203:
-				pChip = GetInterface(IExternalChip::kYMF288, nClock * 2);
-				break;
+          case IExternalChip::kYM2203:
+            pChip = GetInterface(IExternalChip::kYMF288, nClock * 2);
+            break;
 
-			case IExternalChip::kYMF288:
-				pChip = GetInterface(IExternalChip::kYM2608, nClock);
-				break;
+          case IExternalChip::kYMF288:
+            pChip = GetInterface(IExternalChip::kYM2608, nClock);
+            break;
 
-			case IExternalChip::kYM3438:
-				pChip = GetInterface(IExternalChip::kYMF288, nClock);
-				break;
+          case IExternalChip::kYM3438:
+            pChip = GetInterface(IExternalChip::kYMF288, nClock);
+            break;
 
-			case IExternalChip::kY8950:
-				pChip = GetInterface(IExternalChip::kYM3812, nClock);
-				break;
+          case IExternalChip::kY8950:
+            pChip = GetInterface(IExternalChip::kYM3812, nClock);
+            break;
 
-			case IExternalChip::kYM3812:
-				pChip = GetInterface(IExternalChip::kYMF262, nClock * 4);
-				break;
+          case IExternalChip::kYM3812:
+            pChip = GetInterface(IExternalChip::kYMF262, nClock * 4);
+            break;
 
-			default:
-				break;
-		}
-	}
-	return pChip;
+          default:
+            break;
+          }
+        }
+        return pChip;
 }
 
 /**
@@ -98,21 +95,19 @@ IExternalChip* CExternalChipManager::GetInterface(IExternalChip::ChipType nChipT
  */
 IExternalChip* CExternalChipManager::GetInterfaceInner(IExternalChip::ChipType nChipType, UINT nClock)
 {
-	IExternalChip* pChip = NULL;
+  IExternalChip *pChip = nullptr;
 
-	/* G.I.M.I.C / C86BOX */
-	if (pChip == NULL)
-	{
-		pChip = m_c86ctl.GetInterface(nChipType, nClock);
-	}
+  /* G.I.M.I.C / C86BOX */
+  if (pChip == nullptr) {
+    pChip = m_c86ctl.GetInterface(nChipType, nClock);
+  }
 
-	/* SPFM Light */
-	if (pChip == NULL)
-	{
-		pChip = m_scci.GetInterface(nChipType, nClock);
-	}
+        /* SPFM Light */
+        if (pChip == nullptr) {
+          pChip = m_scci.GetInterface(nChipType, nClock);
+        }
 
-	/* ラッピング */
+        /* ラッピング */
 	if (pChip)
 	{
 		switch (nChipType)
@@ -155,12 +150,11 @@ IExternalChip* CExternalChipManager::GetInterfaceInner(IExternalChip::ChipType n
  */
 void CExternalChipManager::Release(IExternalChip* pChip)
 {
-	std::vector<IExternalChip*>::iterator it = std::find(m_chips.begin(), m_chips.end(), pChip);
-	if (it != m_chips.end())
-	{
-		m_chips.erase(it);
-		pChip->Reset();
-		delete pChip;
+  auto it = std::find(m_chips.begin(), m_chips.end(), pChip);
+  if (it != m_chips.end()) {
+    m_chips.erase(it);
+    pChip->Reset();
+    delete pChip;
 	}
 }
 
@@ -169,10 +163,9 @@ void CExternalChipManager::Release(IExternalChip* pChip)
  */
 void CExternalChipManager::Reset()
 {
-	for (std::vector<IExternalChip*>::iterator it = m_chips.begin(); it != m_chips.end(); ++it)
-	{
-		(*it)->Reset();
-	}
+  for (auto &m_chip : m_chips) {
+    m_chip->Reset();
+  }
 }
 
 /**
@@ -181,8 +174,7 @@ void CExternalChipManager::Reset()
  */
 void CExternalChipManager::Mute(bool bMute)
 {
-	for (std::vector<IExternalChip*>::iterator it = m_chips.begin(); it != m_chips.end(); ++it)
-	{
-		(*it)->Message(IExternalChip::kMute, static_cast<INTPTR>(bMute));
-	}
+  for (auto &m_chip : m_chips) {
+    m_chip->Message(IExternalChip::kMute, static_cast<INTPTR>(bMute));
+  }
 }

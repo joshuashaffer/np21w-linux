@@ -156,7 +156,7 @@ static UINT msa_dec(GETSND snd, SINT16 *dst) {
 	UINT8		*buf;
 	UINT		size;
 	UINT		outsamples;
-	int			pred[2], delta[2], nibble;
+	int			pred[2], delta[2] = {0,0}, nibble;
 	UINT		i;
 	UINT8		indata;
 	__COEFPAIR	*coef;

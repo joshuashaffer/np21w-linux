@@ -67,17 +67,16 @@ void PSG::MakeNoiseTable()
 	if (!noisetable[0])
 	{
 		int noise = 14321;
-		for (int i=0; i<noisetablesize; i++)
-		{
-			int n = 0;
-			for (int j=0; j<32; j++)
-			{
-				n = n * 2 + (noise & 1);
-				noise = (noise >> 1) | (((noise << 14) ^ (noise << 16)) & 0x10000);
-			}
-			noisetable[i] = n;
-		}
-	}
+                for (unsigned int &i : noisetable) {
+                  int n = 0;
+                  for (int j = 0; j < 32; j++) {
+                    n = n * 2 + (noise & 1);
+                    noise = (noise >> 1) |
+                            (((noise << 14) ^ (noise << 16)) & 0x10000);
+                  }
+                  i = n;
+                }
+        }
 }
 
 // ---------------------------------------------------------------------------
@@ -122,16 +121,14 @@ void PSG::MakeEnvelopTable()
 
 	uint* ptr = enveloptable[0];
 
-	for (int i=0; i<16*2; i++)
-	{
-		uint8 v = table2[table1[i]];
-		
-		for (int j=0; j<32; j++)
-		{
-			*ptr++ = EmitTable[v];
-			v += table3[table1[i]];
-		}
-	}
+        for (unsigned char i : table1) {
+          uint8 v = table2[i];
+
+          for (int j = 0; j < 32; j++) {
+            *ptr++ = EmitTable[v];
+            v += table3[i];
+          }
+        }
 }
 
 // ---------------------------------------------------------------------------

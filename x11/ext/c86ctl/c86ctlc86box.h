@@ -80,8 +80,9 @@ private:
 	UINT m_que[0x400];				/*!< que */
 	std::vector<Chip3*> m_chips;	/*!< The list of chips */
 
-	C86CtlErr Transaction(const void* lpOutput, int cbOutput, void* lpInput = NULL, int cbInput = 0);
-	C86CtlErr Reset();
+        C86CtlErr Transaction(const void *lpOutput, int cbOutput,
+                              void *lpInput = nullptr, int cbInput = 0);
+        C86CtlErr Reset();
 	void Out(UINT nDevId, UINT nAddr, UINT8 cData);
 
 	friend class Chip3;

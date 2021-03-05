@@ -12,10 +12,7 @@ using namespace scci;
 /**
  * コンストラクタ
  */
-CScciIf::CScciIf()
-	: m_pManager(NULL)
-{
-}
+CScciIf::CScciIf() : m_pManager(nullptr) {}
 
 /**
  * デストラクタ
@@ -41,12 +38,11 @@ bool CScciIf::Initialize()
 	{
 		/* サウンドインターフェースマネージャー取得 */
 		m_pManager = GetSoundInterfaceManager();
-		if (m_pManager == NULL)
-		{
-			break;
-		}
+                if (m_pManager == nullptr) {
+                  break;
+                }
 
-		/* サウンドインターフェースマネージャーインスタンス初期化 */
+                /* サウンドインターフェースマネージャーインスタンス初期化 */
 		/* 必ず最初に実行してください */
 		if (!m_pManager->initializeInstance())
 		{
@@ -76,8 +72,8 @@ void CScciIf::Deinitialize()
 		/* FreeLibraryを行う前に必ず呼び出ししてください */
 		m_pManager->releaseInstance();
 
-		m_pManager = NULL;
-	}
+                m_pManager = nullptr;
+        }
 }
 
 /**
@@ -104,12 +100,11 @@ IExternalChip* CScciIf::GetInterface(IExternalChip::ChipType nChipType, UINT nCl
 
 	do
 	{
-		if (m_pManager == NULL)
-		{
-			break;
-		}
+          if (m_pManager == nullptr) {
+            break;
+          }
 
-		SC_CHIP_TYPE iSoundChipType = SC_TYPE_NONE;
+                SC_CHIP_TYPE iSoundChipType = SC_TYPE_NONE;
 		switch (nChipType)
 		{
 			case IExternalChip::kAY8910:
@@ -153,18 +148,17 @@ IExternalChip* CScciIf::GetInterface(IExternalChip::ChipType nChipType, UINT nCl
 		}
 
 		SoundChip* pSoundChip = m_pManager->getSoundChip(iSoundChipType, nClock);
-		if (pSoundChip != NULL)
-		{
-			/* サウンドチップ取得できた */
-			return new Chip(this, pSoundChip);
-		}
-	} while (false /*CONSTCOND*/);
+                if (pSoundChip != nullptr) {
+                  /* サウンドチップ取得できた */
+                  return new Chip(this, pSoundChip);
+                }
+        } while (false /*CONSTCOND*/);
 
 	if (bInitialized)
 	{
 //		Deinitialize();
 	}
-	return NULL;
+        return nullptr;
 }
 
 /**
