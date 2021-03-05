@@ -106,6 +106,7 @@ BRESULT fdd_read_vfdd(FDDFILE fdd) {
 	long	seekp;
 	UINT	i;
 
+    secsize = DEFAULT_SECSIZE;
 	fddlasterror = 0x00;
 	if (fdd_seeksector_common(fdd)) {
 		return(FAILURE);
@@ -165,6 +166,7 @@ BRESULT fdd_write_vfdd(FDDFILE fdd) {
 	long	seekp;
 	UINT	i;
 
+    secsize = DEFAULT_SECSIZE;
 	fddlasterror = 0x00;
 	if (fdd_seeksector_common(fdd)) {
 		fddlasterror = 0xe0;
