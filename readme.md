@@ -2,271 +2,535 @@ Build of PC-9800 emulator Neko 21/W 0.86 that compiles and runs under linux
 
 - https://simk98.github.io/np21w/index.html
 
-= Instructions =
+Instructions
+------------
+
 ```sh
 $ cd x11
 $ ./configure 
 $ make 
+
 ```
 
-// ---- è`
-
-  ÅK»Ì×ÌgpÊÌ}§
-    MEMOPTIMIZE = 0`2
-
-    CPUÉæèÈºÌlðZbg³êé±ÆðúÒµÄ¢é
-      MEMOPTIMIZE¢è` c Celeron333AÈ~ÌZJhLbVLø@
-      MEMOPTIMIZE = 0   c x86
-      MEMOPTIMIZE = 1   c PowerPCÌfXNgbvpRISC
-      MEMOPTIMIZE = 2   c StrongARMÌgÝÝpRISC
+// ---- ﾂ津ｨﾂ義
 
 
-  RpCÌø«EßèlÌÅK»
-    ø«EßèlÅint^ÈOðwèµ½êÉAÅK»ªLøÉ­©È¢
-    RpCü¯Ìè`Å·B
-    ÊíÍ common.h Ì¨ðgpµÜ·B
-      REG8 c UINT8^ / (sizeof(REG8) != 1)Ìê ãÊrbgð0fill·é
-      REG16 c UINT16^ / (sizeof(REG16) != 2)Ìê ãÊrbgð0fill·é
-@@@¢¸êàlðZbg·é¤ª0fillµAQÆ¤Í0fillµ½àÌÆ©ÈµÜ·B
+
+  ﾂ催ﾂ適ﾂ可ｻﾂづ個暗猟づ個δﾂδつδ環使ﾂ用ﾂ療環づ個抑ﾂ青ｧ
+
+    MEMOPTIMIZE = 0ﾂ〜2
 
 
-  OSÌ¾êÌIð
-    OSLANG_SJIS c Shift-JISÌ¿R[hððß·é
-    OSLANG_EUC  c EUCÌ¿R[hððß·é
 
-    OSLINEBREAK_CR   c MacOS   "\r"
-    OSLINEBREAK_LF   c Unix    "\n"
-    OSLINEBREAK_CRLF c Windows "\r\n"
+    CPUﾂづ可づｦﾂづｨﾂ暗按可ｺﾂづ個青板値ﾂづｰﾂセﾂッﾂトﾂつｳﾂづｪﾂづｩﾂつｱﾂづﾂづｰﾂ甘ｺﾂ妥陳つｵﾂづﾂつ｢ﾂづｩ
 
-      ¦»ÝÍÈºÌ\[XR[hàÅÂÊÉÝèµÄ¢Ü·B
-        (Windowsª APIÉæÁÄ \r\nÌêÆ\nÌêª éÌÅc)
-        Ecommon/_memory.c
-        Edebugsub.c
-        Estatsave.c
+      MEMOPTIMIZEﾂ鳴｢ﾂ津ｨﾂ義 ﾂ… Celeron333Aﾂ暗按降ﾂづ個セﾂカﾂδ督ドﾂキﾂδδッﾂシﾂδﾂ有ﾂ古ｸﾂ機
 
-    (milstr.hIðp)
-    SUPPORT_ANK      c ANK¶ñìÖðN·é
-    SUPPORT_SJIS     c SJIS¶ñìÖðN·é
-    SUPPORT_EUC      c EUC¶ñìÖðN·é
+      MEMOPTIMIZE = 0   ﾂ… x86
 
-      ¦»Ýmilstr.hÅ·×Äè`³ê½ÜÜÉÈÁÄ¢Ü·B
-        ver0.73Åmilstr.hÌè`ðOµ compiler.hÅwèµ½¨ÆÈèÜ·B
+      MEMOPTIMIZE = 1   ﾂ… PowerPCﾂ督卍づ個デﾂスﾂクﾂトﾂッﾂプﾂ用RISC
+
+      MEMOPTIMIZE = 2   ﾂ… StrongARMﾂ督卍づ個組ﾂづ敖債楪づ敖用RISC
 
 
-@CPUCORE_IA32
-@@IA32A[LeN`ðÌp
-@@@i386cðgp·éêÌÓ_
-@@  ECPU panic âx\¦É msgbox() Æ¢¤ API ðgpµÜ·B
-@@@@compiler.h  ½èÅKÉè`µÄ­¾³¢B
-@@@Esigsetjmp(3), siglongjmp(3) ª³¢A[LeN`ÍÈºÌ define ð
-@@@@compiler.h  ½èÉÇÁµÄ­¾³¢B
-@@@@----------------------------------------------------------------------
+
+
+
+  ﾂコﾂδ督パﾂイﾂδ可づ個暗ｸﾂつｫﾂ青板・ﾂ姪淞づｨﾂ値ﾂづ個催ﾂ適ﾂ可ｻ
+
+    ﾂ暗ｸﾂつｫﾂ青板・ﾂ姪淞づｨﾂ値ﾂづintﾂ型ﾂ暗按外ﾂづｰﾂ指ﾂ津ｨﾂつｵﾂつｽﾂ湘ｪﾂ債ﾂづ可、ﾂ催ﾂ適ﾂ可ｻﾂつｪﾂ有ﾂ古ｸﾂづ可督ｭﾂつｩﾂづ按つ｢
+
+    ﾂコﾂδ督パﾂイﾂδ可古ｼﾂつｯﾂづ個津ｨﾂ義ﾂづﾂつｷﾂ。
+
+    ﾂ津環湘ｭﾂづ common.h ﾂづ個閉ｨﾂづｰﾂ使ﾂ用ﾂつｵﾂづ慊つｷﾂ。
+
+      REG8 ﾂ… UINT8ﾂ型 / (sizeof(REG8) != 1)ﾂづ個湘ｪﾂ債 ﾂ湘｣ﾂ暗環ビﾂッﾂトﾂづｰ0fillﾂつｷﾂづｩﾂ篠
+
+      REG16 ﾂ… UINT16ﾂ型 / (sizeof(REG16) != 2)ﾂづ個湘ｪﾂ債 ﾂ湘｣ﾂ暗環ビﾂッﾂトﾂづｰ0fillﾂつｷﾂづｩﾂ篠
+
+ﾂ　ﾂ　ﾂ　ﾂつ｢ﾂつｸﾂづｪﾂづﾂ値ﾂづｰﾂセﾂッﾂトﾂつｷﾂづｩﾂ堕､ﾂつｪ0fillﾂつｵﾂ、ﾂ参ﾂ湘ﾂ堕､ﾂづ0fillﾂつｵﾂつｽﾂづﾂづ個づﾂ個ｩﾂづ按つｵﾂづ慊つｷﾂ。
+
+
+
+
+
+  OSﾂづ個個ｾﾂ古ｪﾂづ個選ﾂ妥ｰ
+
+    OSLANG_SJIS ﾂ… Shift-JISﾂづ個環ｿﾂ篠堋コﾂーﾂドﾂづｰﾂ嘉ｰﾂ偲淞つｷﾂづｩ
+
+    OSLANG_EUC  ﾂ… EUCﾂづ個環ｿﾂ篠堋コﾂーﾂドﾂづｰﾂ嘉ｰﾂ偲淞つｷﾂづｩ
+
+
+
+    OSLINEBREAK_CR   ﾂ… MacOS   "\r"
+
+    OSLINEBREAK_LF   ﾂ… Unix    "\n"
+
+    OSLINEBREAK_CRLF ﾂ… Windows "\r\n"
+
+
+
+      ﾂﾂｦﾂ個ｻﾂ催敖づ債暗按可ｺﾂづ個ソﾂーﾂスﾂコﾂーﾂドﾂ禿ﾂづﾂ古つ陛環づ可静敖津ｨﾂつｵﾂづﾂつ｢ﾂづ慊つｷﾂ。
+
+        (Windowsﾂつｪ APIﾂづ可づｦﾂづﾂづ \r\nﾂづ個湘ｪﾂ債ﾂづ\nﾂづ個湘ｪﾂ債ﾂつｪﾂつﾂづｩﾂづ個づﾂ…)
+
+        ﾂ・common/_memory.c
+
+        ﾂ・debugsub.c
+
+        ﾂ・statsave.c
+
+
+
+    (milstr.hﾂ選ﾂ妥ｰﾂ用)
+
+    SUPPORT_ANK      ﾂ… ANKﾂ閉ｶﾂ篠堋療ｱﾂ堕ﾂ催ｬﾂ甘鳴青板づｰﾂδ環δ督クﾂつｷﾂづｩ
+
+    SUPPORT_SJIS     ﾂ… SJISﾂ閉ｶﾂ篠堋療ｱﾂ堕ﾂ催ｬﾂ甘鳴青板づｰﾂδ環δ督クﾂつｷﾂづｩ
+
+    SUPPORT_EUC      ﾂ… EUCﾂ閉ｶﾂ篠堋療ｱﾂ堕ﾂ催ｬﾂ甘鳴青板づｰﾂδ環δ督クﾂつｷﾂづｩ
+
+
+
+      ﾂﾂｦﾂ個ｻﾂ催拯ilstr.hﾂづﾂつｷﾂづ猟づﾂ津ｨﾂ義ﾂつｳﾂづｪﾂつｽﾂづ慊づ慊づ可づ按づﾂづﾂつ｢ﾂづ慊つｷﾂ。
+
+        ver0.73ﾂづmilstr.hﾂづ個津ｨﾂ義ﾂづｰﾂ外ﾂつｵ compiler.hﾂづﾂ指ﾂ津ｨﾂつｵﾂつｽﾂ閉ｨﾂづﾂづ按づｨﾂづ慊つｷﾂ。
+
+
+
+
+
+ﾂ　CPUCORE_IA32
+
+ﾂ　ﾂ　IA32ﾂアﾂーﾂキﾂテﾂクﾂチﾂδδづｰﾂ催個用
+
+ﾂ　ﾂ　ﾂ　i386cﾂづｰﾂ使ﾂ用ﾂつｷﾂづｩﾂ湘ｪﾂ債ﾂづ個陳債暗督点
+
+ﾂ　ﾂ　  ﾂ・CPU panic ﾂづ｢ﾂ警ﾂ債青表ﾂ篠ｦﾂ篠楪づ msgbox() ﾂづﾂつ｢ﾂつ､ API ﾂづｰﾂ使ﾂ用ﾂつｵﾂづ慊つｷﾂ。
+
+ﾂ　ﾂ　ﾂ　ﾂ　compiler.h ﾂつﾂつｽﾂづｨﾂづﾂ適ﾂ督鳴づ可津ｨﾂ義ﾂつｵﾂづﾂつｭﾂつｾﾂつｳﾂつ｢ﾂ。
+
+ﾂ　ﾂ　ﾂ　ﾂ・sigsetjmp(3), siglongjmp(3) ﾂつｪﾂ鳴ｳﾂつ｢ﾂアﾂーﾂキﾂテﾂクﾂチﾂδδづ債暗按可ｺﾂづ define ﾂづｰ
+
+ﾂ　ﾂ　ﾂ　ﾂ　compiler.h ﾂつﾂつｽﾂづｨﾂづ可津ﾂ嘉ﾂつｵﾂづﾂつｭﾂつｾﾂつｳﾂつ｢ﾂ。
+
+ﾂ　ﾂ　ﾂ　ﾂ　----------------------------------------------------------------------
+
         #define sigjmp_buf              jmp_buf
+
         #define sigsetjmp(env, mask)    setjmp(env)
+
         #define siglongjmp(env, val)    longjmp(env, val)
-@@@@----------------------------------------------------------------------
+
+ﾂ　ﾂ　ﾂ　ﾂ　----------------------------------------------------------------------
+
+
 
   CPUSTRUC_MEMWAIT
-@@@cpucore\¢ÌÉEFCglðÚ®·é(vramop)
 
-@SUPPORT_CRT15KHZ
-@@@½¸15.98kHzðT|[g·é(DIPSW1-1)
+ﾂ　ﾂ　ﾂ　cpucoreﾂ構ﾂ堕｢ﾂ妥個づ可δﾂδつδ環ウﾂェﾂイﾂトﾂ値ﾂづｰﾂ暗堋督ｮﾂつｷﾂづｩ(vramop)
 
-@SUPPORT_CRT31KHZ
-@@@½¸31.47kHzðT|[g·é
-@@@Fellow^CvÍ±ê
 
-@SUPPORT_PC9821
-@@@PC-9821g£ÌT|[g
-@@@RÅ·ª 386K{Å·B
-@@@Ü½ SUPPORT_CRT31KHZàKvÅ·(nC]BIOSðgp·é×)
 
-@SUPPORT_PC9861K
-@@@PC-9861K(RS-232Cg£I/F)ðT|[g
+ﾂ　SUPPORT_CRT15KHZ
 
-@SUPPORT_IDEIO
-@@@IDEÌ I/OxÅÌT|[g
-@@@Åà ATAÌ[höxµ©Å«È¢c
+ﾂ　ﾂ　ﾂ　ﾂ青ﾂ閉ｽﾂ堕鳴債ｸ15.98kHzﾂづｰﾂサﾂポﾂーﾂトﾂつｷﾂづｩ(DIPSW1-1)
 
-@SUPPORT_SASI
-@@@SASI HDDðT|[g
-@@@è`ªÈ¯êÎíIDEÆµÄì®µÜ·B
 
-@SUPPORT_SCSI
-@@@SCSI HDDðT|[gcSR®©È¢
 
-@SUPPORT_S98
-@@@S98Oðæ¾
+ﾂ　SUPPORT_CRT31KHZ
 
-@SUPPORT_WAVEREC
-@@SoundxÅ wavet@CÌ«oµÖðT|[g
-@@Aµ«oµÍ TEhoÍª~ÜéÌÅ@ÙÚfoOp
+ﾂ　ﾂ　ﾂ　ﾂ青ﾂ閉ｽﾂ堕鳴債ｸ31.47kHzﾂづｰﾂサﾂポﾂーﾂトﾂつｷﾂづｩ
+
+ﾂ　ﾂ　ﾂ　Fellowﾂタﾂイﾂプﾂづ債つｱﾂづｪ
+
+
+
+ﾂ　SUPPORT_PC9821
+
+ﾂ　ﾂ　ﾂ　PC-9821ﾂ拡ﾂ陳｣ﾂづ個サﾂポﾂーﾂト
+
+ﾂ　ﾂ　ﾂ　ﾂ督鳴然ﾂづﾂつｷﾂつｪ 386ﾂ必ﾂ須ﾂづﾂつｷﾂ。
+
+ﾂ　ﾂ　ﾂ　ﾂづ慊つｽ SUPPORT_CRT31KHZﾂづﾂ必ﾂ要ﾂづﾂつｷ(ﾂハﾂイﾂδ個ゾBIOSﾂづｰﾂ使ﾂ用ﾂつｷﾂづｩﾂ暗)
+
+
+
+ﾂ　SUPPORT_PC9861K
+
+ﾂ　ﾂ　ﾂ　PC-9861K(RS-232Cﾂ拡ﾂ陳｣I/F)ﾂづｰﾂサﾂポﾂーﾂト
+
+
+
+ﾂ　SUPPORT_IDEIO
+
+ﾂ　ﾂ　ﾂ　IDEﾂづ I/Oﾂδ個ベﾂδ仰づﾂづ個サﾂポﾂーﾂト
+
+ﾂ　ﾂ　ﾂ　ﾂづﾂづ ATAﾂづ個δ環ーﾂドﾂ津ｶﾂ度ﾂつｵﾂつｩﾂづﾂつｫﾂづ按つ｢ﾂ…
+
+
+
+ﾂ　SUPPORT_SASI
+
+ﾂ　ﾂ　ﾂ　SASI HDDﾂづｰﾂサﾂポﾂーﾂト
+
+ﾂ　ﾂ　ﾂ　ﾂ津ｨﾂ義ﾂつｪﾂづ按つｯﾂづｪﾂづ篠湘ｭﾂ篠曵DEﾂづﾂつｵﾂづﾂ催ｬﾂ督ｮﾂつｵﾂづ慊つｷﾂ。
+
+
+
+ﾂ　SUPPORT_SCSI
+
+ﾂ　ﾂ　ﾂ　SCSI HDDﾂづｰﾂサﾂポﾂーﾂトﾂ…ﾂ全ﾂ然ﾂ督ｮﾂつｩﾂづ按つ｢
+
+
+
+ﾂ　SUPPORT_S98
+
+ﾂ　ﾂ　ﾂ　S98ﾂδ債グﾂづｰﾂ偲ｦﾂ督ｾ
+
+
+
+ﾂ　SUPPORT_WAVEREC
+
+ﾂ　ﾂ　Soundﾂδ個ベﾂδ仰づ waveﾂフﾂァﾂイﾂδ仰づ個渉堕つｫﾂ出ﾂつｵﾂ甘鳴青板づｰﾂサﾂポﾂーﾂト
+
+ﾂ　ﾂ　ﾂ但ﾂつｵﾂ渉堕つｫﾂ出ﾂつｵﾂ陳ﾂづ ﾂサﾂウﾂδ督ドﾂ出ﾂ療債つｪﾂ止ﾂづ慊づｩﾂづ個づﾂ　ﾂづ卍づ堋デﾂバﾂグﾂ用
+
+
+
 
 
 // ---- screen
 
-  PC-9801V[YÌæÊTCYÍWÅ 641x400B
-  VGAÅÍûÜçÈ¢ÌÅ ­§IÉVGAÉûßé×É æÊ¡TCYÍ width + extend
-Æ·éB
+
+
+  PC-9801ﾂシﾂδ環ーﾂズﾂづ個嘉ｦﾂ姪環サﾂイﾂズﾂづ債標ﾂ渉ﾂづ 641x400ﾂ。
+
+  VGAﾂづﾂづ債偲ｻﾂづ慊づｧﾂづ按つ｢ﾂづ個づ ﾂ仰ｭﾂ青ｧﾂ的ﾂづ鰻GAﾂづ可偲ｻﾂづ淞づｩﾂ暗猟づ ﾂ嘉ｦﾂ姪環可｡ﾂサﾂイﾂズﾂづ width + extend
+
+ﾂづﾂつｷﾂづｩﾂ。
+
   8 < width < 640
+
   8 < height < 480
+
   extend = 0 or 1
 
+
+
 typedef struct {
-	BYTE	*ptr;		// VRAM|C^
-	int		xalign;		// xûüItZbg
-	int		yalign;		// yûüItZbg
-	int		width;		// ¡
-	int		height;		// c
-	UINT	bpp;		// XN[Frbg
-	int		extend;		// g£
+
+	BYTE	*ptr;		// VRAMﾂポﾂイﾂδ督タ
+
+	int		xalign;		// xﾂ陛ｻﾂ古ｼﾂオﾂフﾂセﾂッﾂト
+
+	int		yalign;		// yﾂ陛ｻﾂ古ｼﾂオﾂフﾂセﾂッﾂト
+
+	int		width;		// ﾂ可｡ﾂ閉
+
+	int		height;		// ﾂ縦ﾂ閉
+
+	UINT	bpp;		// ﾂスﾂクﾂδ環ーﾂδ督色ﾂビﾂッﾂト
+
+	int		extend;		// ﾂ閉敖拡ﾂ陳｣
+
 } SCRNSURF;
 
-  T[tFXTCYÍ (width + extern) x heightB
+
+
+  ﾂサﾂーﾂフﾂェﾂスﾂサﾂイﾂズﾂづ (width + extern) x heightﾂ。
+
+
+
 
 
 const SCRNSURF *scrnmng_surflock(void);
-  æÊ`æJn
+
+  ﾂ嘉ｦﾂ姪環描ﾂ嘉ｦﾂ開ﾂ始
+
+
 
 void scrnmng_surfunlock(const SCRNSURF *surf);
-  æÊ`æI¹(±Ì^C~OÅ`æ)
+
+  ﾂ嘉ｦﾂ姪環描ﾂ嘉ｦﾂ終ﾂ猟ｹ(ﾂつｱﾂづ個タﾂイﾂミﾂδ督グﾂづﾂ描ﾂ嘉ｦ)
+
+
+
 
 
 void scrnmng_setwidth(int posx, int width)
-void scrnmng_setextend(int extend)
-void scrnmng_setheight(int posy, int height)
-  `æTCYÌÏX
-  EBhETCYÌÏX·é
-  tXN[Å êÎ \¦ÌæðÏXB
-  SCRNSURFÅÍ±ÌlðÔ·æ¤É·é
-  posx, widthÍ 8Ì{
 
-BOOL scrnmng_isfullscreen(void) c NP2RAÅÍ¢gp
-  tXN[óÔÌæ¾
-    return: ñ0ÅtXN[
+void scrnmng_setextend(int extend)
+
+void scrnmng_setheight(int posy, int height)
+
+  ﾂ描ﾂ嘉ｦﾂサﾂイﾂズﾂづ個陛渉更
+
+  ﾂウﾂィﾂδ督ドﾂウﾂサﾂイﾂズﾂづ個陛渉更ﾂつｷﾂづｩ
+
+  ﾂフﾂδ仰スﾂクﾂδ環ーﾂδ督陳ﾂづﾂつﾂづｪﾂづ ﾂ表ﾂ篠ｦﾂ療個暗ｦﾂづｰﾂ陛渉更ﾂ。
+
+  SCRNSURFﾂづﾂづ債つｱﾂづ個値ﾂづｰﾂ陛板つｷﾂづｦﾂつ､ﾂづ可つｷﾂづｩ
+
+  posx, widthﾂづ 8ﾂづ個倍ﾂ青
+
+
+
+BOOL scrnmng_isfullscreen(void) ﾂ… NP2ﾂコﾂアﾂづﾂづ債鳴｢ﾂ使ﾂ用
+
+  ﾂフﾂδ仰スﾂクﾂδ環ーﾂδ督湘ｳﾂ妥板づ個偲ｦﾂ督ｾ
+
+    return: ﾂ氾ｱ0ﾂづﾂフﾂδ仰スﾂクﾂδ環ーﾂδ
+
+
 
 BOOL scrnmng_haveextend(void)
-  ¡óÔÌæ¾
-    return: ñ0Å ¡g£T|[g
+
+  ﾂ可｡ﾂ閉敖湘ｳﾂ妥板づ個偲ｦﾂ督ｾ
+
+    return: ﾂ氾ｱ0ﾂづ ﾂ可｡ﾂ閉敖拡ﾂ陳｣ﾂサﾂポﾂーﾂト
+
+
 
 UINT scrnmng_getbpp(void)
-  XN[FrbgÌæ¾
-    return: rbg(8/16/24/32)
+
+  ﾂスﾂクﾂδ環ーﾂδ督色ﾂビﾂッﾂトﾂ青板づ個偲ｦﾂ督ｾ
+
+    return: ﾂビﾂッﾂトﾂ青(8/16/24/32)
+
+
 
 void scrnmng_palchanged(void)
-  pbgXVÌÊm(8bitXN[T|[gÌÝ)
+
+  ﾂパﾂδ個ッﾂトﾂ更ﾂ新ﾂづ個津環知(8bitﾂスﾂクﾂδ環ーﾂδ督サﾂポﾂーﾂトﾂ篠楪づ個づ)
+
+
 
 RGB16 scrnmng_makepal16(RGB32 pal32)
-  RGB32©ç 16bitFðì¬·éB(16bitXN[T|[gÌÝ)
+
+  RGB32ﾂつｩﾂづｧ 16bitﾂ色ﾂづｰﾂ催ｬﾂ青ｬﾂつｷﾂづｩﾂ。(16bitﾂスﾂクﾂδ環ーﾂδ督サﾂポﾂーﾂトﾂ篠楪づ個づ)
+
+
+
+
 
 
 
 // ---- sound
 
-NP2ÌTEhf[^Í sound.cÌÈºÌÖæèæ¾
+
+
+NP2ﾂづ個サﾂウﾂδ督ドﾂデﾂーﾂタﾂづ sound.cﾂづ個暗按可ｺﾂづ個甘鳴青板づｦﾂづｨﾂ偲ｦﾂ督ｾ
+
   const SINT32 *sound_pcmlock(void)
+
   void sound_pcmunlock(const SINT32 *hdl)
 
 
-SOUND_CRITICAL  Z}tHðüêé(see sndcsec.c)
-SOUNDRESERVE    \ñobt@ÌTCY(~b)
-  TEhðèÝ·éêÌwèB
-  èÝÌÅåØÔðSOUNDRESERVEÅwèB
-  (Win9xÌêA©OÅOobt@ð©£éÌÅ èÝ³µEwèÔÊèÉ
-  TEhCgªéÌÅA±ÌÍsv¾Á½)
+
+
+
+SOUND_CRITICAL  ﾂセﾂマﾂフﾂォﾂづｰﾂ禿ｼﾂづｪﾂづｩ(see sndcsec.c)
+
+SOUNDRESERVE    ﾂ予ﾂ姪ｱﾂバﾂッﾂフﾂァﾂづ個サﾂイﾂズ(ﾂミﾂδ環秒)
+
+  ﾂサﾂウﾂδ督ドﾂづｰﾂ環ﾂづｨﾂ債楪づ敖渉按猟敖つｷﾂづｩﾂ湘ｪﾂ債ﾂづ個指ﾂ津ｨﾂ。
+
+  ﾂ環ﾂづｨﾂ債楪づ敖づ個催ﾂ妥･ﾂ可ﾂ妥伉篠楪甘板づｰSOUNDRESERVEﾂづﾂ指ﾂ津ｨﾂ。
+
+  (Win9xﾂづ個湘ｪﾂ債ﾂ、ﾂ篠ｩﾂ前ﾂづﾂδ環δ督グﾂバﾂッﾂフﾂァﾂづｰﾂ個ｩﾂ陳｣ﾂづｩﾂづ個づ ﾂ環ﾂづｨﾂ債楪づ敖鳴ｳﾂつｵﾂ・ﾂ指ﾂ津ｨﾂ篠楪甘板津環づｨﾂづ
+
+  ﾂサﾂウﾂδ督ドﾂδ可イﾂトﾂつｪﾂ猟按づｩﾂづ個づﾂ、ﾂつｱﾂづ個渉按猟敖づ債不ﾂ要ﾂつｾﾂづﾂつｽ)
+
+
+
 
 
 UINT soundmng_create(UINT rate, UINT ms)
-  TEhXg[ÌmÛ
-    input:  rate    TvO[g(11025/22050/44100)
-            ms      TvOobt@TCY(~b)
-    return: l¾µ½obt@ÌTvO
 
-            msÉ]¤KvÍÈ¢(SDLÆ©obt@TCYªÀè³êéÌÅ)
-            NP2ÌTEhobt@ìÍ ÔèlÌÝðpµÄ¢Ü·B
+  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個確ﾂ陛
+
+    input:  rate    ﾂサﾂδ督プﾂδ環δ督グﾂδ個ーﾂト(11025/22050/44100)
+
+            ms      ﾂサﾂδ督プﾂδ環δ督グﾂバﾂッﾂフﾂァﾂサﾂイﾂズ(ﾂミﾂδ環秒)
+
+    return: ﾂ獲ﾂ督ｾﾂつｵﾂつｽﾂバﾂッﾂフﾂァﾂづ個サﾂδ督プﾂδ環δ督グﾂ青
+
+
+
+            msﾂづ可従ﾂつ､ﾂ必ﾂ要ﾂづ債づ按つ｢(SDLﾂづﾂつｩﾂバﾂッﾂフﾂァﾂサﾂイﾂズﾂつｪﾂ古ﾂ津ｨﾂつｳﾂづｪﾂづｩﾂづ個づ)
+
+            NP2ﾂづ個サﾂウﾂδ督ドﾂバﾂッﾂフﾂァﾂ堕ﾂ催ｬﾂづ ﾂ陛板づｨﾂ値ﾂづ個づ敖づｰﾂ猟伉用ﾂつｵﾂづﾂつ｢ﾂづ慊つｷﾂ。
+
+
+
 
 
 void soundmng_destroy(void)
-  TEhXg[ÌI¹
+
+  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個終ﾂ猟ｹ
+
+
 
 void soundmng_reset(void)
-  TEhXg[ÌZbg
+
+  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個δ環セﾂッﾂト
+
+
 
 void soundmng_play(void)
-  TEhXg[ÌÄ¶
+
+  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個催ﾂ青ｶ
+
+
 
 void soundmng_stop(void)
-  TEhXg[Ìâ~
+
+  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個津｢ﾂ止
+
+
 
 void soundmng_sync(void)
-  TEhXg[ÌR[obN
+
+  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個コﾂーﾂδ仰バﾂッﾂク
+
+
 
 void soundmng_setreverse(BOOL reverse)
-  TEhXg[ÌoÍ½]Ýè
-    input:  reverse ñ0Å¶E½]
+
+  ﾂサﾂウﾂδ督ドﾂスﾂトﾂδ環ーﾂδﾂづ個出ﾂ療債板ｽﾂ転ﾂ静敖津ｨ
+
+    input:  reverse ﾂ氾ｱ0ﾂづﾂ債ｶﾂ右ﾂ板ｽﾂ転
+
+
 
 BOOL soundmng_pcmplay(UINT num, BOOL loop)
-  PCMÄ¶
-    input:  num     PCMÔ
-            loop    ñ0Å[v
+
+  PCMﾂ催ﾂ青ｶ
+
+    input:  num     PCMﾂ氾板債
+
+            loop    ﾂ氾ｱ0ﾂづﾂδ仰ーﾂプ
+
+
 
 void soundmng_pcmstop(UINT num)
-  PCMâ~
-    input:  num     PCMÔ
+
+  PCMﾂ津｢ﾂ止
+
+    input:  num     PCMﾂ氾板債
+
+
+
+
 
 
 
 // ---- mouse
 
+
+
 BYTE mousemng_getstat(SINT16 *x, SINT16 *y, int clear)
-  }EXÌóÔæ¾
-    input:  clear   ñ0Å óÔðæ¾ãÉJE^ðZbg·é
-    output: *x      clear©çÌxûüJEg
-            *y      clear©çÌyûüJEg
-    return: bit7    ¶{^ÌóÔ (0:º)
-            bit5    E{^ÌóÔ (0:º)
+
+  ﾂマﾂウﾂスﾂづ個湘ｳﾂ妥板偲ｦﾂ督ｾ
+
+    input:  clear   ﾂ氾ｱ0ﾂづ ﾂ湘ｳﾂ妥板づｰﾂ偲ｦﾂ督ｾﾂ古｣ﾂづ可カﾂウﾂδ督タﾂづｰﾂδ環セﾂッﾂトﾂつｷﾂづｩ
+
+    output: *x      clearﾂつｩﾂづｧﾂづ警ﾂ陛ｻﾂ古ｼﾂカﾂウﾂδ督ト
+
+            *y      clearﾂつｩﾂづｧﾂづ軽ﾂ陛ｻﾂ古ｼﾂカﾂウﾂδ督ト
+
+    return: bit7    ﾂ債ｶﾂボﾂタﾂδ督づ個湘ｳﾂ妥 (0:ﾂ可淞可ｺ)
+
+            bit5    ﾂ右ﾂボﾂタﾂδ督づ個湘ｳﾂ妥 (0:ﾂ可淞可ｺ)
+
+
+
+
 
 
 
 // ---- serial/parallel/midi
 
+
+
 COMMNG commng_create(UINT device)
-  VAI[v
-    input:  foCXÔ
-    return: nh (¸sNULL)
+
+  ﾂシﾂδ環アﾂδ仰オﾂーﾂプﾂδ
+
+    input:  ﾂデﾂバﾂイﾂスﾂ氾板債
+
+    return: ﾂハﾂδ督ドﾂδ (ﾂ篠ｸﾂ敗ﾂ篠朦ULL)
+
+
+
 
 
 void commng_destroy(COMMNG hdl)
-  VAN[Y
-    input:  nh (¸sNULL)
+
+  ﾂシﾂδ環アﾂδ仰クﾂδ債ーﾂズ
+
+    input:  ﾂハﾂδ督ドﾂδ (ﾂ篠ｸﾂ敗ﾂ篠朦ULL)
+
+
+
+
 
 
 
 // ---- joy stick
 
-BYTE joymng_getstat(void)
-  WCXeBbNÌóÔæ¾
 
-    return: bit0    ã{^ÌóÔ (0:º)
-            bit1    º{^ÌóÔ
-            bit2    ¶{^ÌóÔ
-            bit3    E{^ÌóÔ
-            bit4    AË{^PÌóÔ
-            bit5    AË{^QÌóÔ
-            bit6    {^PÌóÔ
-            bit7    {^QÌóÔ
+
+BYTE joymng_getstat(void)
+
+  ﾂジﾂδﾂイﾂスﾂテﾂィﾂッﾂクﾂづ個湘ｳﾂ妥板偲ｦﾂ督ｾ
+
+
+
+    return: bit0    ﾂ湘｣ﾂボﾂタﾂδ督づ個湘ｳﾂ妥 (0:ﾂ可淞可ｺ)
+
+            bit1    ﾂ可ｺﾂボﾂタﾂδ督づ個湘ｳﾂ妥
+
+            bit2    ﾂ債ｶﾂボﾂタﾂδ督づ個湘ｳﾂ妥
+
+            bit3    ﾂ右ﾂボﾂタﾂδ督づ個湘ｳﾂ妥
+
+            bit4    ﾂ連ﾂ偲仰ボﾂタﾂδ督１ﾂづ個湘ｳﾂ妥
+
+            bit5    ﾂ連ﾂ偲仰ボﾂタﾂδ督２ﾂづ個湘ｳﾂ妥
+
+            bit6    ﾂボﾂタﾂδ督１ﾂづ個湘ｳﾂ妥
+
+            bit7    ﾂボﾂタﾂδ督２ﾂづ個湘ｳﾂ妥
+
+
+
 
 
 // ----
 
+
+
 void sysmng_update(UINT bitmap)
-  óÔªÏ»µ½êÉR[³êéB
+
+  ﾂ湘ｳﾂ妥板つｪﾂ陛渉可ｻﾂつｵﾂつｽﾂ湘ｪﾂ債ﾂづ可コﾂーﾂδ仰つｳﾂづｪﾂづｩﾂ。
+
+
 
 void sysmng_cpureset(void)
-  ZbgÉR[³êé
+
+  ﾂδ環セﾂッﾂトﾂ篠楪づ可コﾂーﾂδ仰つｳﾂづｪﾂづｩ
+
+
+
+
 
 
 
 void taskmng_exit(void)
-  VXeðI¹·éB
+
+  ﾂシﾂスﾂテﾂδﾂづｰﾂ終ﾂ猟ｹﾂつｷﾂづｩﾂ。
+
+
 
