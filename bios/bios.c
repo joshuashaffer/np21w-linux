@@ -509,7 +509,8 @@ void bios_initialize(void) {
 	//	file_close(fh);
 	//	TRACEOUT(("write emuitf.rom"));
 	//}
-	CopyMemory(mem + ITF_ADRS, itfrom, sizeof(itfrom)+1);
+	//CopyMemory(mem + ITF_ADRS, itfrom, sizeof(itfrom)+1);
+	CopyMemory(mem + ITF_ADRS, itfrom, sizeof(itfrom));
 #if defined(SUPPORT_FAST_MEMORYCHECK)
 	// 高速メモリチェック
 	if(np2cfg.memcheckspeed > 1){

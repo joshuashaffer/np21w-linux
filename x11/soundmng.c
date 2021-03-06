@@ -1175,12 +1175,19 @@ sdlaudio_callback(void *userdata, unsigned char *stream, int len)
 	if (sndbuf == NULL)
 		goto out;
 
+    UINT delta;
 	while (sndbuf->remain < len) {
 		SNDBUF_FILLED_QUEUE_REMOVE_HEAD();
 		sndbuf_unlock();
 
+        if(sndbuf->size < sndbuf->remain) {
+            delta = 0;
+        } else {
+            delta = sndbuf->size < sndbuf->remain;
+        }
+
 		SDL_MixAudio(stream,
-		    sndbuf->buf + (sndbuf->size - sndbuf->remain),
+		    sndbuf->buf + delta,
 		    sndbuf->remain, SDL_MIX_MAXVOLUME);
 		stream += sndbuf->remain;
 		len -= sndbuf->remain;
@@ -1198,7 +1205,11 @@ sdlaudio_callback(void *userdata, unsigned char *stream, int len)
 		sndbuf_unlock();
 	}
 
-	SDL_MixAudio(stream, sndbuf->buf + (sndbuf->size - sndbuf->remain),
+    UINT diff = 0;
+    if(sndbuf->size > sndbuf->remain) { 
+        diff = sndbuf->size - sndbuf->remain;
+    }
+	SDL_MixAudio(stream, sndbuf->buf + diff,
 	    len, SDL_MIX_MAXVOLUME);
 	sndbuf->remain -= len;
 

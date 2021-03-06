@@ -254,7 +254,7 @@ BRESULT sxsihdd_nvl_open(SXSIDEV sxsi, const OEMCHAR *fname);
 BRESULT sxsi_devopen(REG8 drv, const OEMCHAR *fname) {
 
 	SXSIDEV		sxsi;
-	BRESULT		r;
+	BRESULT		r = FAILURE;
 
 	sxsi = sxsi_getptr(drv);
 	if (sxsi == NULL) {

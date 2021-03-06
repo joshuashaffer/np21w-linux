@@ -249,8 +249,9 @@ uninstall_idle_process(void)
 /*
  * toolkit
  */
+__attribute__((no_sanitize("memory")))
 BRESULT
-gui_gtk_arginit(int *argcp, char ***argvp)
+gui_gtk_arginit(int *argcp, char ***argvp) 
 {
 	char buf[MAX_PATH];
 	char *homeenv;

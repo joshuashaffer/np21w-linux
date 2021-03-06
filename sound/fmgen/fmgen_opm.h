@@ -115,7 +115,7 @@ namespace FM
 	{
 	public:
 		OPM();
-		~OPM() {}
+		virtual ~OPM() {}
 
 		bool	Init(uint c, uint r, bool=false);
 		bool	SetRate(uint c, uint r, bool);

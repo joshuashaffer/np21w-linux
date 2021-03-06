@@ -1227,6 +1227,10 @@ REG16 MEMCALL egc_readword(UINT32 addr) {
 			UINT temp0,temp1,temp2,temp_1,temp_2;
 			UINT16 tempx;
 			UINT32 temp;
+            temp0 = 0;
+            temp1 = 0;
+            temp_1 = 0;
+            temp_2 = 0;
 			if(ad > 3)temp_2 =mem[ad -3 + planead[pl]];
 			if(ad > 2)temp_1 =mem[ad -2 + planead[pl]];
 			if(ad > 1)temp0 = mem[ad -1 + planead[pl]];
@@ -1251,6 +1255,7 @@ REG16 MEMCALL egc_readword(UINT32 addr) {
 	{
 		int fg1,fg2,fg4,fg8;
 		UINT16 temp3;
+        fg1 = fg2 = fg4 = fg8 = 0;
 		if(!(egc.access & 1))fg1 = (egc.fg&1)|(egc.fg&1)<<1|(egc.fg&1)<<2|(egc.fg&1)<<3|(egc.fg&1)<<4|(egc.fg&1)<<5|(egc.fg&1)<<6|(egc.fg&1)<<7; 
 		if(!(egc.access & 1))fg2 = (egc.fg&2)|(egc.fg&2)<<1|(egc.fg&2)<<2|(egc.fg&2)<<3|(egc.fg&2)<<4|(egc.fg&2)<<5|(egc.fg&2)<<6|(egc.fg&2)<<7; 
 		if(!(egc.access & 1))fg4 = (egc.fg&4)|(egc.fg&4)<<1|(egc.fg&4)<<2|(egc.fg&4)<<3|(egc.fg&4)<<4|(egc.fg&4)<<5|(egc.fg&4)<<6|(egc.fg&4)<<7; 

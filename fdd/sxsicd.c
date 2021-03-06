@@ -92,6 +92,7 @@ BRESULT sxsicd_readraw(SXSIDEV sxsi, FILEPOS pos, void *buf) {
 #endif
 
 	//	pos位置のセクタサイズを取得
+    secsize = DEFAULT_SECSIZE;
 	for (i = cdinfo->trks - 1; i >= 0; i--) {
 		if (cdinfo->trk[i].pos <= (UINT32)pos) {
 			secsize = cdinfo->trk[i].sector_size;

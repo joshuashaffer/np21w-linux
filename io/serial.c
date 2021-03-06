@@ -234,7 +234,7 @@ void rs232c_callback(void) {
 		cm_rs232c = commng_create(COMCREATE_SERIAL);
 	}
 	rs232c_removecounter = (rs232c_removecounter + 1) % RS232C_BUFFER_CLRC;
-	if (bufused > 0 && rs232c_removecounter==0 || bufused == RS232C_BUFFER-1){
+	if ((bufused > 0 && rs232c_removecounter==0) || bufused == RS232C_BUFFER-1){
 		rs232c_buf_rpos = (rs232c_buf_rpos+1) & RS232C_BUFFER_MASK; // 一番古いものを捨てる
 	}
 	if ((cm_rs232c) && (cm_rs232c->read(cm_rs232c, &rs232c_buf[rs232c_buf_wpos]))) {

@@ -34,7 +34,9 @@ bool FileIO::Open(const char* filename, uint flg)
 	char mode[5] = "rwb";
 	Close();
 
-	strncpy(path, filename, MAX_PATH);
+    if(filename != path) {
+        strncpy(path, filename, MAX_PATH);
+    }
 
 	if(flg & readonly)
 		strcpy(mode, "rb");

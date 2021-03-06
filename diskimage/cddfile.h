@@ -2,6 +2,11 @@
 extern "C" {
 #endif
 
+#ifdef DEFAULT_SECSIZE
+#undef DEFAULT_SECSIZE
+#endif 
+#define DEFAULT_SECSIZE 128
+
 extern const OEMCHAR str_cue[];
 extern const OEMCHAR str_ccd[];
 extern const OEMCHAR str_cdm[];

@@ -44,6 +44,8 @@ private:
 	{
 	public:
 		Chip3(CC86Box* pC86Box, UINT nDevId, ChipType nChipType);
+        virtual ~Chip3() {
+        }
 
 		// IRealUnknown
 		virtual size_t AddRef();
