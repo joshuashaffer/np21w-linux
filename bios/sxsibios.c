@@ -141,7 +141,7 @@ static REG8 sasibios_read(UINT type, SXSIDEV sxsi) {
 	UINT	r;
 	UINT8	work[1024];
 	FILEPOS	posbase;
-	UINT8	oldAL = CPU_AL;
+	//UINT8	oldAL = CPU_AL;
 
 	size = CPU_BX;
 	if (!size) {
@@ -238,7 +238,7 @@ static REG8 scsibios_read(UINT type, SXSIDEV sxsi) {
 	UINT	r;
 	UINT8	work[1024];
 	FILEPOS	posbase;
-	UINT8	oldAL = CPU_AL;
+	//UINT8	oldAL = CPU_AL;
 
 	size = CPU_BX;
 	if (!size) {

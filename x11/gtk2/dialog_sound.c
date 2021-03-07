@@ -476,8 +476,8 @@ ok_button_clicked(GtkButton *b, gpointer d)
 	for (i = 0; i < NELEMENTS(spb_ioport_str); i++) {
 		if (strcmp(spb_ioport, spb_ioport_str[i]) == 0) {
 			if (SPB_GET_IOPORT() != i) {
-				snd86opt |= SPB_SET_IOPORT(i);
-				snd86opt_mask |= SPB_MASK_IOPORT;
+				spbopt |= SPB_SET_IOPORT(i);
+				spbopt_mask |= SPB_MASK_IOPORT;
 				renewal = TRUE;
 			}
 			break;

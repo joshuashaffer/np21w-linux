@@ -29,7 +29,6 @@ void bios0x19(void) {
 
 	if (CPU_AH < 2) {
 		// 通信速度…
-		mode = CPU_CH | 0x02;
 		speed = CPU_AL;
 		if (speed >= 8) {
 			speed = 4;						// 1200bps
@@ -38,25 +37,6 @@ void bios0x19(void) {
 			speed += 12;
 		}
 
-#if 1	// NP2では未サポートの為　強行(汗
-		mode &= ~1;
-#else
-		if (mode & 1) {
-			if (speed < (12 + 6)) {
-				speed += 2;
-			}
-			else {
-				mode &= ~1;
-			}
-		}
-		// シリアルリセット
-		iocore_out8(0x32, 0x00);		// dummy instruction
-		iocore_out8(0x32, 0x00);		// dummy instruction
-		iocore_out8(0x32, 0x00);		// dummy instruction
-		iocore_out8(0x32, 0x40);		// reset
-		iocore_out8(0x32, mode);		// mode
-		iocore_out8(0x32, CPU_CL);	// cmd
-#endif
 		iocore_out8(0x77, 0xb6);
 		iocore_out8(0x75, (UINT8)rs_speed[speed]);
 		iocore_out8(0x75, (UINT8)(rs_speed[speed] >> 8));

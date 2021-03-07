@@ -689,6 +689,7 @@ static int nevent_read(STFLAGH sfh, NEVENTID *tbl, UINT *pos) {
 	UINT		i;
 	NEVENTID	num;
 
+    memset(&nit,0,sizeof(nit));
 	ret = statflag_read(sfh, &nit, sizeof(nit));
 
 	for (i=0; i<NELEMENTS(evtnum); i++) {
@@ -721,6 +722,7 @@ static int flagload_evt(STFLAGH sfh, const SFENTRY *tbl) {
 	NEVTSAVE	nevt;
 	UINT		i;
 
+    memset(&nevt,0,sizeof(nevt));
 	ret = statflag_read(sfh, &nevt, sizeof(nevt));
 
 	g_nevent.readyevents = 0;
@@ -1000,8 +1002,9 @@ static int flagload_fm(STFLAGH sfh, const SFENTRY *tbl)
 	SOUNDID nSoundID;
 	UINT nSaveFlags;
 	UINT i;
-	UINT32 datalen;
+	UINT32 datalen = 0;
 
+    memset(&nSoundID, 0, sizeof(nSoundID));
 	ret = statflag_read(sfh, &nSoundID, sizeof(nSoundID));
 	if(nSoundID==SOUNDID_INVALID){
 		// new statsave
@@ -1309,6 +1312,7 @@ static int flagcheck_sxsi(STFLAGH sfh, const SFENTRY *tbl) {
 	UINT		i;
 	OEMCHAR		buf[8];
 
+    memset(&sds, 0, sizeof(sds));
 	sxsi_allflash();
 	ret = statflag_read(sfh, &sds, sizeof(sds));
 	for (i=0; i<NELEMENTS(sds.ide); i++) {
