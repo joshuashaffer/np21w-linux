@@ -2,41 +2,41 @@
 // どーでもいい通知系
 
 enum {
-	SYS_UPDATECFG		= 0x0001,
-	SYS_UPDATEOSCFG		= 0x0002,
-	SYS_UPDATECLOCK		= 0x0004,
-	SYS_UPDATERATE		= 0x0008,
-	SYS_UPDATESBUF		= 0x0010,
-	SYS_UPDATEMIDI		= 0x0020,
-	SYS_UPDATESBOARD	= 0x0040,
-	SYS_UPDATEFDD		= 0x0080,
-	SYS_UPDATEHDD		= 0x0100,
-	SYS_UPDATEMEMORY	= 0x0200,
-	SYS_UPDATESERIAL1	= 0x0400,
+  SYS_UPDATECFG = 0x0001,
+  SYS_UPDATEOSCFG = 0x0002,
+  SYS_UPDATECLOCK = 0x0004,
+  SYS_UPDATERATE = 0x0008,
+  SYS_UPDATESBUF = 0x0010,
+  SYS_UPDATEMIDI = 0x0020,
+  SYS_UPDATESBOARD = 0x0040,
+  SYS_UPDATEFDD = 0x0080,
+  SYS_UPDATEHDD = 0x0100,
+  SYS_UPDATEMEMORY = 0x0200,
+  SYS_UPDATESERIAL1 = 0x0400,
 
-	SYS_UPDATESNDDEV	= 0x1000
+  SYS_UPDATESNDDEV = 0x1000
 };
 
 enum {
-	SYS_UPDATECAPTION_FDD	= 0x01,
-	SYS_UPDATECAPTION_CLK	= 0x02,
-	SYS_UPDATECAPTION_MISC	= 0x04,
-	
-	SYS_UPDATECAPTION_ALL	= 0xff,
+  SYS_UPDATECAPTION_FDD = 0x01,
+  SYS_UPDATECAPTION_CLK = 0x02,
+  SYS_UPDATECAPTION_MISC = 0x04,
+
+  SYS_UPDATECAPTION_ALL = 0xff,
 };
 
 typedef struct {
-	UINT8	showvolume;
-	UINT8	showmousespeed;
+  UINT8 showvolume;
+  UINT8 showmousespeed;
 } SYSMNGMISCINFO;
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-extern	UINT	sys_updates;
+extern UINT sys_updates;
 
-extern	SYSMNGMISCINFO	sys_miscinfo;
+extern SYSMNGMISCINFO sys_miscinfo;
 
 #if 0
 void sysmng_initialize(void);
@@ -47,25 +47,22 @@ void sysmng_hddaccess(UINT8 drv);
 #else
 
 // マクロ(単に関数コールしたくないだけ)
-#define	sysmng_initialize()												\
-			sys_updates = 0
+#define sysmng_initialize() sys_updates = 0
 
-#define	sysmng_update(a)												\
-			sys_updates |= (a);											\
-			if ((a) & SYS_UPDATEFDD) sysmng_updatecaption(SYS_UPDATECAPTION_FDD)
+#define sysmng_update(a)                                                       \
+  sys_updates |= (a);                                                          \
+  if ((a)&SYS_UPDATEFDD)                                                       \
+  sysmng_updatecaption(SYS_UPDATECAPTION_FDD)
 
-#define	sysmng_cpureset()												\
-			sys_updates &= (SYS_UPDATECFG | SYS_UPDATEOSCFG);			\
-			sysmng_workclockreset()
+#define sysmng_cpureset()                                                      \
+  sys_updates &= (SYS_UPDATECFG | SYS_UPDATEOSCFG);                            \
+  sysmng_workclockreset()
 
-#define	sysmng_fddaccess(a)												\
-			toolwin_fddaccess((a))
+#define sysmng_fddaccess(a) toolwin_fddaccess((a))
 
-#define	sysmng_hddaccess(a)												\
-			toolwin_hddaccess((a));
+#define sysmng_hddaccess(a) toolwin_hddaccess((a));
 
 #endif
-
 
 // ---- あとはOS依存部
 
@@ -79,4 +76,3 @@ void toolwin_hddaccess(UINT8 drv);
 #ifdef __cplusplus
 }
 #endif
-

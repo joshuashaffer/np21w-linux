@@ -9,117 +9,113 @@
 #include "nevent.h"
 
 enum {
-	PCM86_LOGICALBUF	= 0x8000,
-	PCM86_BUFSIZE		= (1 << 16),
-	PCM86_BUFMSK		= ((1 << 16) - 1),
+  PCM86_LOGICALBUF = 0x8000,
+  PCM86_BUFSIZE = (1 << 16),
+  PCM86_BUFMSK = ((1 << 16) - 1),
 
-	PCM86_DIVBIT		= 10,
-	PCM86_DIVENV		= (1 << PCM86_DIVBIT),
+  PCM86_DIVBIT = 10,
+  PCM86_DIVENV = (1 << PCM86_DIVBIT),
 
-	PCM86_RESCUE		= 20
+  PCM86_RESCUE = 20
 };
 
-#define	PCM86_EXTBUF		g_pcm86.rescue					/* 救済延滞… */
-#define	PCM86_REALBUFSIZE	(PCM86_LOGICALBUF + PCM86_EXTBUF)
+#define PCM86_EXTBUF g_pcm86.rescue /* 救済延滞… */
+#define PCM86_REALBUFSIZE (PCM86_LOGICALBUF + PCM86_EXTBUF)
 
-#define RECALC_NOWCLKWAIT(cnt)											\
-	do																	\
-	{																	\
-		g_pcm86.virbuf -= (SINT32)(cnt << g_pcm86.stepbit);				\
-		if (g_pcm86.virbuf < 0)											\
-		{																\
-			g_pcm86.virbuf &= g_pcm86.stepmask;							\
-		}																\
-	} while (0 /*CONSTCOND*/)
+#define RECALC_NOWCLKWAIT(cnt)                                                 \
+  do {                                                                         \
+    g_pcm86.virbuf -= (SINT32)(cnt << g_pcm86.stepbit);                        \
+    if (g_pcm86.virbuf < 0) {                                                  \
+      g_pcm86.virbuf &= g_pcm86.stepmask;                                      \
+    }                                                                          \
+  } while (0 /*CONSTCOND*/)
 
 typedef struct {
-	SINT32	divremain;
-	SINT32	div;
-	SINT32	div2;
-	SINT32	smp;
-	SINT32	lastsmp;
-	SINT32	smp_l;
-	SINT32	lastsmp_l;
-	SINT32	smp_r;
-	SINT32	lastsmp_r;
+  SINT32 divremain;
+  SINT32 div;
+  SINT32 div2;
+  SINT32 smp;
+  SINT32 lastsmp;
+  SINT32 smp_l;
+  SINT32 lastsmp_l;
+  SINT32 smp_r;
+  SINT32 lastsmp_r;
 
-	UINT32	readpos;			/* DSOUND再生位置 */
-	UINT32	wrtpos;				/* 書込み位置 */
-	SINT32	realbuf;			/* DSOUND用のデータ数 */
-	SINT32	virbuf;				/* 86PCM(bufsize:0x8000)のデータ数 */
-	SINT32	rescue;
+  UINT32 readpos; /* DSOUND再生位置 */
+  UINT32 wrtpos;  /* 書込み位置 */
+  SINT32 realbuf; /* DSOUND用のデータ数 */
+  SINT32 virbuf;  /* 86PCM(bufsize:0x8000)のデータ数 */
+  SINT32 rescue;
 
-	SINT32	fifosize;
-	SINT32	volume;
-	SINT32	vol5;
+  SINT32 fifosize;
+  SINT32 volume;
+  SINT32 vol5;
 
-	UINT32	lastclock_obsolate;
-	UINT32	stepclock_obsolate;
-	UINT	stepmask;
+  UINT32 lastclock_obsolate;
+  UINT32 stepclock_obsolate;
+  UINT stepmask;
 
-	UINT8	fifo;
-	UINT8	soundflags;			/*!< サウンド フラグ (A460) */
-	UINT8	dactrl;
-	UINT8	_write;
-	UINT8	stepbit;
-	UINT8	irq;
-	UINT8	reqirq;
-	UINT8	irqflag;
+  UINT8 fifo;
+  UINT8 soundflags; /*!< サウンド フラグ (A460) */
+  UINT8 dactrl;
+  UINT8 _write;
+  UINT8 stepbit;
+  UINT8 irq;
+  UINT8 reqirq;
+  UINT8 irqflag;
 
-	UINT8	buffer[PCM86_BUFSIZE];
-	
-	UINT	rateval;
-	
-	UINT64	lastclock;
-	UINT64	stepclock;
+  UINT8 buffer[PCM86_BUFSIZE];
+
+  UINT rateval;
+
+  UINT64 lastclock;
+  UINT64 stepclock;
 } _PCM86, *PCM86;
 
 typedef struct { // ステートセーブ互換性維持用（変更禁止）
-	SINT32	divremain;
-	SINT32	div;
-	SINT32	div2;
-	SINT32	smp;
-	SINT32	lastsmp;
-	SINT32	smp_l;
-	SINT32	lastsmp_l;
-	SINT32	smp_r;
-	SINT32	lastsmp_r;
+  SINT32 divremain;
+  SINT32 div;
+  SINT32 div2;
+  SINT32 smp;
+  SINT32 lastsmp;
+  SINT32 smp_l;
+  SINT32 lastsmp_l;
+  SINT32 smp_r;
+  SINT32 lastsmp_r;
 
-	UINT32	readpos;			/* DSOUND再生位置 */
-	UINT32	wrtpos;				/* 書込み位置 */
-	SINT32	realbuf;			/* DSOUND用のデータ数 */
-	SINT32	virbuf;				/* 86PCM(bufsize:0x8000)のデータ数 */
-	SINT32	rescue;
+  UINT32 readpos; /* DSOUND再生位置 */
+  UINT32 wrtpos;  /* 書込み位置 */
+  SINT32 realbuf; /* DSOUND用のデータ数 */
+  SINT32 virbuf;  /* 86PCM(bufsize:0x8000)のデータ数 */
+  SINT32 rescue;
 
-	SINT32	fifosize;
-	SINT32	volume;
-	SINT32	vol5;
+  SINT32 fifosize;
+  SINT32 volume;
+  SINT32 vol5;
 
-	UINT32	lastclock;
-	UINT32	stepclock;
-	UINT	stepmask;
+  UINT32 lastclock;
+  UINT32 stepclock;
+  UINT stepmask;
 
-	UINT8	fifo;
-	UINT8	soundflags;			/*!< サウンド フラグ (A460) */
-	UINT8	dactrl;
-	UINT8	_write;
-	UINT8	stepbit;
-	UINT8	irq;
-	UINT8	reqirq;
-	UINT8	irqflag;
+  UINT8 fifo;
+  UINT8 soundflags; /*!< サウンド フラグ (A460) */
+  UINT8 dactrl;
+  UINT8 _write;
+  UINT8 stepbit;
+  UINT8 irq;
+  UINT8 reqirq;
+  UINT8 irqflag;
 
-	UINT8	buffer[PCM86_BUFSIZE];
+  UINT8 buffer[PCM86_BUFSIZE];
 } _PCM86_OLD, *PCM86_OLD;
 
 typedef struct {
-	UINT	rate;
-	UINT	vol;
+  UINT rate;
+  UINT vol;
 } PCM86CFG;
 
-
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 extern const UINT pcm86rate8[];

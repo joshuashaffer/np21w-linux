@@ -21,35 +21,29 @@ static const TCHAR s_szClassName[] = TEXT("NP2-SubWnd");
  * 初期化
  * @param[in] hInstance インスタンス
  */
-void CSubWndBase::Initialize(HINSTANCE hInstance)
-{
-	WNDCLASS wc;
-	ZeroMemory(&wc, sizeof(wc));
-	wc.style = CS_BYTEALIGNCLIENT | CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
-	wc.lpfnWndProc = ::DefWindowProc;
-	wc.cbWndExtra = NP2GWLP_SIZE;
-	wc.hInstance = hInstance;
-	wc.hIcon = ::LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON2));
-	wc.hCursor = ::LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = static_cast<HBRUSH>(::GetStockObject(NULL_BRUSH));
-	wc.lpszClassName = s_szClassName;
-	RegisterClass(&wc);
+void CSubWndBase::Initialize(HINSTANCE hInstance) {
+  WNDCLASS wc;
+  ZeroMemory(&wc, sizeof(wc));
+  wc.style = CS_BYTEALIGNCLIENT | CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
+  wc.lpfnWndProc = ::DefWindowProc;
+  wc.cbWndExtra = NP2GWLP_SIZE;
+  wc.hInstance = hInstance;
+  wc.hIcon = ::LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON2));
+  wc.hCursor = ::LoadCursor(NULL, IDC_ARROW);
+  wc.hbrBackground = static_cast<HBRUSH>(::GetStockObject(NULL_BRUSH));
+  wc.lpszClassName = s_szClassName;
+  RegisterClass(&wc);
 }
 
 /**
  * コンストラクタ
  */
-CSubWndBase::CSubWndBase()
-	: m_wlex(NULL)
-{
-}
+CSubWndBase::CSubWndBase() : m_wlex(NULL) {}
 
 /**
  * デストラクタ
  */
-CSubWndBase::~CSubWndBase()
-{
-}
+CSubWndBase::~CSubWndBase() {}
 
 /**
  * ウィンドウ作成
@@ -64,10 +58,12 @@ CSubWndBase::~CSubWndBase()
  * @retval TRUE 成功
  * @retval FALSE 失敗
  */
-BOOL CSubWndBase::Create(UINT nCaptionID, DWORD dwStyle, int x, int y, int nWidth, int nHeight, HWND hwndParent, HMENU nIDorHMenu)
-{
-	std::tstring rCaption(LoadTString(nCaptionID));
-	return CreateEx(0, s_szClassName, rCaption.c_str(), dwStyle, x, y, nWidth, nHeight, hwndParent, nIDorHMenu);
+BOOL CSubWndBase::Create(UINT nCaptionID, DWORD dwStyle, int x, int y,
+                         int nWidth, int nHeight, HWND hwndParent,
+                         HMENU nIDorHMenu) {
+  std::tstring rCaption(LoadTString(nCaptionID));
+  return CreateEx(0, s_szClassName, rCaption.c_str(), dwStyle, x, y, nWidth,
+                  nHeight, hwndParent, nIDorHMenu);
 }
 
 /**
@@ -83,72 +79,73 @@ BOOL CSubWndBase::Create(UINT nCaptionID, DWORD dwStyle, int x, int y, int nWidt
  * @retval TRUE 成功
  * @retval FALSE 失敗
  */
-BOOL CSubWndBase::Create(LPCTSTR lpCaption, DWORD dwStyle, int x, int y, int nWidth, int nHeight, HWND hwndParent, HMENU nIDorHMenu)
-{
-	return CreateEx(0, s_szClassName, lpCaption, dwStyle, x, y, nWidth, nHeight, hwndParent, nIDorHMenu);
+BOOL CSubWndBase::Create(LPCTSTR lpCaption, DWORD dwStyle, int x, int y,
+                         int nWidth, int nHeight, HWND hwndParent,
+                         HMENU nIDorHMenu) {
+  return CreateEx(0, s_szClassName, lpCaption, dwStyle, x, y, nWidth, nHeight,
+                  hwndParent, nIDorHMenu);
 }
 
 /**
  * ウィンドウ タイプの設定
  * @param[in] nType タイプ
  */
-void CSubWndBase::SetWndType(UINT8 nType)
-{
-	WINLOCEX wlex = ::np2_winlocexallwin(g_hWndMain);
-	winlocex_setholdwnd(wlex, m_hWnd);
-	np2class_windowtype(m_hWnd, nType);
-	winlocex_move(wlex);
-	winlocex_destroy(wlex);
+void CSubWndBase::SetWndType(UINT8 nType) {
+  WINLOCEX wlex = ::np2_winlocexallwin(g_hWndMain);
+  winlocex_setholdwnd(wlex, m_hWnd);
+  np2class_windowtype(m_hWnd, nType);
+  winlocex_move(wlex);
+  winlocex_destroy(wlex);
 }
 
 /**
  * CWndProc オブジェクトの Windows プロシージャ (WindowProc) が用意されています
  * @param[in] nMsg 処理される Windows メッセージを指定します
- * @param[in] wParam メッセージの処理で使う付加情報を提供します。このパラメータの値はメッセージに依存します
- * @param[in] lParam メッセージの処理で使う付加情報を提供します。このパラメータの値はメッセージに依存します
+ * @param[in] wParam
+ * メッセージの処理で使う付加情報を提供します。このパラメータの値はメッセージに依存します
+ * @param[in] lParam
+ * メッセージの処理で使う付加情報を提供します。このパラメータの値はメッセージに依存します
  * @return メッセージに依存する値を返します
  */
-LRESULT CSubWndBase::WindowProc(UINT nMsg, WPARAM wParam, LPARAM lParam)
-{
-	switch (nMsg)
-	{
-		case WM_KEYDOWN:
-		case WM_KEYUP:
-			::SendMessage(g_hWndMain, nMsg, wParam, lParam);
-			break;
+LRESULT CSubWndBase::WindowProc(UINT nMsg, WPARAM wParam, LPARAM lParam) {
+  switch (nMsg) {
+  case WM_KEYDOWN:
+  case WM_KEYUP:
+    ::SendMessage(g_hWndMain, nMsg, wParam, lParam);
+    break;
 
-		case WM_ENTERMENULOOP:
-			CSoundMng::GetInstance()->Disable(SNDPROC_SUBWIND);
-			break;
+  case WM_ENTERMENULOOP:
+    CSoundMng::GetInstance()->Disable(SNDPROC_SUBWIND);
+    break;
 
-		case WM_EXITMENULOOP:
-			CSoundMng::GetInstance()->Enable(SNDPROC_SUBWIND);
-			break;
+  case WM_EXITMENULOOP:
+    CSoundMng::GetInstance()->Enable(SNDPROC_SUBWIND);
+    break;
 
-		case WM_ENTERSIZEMOVE:
-			CSoundMng::GetInstance()->Disable(SNDPROC_SUBWIND);
-			winlocex_destroy(m_wlex);
-			m_wlex = np2_winlocexallwin(m_hWnd);
-			break;
+  case WM_ENTERSIZEMOVE:
+    CSoundMng::GetInstance()->Disable(SNDPROC_SUBWIND);
+    winlocex_destroy(m_wlex);
+    m_wlex = np2_winlocexallwin(m_hWnd);
+    break;
 
-		case WM_MOVING:
-			if (np2oscfg.WINSNAP) { // スナップ設定を共通に np21w ver0.86 rev22
-				winlocex_moving(m_wlex, reinterpret_cast<RECT*>(lParam));
-			}
-			break;
+  case WM_MOVING:
+    if (np2oscfg.WINSNAP) { // スナップ設定を共通に np21w ver0.86 rev22
+      winlocex_moving(m_wlex, reinterpret_cast<RECT *>(lParam));
+    }
+    break;
 
-		case WM_EXITSIZEMOVE:
-			::winlocex_destroy(m_wlex);
-			m_wlex = NULL;
-			CSoundMng::GetInstance()->Enable(SNDPROC_SUBWIND);
-			break;
+  case WM_EXITSIZEMOVE:
+    ::winlocex_destroy(m_wlex);
+    m_wlex = NULL;
+    CSoundMng::GetInstance()->Enable(SNDPROC_SUBWIND);
+    break;
 
-		case WM_CLOSE:
-			DestroyWindow();
-			break;
+  case WM_CLOSE:
+    DestroyWindow();
+    break;
 
-		default:
-			return CWndProc::WindowProc(nMsg, wParam, lParam);
-	}
-	return 0L;
+  default:
+    return CWndProc::WindowProc(nMsg, wParam, lParam);
+  }
+  return 0L;
 }

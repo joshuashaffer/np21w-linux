@@ -21,14 +21,13 @@
  * @param[in] argv 引数
  * @return リザルト コード
  */
-int main(int argc, char *argv[])
-{
-	UINT nLength;
-	TCHAR szFont[MAX_PATH];
+int main(int argc, char *argv[]) {
+  UINT nLength;
+  TCHAR szFont[MAX_PATH];
 
-	nLength = GetWindowsDirectory(szFont, SDL_arraysize(szFont));
-	lstrcpy(szFont + nLength, TEXT("\\Fonts\\msgothic.ttc"));
-	fontmng_setdeffontname(szFont);
+  nLength = GetWindowsDirectory(szFont, SDL_arraysize(szFont));
+  lstrcpy(szFont + nLength, TEXT("\\Fonts\\msgothic.ttc"));
+  fontmng_setdeffontname(szFont);
 
-	return np2_main(argc, argv);
+  return np2_main(argc, argv);
 }

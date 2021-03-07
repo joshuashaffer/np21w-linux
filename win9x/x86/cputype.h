@@ -8,4 +8,3 @@ int havemmx(void);
 #ifdef __cplusplus
 }
 #endif
-

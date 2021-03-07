@@ -1,25 +1,23 @@
 
 enum {
-	GDCOPE_REPLACE		= 0,
-	GDCOPE_COMPLEMENT	= 1,
-	GDCOPE_CLEAR		= 2,
-	GDCOPE_SET			= 3
+  GDCOPE_REPLACE = 0,
+  GDCOPE_COMPLEMENT = 1,
+  GDCOPE_CLEAR = 2,
+  GDCOPE_SET = 3
 };
 
 typedef struct {
-	UINT8	ope;
-	UINT8	DC[2];
-	UINT8	D[2];
-	UINT8	D2[2];
-	UINT8	D1[2];
-	UINT8	DM[2];
+  UINT8 ope;
+  UINT8 DC[2];
+  UINT8 D[2];
+  UINT8 D2[2];
+  UINT8 D1[2];
+  UINT8 DM[2];
 } GDCVECT;
 
 extern const UINT32 gdcplaneseg[4];
 
-typedef void (*GDCSUBFN)(UINT32 csrw, const GDCVECT *vect,
-														REG16 pat, REG8 ope);
-
+typedef void (*GDCSUBFN)(UINT32 csrw, const GDCVECT *vect, REG16 pat, REG8 ope);
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,10 +25,10 @@ extern "C" {
 
 #if !defined(MEMOPTIMIZE) || (MEMOPTIMIZE < 2)
 extern const UINT8 gdcbitreverse[0x100];
-#define	GDCPATREVERSE(d)		gdcbitreverse[(d) & 0xff]
+#define GDCPATREVERSE(d) gdcbitreverse[(d)&0xff]
 #else
 REG8 gdcbitreverse(REG8 data);
-#define	GDCPATREVERSE(d)		gdcbitreverse((REG8)(d))
+#define GDCPATREVERSE(d) gdcbitreverse((REG8)(d))
 #endif
 
 void gdcslavewait(NEVENTITEM item);
@@ -52,4 +50,3 @@ void gdcsub_write(void);
 #ifdef __cplusplus
 }
 #endif
-

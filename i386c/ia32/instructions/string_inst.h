@@ -23,16 +23,16 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_INSTRUCTION_STRING_H__
-#define	IA32_CPU_INSTRUCTION_STRING_H__
+#ifndef IA32_CPU_INSTRUCTION_STRING_H__
+#define IA32_CPU_INSTRUCTION_STRING_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define	STRING_DIR	((CPU_FLAG & D_FLAG) ? -1 : 1)
-#define	STRING_DIRx2	((CPU_FLAG & D_FLAG) ? -2 : 2)
-#define	STRING_DIRx4	((CPU_FLAG & D_FLAG) ? -4 : 4)
+#define STRING_DIR ((CPU_FLAG & D_FLAG) ? -1 : 1)
+#define STRING_DIRx2 ((CPU_FLAG & D_FLAG) ? -2 : 2)
+#define STRING_DIRx4 ((CPU_FLAG & D_FLAG) ? -4 : 4)
 
 /* movs */
 void MOVSB_XbYb(void);
@@ -86,4 +86,4 @@ void OUTSD_DXXd(void);
 }
 #endif
 
-#endif	/* IA32_CPU_INSTRUCTION_STRING_H__ */
+#endif /* IA32_CPU_INSTRUCTION_STRING_H__ */

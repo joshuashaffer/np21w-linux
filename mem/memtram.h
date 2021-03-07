@@ -13,4 +13,3 @@ void MEMCALL memtram_wr32(UINT32 address, UINT32 value);
 #ifdef __cplusplus
 }
 #endif
-

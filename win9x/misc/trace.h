@@ -7,11 +7,11 @@
 
 #ifndef TRACE
 
-#define	TRACEINIT()
-#define	TRACETERM()
-#define	TRACEOUT(a)
-#define	VERBOSE(a)
-#define	APPDEVOUT(a)
+#define TRACEINIT()
+#define TRACETERM()
+#define TRACEOUT(a)
+#define VERBOSE(a)
+#define APPDEVOUT(a)
 
 #else
 
@@ -30,10 +30,10 @@ void trace_fileout(const OEMCHAR *fname);
 }
 #endif
 
-#define	TRACEINIT()		trace_init()
-#define	TRACETERM()		trace_term()
-#define	TRACEOUT(arg)	trace_fmt arg
-#define	VERBOSE(arg)	trace_fmt2 arg
-#define	APPDEVOUT(arg)	trace_char(arg)
+#define TRACEINIT() trace_init()
+#define TRACETERM() trace_term()
+#define TRACEOUT(arg) trace_fmt arg
+#define VERBOSE(arg) trace_fmt2 arg
+#define APPDEVOUT(arg) trace_char(arg)
 
 #endif

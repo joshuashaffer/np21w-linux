@@ -1,6 +1,7 @@
 /*!
  * @file	guard.h
- * @brief	クリティカル セクション クラスの宣言およびインターフェイスの定義をします
+ * @brief	クリティカル セクション
+ * クラスの宣言およびインターフェイスの定義をします
  */
 
 #pragma once
@@ -10,10 +11,9 @@
 /*!
  * @brief クリティカル セクション クラス
  */
-class CGuard
-{
+class CGuard {
 public:
-	/*! コンストラクタ */
+  /*! コンストラクタ */
   CGuard() { ::pthread_mutex_init(&m_cs, nullptr); }
 
   /*! デストラクタ */
@@ -26,5 +26,5 @@ public:
   void Leave() { ::pthread_mutex_unlock(&m_cs); }
 
 private:
-	pthread_mutex_t m_cs;		//!< クリティカル セクション情報
+  pthread_mutex_t m_cs; //!< クリティカル セクション情報
 };

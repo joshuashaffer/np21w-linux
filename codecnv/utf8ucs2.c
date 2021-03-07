@@ -6,7 +6,8 @@
 #include "compiler.h"
 #include "codecnv.h"
 
-static UINT utf8toucs2(UINT16 *lpOutput, UINT cchOutput, const char *lpInput, UINT cchInput);
+static UINT utf8toucs2(UINT16 *lpOutput, UINT cchOutput, const char *lpInput,
+                       UINT cchInput);
 
 /**
  * Maps a UTF-8 string to a UTF-16 string
@@ -16,36 +17,31 @@ static UINT utf8toucs2(UINT16 *lpOutput, UINT cchOutput, const char *lpInput, UI
  * @param[in] cchInput Size, in characters, of the buffer indicated by lpInput
  * @return The number of characters written to the buffer indicated by lpOutput
  */
-UINT codecnv_utf8toucs2(UINT16 *lpOutput, UINT cchOutput, const char *lpInput, UINT cchInput)
-{
-	UINT nLength;
+UINT codecnv_utf8toucs2(UINT16 *lpOutput, UINT cchOutput, const char *lpInput,
+                        UINT cchInput) {
+  UINT nLength;
 
-	if (lpInput == NULL)
-	{
-		return 0;
-	}
+  if (lpInput == NULL) {
+    return 0;
+  }
 
-	if (cchOutput == 0)
-	{
-		lpOutput = NULL;
-		cchOutput = (UINT)-1;
-	}
+  if (cchOutput == 0) {
+    lpOutput = NULL;
+    cchOutput = (UINT)-1;
+  }
 
-	if (cchInput != (UINT)-1)
-	{
-		// Binary mode
-		return utf8toucs2(lpOutput, cchOutput, lpInput, cchInput);
-	}
-	else
-	{
-		// String mode
-		nLength = utf8toucs2(lpOutput, cchOutput - 1, lpInput, (UINT)strlen(lpInput));
-		if (lpOutput)
-		{
-			lpOutput[nLength] = '\0';
-		}
-		return nLength + 1;
-	}
+  if (cchInput != (UINT)-1) {
+    // Binary mode
+    return utf8toucs2(lpOutput, cchOutput, lpInput, cchInput);
+  } else {
+    // String mode
+    nLength =
+        utf8toucs2(lpOutput, cchOutput - 1, lpInput, (UINT)strlen(lpInput));
+    if (lpOutput) {
+      lpOutput[nLength] = '\0';
+    }
+    return nLength + 1;
+  }
 }
 
 /**
@@ -56,42 +52,37 @@ UINT codecnv_utf8toucs2(UINT16 *lpOutput, UINT cchOutput, const char *lpInput, U
  * @param[in] cchInput Size, in characters, of the buffer indicated by lpInput
  * @return The number of characters written to the buffer indicated by lpOutput
  */
-static UINT utf8toucs2(UINT16 *lpOutput, UINT cchOutput, const char *lpInput, UINT cchInput)
-{
-	UINT nRemain;
-	UINT c;
-	int nBits;
+static UINT utf8toucs2(UINT16 *lpOutput, UINT cchOutput, const char *lpInput,
+                       UINT cchInput) {
+  UINT nRemain;
+  UINT c;
+  int nBits;
 
-	nRemain = cchOutput;
-	while ((cchInput > 0) && (nRemain > 0))
-	{
-		c = *lpInput++;
-		cchInput--;
+  nRemain = cchOutput;
+  while ((cchInput > 0) && (nRemain > 0)) {
+    c = *lpInput++;
+    cchInput--;
 
-		if (c & 0x80)
-		{
-			nBits = 0;
-			while ((nBits < 6) && (c & (0x80 >> nBits)))
-			{
-				nBits++;
-			}
+    if (c & 0x80) {
+      nBits = 0;
+      while ((nBits < 6) && (c & (0x80 >> nBits))) {
+        nBits++;
+      }
 
-			c &= (0x7f >> nBits);
-			nBits--;
+      c &= (0x7f >> nBits);
+      nBits--;
 
-			while ((nBits > 0) && (cchInput > 0) && (((*lpInput) & 0xc0) == 0x80))
-			{
-				c = (c << 6) | ((*lpInput++) & 0x3f);
-				cchInput--;
-				nBits--;
-			}
-		}
+      while ((nBits > 0) && (cchInput > 0) && (((*lpInput) & 0xc0) == 0x80)) {
+        c = (c << 6) | ((*lpInput++) & 0x3f);
+        cchInput--;
+        nBits--;
+      }
+    }
 
-		nRemain--;
-		if (lpOutput)
-		{
-			*lpOutput++ = (UINT16)c;
-		}
-	}
-	return (UINT)(cchOutput - nRemain);
+    nRemain--;
+    if (lpOutput) {
+      *lpOutput++ = (UINT16)c;
+    }
+  }
+  return (UINT)(cchOutput - nRemain);
 }

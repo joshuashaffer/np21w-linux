@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	NP2_X11_DRAWMNG_H__
-#define	NP2_X11_DRAWMNG_H__
+#ifndef NP2_X11_DRAWMNG_H__
+#define NP2_X11_DRAWMNG_H__
 
 #include "compiler.h"
 
@@ -33,24 +33,24 @@
 G_BEGIN_DECLS
 
 typedef struct {
-	RGB32	mask;
-	UINT8	r16b;
-	UINT8	l16r;
-	UINT8	l16g;
+  RGB32 mask;
+  UINT8 r16b;
+  UINT8 l16r;
+  UINT8 l16g;
 } PAL16MASK;
 
 typedef struct {
-	CMNVRAM		vram;
+  CMNVRAM vram;
 
-	int		width;
-	int		height;
-	int		lpitch;
+  int width;
+  int height;
+  int lpitch;
 
-	RECT_T		src;
-	POINT_T		dest;
+  RECT_T src;
+  POINT_T dest;
 
-	PAL16MASK	pal16mask;
-	BOOL		drawing;
+  PAL16MASK pal16mask;
+  BOOL drawing;
 } _DRAWMNG_HDL, *DRAWMNG_HDL;
 
 DRAWMNG_HDL drawmng_create(void *parent, int width, int height);
@@ -62,9 +62,10 @@ void drawmng_set_size(DRAWMNG_HDL hdl, int width, int height);
 void drawmng_invalidate(DRAWMNG_HDL hdl, RECT_T *r);
 void *drawmng_get_widget_handle(DRAWMNG_HDL hdl);
 
-void drawmng_make16mask(PAL16MASK *pal16, UINT32 bmask, UINT32 rmask, UINT32 gmask);
+void drawmng_make16mask(PAL16MASK *pal16, UINT32 bmask, UINT32 rmask,
+                        UINT32 gmask);
 RGB16 drawmng_makepal16(PAL16MASK *pal16, RGB32 pal32);
 
 G_END_DECLS
 
-#endif	/* NP2_X11_DRAWMNG_H__ */
+#endif /* NP2_X11_DRAWMNG_H__ */

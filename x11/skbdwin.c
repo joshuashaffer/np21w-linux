@@ -10,50 +10,38 @@
 
 SKBDCFG skbdcfg;
 
-
 BRESULT
-skbdwin_initialize(void)
-{
+skbdwin_initialize(void) {
 
-	softkbd_initialize();
+  softkbd_initialize();
 
-	return SUCCESS;
+  return SUCCESS;
 }
 
-void
-skbdwin_deinitialize(void)
-{
-
-	softkbd_deinitialize();
-}
-
+void skbdwin_deinitialize(void) { softkbd_deinitialize(); }
 
 /* ---- ini */
 
 static const char ini_title[] = "NP2 software keyboard";
 
 static INITBL iniitem[] = {
-	{"WindposX", INITYPE_SINT32,	&skbdcfg.posx,		0},
-	{"WindposY", INITYPE_SINT32,	&skbdcfg.posy,		0},
+    {"WindposX", INITYPE_SINT32, &skbdcfg.posx, 0},
+    {"WindposY", INITYPE_SINT32, &skbdcfg.posy, 0},
 };
-#define	INIITEMS	(sizeof(iniitem) / sizeof(iniitem[0]))
+#define INIITEMS (sizeof(iniitem) / sizeof(iniitem[0]))
 
-void
-skbdwin_readini(void)
-{
-	char path[MAX_PATH];
+void skbdwin_readini(void) {
+  char path[MAX_PATH];
 
-	memset(&skbdcfg, 0, sizeof(skbdcfg));
-	file_cpyname(path, modulefile, sizeof(path));
-	ini_read(path, ini_title, iniitem, INIITEMS);
+  memset(&skbdcfg, 0, sizeof(skbdcfg));
+  file_cpyname(path, modulefile, sizeof(path));
+  ini_read(path, ini_title, iniitem, INIITEMS);
 }
 
-void
-skbdwin_writeini(void)
-{
-	char path[MAX_PATH];
+void skbdwin_writeini(void) {
+  char path[MAX_PATH];
 
-	file_cpyname(path, modulefile, sizeof(path));
-	ini_write(path, ini_title, iniitem, INIITEMS, FALSE);
+  file_cpyname(path, modulefile, sizeof(path));
+  ini_write(path, ini_title, iniitem, INIITEMS, FALSE);
 }
 #endif

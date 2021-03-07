@@ -1,51 +1,47 @@
 
 #if !defined(DISABLE_SOUND)
 
-enum {
-	BEEPEVENT_MAXBIT	= 8,
-	BEEPEVENT_MAX		= (1 << BEEPEVENT_MAXBIT)
-};
+enum { BEEPEVENT_MAXBIT = 8, BEEPEVENT_MAX = (1 << BEEPEVENT_MAXBIT) };
 
 typedef struct {
-	UINT32	clock;
-	int		enable;
+  UINT32 clock;
+  int enable;
 } BPEVENT;
 
 typedef struct {
-	UINT16	cnt;
-	UINT16	hz;
-	int		buz;
-	int		__puchi;
-	UINT8	mode;
-	UINT8	padding[3];
+  UINT16 cnt;
+  UINT16 hz;
+  int buz;
+  int __puchi;
+  UINT8 mode;
+  UINT8 padding[3];
 
-	int		low;
-	int		enable;
-	int		lastenable;
-	int		lastremain;
-	int		lastonevt;
-	int		lastclk;
-	UINT32	clock;
-	UINT32  beep_data_curr_loc;
-	UINT32  beep_data_load_loc;
-	UINT32  beep_laskclk;
-	UINT	events;
-	BPEVENT	event[BEEPEVENT_MAX];
+  int low;
+  int enable;
+  int lastenable;
+  int lastremain;
+  int lastonevt;
+  int lastclk;
+  UINT32 clock;
+  UINT32 beep_data_curr_loc;
+  UINT32 beep_data_load_loc;
+  UINT32 beep_laskclk;
+  UINT events;
+  BPEVENT event[BEEPEVENT_MAX];
 } _BEEP, *BEEP;
 
 typedef struct {
-	UINT	rate;
-	UINT	vol;
-	UINT	__puchibase;
-	UINT	samplebase;
+  UINT rate;
+  UINT vol;
+  UINT __puchibase;
+  UINT samplebase;
 } BEEPCFG;
-
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-extern	_BEEP		g_beep;
+extern _BEEP g_beep;
 #define BEEPDATACOUNT 0x100000
 extern UINT16 beep_data[BEEPDATACOUNT];
 extern UINT32 beep_time[BEEPDATACOUNT];
@@ -80,4 +76,3 @@ void SOUNDCALL beep_getpcm(BEEP bp, SINT32 *pcm, UINT count);
 #define beep_oneventset()
 
 #endif
-

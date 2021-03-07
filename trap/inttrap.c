@@ -11,40 +11,42 @@
 
 void CPUCALL softinttrap(UINT cs, UINT32 eip, UINT vect) {
 
-// ---- ここにトラップ条件コードを書きます
-	if (vect == 0x7f) {
-		switch(CPU_AH) {
-			case 0:
-				TRACEOUT(("INT-7F AH=00 Load data DS:DX = %.4x:%.4x", CPU_DS, CPU_DX));
-				break;
+  // ---- ここにトラップ条件コードを書きます
+  if (vect == 0x7f) {
+    switch (CPU_AH) {
+    case 0:
+      TRACEOUT(("INT-7F AH=00 Load data DS:DX = %.4x:%.4x", CPU_DS, CPU_DX));
+      break;
 
-			case 1:
-				TRACEOUT(("INT-7F AH=01 Play data AL=%.2x", CPU_AL));
-				break;
+    case 1:
+      TRACEOUT(("INT-7F AH=01 Play data AL=%.2x", CPU_AL));
+      break;
 
-			case 2:
-				TRACEOUT(("INT-7F AH=02 Stop Data"));
-				break;
+    case 2:
+      TRACEOUT(("INT-7F AH=02 Stop Data"));
+      break;
 
-//			case 3:
-//				TRACEOUT(("INT-7F AH=03 Get Status"));
-//				break;
+      //			case 3:
+      //				TRACEOUT(("INT-7F AH=03 Get Status"));
+      //				break;
 
-			case 4:
-				TRACEOUT(("INT-7F AH=04 Set Parameter AL=%.2x", CPU_AL));
-				break;
-		}
-	}
-	return;
+    case 4:
+      TRACEOUT(("INT-7F AH=04 Set Parameter AL=%.2x", CPU_AL));
+      break;
+    }
+  }
+  return;
 
-	if (vect == 0x50) {
-		if (CPU_AX != 9)
-		TRACEOUT(("%.4x:%.4x INT-50 AX=%.4x BX=%.4x DX=%.4x", cs, eip, CPU_AX, CPU_BX, CPU_DX));
-	}
-	if (vect == 0x51) {
-		TRACEOUT(("%.4x:%.4x INT-51 AX=%.4x BX=%.4x DX=%.4x", cs, eip, CPU_AX, CPU_BX, CPU_DX));
-	}
-	return;
+  if (vect == 0x50) {
+    if (CPU_AX != 9)
+      TRACEOUT(("%.4x:%.4x INT-50 AX=%.4x BX=%.4x DX=%.4x", cs, eip, CPU_AX,
+                CPU_BX, CPU_DX));
+  }
+  if (vect == 0x51) {
+    TRACEOUT(("%.4x:%.4x INT-51 AX=%.4x BX=%.4x DX=%.4x", cs, eip, CPU_AX,
+              CPU_BX, CPU_DX));
+  }
+  return;
 
 #if 0
 //	if (vect == 0x2f) {
@@ -170,30 +172,35 @@ void CPUCALL softinttrap(UINT cs, UINT32 eip, UINT vect) {
 	}
 #endif
 #if 1
-	if (vect == 0x21) {
-		char f[128];
-		UINT i;
-		char c;
-		switch(CPU_AH) {
-			case 0x3d:
-				for (i=0; i<127; i++) {
-					c = MEMR_READ8(CPU_DS, CPU_DX + i);
-					if (c == '\0') break;
-					f[i] = c;
-				}
-				f[i] = 0;
-				TRACEOUT(("DOS: %.4x:%.4x Open Handle AL=%.2x DS:DX=%.4x:%.4x[%s]", cs, eip, CPU_AL, CPU_DS, CPU_DX, f));
-				break;
+  if (vect == 0x21) {
+    char f[128];
+    UINT i;
+    char c;
+    switch (CPU_AH) {
+    case 0x3d:
+      for (i = 0; i < 127; i++) {
+        c = MEMR_READ8(CPU_DS, CPU_DX + i);
+        if (c == '\0')
+          break;
+        f[i] = c;
+      }
+      f[i] = 0;
+      TRACEOUT(("DOS: %.4x:%.4x Open Handle AL=%.2x DS:DX=%.4x:%.4x[%s]", cs,
+                eip, CPU_AL, CPU_DS, CPU_DX, f));
+      break;
 
-			case 0x3f:
-				TRACEOUT(("DOS: %.4x:%.4x Read Handle BX=%.4x DS:DX=%.4x:%.4x CX=%.4x", cs, eip, CPU_BX, CPU_DS, CPU_DX, CPU_CX));
-				break;
+    case 0x3f:
+      TRACEOUT(("DOS: %.4x:%.4x Read Handle BX=%.4x DS:DX=%.4x:%.4x CX=%.4x",
+                cs, eip, CPU_BX, CPU_DS, CPU_DX, CPU_CX));
+      break;
 
-			case 0x42:
-				TRACEOUT(("DOS: %.4x:%.4x Move File Pointer BX=%.4x CX:DX=%.4x:%.4x AL=%.2x", cs, eip, CPU_BX, CPU_CX, CPU_DX, CPU_AL));
-				break;
-		}
-	}
+    case 0x42:
+      TRACEOUT(
+          ("DOS: %.4x:%.4x Move File Pointer BX=%.4x CX:DX=%.4x:%.4x AL=%.2x",
+           cs, eip, CPU_BX, CPU_CX, CPU_DX, CPU_AL));
+      break;
+    }
+  }
 #endif
 #if 0
 	if (vect == 0xf5) {
@@ -237,42 +244,42 @@ void CPUCALL softinttrap(UINT cs, UINT32 eip, UINT vect) {
 	}
 #endif
 #if defined(TRACE)
-	if (vect == 0x7f) {
-		UINT i, j;
-		switch(CPU_AH) {
-			case 0:
-				TRACEOUT(("INT-7F AH=00 Load data DS:DX = %.4x:%.4x", CPU_DS, CPU_DX));
-				for (i=0; i<16; i+=4) {
-					char buf[256];
-					for (j=0; j<4; j++) {
-						sprintf(buf + (j * 6), "0x%.2x, ",
-										MEMR_READ8(CPU_DS, CPU_DX + i + j));
-					}
-					TRACEOUT(("%s", buf));
-				}
-				break;
+  if (vect == 0x7f) {
+    UINT i, j;
+    switch (CPU_AH) {
+    case 0:
+      TRACEOUT(("INT-7F AH=00 Load data DS:DX = %.4x:%.4x", CPU_DS, CPU_DX));
+      for (i = 0; i < 16; i += 4) {
+        char buf[256];
+        for (j = 0; j < 4; j++) {
+          sprintf(buf + (j * 6), "0x%.2x, ",
+                  MEMR_READ8(CPU_DS, CPU_DX + i + j));
+        }
+        TRACEOUT(("%s", buf));
+      }
+      break;
 
-			case 1:
-				TRACEOUT(("INT-7F AH=01 Play data AL=%.2x", CPU_AL));
-				break;
+    case 1:
+      TRACEOUT(("INT-7F AH=01 Play data AL=%.2x", CPU_AL));
+      break;
 
-			case 2:
-				TRACEOUT(("INT-7F AH=02 Stop Data"));
-				break;
+    case 2:
+      TRACEOUT(("INT-7F AH=02 Stop Data"));
+      break;
 
-			case 3:
-//				TRACEOUT(("INT-7F AH=03 Get Status"));
-				break;
+    case 3:
+      //				TRACEOUT(("INT-7F AH=03 Get Status"));
+      break;
 
-			case 4:
-				TRACEOUT(("INT-7F AH=04 Set Parameter AL=%.2x", CPU_AL));
-				break;
+    case 4:
+      TRACEOUT(("INT-7F AH=04 Set Parameter AL=%.2x", CPU_AL));
+      break;
 
-			default:
-				TRACEOUT(("INT-7F AH=%.2x", CPU_AH));
-				break;
-		}
-	}
+    default:
+      TRACEOUT(("INT-7F AH=%.2x", CPU_AH));
+      break;
+    }
+  }
 #endif
 #if 0 // defined(TRACE)
 	if ((vect >= 0xa0) && (vect < 0xb0)) {
@@ -283,4 +290,3 @@ extern void lio_look(UINT vect);
 }
 
 #endif
-

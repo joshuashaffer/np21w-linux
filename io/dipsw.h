@@ -9,4 +9,3 @@ REG8 IOINPCALL dipsw_r8(UINT port);
 #ifdef __cplusplus
 }
 #endif
-

@@ -12,4 +12,3 @@ UINT timing_getcount_baseclock(void);
 #ifdef __cplusplus
 }
 #endif
-

@@ -1,8 +1,7 @@
 
 typedef struct {
-	int		enable;
+  int enable;
 } _NMIIO, *NMIIO;
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -14,4 +13,3 @@ void nmiio_bind(void);
 #ifdef __cplusplus
 }
 #endif
-

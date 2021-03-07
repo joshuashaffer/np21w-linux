@@ -1,19 +1,11 @@
-#ifndef	NP2_X11_SOUNGMNG_H__
-#define	NP2_X11_SOUNGMNG_H__
+#ifndef NP2_X11_SOUNGMNG_H__
+#define NP2_X11_SOUNGMNG_H__
 
 G_BEGIN_DECLS
 
-enum {
-	SOUND_PCMSEEK,
-	SOUND_PCMSEEK1,
-	SOUND_MAXPCM
-};
+enum { SOUND_PCMSEEK, SOUND_PCMSEEK1, SOUND_MAXPCM };
 
-enum {
-	SNDDRV_NODRV,
-	SNDDRV_SDL,
-	SNDDRV_DRVMAX
-};
+enum { SNDDRV_NODRV, SNDDRV_SDL, SNDDRV_DRVMAX };
 
 UINT8 snddrv_drv2num(const char *);
 const char *snddrv_num2drv(UINT8);
@@ -40,29 +32,29 @@ void soundmng_pcmvolume(UINT num, int volume);
 
 extern int pcm_volume_default;
 
-#else	/* NOSOUND */
+#else /* NOSOUND */
 
-#define soundmng_create(rate, ms)	0
-#define	soundmng_destroy()
-#define	soundmng_reset()
-#define	soundmng_play()
-#define	soundmng_stop()
-#define	soundmng_sync()
-#define	soundmng_setreverse(reverse)
+#define soundmng_create(rate, ms) 0
+#define soundmng_destroy()
+#define soundmng_reset()
+#define soundmng_play()
+#define soundmng_stop()
+#define soundmng_sync()
+#define soundmng_setreverse(reverse)
 
-#define	soundmng_pcmplay(num, loop)
-#define	soundmng_pcmstop(num)
+#define soundmng_pcmplay(num, loop)
+#define soundmng_pcmstop(num)
 
 /* ---- for X11 */
 
-#define	soundmng_initialize()		np2cfg.SOUND_SW = 0, FAILURE
-#define	soundmng_deinitialize()
+#define soundmng_initialize() np2cfg.SOUND_SW = 0, FAILURE
+#define soundmng_deinitialize()
 
-#define	soundmng_pcmload(num, filename)	FAILURE
-#define	soundmng_pcmvolume(num, volume)
+#define soundmng_pcmload(num, filename) FAILURE
+#define soundmng_pcmvolume(num, volume)
 
-#endif	/* !NOSOUND */
+#endif /* !NOSOUND */
 
 G_END_DECLS
 
-#endif	/* NP2_X11_SOUNGMNG_H__ */
+#endif /* NP2_X11_SOUNGMNG_H__ */

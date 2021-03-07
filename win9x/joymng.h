@@ -10,9 +10,7 @@ REG8 joymng_available(void);
 }
 #endif
 
-
 // ----
 
 void joymng_initialize(void);
 void joymng_sync(void);
-

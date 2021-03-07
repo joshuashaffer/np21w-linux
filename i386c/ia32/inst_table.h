@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_INST_TABLE_H__
-#define	IA32_CPU_INST_TABLE_H__
+#ifndef IA32_CPU_INST_TABLE_H__
+#define IA32_CPU_INST_TABLE_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,54 +47,54 @@ extern void (*insttable_2byteF30F_32[256])(void);
  */
 
 /* group 1 */
-extern void (CPUCALL *insttable_G1EbIb[])(UINT8 *, UINT32);
-extern void (CPUCALL *insttable_G1EwIx[])(UINT16 *, UINT32);
-extern void (CPUCALL *insttable_G1EdIx[])(UINT32 *, UINT32);
-extern void (CPUCALL *insttable_G1EbIb_ext[])(UINT32, UINT32);
-extern void (CPUCALL *insttable_G1EwIx_ext[])(UINT32, UINT32);
-extern void (CPUCALL *insttable_G1EdIx_ext[])(UINT32, UINT32);
+extern void(CPUCALL *insttable_G1EbIb[])(UINT8 *, UINT32);
+extern void(CPUCALL *insttable_G1EwIx[])(UINT16 *, UINT32);
+extern void(CPUCALL *insttable_G1EdIx[])(UINT32 *, UINT32);
+extern void(CPUCALL *insttable_G1EbIb_ext[])(UINT32, UINT32);
+extern void(CPUCALL *insttable_G1EwIx_ext[])(UINT32, UINT32);
+extern void(CPUCALL *insttable_G1EdIx_ext[])(UINT32, UINT32);
 
 /* group 2 */
-extern void (CPUCALL *insttable_G2Eb[])(UINT8 *);
-extern void (CPUCALL *insttable_G2Ew[])(UINT16 *);
-extern void (CPUCALL *insttable_G2Ed[])(UINT32 *);
-extern void (CPUCALL *insttable_G2EbCL[])(UINT8 *, UINT);
-extern void (CPUCALL *insttable_G2EwCL[])(UINT16 *, UINT);
-extern void (CPUCALL *insttable_G2EdCL[])(UINT32 *, UINT);
-extern void (CPUCALL *insttable_G2Eb_ext[])(UINT32);
-extern void (CPUCALL *insttable_G2Ew_ext[])(UINT32);
-extern void (CPUCALL *insttable_G2Ed_ext[])(UINT32);
-extern void (CPUCALL *insttable_G2EbCL_ext[])(UINT32, UINT);
-extern void (CPUCALL *insttable_G2EwCL_ext[])(UINT32, UINT);
-extern void (CPUCALL *insttable_G2EdCL_ext[])(UINT32, UINT);
+extern void(CPUCALL *insttable_G2Eb[])(UINT8 *);
+extern void(CPUCALL *insttable_G2Ew[])(UINT16 *);
+extern void(CPUCALL *insttable_G2Ed[])(UINT32 *);
+extern void(CPUCALL *insttable_G2EbCL[])(UINT8 *, UINT);
+extern void(CPUCALL *insttable_G2EwCL[])(UINT16 *, UINT);
+extern void(CPUCALL *insttable_G2EdCL[])(UINT32 *, UINT);
+extern void(CPUCALL *insttable_G2Eb_ext[])(UINT32);
+extern void(CPUCALL *insttable_G2Ew_ext[])(UINT32);
+extern void(CPUCALL *insttable_G2Ed_ext[])(UINT32);
+extern void(CPUCALL *insttable_G2EbCL_ext[])(UINT32, UINT);
+extern void(CPUCALL *insttable_G2EwCL_ext[])(UINT32, UINT);
+extern void(CPUCALL *insttable_G2EdCL_ext[])(UINT32, UINT);
 
 /* group 3 */
-extern void (CPUCALL *insttable_G3Eb[])(UINT32);
-extern void (CPUCALL *insttable_G3Ew[])(UINT32);
-extern void (CPUCALL *insttable_G3Ed[])(UINT32);
+extern void(CPUCALL *insttable_G3Eb[])(UINT32);
+extern void(CPUCALL *insttable_G3Ew[])(UINT32);
+extern void(CPUCALL *insttable_G3Ed[])(UINT32);
 
 /* group 4 */
-extern void (CPUCALL *insttable_G4[])(UINT32);
+extern void(CPUCALL *insttable_G4[])(UINT32);
 
 /* group 5 */
-extern void (CPUCALL *insttable_G5Ew[])(UINT32);
-extern void (CPUCALL *insttable_G5Ed[])(UINT32);
+extern void(CPUCALL *insttable_G5Ew[])(UINT32);
+extern void(CPUCALL *insttable_G5Ed[])(UINT32);
 
 /* group 6 */
-extern void (CPUCALL *insttable_G6[])(UINT32);
+extern void(CPUCALL *insttable_G6[])(UINT32);
 
 /* group 7 */
-extern void (CPUCALL *insttable_G7[])(UINT32);
+extern void(CPUCALL *insttable_G7[])(UINT32);
 
 /* group 8 */
-extern void (CPUCALL *insttable_G8EwIb[])(UINT32);
-extern void (CPUCALL *insttable_G8EdIb[])(UINT32);
+extern void(CPUCALL *insttable_G8EwIb[])(UINT32);
+extern void(CPUCALL *insttable_G8EdIb[])(UINT32);
 
 /* group 9 */
-extern void (CPUCALL *insttable_G9[])(UINT32);
+extern void(CPUCALL *insttable_G9[])(UINT32);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* IA32_CPU_INST_TABLE_H__ */
+#endif /* IA32_CPU_INST_TABLE_H__ */

@@ -29,203 +29,182 @@
 
 #include "seg_reg.h"
 
+void LES_GwMp(void) {
+  UINT16 *out;
+  UINT32 op, dst, madr;
+  UINT16 sreg;
 
-void
-LES_GwMp(void)
-{
-	UINT16 *out;
-	UINT32 op, dst, madr;
-	UINT16 sreg;
-
-	GET_PCBYTE(op);
-	if (op < 0xc0) {
-		out = reg16_b53[op];
-		madr = calc_ea_dst(op);
-		dst = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr);
-		sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 2);
-		LOAD_SEGREG(CPU_ES_INDEX, sreg);
-		*out = (UINT16)dst;
-		return;
-	}
-	EXCEPTION(UD_EXCEPTION, 0);
+  GET_PCBYTE(op);
+  if (op < 0xc0) {
+    out = reg16_b53[op];
+    madr = calc_ea_dst(op);
+    dst = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr);
+    sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 2);
+    LOAD_SEGREG(CPU_ES_INDEX, sreg);
+    *out = (UINT16)dst;
+    return;
+  }
+  EXCEPTION(UD_EXCEPTION, 0);
 }
 
-void
-LES_GdMp(void)
-{
-	UINT32 *out;
-	UINT32 op, dst, madr;
-	UINT16 sreg;
+void LES_GdMp(void) {
+  UINT32 *out;
+  UINT32 op, dst, madr;
+  UINT16 sreg;
 
-	GET_PCBYTE(op);
-	if (op < 0xc0) {
-		out = reg32_b53[op];
-		madr = calc_ea_dst(op);
-		dst = cpu_vmemoryread_d(CPU_INST_SEGREG_INDEX, madr);
-		sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 4);
-		LOAD_SEGREG(CPU_ES_INDEX, sreg);
-		*out = dst;
-		return;
-	}
-	EXCEPTION(UD_EXCEPTION, 0);
+  GET_PCBYTE(op);
+  if (op < 0xc0) {
+    out = reg32_b53[op];
+    madr = calc_ea_dst(op);
+    dst = cpu_vmemoryread_d(CPU_INST_SEGREG_INDEX, madr);
+    sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 4);
+    LOAD_SEGREG(CPU_ES_INDEX, sreg);
+    *out = dst;
+    return;
+  }
+  EXCEPTION(UD_EXCEPTION, 0);
 }
 
-void
-LSS_GwMp(void)
-{
-	UINT16 *out;
-	UINT32 op, dst, madr;
-	UINT16 sreg;
+void LSS_GwMp(void) {
+  UINT16 *out;
+  UINT32 op, dst, madr;
+  UINT16 sreg;
 
-	GET_PCBYTE(op);
-	if (op < 0xc0) {
-		out = reg16_b53[op];
-		madr = calc_ea_dst(op);
-		dst = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr);
-		sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 2);
-		LOAD_SEGREG(CPU_SS_INDEX, sreg);
-		*out = (UINT16)dst;
-		return;
-	}
-	EXCEPTION(UD_EXCEPTION, 0);
+  GET_PCBYTE(op);
+  if (op < 0xc0) {
+    out = reg16_b53[op];
+    madr = calc_ea_dst(op);
+    dst = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr);
+    sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 2);
+    LOAD_SEGREG(CPU_SS_INDEX, sreg);
+    *out = (UINT16)dst;
+    return;
+  }
+  EXCEPTION(UD_EXCEPTION, 0);
 }
 
-void
-LSS_GdMp(void)
-{
-	UINT32 *out;
-	UINT32 op, dst, madr;
-	UINT16 sreg;
+void LSS_GdMp(void) {
+  UINT32 *out;
+  UINT32 op, dst, madr;
+  UINT16 sreg;
 
-	GET_PCBYTE(op);
-	if (op < 0xc0) {
-		out = reg32_b53[op];
-		madr = calc_ea_dst(op);
-		dst = cpu_vmemoryread_d(CPU_INST_SEGREG_INDEX, madr);
-		sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 4);
-		LOAD_SEGREG(CPU_SS_INDEX, sreg);
-		*out = dst;
-		return;
-	}
-	EXCEPTION(UD_EXCEPTION, 0);
+  GET_PCBYTE(op);
+  if (op < 0xc0) {
+    out = reg32_b53[op];
+    madr = calc_ea_dst(op);
+    dst = cpu_vmemoryread_d(CPU_INST_SEGREG_INDEX, madr);
+    sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 4);
+    LOAD_SEGREG(CPU_SS_INDEX, sreg);
+    *out = dst;
+    return;
+  }
+  EXCEPTION(UD_EXCEPTION, 0);
 }
 
-void
-LDS_GwMp(void)
-{
-	UINT16 *out;
-	UINT32 op, dst, madr;
-	UINT16 sreg;
+void LDS_GwMp(void) {
+  UINT16 *out;
+  UINT32 op, dst, madr;
+  UINT16 sreg;
 
-	GET_PCBYTE(op);
-	if (op < 0xc0) {
-		out = reg16_b53[op];
-		madr = calc_ea_dst(op);
-		dst = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr);
-		sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 2);
-		LOAD_SEGREG(CPU_DS_INDEX, sreg);
-		*out = (UINT16)dst;
-		return;
-	}
-	EXCEPTION(UD_EXCEPTION, 0);
+  GET_PCBYTE(op);
+  if (op < 0xc0) {
+    out = reg16_b53[op];
+    madr = calc_ea_dst(op);
+    dst = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr);
+    sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 2);
+    LOAD_SEGREG(CPU_DS_INDEX, sreg);
+    *out = (UINT16)dst;
+    return;
+  }
+  EXCEPTION(UD_EXCEPTION, 0);
 }
 
-void
-LDS_GdMp(void)
-{
-	UINT32 *out;
-	UINT32 op, dst, madr;
-	UINT16 sreg;
+void LDS_GdMp(void) {
+  UINT32 *out;
+  UINT32 op, dst, madr;
+  UINT16 sreg;
 
-	GET_PCBYTE(op);
-	if (op < 0xc0) {
-		out = reg32_b53[op];
-		madr = calc_ea_dst(op);
-		dst = cpu_vmemoryread_d(CPU_INST_SEGREG_INDEX, madr);
-		sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 4);
-		LOAD_SEGREG(CPU_DS_INDEX, sreg);
-		*out = dst;
-		return;
-	}
-	EXCEPTION(UD_EXCEPTION, 0);
+  GET_PCBYTE(op);
+  if (op < 0xc0) {
+    out = reg32_b53[op];
+    madr = calc_ea_dst(op);
+    dst = cpu_vmemoryread_d(CPU_INST_SEGREG_INDEX, madr);
+    sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 4);
+    LOAD_SEGREG(CPU_DS_INDEX, sreg);
+    *out = dst;
+    return;
+  }
+  EXCEPTION(UD_EXCEPTION, 0);
 }
 
-void
-LFS_GwMp(void)
-{
-	UINT16 *out;
-	UINT32 op, dst, madr;
-	UINT16 sreg;
+void LFS_GwMp(void) {
+  UINT16 *out;
+  UINT32 op, dst, madr;
+  UINT16 sreg;
 
-	GET_PCBYTE(op);
-	if (op < 0xc0) {
-		out = reg16_b53[op];
-		madr = calc_ea_dst(op);
-		dst = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr);
-		sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 2);
-		LOAD_SEGREG(CPU_FS_INDEX, sreg);
-		*out = (UINT16)dst;
-		return;
-	}
-	EXCEPTION(UD_EXCEPTION, 0);
+  GET_PCBYTE(op);
+  if (op < 0xc0) {
+    out = reg16_b53[op];
+    madr = calc_ea_dst(op);
+    dst = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr);
+    sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 2);
+    LOAD_SEGREG(CPU_FS_INDEX, sreg);
+    *out = (UINT16)dst;
+    return;
+  }
+  EXCEPTION(UD_EXCEPTION, 0);
 }
 
-void
-LFS_GdMp(void)
-{
-	UINT32 *out;
-	UINT32 op, dst, madr;
-	UINT16 sreg;
+void LFS_GdMp(void) {
+  UINT32 *out;
+  UINT32 op, dst, madr;
+  UINT16 sreg;
 
-	GET_PCBYTE(op);
-	if (op < 0xc0) {
-		out = reg32_b53[op];
-		madr = calc_ea_dst(op);
-		dst = cpu_vmemoryread_d(CPU_INST_SEGREG_INDEX, madr);
-		sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 4);
-		LOAD_SEGREG(CPU_FS_INDEX, sreg);
-		*out = dst;
-		return;
-	}
-	EXCEPTION(UD_EXCEPTION, 0);
+  GET_PCBYTE(op);
+  if (op < 0xc0) {
+    out = reg32_b53[op];
+    madr = calc_ea_dst(op);
+    dst = cpu_vmemoryread_d(CPU_INST_SEGREG_INDEX, madr);
+    sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 4);
+    LOAD_SEGREG(CPU_FS_INDEX, sreg);
+    *out = dst;
+    return;
+  }
+  EXCEPTION(UD_EXCEPTION, 0);
 }
 
-void
-LGS_GwMp(void)
-{
-	UINT16 *out;
-	UINT32 op, dst, madr;
-	UINT16 sreg;
+void LGS_GwMp(void) {
+  UINT16 *out;
+  UINT32 op, dst, madr;
+  UINT16 sreg;
 
-	GET_PCBYTE(op);
-	if (op < 0xc0) {
-		out = reg16_b53[op];
-		madr = calc_ea_dst(op);
-		dst = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr);
-		sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 2);
-		LOAD_SEGREG(CPU_GS_INDEX, sreg);
-		*out = (UINT16)dst;
-		return;
-	}
-	EXCEPTION(UD_EXCEPTION, 0);
+  GET_PCBYTE(op);
+  if (op < 0xc0) {
+    out = reg16_b53[op];
+    madr = calc_ea_dst(op);
+    dst = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr);
+    sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 2);
+    LOAD_SEGREG(CPU_GS_INDEX, sreg);
+    *out = (UINT16)dst;
+    return;
+  }
+  EXCEPTION(UD_EXCEPTION, 0);
 }
 
-void
-LGS_GdMp(void)
-{
-	UINT32 *out;
-	UINT32 op, dst, madr;
-	UINT16 sreg;
+void LGS_GdMp(void) {
+  UINT32 *out;
+  UINT32 op, dst, madr;
+  UINT16 sreg;
 
-	GET_PCBYTE(op);
-	if (op < 0xc0) {
-		out = reg32_b53[op];
-		madr = calc_ea_dst(op);
-		dst = cpu_vmemoryread_d(CPU_INST_SEGREG_INDEX, madr);
-		sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 4);
-		LOAD_SEGREG(CPU_GS_INDEX, sreg);
-		*out = dst;
-		return;
-	}
-	EXCEPTION(UD_EXCEPTION, 0);
+  GET_PCBYTE(op);
+  if (op < 0xc0) {
+    out = reg32_b53[op];
+    madr = calc_ea_dst(op);
+    dst = cpu_vmemoryread_d(CPU_INST_SEGREG_INDEX, madr);
+    sreg = cpu_vmemoryread_w(CPU_INST_SEGREG_INDEX, madr + 4);
+    LOAD_SEGREG(CPU_GS_INDEX, sreg);
+    *out = dst;
+    return;
+  }
+  EXCEPTION(UD_EXCEPTION, 0);
 }

@@ -1,16 +1,15 @@
 
 typedef struct {
-	UINT	code;
-	UINT	lr;
-	UINT	line;
+  UINT code;
+  UINT lr;
+  UINT line;
 } _CGROM, *CGROM;
 
 typedef struct {
-	UINT32	low;
-	UINT32	high;
-	UINT8	writable;
+  UINT32 low;
+  UINT32 high;
+  UINT8 writable;
 } _CGWINDOW, *CGWINDOW;
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,4 +21,3 @@ void cgrom_bind(void);
 #ifdef __cplusplus
 }
 #endif
-

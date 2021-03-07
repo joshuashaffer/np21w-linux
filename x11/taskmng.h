@@ -1,5 +1,5 @@
-#ifndef	NP2_X11_TASKMNG_H__
-#define	NP2_X11_TASKMNG_H__
+#ifndef NP2_X11_TASKMNG_H__
+#define NP2_X11_TASKMNG_H__
 
 #include "compiler.h"
 
@@ -11,8 +11,8 @@ void taskmng_initialize(void);
 BOOL taskmng_sleep(UINT32 tick);
 void taskmng_exit(void);
 
-#define	taskmng_isavail()	np2running
+#define taskmng_isavail() np2running
 
 G_END_DECLS
 
-#endif	/* NP2_X11_TASKMNG_H__ */
+#endif /* NP2_X11_TASKMNG_H__ */

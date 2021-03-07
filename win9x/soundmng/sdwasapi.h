@@ -1,6 +1,7 @@
 /**
  * @file	sdwasapi.h
- * @brief	WASAPI オーディオ クラスの宣言およびインターフェイスの定義をします
+ * @brief	WASAPI オーディオ
+ * クラスの宣言およびインターフェイスの定義をします
  */
 
 #pragma once
@@ -15,46 +16,46 @@
 /**
  * @brief デバイス
  */
-struct WasapiDevice
-{
-	LPWSTR id;							//!< ID
-	TCHAR szDevice[MAX_PATH];			//!< デバイス
+struct WasapiDevice {
+  LPWSTR id;                //!< ID
+  TCHAR szDevice[MAX_PATH]; //!< デバイス
 };
 
 /**
  * @brief WASAPI クラス
  */
-class CSoundDeviceWasapi : public CSoundDeviceBase, protected CThreadBase
-{
+class CSoundDeviceWasapi : public CSoundDeviceBase, protected CThreadBase {
 public:
-	static void Initialize();
-	static void Deinitialize();
-	static void EnumerateDevices(std::vector<LPCTSTR>& devices);
+  static void Initialize();
+  static void Deinitialize();
+  static void EnumerateDevices(std::vector<LPCTSTR> &devices);
 
-	CSoundDeviceWasapi();
-	virtual ~CSoundDeviceWasapi();
-	virtual bool Open(LPCTSTR lpDevice = NULL, HWND hWnd = NULL);
-	virtual void Close();
-	virtual UINT CreateStream(UINT nSamplingRate, UINT nChannels, UINT nBufferSize = 0);
-	virtual void DestroyStream();
-	virtual bool PlayStream();
-	virtual void StopStream();
-	virtual void SetMasterVolume(int nVolume);
+  CSoundDeviceWasapi();
+  virtual ~CSoundDeviceWasapi();
+  virtual bool Open(LPCTSTR lpDevice = NULL, HWND hWnd = NULL);
+  virtual void Close();
+  virtual UINT CreateStream(UINT nSamplingRate, UINT nChannels,
+                            UINT nBufferSize = 0);
+  virtual void DestroyStream();
+  virtual bool PlayStream();
+  virtual void StopStream();
+  virtual void SetMasterVolume(int nVolume);
 
 protected:
-	virtual bool Task();
+  virtual bool Task();
 
 private:
-	static std::vector<WasapiDevice> sm_devices;	//!< デバイス リスト
-	int m_mastervolume;								//!< マスタボリューム
+  static std::vector<WasapiDevice> sm_devices; //!< デバイス リスト
+  int m_mastervolume;                          //!< マスタボリューム
 
-	IMMDeviceEnumerator* m_pEnumerator;			//!< デバイス列挙インスタンス
-	IMMDevice* m_pDevice;						//!< デバイス インスタンス
-	IAudioClient* m_pAudioClient;				//!< オーディオ クライアント インスタンス
-	WAVEFORMATEX* m_pwfx;						//!< フォーマット
-	IAudioRenderClient* m_pRenderClient;		//!< オーディオ レンダラー クライアント インスタンス
-	UINT32 m_nBufferSize;						//!< バッファ サイズ
-	HANDLE m_hEvents[2];						//!< イベント
-	void ResetStream();
-	void FillStream();
+  IMMDeviceEnumerator *m_pEnumerator; //!< デバイス列挙インスタンス
+  IMMDevice *m_pDevice;               //!< デバイス インスタンス
+  IAudioClient *m_pAudioClient; //!< オーディオ クライアント インスタンス
+  WAVEFORMATEX *m_pwfx; //!< フォーマット
+  IAudioRenderClient
+      *m_pRenderClient; //!< オーディオ レンダラー クライアント インスタンス
+  UINT32 m_nBufferSize; //!< バッファ サイズ
+  HANDLE m_hEvents[2];  //!< イベント
+  void ResetStream();
+  void FillStream();
 };

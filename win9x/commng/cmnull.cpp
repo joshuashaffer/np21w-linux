@@ -9,39 +9,27 @@
 /**
  * コンストラクタ
  */
-CComNull::CComNull()
-	: CComBase(COMCONNECT_OFF)
-{
-}
+CComNull::CComNull() : CComBase(COMCONNECT_OFF) {}
 
 /**
  * Read
  * @param[out] pData
  * @return result
  */
-UINT CComNull::Read(UINT8* pData)
-{
-	return 0;
-}
+UINT CComNull::Read(UINT8 *pData) { return 0; }
 
 /**
  * Write
  * @param[in] cData
  * @return result
  */
-UINT CComNull::Write(UINT8 cData)
-{
-	return 0;
-}
+UINT CComNull::Write(UINT8 cData) { return 0; }
 
 /**
  * ステータスを得る
  * @return ステータス
  */
-UINT8 CComNull::GetStat()
-{
-	return 0xf0;
-}
+UINT8 CComNull::GetStat() { return 0xf0; }
 
 /**
  * メッセージ
@@ -49,7 +37,4 @@ UINT8 CComNull::GetStat()
  * @param[in] nParam パラメタ
  * @return リザルト コード
  */
-INTPTR CComNull::Message(UINT nMessage, INTPTR nParam)
-{
-	return 0;
-}
+INTPTR CComNull::Message(UINT nMessage, INTPTR nParam) { return 0; }

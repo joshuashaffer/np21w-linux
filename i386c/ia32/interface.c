@@ -39,272 +39,248 @@
 #include "i386hax/haxcore.h"
 #endif
 
-void
-ia32_initreg(void)
-{
-	int i;
+void ia32_initreg(void) {
+  int i;
 
-	CPU_STATSAVE.cpu_inst_default.seg_base = (UINT32)-1;
+  CPU_STATSAVE.cpu_inst_default.seg_base = (UINT32)-1;
 
-	CPU_EDX = (CPU_FAMILY << 8) | (CPU_MODEL << 4) | CPU_STEPPING;
-	CPU_EFLAG = 2;
-	CPU_CR0 = CPU_CR0_CD | CPU_CR0_NW;
+  CPU_EDX = (CPU_FAMILY << 8) | (CPU_MODEL << 4) | CPU_STEPPING;
+  CPU_EFLAG = 2;
+  CPU_CR0 = CPU_CR0_CD | CPU_CR0_NW;
 #if defined(USE_FPU)
-	if(i386cpuid.cpu_feature & CPU_FEATURE_FPU){
-		CPU_CR0 |= CPU_CR0_ET;	/* FPU present */
-		CPU_CR0 &= ~CPU_CR0_EM;
-	}else{
-		CPU_CR0 |= CPU_CR0_EM | CPU_CR0_NE;
-		CPU_CR0 &= ~(CPU_CR0_MP | CPU_CR0_ET);
-	}
+  if (i386cpuid.cpu_feature & CPU_FEATURE_FPU) {
+    CPU_CR0 |= CPU_CR0_ET; /* FPU present */
+    CPU_CR0 &= ~CPU_CR0_EM;
+  } else {
+    CPU_CR0 |= CPU_CR0_EM | CPU_CR0_NE;
+    CPU_CR0 &= ~(CPU_CR0_MP | CPU_CR0_ET);
+  }
 #else
-	CPU_CR0 |= CPU_CR0_EM | CPU_CR0_NE;
-	CPU_CR0 &= ~(CPU_CR0_MP | CPU_CR0_ET);
+  CPU_CR0 |= CPU_CR0_EM | CPU_CR0_NE;
+  CPU_CR0 &= ~(CPU_CR0_MP | CPU_CR0_ET);
 #endif
-	CPU_MXCSR = 0x1f80;
-	
+  CPU_MXCSR = 0x1f80;
+
 #if defined(USE_TSC)
-	CPU_MSR_TSC = 0;
+  CPU_MSR_TSC = 0;
 #endif
 
-	CPU_GDTR_BASE = 0x0;
-	CPU_GDTR_LIMIT = 0xffff;
-	CPU_IDTR_BASE = 0x0;
-	CPU_IDTR_LIMIT = 0xffff;
-	CPU_LDTR_BASE = 0x0;
-	CPU_LDTR_LIMIT = 0xffff;
-	CPU_TR_BASE = 0x0;
-	CPU_TR_LIMIT = 0xffff;
+  CPU_GDTR_BASE = 0x0;
+  CPU_GDTR_LIMIT = 0xffff;
+  CPU_IDTR_BASE = 0x0;
+  CPU_IDTR_LIMIT = 0xffff;
+  CPU_LDTR_BASE = 0x0;
+  CPU_LDTR_LIMIT = 0xffff;
+  CPU_TR_BASE = 0x0;
+  CPU_TR_LIMIT = 0xffff;
 
-	CPU_STATSAVE.cpu_regs.dr[6] = 0xffff1ff0;
+  CPU_STATSAVE.cpu_regs.dr[6] = 0xffff1ff0;
 
-	for (i = 0; i < CPU_SEGREG_NUM; ++i) {
-		segdesc_init(i, 0, &CPU_STAT_SREG(i));
-	}
-	LOAD_SEGREG(CPU_CS_INDEX, 0xf000);
-	CPU_STAT_CS_BASE = 0xffff0000;
-	CPU_EIP = 0xfff0;
-	CPU_ADRSMASK = 0x000fffff;
+  for (i = 0; i < CPU_SEGREG_NUM; ++i) {
+    segdesc_init(i, 0, &CPU_STAT_SREG(i));
+  }
+  LOAD_SEGREG(CPU_CS_INDEX, 0xf000);
+  CPU_STAT_CS_BASE = 0xffff0000;
+  CPU_EIP = 0xfff0;
+  CPU_ADRSMASK = 0x000fffff;
 
-	tlb_init();
-	fpu_initialize();
+  tlb_init();
+  fpu_initialize();
 }
 
-void
-ia32reset(void)
-{
+void ia32reset(void) {
 
-	memset(&i386core.s, 0, sizeof(i386core.s));
-	ia32_initreg();
+  memset(&i386core.s, 0, sizeof(i386core.s));
+  ia32_initreg();
 }
 
-void
-ia32shut(void)
-{
+void ia32shut(void) {
 
-	memset(&i386core.s, 0, offsetof(I386STAT, cpu_type));
-	ia32_initreg();
+  memset(&i386core.s, 0, offsetof(I386STAT, cpu_type));
+  ia32_initreg();
 }
 
-void
-ia32a20enable(BOOL enable)
-{
+void ia32a20enable(BOOL enable) {
 
-	CPU_ADRSMASK = (enable)?0xffffffff:0x00ffffff;
+  CPU_ADRSMASK = (enable) ? 0xffffffff : 0x00ffffff;
 }
 
 //#pragma optimize("", off)
-void
-ia32(void)
-{
-	switch (sigsetjmp(exec_1step_jmpbuf, 1)) {
-	case 0:
-		break;
+void ia32(void) {
+  switch (sigsetjmp(exec_1step_jmpbuf, 1)) {
+  case 0:
+    break;
 
-	case 1:
-		VERBOSE(("ia32: return from exception"));
-		break;
+  case 1:
+    VERBOSE(("ia32: return from exception"));
+    break;
 
-	case 2:
-		VERBOSE(("ia32: return from panic"));
-		return;
+  case 2:
+    VERBOSE(("ia32: return from panic"));
+    return;
 
-	default:
-		VERBOSE(("ia32: return from unknown cause"));
-		break;
-	}
-	if (!CPU_TRAP && !dmac.working) {
-		exec_allstep();
-	}else if (!CPU_TRAP) {
-		do {
-			exec_1step();
-			dmax86();
-		} while (CPU_REMCLOCK > 0);
-	}else{
-		do {
-			exec_1step();
-			if (CPU_TRAP) {
-				CPU_DR6 |= CPU_DR6_BS;
-				INTERRUPT(1, INTR_TYPE_EXCEPTION);
-			}
-			dmax86();
-		} while (CPU_REMCLOCK > 0);
-	}
-
+  default:
+    VERBOSE(("ia32: return from unknown cause"));
+    break;
+  }
+  if (!CPU_TRAP && !dmac.working) {
+    exec_allstep();
+  } else if (!CPU_TRAP) {
+    do {
+      exec_1step();
+      dmax86();
+    } while (CPU_REMCLOCK > 0);
+  } else {
+    do {
+      exec_1step();
+      if (CPU_TRAP) {
+        CPU_DR6 |= CPU_DR6_BS;
+        INTERRUPT(1, INTR_TYPE_EXCEPTION);
+      }
+      dmax86();
+    } while (CPU_REMCLOCK > 0);
+  }
 }
 
-void
-ia32_step(void)
-{
-	switch (sigsetjmp(exec_1step_jmpbuf, 1)) {
-	case 0:
-		break;
+void ia32_step(void) {
+  switch (sigsetjmp(exec_1step_jmpbuf, 1)) {
+  case 0:
+    break;
 
-	case 1:
-		VERBOSE(("ia32: return from exception"));
-		break;
+  case 1:
+    VERBOSE(("ia32: return from exception"));
+    break;
 
-	case 2:
-		VERBOSE(("ia32: return from panic"));
-		return;
+  case 2:
+    VERBOSE(("ia32: return from panic"));
+    return;
 
-	default:
-		VERBOSE(("ia32: return from unknown cause"));
-		break;
-	}
+  default:
+    VERBOSE(("ia32: return from unknown cause"));
+    break;
+  }
 
-	do {
-		exec_1step();
-		if (CPU_TRAP) {
-			CPU_DR6 |= CPU_DR6_BS;
-			INTERRUPT(1, INTR_TYPE_EXCEPTION);
-		}
-		if (dmac.working) {
-			dmax86();
-		}
-	} while (CPU_REMCLOCK > 0);
+  do {
+    exec_1step();
+    if (CPU_TRAP) {
+      CPU_DR6 |= CPU_DR6_BS;
+      INTERRUPT(1, INTR_TYPE_EXCEPTION);
+    }
+    if (dmac.working) {
+      dmax86();
+    }
+  } while (CPU_REMCLOCK > 0);
 }
 //#pragma optimize("", on)
 
-void CPUCALL
-ia32_interrupt(int vect, int soft)
-{
+void CPUCALL ia32_interrupt(int vect, int soft) {
 
-//	TRACEOUT(("int (%x, %x) PE=%d VM=%d",  vect, soft, CPU_STAT_PM, CPU_STAT_VM86));
+//	TRACEOUT(("int (%x, %x) PE=%d VM=%d",  vect, soft, CPU_STAT_PM,
+//CPU_STAT_VM86));
 #if defined(SUPPORT_IA32_HAXM)
-	if(np2hax.enable && !np2hax.emumode && np2hax.hVCPUDevice){
-		np2haxcore.hltflag = 0;
-		if(!soft){
-			HAX_TUNNEL *tunnel;
-			tunnel = (HAX_TUNNEL*)np2hax.tunnel.va;
-			if(np2haxstat.irq_reqidx_end - np2haxstat.irq_reqidx_cur < 250){
-				np2haxstat.irq_req[np2haxstat.irq_reqidx_end] = vect;
-				np2haxstat.irq_reqidx_end++;
-			}
-			//i386haxfunc_vcpu_interrupt(vect);
-		}
-	}else
+  if (np2hax.enable && !np2hax.emumode && np2hax.hVCPUDevice) {
+    np2haxcore.hltflag = 0;
+    if (!soft) {
+      HAX_TUNNEL *tunnel;
+      tunnel = (HAX_TUNNEL *)np2hax.tunnel.va;
+      if (np2haxstat.irq_reqidx_end - np2haxstat.irq_reqidx_cur < 250) {
+        np2haxstat.irq_req[np2haxstat.irq_reqidx_end] = vect;
+        np2haxstat.irq_reqidx_end++;
+      }
+      // i386haxfunc_vcpu_interrupt(vect);
+    }
+  } else
 #endif
-	{
-		if (!soft) {
-			INTERRUPT(vect, INTR_TYPE_EXTINTR);
-		} else {
-			if (CPU_STAT_PM && CPU_STAT_VM86 && CPU_STAT_IOPL < CPU_IOPL3) {
-				VERBOSE(("ia32_interrupt: VM86 && IOPL < 3 && INTn"));
-				EXCEPTION(GP_EXCEPTION, 0);
-			}
-			INTERRUPT(vect, INTR_TYPE_SOFTINTR);
-		}
-	}
+  {
+    if (!soft) {
+      INTERRUPT(vect, INTR_TYPE_EXTINTR);
+    } else {
+      if (CPU_STAT_PM && CPU_STAT_VM86 && CPU_STAT_IOPL < CPU_IOPL3) {
+        VERBOSE(("ia32_interrupt: VM86 && IOPL < 3 && INTn"));
+        EXCEPTION(GP_EXCEPTION, 0);
+      }
+      INTERRUPT(vect, INTR_TYPE_SOFTINTR);
+    }
+  }
 }
-
 
 /*
  * error function
  */
-void
-ia32_panic(const char *str, ...)
-{
-	extern char *cpu_reg2str(void);
-	char buf[2048];
-	va_list ap;
+void ia32_panic(const char *str, ...) {
+  extern char *cpu_reg2str(void);
+  char buf[2048];
+  va_list ap;
 
-	va_start(ap, str);
-	vsnprintf(buf, sizeof(buf), str, ap);
-	va_end(ap);
-	strcat(buf, "\n");
-	strcat(buf, cpu_reg2str());
-	VERBOSE(("%s", buf));
+  va_start(ap, str);
+  vsnprintf(buf, sizeof(buf), str, ap);
+  va_end(ap);
+  strcat(buf, "\n");
+  strcat(buf, cpu_reg2str());
+  VERBOSE(("%s", buf));
 
-	msgbox("ia32_panic", buf);
+  msgbox("ia32_panic", buf);
 
 #if defined(IA32_REBOOT_ON_PANIC)
-	VERBOSE(("ia32_panic: reboot"));
-	pccore_reset();
-	pcstat.screendispflag = 0;
-	siglongjmp(exec_1step_jmpbuf, 2);
+  VERBOSE(("ia32_panic: reboot"));
+  pccore_reset();
+  pcstat.screendispflag = 0;
+  siglongjmp(exec_1step_jmpbuf, 2);
 #else
-	__ASSERT(0);
-	exit(1);
+  __ASSERT(0);
+  exit(1);
 #endif
 }
 
-void
-ia32_warning(const char *str, ...)
-{
-	char buf[1024];
-	va_list ap;
-	va_start(ap, str);
-	vsnprintf(buf, sizeof(buf), str, ap);
-	va_end(ap);
-	strcat(buf, "\n");
+void ia32_warning(const char *str, ...) {
+  char buf[1024];
+  va_list ap;
+  va_start(ap, str);
+  vsnprintf(buf, sizeof(buf), str, ap);
+  va_end(ap);
+  strcat(buf, "\n");
 
-	msgbox("ia32_warning", buf);
+  msgbox("ia32_warning", buf);
 }
 
-void
-ia32_printf(const char *str, ...)
-{
-	char buf[1024];
-	va_list ap;
-	va_start(ap, str);
-	vsnprintf(buf, sizeof(buf), str, ap);
-	va_end(ap);
-	strcat(buf, "\n");
+void ia32_printf(const char *str, ...) {
+  char buf[1024];
+  va_list ap;
+  va_start(ap, str);
+  vsnprintf(buf, sizeof(buf), str, ap);
+  va_end(ap);
+  strcat(buf, "\n");
 
-	msgbox("ia32_printf", buf);
+  msgbox("ia32_printf", buf);
 }
-
 
 /*
  * bios call interface
  */
-void
-ia32_bioscall(void)
-{
-	UINT32 adrs;
+void ia32_bioscall(void) {
+  UINT32 adrs;
 
-	if (!CPU_STAT_PM || CPU_STAT_VM86) {
+  if (!CPU_STAT_PM || CPU_STAT_VM86) {
 #if 1
-		adrs = CPU_PREV_EIP + (CPU_CS << 4);
+    adrs = CPU_PREV_EIP + (CPU_CS << 4);
 #else
-		adrs = CPU_PREV_EIP + CPU_STAT_CS_BASE;
+    adrs = CPU_PREV_EIP + CPU_STAT_CS_BASE;
 #endif
-		if ((adrs >= 0xf8000) && (adrs < 0x100000)) {
-			if (biosfunc(adrs)) {
-				/* Nothing to do */
-			}
-			LOAD_SEGREG(CPU_ES_INDEX, CPU_ES);
-			LOAD_SEGREG(CPU_CS_INDEX, CPU_CS);
-			LOAD_SEGREG(CPU_SS_INDEX, CPU_SS);
-			LOAD_SEGREG(CPU_DS_INDEX, CPU_DS);
-		}
-	}else{
+    if ((adrs >= 0xf8000) && (adrs < 0x100000)) {
+      if (biosfunc(adrs)) {
+        /* Nothing to do */
+      }
+      LOAD_SEGREG(CPU_ES_INDEX, CPU_ES);
+      LOAD_SEGREG(CPU_CS_INDEX, CPU_CS);
+      LOAD_SEGREG(CPU_SS_INDEX, CPU_SS);
+      LOAD_SEGREG(CPU_DS_INDEX, CPU_DS);
+    }
+  } else {
 #ifdef SUPPORT_PCI
-		adrs = CPU_EIP;
-		if (bios32func(adrs)) {
-			/* Nothing to do */
-		}
+    adrs = CPU_EIP;
+    if (bios32func(adrs)) {
+      /* Nothing to do */
+    }
 #endif
-	}
+  }
 }

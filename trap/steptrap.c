@@ -5,7 +5,7 @@
 
 #include "compiler.h"
 
-#define	IPTRACE			(1 << 12)
+#define IPTRACE (1 << 12)
 
 #if defined(ENABLE_TRAP)
 #include "steptrap.h"
@@ -15,52 +15,54 @@
 #include "sound.h"
 #include "fmboard.h"
 
-
 #if IPTRACE
-static	UINT	trpos = 0;
-static	UINT32	trcs[IPTRACE];
-static	UINT32	treip[IPTRACE];
+static UINT trpos = 0;
+static UINT32 trcs[IPTRACE];
+static UINT32 treip[IPTRACE];
 #endif
 
 void CPUCALL steptrap(UINT cs, UINT32 eip) {
 
-//	TRACEOUT(("%.4x:%.4x", cs, eip));
+  //	TRACEOUT(("%.4x:%.4x", cs, eip));
 
 #if IPTRACE
-	trcs[trpos & (IPTRACE - 1)] = cs;
-	treip[trpos & (IPTRACE - 1)] = eip;
-	trpos++;
+  trcs[trpos & (IPTRACE - 1)] = cs;
+  treip[trpos & (IPTRACE - 1)] = eip;
+  trpos++;
 #endif
 
+  // ---- ここにトラップ条件コードを書きます
+  {
+    static UINT32 x;
+    UINT32 tmp;
+    tmp = *(UINT32 *)(mem + 0x7ade1);
+    if (x != tmp) {
+      TRACEOUT(("%.4x:%.4x: %.8x -> %.8x", cs, eip, x, tmp));
+      x = tmp;
+    }
+  }
 
-// ---- ここにトラップ条件コードを書きます
-{
-	static UINT32 x;
-	UINT32 tmp;
-	tmp = *(UINT32 *)(mem + 0x7ade1);
-	if (x != tmp) {
-		TRACEOUT(("%.4x:%.4x: %.8x -> %.8x", cs, eip, x, tmp));
-		x = tmp;
-	}
-}
+  return;
 
-	return;
+  if ((cs == 0x1ea) && (eip == 0x0617)) {
+    TRACEOUT(("ES:BP+1 = %.2x", CPU_AL));
+  }
+  return;
 
-	if ((cs == 0x1ea) && (eip == 0x0617)) {
-		TRACEOUT(("ES:BP+1 = %.2x", CPU_AL));
-	}
-	return;
+  if ((cs == 0x0601) && (eip == 0x025c)) {
+    TRACEOUT(("INT-D2 AX=%.4x BX=%.4x DX=%.4x", CPU_AX, CPU_BX, CPU_DX));
+  }
+  return;
 
-	if ((cs == 0x0601) && (eip == 0x025c)) {
-		TRACEOUT(("INT-D2 AX=%.4x BX=%.4x DX=%.4x", CPU_AX, CPU_BX, CPU_DX));
-	}
-	return;
-
-// if (cs4231.intflag) TRACEOUT(("%.4x:%.4x", cs, eip));
-	if (cs == 0x1311) TRACEOUT(("%.4x:%.4x", cs, eip));
-	if (cs == 0x0d77) TRACEOUT(("%.4x:%.4x", cs, eip));
-	if (cs == 0x0f5d) TRACEOUT(("%.4x:%.4x", cs, eip));
-	if (cs == 0x0e91) TRACEOUT(("%.4x:%.4x", cs, eip));
+  // if (cs4231.intflag) TRACEOUT(("%.4x:%.4x", cs, eip));
+  if (cs == 0x1311)
+    TRACEOUT(("%.4x:%.4x", cs, eip));
+  if (cs == 0x0d77)
+    TRACEOUT(("%.4x:%.4x", cs, eip));
+  if (cs == 0x0f5d)
+    TRACEOUT(("%.4x:%.4x", cs, eip));
+  if (cs == 0x0e91)
+    TRACEOUT(("%.4x:%.4x", cs, eip));
 
 #if 0
 {
@@ -75,8 +77,7 @@ void CPUCALL steptrap(UINT cs, UINT32 eip) {
 }
 #endif
 
-
-	// IDEテスト用
+    // IDEテスト用
 #if 0
 	if ((cs == 0x1300) && (eip == 0x1E97)) {
 		TRACEOUT(("-------- NECCD: function: %.2x", CPU_AL));
@@ -84,12 +85,12 @@ void CPUCALL steptrap(UINT cs, UINT32 eip) {
 	if (cs == 0xdf6) TRACEOUT(("%.4x:%.4x", CPU_CS, CPU_IP));
 #endif
 #if 1
-	if ((cs == 0x0620) && (eip == 0x1E97)) {
-		TRACEOUT(("-------- NECCD: function: %.2x", CPU_AL));
-	}
+  if ((cs == 0x0620) && (eip == 0x1E97)) {
+    TRACEOUT(("-------- NECCD: function: %.2x", CPU_AL));
+  }
 #endif
 
-	return;
+  return;
 
 #if 0
 	if (cs == 0x05a0) {
@@ -169,7 +170,7 @@ void CPUCALL steptrap(UINT cs, UINT32 eip) {
 #endif
 	}
 #endif
-#if 0	// DC
+#if 0 // DC
 	if (cs == 0x1000) {
 		if (eip == 0x5924) {
 			TRACEOUT(("%.4x:%.4x -> %.4x:%.4x", cs, eip,
@@ -178,7 +179,7 @@ void CPUCALL steptrap(UINT cs, UINT32 eip) {
 		}
 	}
 #endif
-#if 0	// 羅針盤
+#if 0 // 羅針盤
 	if (cs == 0x60) {
 		if (eip == 0xADF9) {
 			TRACEOUT(("%.4x:%.4x -> %.4x:%.4x:%.4x", cs, eip, CPU_BX, CPU_SI, CPU_AX));
@@ -204,35 +205,31 @@ void CPUCALL steptrap(UINT cs, UINT32 eip) {
 #endif
 }
 
-
 #if IPTRACE
 void steptrap_hisfileout(void) {
 
-	UINT	s;
-	FILEH	fh;
-	UINT	pos;
-	char	buf[32];
+  UINT s;
+  FILEH fh;
+  UINT pos;
+  char buf[32];
 
-	s = trpos;
-	if (s > IPTRACE) {
-		s -= IPTRACE;
-	}
-	else {
-		s = 0;
-	}
-	fh = file_create_c(OEMTEXT("his.txt"));
-	while(s < trpos) {
-		pos = s & (IPTRACE - 1);
-		s++;
-		SPRINTF(buf, "%.4x:%.8x\r\n", trcs[pos], treip[pos]);
-		file_write(fh, buf, STRLEN(buf));
-	}
-	file_close(fh);
+  s = trpos;
+  if (s > IPTRACE) {
+    s -= IPTRACE;
+  } else {
+    s = 0;
+  }
+  fh = file_create_c(OEMTEXT("his.txt"));
+  while (s < trpos) {
+    pos = s & (IPTRACE - 1);
+    s++;
+    SPRINTF(buf, "%.4x:%.8x\r\n", trcs[pos], treip[pos]);
+    file_write(fh, buf, STRLEN(buf));
+  }
+  file_close(fh);
 }
 #else
-void steptrap_hisfileout(void) {
-}
+void steptrap_hisfileout(void) {}
 #endif
 
 #endif
-

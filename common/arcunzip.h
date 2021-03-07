@@ -8,4 +8,3 @@ ARCH arcunzip_open(const OEMCHAR *path);
 #ifdef __cplusplus
 }
 #endif
-

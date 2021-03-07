@@ -11,12 +11,10 @@
  * @param[in] lpValues 値の配列
  * @param[in] cchValues 値の数
  */
-void CComboData::Add(const UINT32* lpValues, UINT cchValues)
-{
-	for (UINT i = 0; i < cchValues; i++)
-	{
-		Add(lpValues[i]);
-	}
+void CComboData::Add(const UINT32 *lpValues, UINT cchValues) {
+  for (UINT i = 0; i < cchValues; i++) {
+    Add(lpValues[i]);
+  }
 }
 
 /**
@@ -24,12 +22,10 @@ void CComboData::Add(const UINT32* lpValues, UINT cchValues)
  * @param[in] lpValues 値の配列
  * @param[in] cchValues 値の数
  */
-void CComboData::Add(const Value* lpValues, UINT cchValues)
-{
-	for (UINT i = 0; i < cchValues; i++)
-	{
-		Add(lpValues[i].nNumber, lpValues[i].nItemData);
-	}
+void CComboData::Add(const Value *lpValues, UINT cchValues) {
+  for (UINT i = 0; i < cchValues; i++) {
+    Add(lpValues[i].nNumber, lpValues[i].nItemData);
+  }
 }
 
 /**
@@ -37,13 +33,11 @@ void CComboData::Add(const Value* lpValues, UINT cchValues)
  * @param[in] lpEntries エントリの配列
  * @param[in] cchEntries エントリの数
  */
-void CComboData::Add(const Entry* lpEntries, UINT cchEntries)
-{
-	for (UINT i = 0; i < cchEntries; i++)
-	{
-		std::tstring rString(LoadTString(lpEntries[i].lpcszString));
-		Add(rString.c_str(), lpEntries[i].nItemData);
-	}
+void CComboData::Add(const Entry *lpEntries, UINT cchEntries) {
+  for (UINT i = 0; i < cchEntries; i++) {
+    std::tstring rString(LoadTString(lpEntries[i].lpcszString));
+    Add(rString.c_str(), lpEntries[i].nItemData);
+  }
 }
 
 /**
@@ -51,10 +45,7 @@ void CComboData::Add(const Entry* lpEntries, UINT cchEntries)
  * @param[in] nValue 値
  * @return インデックス
  */
-int CComboData::Add(UINT32 nValue)
-{
-	return Add(nValue, nValue);
-}
+int CComboData::Add(UINT32 nValue) { return Add(nValue, nValue); }
 
 /**
  * 追加
@@ -62,11 +53,10 @@ int CComboData::Add(UINT32 nValue)
  * @param[in] nItemData データ
  * @return インデックス
  */
-int CComboData::Add(UINT32 nValue, UINT32 nItemData)
-{
-	TCHAR szStr[16];
-	wsprintf(szStr, TEXT("%u"), nValue);
-	return Add(szStr, nItemData);
+int CComboData::Add(UINT32 nValue, UINT32 nItemData) {
+  TCHAR szStr[16];
+  wsprintf(szStr, TEXT("%u"), nValue);
+  return Add(szStr, nItemData);
 }
 
 /**
@@ -75,14 +65,12 @@ int CComboData::Add(UINT32 nValue, UINT32 nItemData)
  * @param[in] nItemData データ
  * @return インデックス
  */
-int CComboData::Add(LPCTSTR lpString, UINT32 nItemData)
-{
-	const int nIndex = AddString(lpString);
-	if (nIndex >= 0)
-	{
-		SetItemData(nIndex, static_cast<DWORD_PTR>(nItemData));
-	}
-	return nIndex;
+int CComboData::Add(LPCTSTR lpString, UINT32 nItemData) {
+  const int nIndex = AddString(lpString);
+  if (nIndex >= 0) {
+    SetItemData(nIndex, static_cast<DWORD_PTR>(nItemData));
+  }
+  return nIndex;
 }
 
 /**
@@ -90,17 +78,14 @@ int CComboData::Add(LPCTSTR lpString, UINT32 nItemData)
  * @param[in] nValue 値
  * @return インデックス
  */
-int CComboData::FindItemData(UINT32 nValue) const
-{
-	const int nItems = GetCount();
-	for (int i = 0; i < nItems; i++)
-	{
-		if (GetItemData(i) == nValue)
-		{
-			return i;
-		}
-	}
-	return CB_ERR;
+int CComboData::FindItemData(UINT32 nValue) const {
+  const int nItems = GetCount();
+  for (int i = 0; i < nItems; i++) {
+    if (GetItemData(i) == nValue) {
+      return i;
+    }
+  }
+  return CB_ERR;
 }
 
 /**
@@ -109,15 +94,13 @@ int CComboData::FindItemData(UINT32 nValue) const
  * @retval true 成功
  * @retval false 失敗
  */
-bool CComboData::SetCurItemData(UINT32 nValue)
-{
-	const int nIndex = FindItemData(nValue);
-	if (nIndex == CB_ERR)
-	{
-		return false;
-	}
-	SetCurSel(nIndex);
-	return true;
+bool CComboData::SetCurItemData(UINT32 nValue) {
+  const int nIndex = FindItemData(nValue);
+  if (nIndex == CB_ERR) {
+    return false;
+  }
+  SetCurSel(nIndex);
+  return true;
 }
 
 /**
@@ -125,12 +108,10 @@ bool CComboData::SetCurItemData(UINT32 nValue)
  * @param[in] nDefault デフォルト値
  * @return 値
  */
-UINT32 CComboData::GetCurItemData(UINT32 nDefault) const
-{
-	const int nIndex = GetCurSel();
-	if (nIndex >= 0)
-	{
-		return static_cast<UINT32>(GetItemData(nIndex));
-	}
-	return nDefault;
+UINT32 CComboData::GetCurItemData(UINT32 nDefault) const {
+  const int nIndex = GetCurSel();
+  if (nIndex >= 0) {
+    return static_cast<UINT32>(GetItemData(nIndex));
+  }
+  return nDefault;
 }

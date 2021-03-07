@@ -12,26 +12,23 @@
 /**
  * @breif The sturecture of AMD-98
  */
-struct amd98_t
-{
-	struct
-	{
-		UINT8	psg1reg;
-		UINT8	psg2reg;
-		UINT8	psg3reg;
-		UINT8	rhythm;
-	} s;
-	_PSGGEN psg[3];
+struct amd98_t {
+  struct {
+    UINT8 psg1reg;
+    UINT8 psg2reg;
+    UINT8 psg3reg;
+    UINT8 rhythm;
+  } s;
+  _PSGGEN psg[3];
 };
 
 typedef struct amd98_t AMD98;
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-extern	AMD98	g_amd98;
+extern AMD98 g_amd98;
 
 void amd98_initialize(UINT rate);
 void amd98_deinitialize(void);
@@ -48,4 +45,3 @@ int amd98_sfload(STFLAGH sfh, const SFENTRY *tbl);
 #ifdef __cplusplus
 }
 #endif
-

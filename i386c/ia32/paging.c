@@ -108,50 +108,50 @@
  * +-----+-----------+-----+-----+---+
  */
 #if !defined(USE_PAGE_ACCESS_TABLE)
-#define	page_access	0xd0ddd0ff
-#else	/* USE_PAGE_ACCESS_TABLE */
+#define page_access 0xd0ddd0ff
+#else  /* USE_PAGE_ACCESS_TABLE */
 static const UINT8 page_access_bit[32] = {
-	1,	/* CR0: n, CPL: s, PTE: s, PTE: r, ope: r */
-	1,	/* CR0: n, CPL: s, PTE: s, PTE: r, ope: w */
-	1,	/* CR0: n, CPL: s, PTE: s, PTE: w, ope: r */
-	1,	/* CR0: n, CPL: s, PTE: s, PTE: w, ope: w */
+    1, /* CR0: n, CPL: s, PTE: s, PTE: r, ope: r */
+    1, /* CR0: n, CPL: s, PTE: s, PTE: r, ope: w */
+    1, /* CR0: n, CPL: s, PTE: s, PTE: w, ope: r */
+    1, /* CR0: n, CPL: s, PTE: s, PTE: w, ope: w */
 
-	1,	/* CR0: n, CPL: s, PTE: u, PTE: r, ope: r */
-	1,	/* CR0: n, CPL: s, PTE: u, PTE: r, ope: w */
-	1,	/* CR0: n, CPL: s, PTE: u, PTE: w, ope: r */
-	1,	/* CR0: n, CPL: s, PTE: u, PTE: w, ope: w */
+    1, /* CR0: n, CPL: s, PTE: u, PTE: r, ope: r */
+    1, /* CR0: n, CPL: s, PTE: u, PTE: r, ope: w */
+    1, /* CR0: n, CPL: s, PTE: u, PTE: w, ope: r */
+    1, /* CR0: n, CPL: s, PTE: u, PTE: w, ope: w */
 
-	0,	/* CR0: n, CPL: u, PTE: s, PTE: r, ope: r */
-	0,	/* CR0: n, CPL: u, PTE: s, PTE: r, ope: w */
-	0,	/* CR0: n, CPL: u, PTE: s, PTE: w, ope: r */
-	0,	/* CR0: n, CPL: u, PTE: s, PTE: w, ope: w */
+    0, /* CR0: n, CPL: u, PTE: s, PTE: r, ope: r */
+    0, /* CR0: n, CPL: u, PTE: s, PTE: r, ope: w */
+    0, /* CR0: n, CPL: u, PTE: s, PTE: w, ope: r */
+    0, /* CR0: n, CPL: u, PTE: s, PTE: w, ope: w */
 
-	1,	/* CR0: n, CPL: u, PTE: u, PTE: r, ope: r */
-	0,	/* CR0: n, CPL: u, PTE: u, PTE: r, ope: w */
-	1,	/* CR0: n, CPL: u, PTE: u, PTE: w, ope: r */
-	1,	/* CR0: n, CPL: u, PTE: u, PTE: w, ope: w */
+    1, /* CR0: n, CPL: u, PTE: u, PTE: r, ope: r */
+    0, /* CR0: n, CPL: u, PTE: u, PTE: r, ope: w */
+    1, /* CR0: n, CPL: u, PTE: u, PTE: w, ope: r */
+    1, /* CR0: n, CPL: u, PTE: u, PTE: w, ope: w */
 
-	1,	/* CR0: p, CPL: s, PTE: s, PTE: r, ope: r */
-	0,	/* CR0: p, CPL: s, PTE: s, PTE: r, ope: w */
-	1,	/* CR0: p, CPL: s, PTE: s, PTE: w, ope: r */
-	1,	/* CR0: p, CPL: s, PTE: s, PTE: w, ope: w */
+    1, /* CR0: p, CPL: s, PTE: s, PTE: r, ope: r */
+    0, /* CR0: p, CPL: s, PTE: s, PTE: r, ope: w */
+    1, /* CR0: p, CPL: s, PTE: s, PTE: w, ope: r */
+    1, /* CR0: p, CPL: s, PTE: s, PTE: w, ope: w */
 
-	1,	/* CR0: p, CPL: s, PTE: u, PTE: r, ope: r */
-	0,	/* CR0: p, CPL: s, PTE: u, PTE: r, ope: w */
-	1,	/* CR0: p, CPL: s, PTE: u, PTE: w, ope: r */
-	1,	/* CR0: p, CPL: s, PTE: u, PTE: w, ope: w */
+    1, /* CR0: p, CPL: s, PTE: u, PTE: r, ope: r */
+    0, /* CR0: p, CPL: s, PTE: u, PTE: r, ope: w */
+    1, /* CR0: p, CPL: s, PTE: u, PTE: w, ope: r */
+    1, /* CR0: p, CPL: s, PTE: u, PTE: w, ope: w */
 
-	0,	/* CR0: p, CPL: u, PTE: s, PTE: r, ope: r */
-	0,	/* CR0: p, CPL: u, PTE: s, PTE: r, ope: w */
-	0,	/* CR0: p, CPL: u, PTE: s, PTE: w, ope: r */
-	0,	/* CR0: p, CPL: u, PTE: s, PTE: w, ope: w */
+    0, /* CR0: p, CPL: u, PTE: s, PTE: r, ope: r */
+    0, /* CR0: p, CPL: u, PTE: s, PTE: r, ope: w */
+    0, /* CR0: p, CPL: u, PTE: s, PTE: w, ope: r */
+    0, /* CR0: p, CPL: u, PTE: s, PTE: w, ope: w */
 
-	1,	/* CR0: p, CPL: u, PTE: u, PTE: r, ope: r */
-	0,	/* CR0: p, CPL: u, PTE: u, PTE: r, ope: w */
-	1,	/* CR0: p, CPL: u, PTE: u, PTE: w, ope: r */
-	1,	/* CR0: p, CPL: u, PTE: u, PTE: w, ope: w */
+    1, /* CR0: p, CPL: u, PTE: u, PTE: r, ope: r */
+    0, /* CR0: p, CPL: u, PTE: u, PTE: r, ope: w */
+    1, /* CR0: p, CPL: u, PTE: u, PTE: w, ope: r */
+    1, /* CR0: p, CPL: u, PTE: u, PTE: w, ope: w */
 };
-#endif	/* !USE_PAGE_ACCESS_TABLE */
+#endif /* !USE_PAGE_ACCESS_TABLE */
 
 /*
  *--
@@ -181,14 +181,14 @@ static const UINT8 page_access_bit[32] = {
  */
 /* TLB */
 struct tlb_entry {
-	UINT32	tag;	/* linear address */
-#define	TLB_ENTRY_TAG_VALID		(1 << 0)
+  UINT32 tag; /* linear address */
+#define TLB_ENTRY_TAG_VALID (1 << 0)
 /*	pde & pte & CPU_PTE_WRITABLE	(1 << 1)	*/
 /*	pde & pte & CPU_PTE_USER_MODE	(1 << 2)	*/
-#define	TLB_ENTRY_TAG_DIRTY		CPU_PTE_DIRTY		/* (1 << 6) */
-#define	TLB_ENTRY_TAG_GLOBAL		CPU_PTE_GLOBAL_PAGE	/* (1 << 8) */
-#define	TLB_ENTRY_TAG_MAX_SHIFT		12
-	UINT32	paddr;	/* physical address */
+#define TLB_ENTRY_TAG_DIRTY CPU_PTE_DIRTY        /* (1 << 6) */
+#define TLB_ENTRY_TAG_GLOBAL CPU_PTE_GLOBAL_PAGE /* (1 << 8) */
+#define TLB_ENTRY_TAG_MAX_SHIFT 12
+  UINT32 paddr; /* physical address */
 };
 static void MEMCALL tlb_update(UINT32 laddr, UINT entry, int ucrw);
 
@@ -199,721 +199,680 @@ static UINT32 MEMCALL paging(UINT32 laddr, int ucrw);
  * linear memory access
  */
 /* RMW */
-UINT8 MEMCALL
-cpu_memory_access_la_RMW_b(UINT32 laddr, UINT32 (CPUCALL *func)(UINT32, void *), void *arg)
-{
-	const int ucrw = CPU_PAGE_WRITE_DATA | CPU_STAT_USER_MODE;
-	UINT32 paddr;
-	UINT32 result;
-	UINT8 value;
+UINT8 MEMCALL cpu_memory_access_la_RMW_b(UINT32 laddr,
+                                         UINT32(CPUCALL *func)(UINT32, void *),
+                                         void *arg) {
+  const int ucrw = CPU_PAGE_WRITE_DATA | CPU_STAT_USER_MODE;
+  UINT32 paddr;
+  UINT32 result;
+  UINT8 value;
 
-	paddr = paging(laddr, ucrw);
-	value = cpu_memoryread(paddr);
-	result = (*func)(value, arg);
-	cpu_memorywrite(paddr, (UINT8)result);
-	return value;
+  paddr = paging(laddr, ucrw);
+  value = cpu_memoryread(paddr);
+  result = (*func)(value, arg);
+  cpu_memorywrite(paddr, (UINT8)result);
+  return value;
 }
 
-UINT16 MEMCALL
-cpu_memory_access_la_RMW_w(UINT32 laddr, UINT32 (CPUCALL *func)(UINT32, void *), void *arg)
-{
-	const int ucrw = CPU_PAGE_WRITE_DATA | CPU_STAT_USER_MODE;
-	UINT32 paddr[2];
-	UINT32 result;
-	UINT16 value;
+UINT16 MEMCALL cpu_memory_access_la_RMW_w(UINT32 laddr,
+                                          UINT32(CPUCALL *func)(UINT32, void *),
+                                          void *arg) {
+  const int ucrw = CPU_PAGE_WRITE_DATA | CPU_STAT_USER_MODE;
+  UINT32 paddr[2];
+  UINT32 result;
+  UINT16 value;
 
-	paddr[0] = paging(laddr, ucrw);
-	if ((laddr + 1) & CPU_PAGE_MASK) {
-		value = cpu_memoryread_w(paddr[0]);
-		result = (*func)(value, arg);
-		cpu_memorywrite_w(paddr[0], (UINT16)result);
-		return value;
-	}
+  paddr[0] = paging(laddr, ucrw);
+  if ((laddr + 1) & CPU_PAGE_MASK) {
+    value = cpu_memoryread_w(paddr[0]);
+    result = (*func)(value, arg);
+    cpu_memorywrite_w(paddr[0], (UINT16)result);
+    return value;
+  }
 
-	paddr[1] = paging(laddr + 1, ucrw);
-	value = cpu_memoryread_b(paddr[0]);
-	value += (UINT16)cpu_memoryread_b(paddr[1]) << 8;
-	result = (*func)(value, arg);
-	cpu_memorywrite(paddr[0], (UINT8)result);
-	cpu_memorywrite(paddr[1], (UINT8)(result >> 8));
-	return value;
+  paddr[1] = paging(laddr + 1, ucrw);
+  value = cpu_memoryread_b(paddr[0]);
+  value += (UINT16)cpu_memoryread_b(paddr[1]) << 8;
+  result = (*func)(value, arg);
+  cpu_memorywrite(paddr[0], (UINT8)result);
+  cpu_memorywrite(paddr[1], (UINT8)(result >> 8));
+  return value;
 }
 
-UINT32 MEMCALL
-cpu_memory_access_la_RMW_d(UINT32 laddr, UINT32 (CPUCALL *func)(UINT32, void *), void *arg)
-{
-	const int ucrw = CPU_PAGE_WRITE_DATA | CPU_STAT_USER_MODE;
-	UINT32 paddr[2];
-	UINT32 result;
-	UINT32 value;
-	int remain;
+UINT32 MEMCALL cpu_memory_access_la_RMW_d(UINT32 laddr,
+                                          UINT32(CPUCALL *func)(UINT32, void *),
+                                          void *arg) {
+  const int ucrw = CPU_PAGE_WRITE_DATA | CPU_STAT_USER_MODE;
+  UINT32 paddr[2];
+  UINT32 result;
+  UINT32 value;
+  int remain;
 
-	paddr[0] = paging(laddr, ucrw);
-	remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
-	if (remain >= 4) {
-		value = cpu_memoryread_d(paddr[0]);
-		result = (*func)(value, arg);
-		cpu_memorywrite_d(paddr[0], result);
-		return value;
-	}
+  paddr[0] = paging(laddr, ucrw);
+  remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
+  if (remain >= 4) {
+    value = cpu_memoryread_d(paddr[0]);
+    result = (*func)(value, arg);
+    cpu_memorywrite_d(paddr[0], result);
+    return value;
+  }
 
-	paddr[1] = paging(laddr + remain, ucrw);
-	switch (remain) {
-	case 3:
-		value = cpu_memoryread(paddr[0]);
-		value += (UINT32)cpu_memoryread_w(paddr[0] + 1) << 8;
-		value += (UINT32)cpu_memoryread(paddr[1]) << 24;
-		result = (*func)(value, arg);
-		cpu_memorywrite(paddr[0], (UINT8)result);
-		cpu_memorywrite_w(paddr[0] + 1, (UINT16)(result >> 8));
-		cpu_memorywrite(paddr[1], (UINT8)(result >> 24));
-		break;
+  paddr[1] = paging(laddr + remain, ucrw);
+  switch (remain) {
+  case 3:
+    value = cpu_memoryread(paddr[0]);
+    value += (UINT32)cpu_memoryread_w(paddr[0] + 1) << 8;
+    value += (UINT32)cpu_memoryread(paddr[1]) << 24;
+    result = (*func)(value, arg);
+    cpu_memorywrite(paddr[0], (UINT8)result);
+    cpu_memorywrite_w(paddr[0] + 1, (UINT16)(result >> 8));
+    cpu_memorywrite(paddr[1], (UINT8)(result >> 24));
+    break;
 
-	case 2:
-		value = cpu_memoryread_w(paddr[0]);
-		value += (UINT32)cpu_memoryread_w(paddr[1]) << 16;
-		result = (*func)(value, arg);
-		cpu_memorywrite_w(paddr[0], (UINT16)result);
-		cpu_memorywrite_w(paddr[1], (UINT16)(result >> 16));
-		break;
+  case 2:
+    value = cpu_memoryread_w(paddr[0]);
+    value += (UINT32)cpu_memoryread_w(paddr[1]) << 16;
+    result = (*func)(value, arg);
+    cpu_memorywrite_w(paddr[0], (UINT16)result);
+    cpu_memorywrite_w(paddr[1], (UINT16)(result >> 16));
+    break;
 
-	case 1:
-		value = cpu_memoryread(paddr[0]);
-		value += (UINT32)cpu_memoryread_w(paddr[1]) << 8;
-		value += (UINT32)cpu_memoryread(paddr[1] + 2) << 24;
-		result = (*func)(value, arg);
-		cpu_memorywrite(paddr[0], (UINT8)result);
-		cpu_memorywrite_w(paddr[1], (UINT16)(result >> 8));
-		cpu_memorywrite(paddr[1] + 2, (UINT8)(result >> 24));
-		break;
+  case 1:
+    value = cpu_memoryread(paddr[0]);
+    value += (UINT32)cpu_memoryread_w(paddr[1]) << 8;
+    value += (UINT32)cpu_memoryread(paddr[1] + 2) << 24;
+    result = (*func)(value, arg);
+    cpu_memorywrite(paddr[0], (UINT8)result);
+    cpu_memorywrite_w(paddr[1], (UINT16)(result >> 8));
+    cpu_memorywrite(paddr[1] + 2, (UINT8)(result >> 24));
+    break;
 
-	default:
-		ia32_panic("cpu_memory_access_la_RMW_d: out of range (remain=%d)\n", remain);
-		value = 0;	/* XXX compiler happy */
-		break;
-	}
-	return value;
+  default:
+    ia32_panic("cpu_memory_access_la_RMW_d: out of range (remain=%d)\n",
+               remain);
+    value = 0; /* XXX compiler happy */
+    break;
+  }
+  return value;
 }
 
 /* read */
-UINT8 MEMCALL
-cpu_linear_memory_read_b(UINT32 laddr, int ucrw)
-{
-	return cpu_memoryread(paging(laddr, ucrw));
+UINT8 MEMCALL cpu_linear_memory_read_b(UINT32 laddr, int ucrw) {
+  return cpu_memoryread(paging(laddr, ucrw));
 }
-UINT8 MEMCALL
-cpu_linear_memory_read_b_codefetch(UINT32 laddr, int ucrw)
-{
-	return cpu_memoryread_codefetch(paging(laddr, ucrw));
+UINT8 MEMCALL cpu_linear_memory_read_b_codefetch(UINT32 laddr, int ucrw) {
+  return cpu_memoryread_codefetch(paging(laddr, ucrw));
 }
 
-UINT16 MEMCALL
-cpu_linear_memory_read_w(UINT32 laddr, int ucrw)
-{
-	UINT32 paddr[2];
-	UINT16 value;
+UINT16 MEMCALL cpu_linear_memory_read_w(UINT32 laddr, int ucrw) {
+  UINT32 paddr[2];
+  UINT16 value;
 
-	paddr[0] = paging(laddr, ucrw);
-	if ((laddr + 1) & CPU_PAGE_MASK)
-		return cpu_memoryread_w(paddr[0]);
+  paddr[0] = paging(laddr, ucrw);
+  if ((laddr + 1) & CPU_PAGE_MASK)
+    return cpu_memoryread_w(paddr[0]);
 
-	paddr[1] = paging(laddr + 1, ucrw);
-	value = cpu_memoryread_b(paddr[0]);
-	value |= (UINT16)cpu_memoryread_b(paddr[1]) << 8;
-	return value;
+  paddr[1] = paging(laddr + 1, ucrw);
+  value = cpu_memoryread_b(paddr[0]);
+  value |= (UINT16)cpu_memoryread_b(paddr[1]) << 8;
+  return value;
 }
-UINT16 MEMCALL
-cpu_linear_memory_read_w_codefetch(UINT32 laddr, int ucrw)
-{
-	UINT32 paddr[2];
-	UINT16 value;
+UINT16 MEMCALL cpu_linear_memory_read_w_codefetch(UINT32 laddr, int ucrw) {
+  UINT32 paddr[2];
+  UINT16 value;
 
-	paddr[0] = paging(laddr, ucrw);
-	if ((laddr + 1) & CPU_PAGE_MASK)
-		return cpu_memoryread_w_codefetch(paddr[0]);
+  paddr[0] = paging(laddr, ucrw);
+  if ((laddr + 1) & CPU_PAGE_MASK)
+    return cpu_memoryread_w_codefetch(paddr[0]);
 
-	paddr[1] = paging(laddr + 1, ucrw);
-	value = cpu_memoryread_b_codefetch(paddr[0]);
-	value |= (UINT16)cpu_memoryread_b_codefetch(paddr[1]) << 8;
-	return value;
+  paddr[1] = paging(laddr + 1, ucrw);
+  value = cpu_memoryread_b_codefetch(paddr[0]);
+  value |= (UINT16)cpu_memoryread_b_codefetch(paddr[1]) << 8;
+  return value;
 }
 
+UINT32 MEMCALL cpu_linear_memory_read_d(UINT32 laddr, int ucrw) {
+  UINT32 paddr[2];
+  UINT32 value;
+  UINT remain;
 
-UINT32 MEMCALL
-cpu_linear_memory_read_d(UINT32 laddr, int ucrw)
-{
-	UINT32 paddr[2];
-	UINT32 value;
-	UINT remain;
+  paddr[0] = paging(laddr, ucrw);
+  remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
+  if (remain >= sizeof(value))
+    return cpu_memoryread_d(paddr[0]);
 
-	paddr[0] = paging(laddr, ucrw);
-	remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
-	if (remain >= sizeof(value))
-		return cpu_memoryread_d(paddr[0]);
+  paddr[1] = paging(laddr + remain, ucrw);
+  switch (remain) {
+  case 3:
+    value = cpu_memoryread(paddr[0]);
+    value |= (UINT32)cpu_memoryread_w(paddr[0] + 1) << 8;
+    value |= (UINT32)cpu_memoryread(paddr[1]) << 24;
+    break;
 
-	paddr[1] = paging(laddr + remain, ucrw);
-	switch (remain) {
-	case 3:
-		value = cpu_memoryread(paddr[0]);
-		value |= (UINT32)cpu_memoryread_w(paddr[0] + 1) << 8;
-		value |= (UINT32)cpu_memoryread(paddr[1]) << 24;
-		break;
+  case 2:
+    value = cpu_memoryread_w(paddr[0]);
+    value |= (UINT32)cpu_memoryread_w(paddr[1]) << 16;
+    break;
 
-	case 2:
-		value = cpu_memoryread_w(paddr[0]);
-		value |= (UINT32)cpu_memoryread_w(paddr[1]) << 16;
-		break;
+  case 1:
+    value = cpu_memoryread(paddr[0]);
+    value |= (UINT32)cpu_memoryread_w(paddr[1]) << 8;
+    value |= (UINT32)cpu_memoryread(paddr[1] + 2) << 24;
+    break;
 
-	case 1:
-		value = cpu_memoryread(paddr[0]);
-		value |= (UINT32)cpu_memoryread_w(paddr[1]) << 8;
-		value |= (UINT32)cpu_memoryread(paddr[1] + 2) << 24;
-		break;
-
-	default:
-		ia32_panic("cpu_linear_memory_read_d: out of range (remain=%d)\n", remain);
-		value = 0;	/* XXX compiler happy */
-		break;
-	}
-	return value;
+  default:
+    ia32_panic("cpu_linear_memory_read_d: out of range (remain=%d)\n", remain);
+    value = 0; /* XXX compiler happy */
+    break;
+  }
+  return value;
 }
-UINT32 MEMCALL
-cpu_linear_memory_read_d_codefetch(UINT32 laddr, int ucrw)
-{
-	UINT32 paddr[2];
-	UINT32 value;
-	UINT remain;
+UINT32 MEMCALL cpu_linear_memory_read_d_codefetch(UINT32 laddr, int ucrw) {
+  UINT32 paddr[2];
+  UINT32 value;
+  UINT remain;
 
-	paddr[0] = paging(laddr, ucrw);
-	remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
-	if (remain >= sizeof(value))
-		return cpu_memoryread_d_codefetch(paddr[0]);
+  paddr[0] = paging(laddr, ucrw);
+  remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
+  if (remain >= sizeof(value))
+    return cpu_memoryread_d_codefetch(paddr[0]);
 
-	paddr[1] = paging(laddr + remain, ucrw);
-	switch (remain) {
-	case 3:
-		value = cpu_memoryread_codefetch(paddr[0]);
-		value |= (UINT32)cpu_memoryread_w_codefetch(paddr[0] + 1) << 8;
-		value |= (UINT32)cpu_memoryread_codefetch(paddr[1]) << 24;
-		break;
+  paddr[1] = paging(laddr + remain, ucrw);
+  switch (remain) {
+  case 3:
+    value = cpu_memoryread_codefetch(paddr[0]);
+    value |= (UINT32)cpu_memoryread_w_codefetch(paddr[0] + 1) << 8;
+    value |= (UINT32)cpu_memoryread_codefetch(paddr[1]) << 24;
+    break;
 
-	case 2:
-		value = cpu_memoryread_w_codefetch(paddr[0]);
-		value |= (UINT32)cpu_memoryread_w_codefetch(paddr[1]) << 16;
-		break;
+  case 2:
+    value = cpu_memoryread_w_codefetch(paddr[0]);
+    value |= (UINT32)cpu_memoryread_w_codefetch(paddr[1]) << 16;
+    break;
 
-	case 1:
-		value = cpu_memoryread_codefetch(paddr[0]);
-		value |= (UINT32)cpu_memoryread_w_codefetch(paddr[1]) << 8;
-		value |= (UINT32)cpu_memoryread_codefetch(paddr[1] + 2) << 24;
-		break;
+  case 1:
+    value = cpu_memoryread_codefetch(paddr[0]);
+    value |= (UINT32)cpu_memoryread_w_codefetch(paddr[1]) << 8;
+    value |= (UINT32)cpu_memoryread_codefetch(paddr[1] + 2) << 24;
+    break;
 
-	default:
-		ia32_panic("cpu_linear_memory_read_d: out of range (remain=%d)\n", remain);
-		value = 0;	/* XXX compiler happy */
-		break;
-	}
-	return value;
+  default:
+    ia32_panic("cpu_linear_memory_read_d: out of range (remain=%d)\n", remain);
+    value = 0; /* XXX compiler happy */
+    break;
+  }
+  return value;
 }
 
-UINT64 MEMCALL
-cpu_linear_memory_read_q(UINT32 laddr, int ucrw)
-{
-	UINT32 paddr[2];
-	UINT64 value;
-	UINT remain;
+UINT64 MEMCALL cpu_linear_memory_read_q(UINT32 laddr, int ucrw) {
+  UINT32 paddr[2];
+  UINT64 value;
+  UINT remain;
 
-	paddr[0] = paging(laddr, ucrw);
-	remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
-	if (remain >= sizeof(value))
-		return cpu_memoryread_q(paddr[0]);
+  paddr[0] = paging(laddr, ucrw);
+  remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
+  if (remain >= sizeof(value))
+    return cpu_memoryread_q(paddr[0]);
 
-	paddr[1] = paging(laddr + remain, ucrw);
-	switch (remain) {
-	case 7:
-		value = cpu_memoryread(paddr[0]);
-		value += (UINT64)cpu_memoryread_w(paddr[0] + 1) << 8;
-		value += (UINT64)cpu_memoryread_d(paddr[0] + 3) << 24;
-		value += (UINT64)cpu_memoryread(paddr[1]) << 56;
-		break;
+  paddr[1] = paging(laddr + remain, ucrw);
+  switch (remain) {
+  case 7:
+    value = cpu_memoryread(paddr[0]);
+    value += (UINT64)cpu_memoryread_w(paddr[0] + 1) << 8;
+    value += (UINT64)cpu_memoryread_d(paddr[0] + 3) << 24;
+    value += (UINT64)cpu_memoryread(paddr[1]) << 56;
+    break;
 
-	case 6:
-		value = cpu_memoryread_w(paddr[0]);
-		value += (UINT64)cpu_memoryread_d(paddr[0] + 2) << 16;
-		value += (UINT64)cpu_memoryread_w(paddr[1]) << 48;
-		break;
+  case 6:
+    value = cpu_memoryread_w(paddr[0]);
+    value += (UINT64)cpu_memoryread_d(paddr[0] + 2) << 16;
+    value += (UINT64)cpu_memoryread_w(paddr[1]) << 48;
+    break;
 
-	case 5:
-		value = cpu_memoryread(paddr[0]);
-		value += (UINT64)cpu_memoryread_d(paddr[0] + 1) << 8;
-		value += (UINT64)cpu_memoryread_w(paddr[1]) << 40;
-		value += (UINT64)cpu_memoryread(paddr[1] + 2) << 56;
-		break;
+  case 5:
+    value = cpu_memoryread(paddr[0]);
+    value += (UINT64)cpu_memoryread_d(paddr[0] + 1) << 8;
+    value += (UINT64)cpu_memoryread_w(paddr[1]) << 40;
+    value += (UINT64)cpu_memoryread(paddr[1] + 2) << 56;
+    break;
 
-	case 4:
-		value = cpu_memoryread_d(paddr[0]);
-		value += (UINT64)cpu_memoryread_d(paddr[1]) << 32;
-		break;
+  case 4:
+    value = cpu_memoryread_d(paddr[0]);
+    value += (UINT64)cpu_memoryread_d(paddr[1]) << 32;
+    break;
 
-	case 3:
-		value = cpu_memoryread(paddr[0]);
-		value += (UINT64)cpu_memoryread_w(paddr[0] + 1) << 8;
-		value += (UINT64)cpu_memoryread_d(paddr[1]) << 24;
-		value += (UINT64)cpu_memoryread(paddr[1] + 4) << 56;
-		break;
+  case 3:
+    value = cpu_memoryread(paddr[0]);
+    value += (UINT64)cpu_memoryread_w(paddr[0] + 1) << 8;
+    value += (UINT64)cpu_memoryread_d(paddr[1]) << 24;
+    value += (UINT64)cpu_memoryread(paddr[1] + 4) << 56;
+    break;
 
-	case 2:
-		value = cpu_memoryread_w(paddr[0]);
-		value += (UINT64)cpu_memoryread_d(paddr[1]) << 16;
-		value += (UINT64)cpu_memoryread_w(paddr[1] + 4) << 48;
-		break;
+  case 2:
+    value = cpu_memoryread_w(paddr[0]);
+    value += (UINT64)cpu_memoryread_d(paddr[1]) << 16;
+    value += (UINT64)cpu_memoryread_w(paddr[1] + 4) << 48;
+    break;
 
-	case 1:
-		value = cpu_memoryread(paddr[0]);
-		value += (UINT64)cpu_memoryread_d(paddr[1]) << 8;
-		value += (UINT64)cpu_memoryread_w(paddr[1] + 4) << 40;
-		value += (UINT64)cpu_memoryread(paddr[1] + 6) << 56;
-		break;
+  case 1:
+    value = cpu_memoryread(paddr[0]);
+    value += (UINT64)cpu_memoryread_d(paddr[1]) << 8;
+    value += (UINT64)cpu_memoryread_w(paddr[1] + 4) << 40;
+    value += (UINT64)cpu_memoryread(paddr[1] + 6) << 56;
+    break;
 
-	default:
-		ia32_panic("cpu_linear_memory_read_q: out of range (remain=%d)\n", remain);
-		value = 0;	/* XXX compiler happy */
-		break;
-	}
-	return value;
+  default:
+    ia32_panic("cpu_linear_memory_read_q: out of range (remain=%d)\n", remain);
+    value = 0; /* XXX compiler happy */
+    break;
+  }
+  return value;
 }
 
-REG80 MEMCALL
-cpu_linear_memory_read_f(UINT32 laddr, int ucrw)
-{
-	UINT32 paddr[2];
-	REG80 value;
-	UINT remain;
-	UINT i, j;
+REG80 MEMCALL cpu_linear_memory_read_f(UINT32 laddr, int ucrw) {
+  UINT32 paddr[2];
+  REG80 value;
+  UINT remain;
+  UINT i, j;
 
-	paddr[0] = paging(laddr, ucrw);
-	remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
-	if (remain >= sizeof(value))
-		return cpu_memoryread_f(paddr[0]);
+  paddr[0] = paging(laddr, ucrw);
+  remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
+  if (remain >= sizeof(value))
+    return cpu_memoryread_f(paddr[0]);
 
-	paddr[1] = paging(laddr + remain, ucrw);
-	for (i = 0; i < remain; ++i) {
-		value.b[i] = cpu_memoryread(paddr[0] + i);
-	}
-	for (j = 0; i < 10; ++i, ++j) {
-		value.b[i] = cpu_memoryread(paddr[1] + j);
-	}
-	return value;
+  paddr[1] = paging(laddr + remain, ucrw);
+  for (i = 0; i < remain; ++i) {
+    value.b[i] = cpu_memoryread(paddr[0] + i);
+  }
+  for (j = 0; i < 10; ++i, ++j) {
+    value.b[i] = cpu_memoryread(paddr[1] + j);
+  }
+  return value;
 }
 
 /* write */
-void MEMCALL
-cpu_linear_memory_write_b(UINT32 laddr, UINT8 value, int ucrw)
-{
+void MEMCALL cpu_linear_memory_write_b(UINT32 laddr, UINT8 value, int ucrw) {
 
-	cpu_memorywrite(paging(laddr, ucrw), value);
+  cpu_memorywrite(paging(laddr, ucrw), value);
 }
 
-void MEMCALL
-cpu_linear_memory_write_w(UINT32 laddr, UINT16 value, int ucrw)
-{
-	UINT32 paddr[2];
+void MEMCALL cpu_linear_memory_write_w(UINT32 laddr, UINT16 value, int ucrw) {
+  UINT32 paddr[2];
 
-	paddr[0] = paging(laddr, ucrw);
-	if ((laddr + 1) & CPU_PAGE_MASK) {
-		cpu_memorywrite_w(paddr[0], value);
-		return;
-	}
+  paddr[0] = paging(laddr, ucrw);
+  if ((laddr + 1) & CPU_PAGE_MASK) {
+    cpu_memorywrite_w(paddr[0], value);
+    return;
+  }
 
-	paddr[1] = paging(laddr + 1, ucrw);
-	cpu_memorywrite(paddr[0], (UINT8)value);
-	cpu_memorywrite(paddr[1], (UINT8)(value >> 8));
+  paddr[1] = paging(laddr + 1, ucrw);
+  cpu_memorywrite(paddr[0], (UINT8)value);
+  cpu_memorywrite(paddr[1], (UINT8)(value >> 8));
 }
 
-void MEMCALL
-cpu_linear_memory_write_d(UINT32 laddr, UINT32 value, int ucrw)
-{
-	UINT32 paddr[2];
-	UINT remain;
+void MEMCALL cpu_linear_memory_write_d(UINT32 laddr, UINT32 value, int ucrw) {
+  UINT32 paddr[2];
+  UINT remain;
 
-	paddr[0] = paging(laddr, ucrw);
-	remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
-	if (remain >= sizeof(value)) {
-		cpu_memorywrite_d(paddr[0], value);
-		return;
-	}
+  paddr[0] = paging(laddr, ucrw);
+  remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
+  if (remain >= sizeof(value)) {
+    cpu_memorywrite_d(paddr[0], value);
+    return;
+  }
 
-	paddr[1] = paging(laddr + remain, ucrw);
-	switch (remain) {
-	case 3:
-		cpu_memorywrite(paddr[0], (UINT8)value);
-		cpu_memorywrite_w(paddr[0] + 1, (UINT16)(value >> 8));
-		cpu_memorywrite(paddr[1], (UINT8)(value >> 24));
-		break;
+  paddr[1] = paging(laddr + remain, ucrw);
+  switch (remain) {
+  case 3:
+    cpu_memorywrite(paddr[0], (UINT8)value);
+    cpu_memorywrite_w(paddr[0] + 1, (UINT16)(value >> 8));
+    cpu_memorywrite(paddr[1], (UINT8)(value >> 24));
+    break;
 
-	case 2:
-		cpu_memorywrite_w(paddr[0], (UINT16)value);
-		cpu_memorywrite_w(paddr[1], (UINT16)(value >> 16));
-		break;
+  case 2:
+    cpu_memorywrite_w(paddr[0], (UINT16)value);
+    cpu_memorywrite_w(paddr[1], (UINT16)(value >> 16));
+    break;
 
-	case 1:
-		cpu_memorywrite(paddr[0], (UINT8)value);
-		cpu_memorywrite_w(paddr[1], (UINT16)(value >> 8));
-		cpu_memorywrite(paddr[1] + 2, (UINT8)(value >> 24));
-		break;
+  case 1:
+    cpu_memorywrite(paddr[0], (UINT8)value);
+    cpu_memorywrite_w(paddr[1], (UINT16)(value >> 8));
+    cpu_memorywrite(paddr[1] + 2, (UINT8)(value >> 24));
+    break;
 
-	default:
-		ia32_panic("cpu_linear_memory_write_d: out of range (remain=%d)\n", remain);
-		break;
-	}
+  default:
+    ia32_panic("cpu_linear_memory_write_d: out of range (remain=%d)\n", remain);
+    break;
+  }
 }
 
-void MEMCALL
-cpu_linear_memory_write_q(UINT32 laddr, UINT64 value, int ucrw)
-{
-	UINT32 paddr[2];
-	UINT remain;
+void MEMCALL cpu_linear_memory_write_q(UINT32 laddr, UINT64 value, int ucrw) {
+  UINT32 paddr[2];
+  UINT remain;
 
-	paddr[0] = paging(laddr, ucrw);
-	remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
-	if (remain >= sizeof(value)) {
-		cpu_memorywrite_q(paddr[0], value);
-		return;
-	}
+  paddr[0] = paging(laddr, ucrw);
+  remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
+  if (remain >= sizeof(value)) {
+    cpu_memorywrite_q(paddr[0], value);
+    return;
+  }
 
-	paddr[1] = paging(laddr + remain, ucrw);
-	switch (remain) {
-	case 7:
-		cpu_memorywrite(paddr[0], (UINT8)value);
-		cpu_memorywrite_w(paddr[0] + 1, (UINT16)(value >> 8));
-		cpu_memorywrite_d(paddr[0] + 3, (UINT32)(value >> 24));
-		cpu_memorywrite(paddr[1], (UINT8)(value >> 56));
-		break;
+  paddr[1] = paging(laddr + remain, ucrw);
+  switch (remain) {
+  case 7:
+    cpu_memorywrite(paddr[0], (UINT8)value);
+    cpu_memorywrite_w(paddr[0] + 1, (UINT16)(value >> 8));
+    cpu_memorywrite_d(paddr[0] + 3, (UINT32)(value >> 24));
+    cpu_memorywrite(paddr[1], (UINT8)(value >> 56));
+    break;
 
-	case 6:
-		cpu_memorywrite_w(paddr[0], (UINT16)value);
-		cpu_memorywrite_d(paddr[0] + 2, (UINT32)(value >> 16));
-		cpu_memorywrite_w(paddr[1], (UINT16)(value >> 48));
-		break;
+  case 6:
+    cpu_memorywrite_w(paddr[0], (UINT16)value);
+    cpu_memorywrite_d(paddr[0] + 2, (UINT32)(value >> 16));
+    cpu_memorywrite_w(paddr[1], (UINT16)(value >> 48));
+    break;
 
-	case 5:
-		cpu_memorywrite(paddr[0], (UINT8)value);
-		cpu_memorywrite_d(paddr[0] + 1, (UINT32)(value >> 8));
-		cpu_memorywrite_w(paddr[1], (UINT16)(value >> 40));
-		cpu_memorywrite(paddr[1] + 2, (UINT8)(value >> 56));
-		break;
+  case 5:
+    cpu_memorywrite(paddr[0], (UINT8)value);
+    cpu_memorywrite_d(paddr[0] + 1, (UINT32)(value >> 8));
+    cpu_memorywrite_w(paddr[1], (UINT16)(value >> 40));
+    cpu_memorywrite(paddr[1] + 2, (UINT8)(value >> 56));
+    break;
 
-	case 4:
-		cpu_memorywrite_d(paddr[0], (UINT32)value);
-		cpu_memorywrite_d(paddr[1], (UINT32)(value >> 32));
-		break;
+  case 4:
+    cpu_memorywrite_d(paddr[0], (UINT32)value);
+    cpu_memorywrite_d(paddr[1], (UINT32)(value >> 32));
+    break;
 
-	case 3:
-		cpu_memorywrite(paddr[0], (UINT8)value);
-		cpu_memorywrite_w(paddr[0] + 1, (UINT16)(value >> 8));
-		cpu_memorywrite_d(paddr[1], (UINT32)(value >> 24));
-		cpu_memorywrite(paddr[1] + 4, (UINT8)(value >> 56));
-		break;
+  case 3:
+    cpu_memorywrite(paddr[0], (UINT8)value);
+    cpu_memorywrite_w(paddr[0] + 1, (UINT16)(value >> 8));
+    cpu_memorywrite_d(paddr[1], (UINT32)(value >> 24));
+    cpu_memorywrite(paddr[1] + 4, (UINT8)(value >> 56));
+    break;
 
-	case 2:
-		cpu_memorywrite_w(paddr[0], (UINT16)value);
-		cpu_memorywrite_d(paddr[1], (UINT32)(value >> 16));
-		cpu_memorywrite_w(paddr[1] + 4, (UINT16)(value >> 48));
-		break;
+  case 2:
+    cpu_memorywrite_w(paddr[0], (UINT16)value);
+    cpu_memorywrite_d(paddr[1], (UINT32)(value >> 16));
+    cpu_memorywrite_w(paddr[1] + 4, (UINT16)(value >> 48));
+    break;
 
-	case 1:
-		cpu_memorywrite(paddr[0], (UINT8)value);
-		cpu_memorywrite_d(paddr[1], (UINT32)(value >> 8));
-		cpu_memorywrite_w(paddr[1] + 4, (UINT16)(value >> 40));
-		cpu_memorywrite(paddr[1] + 6, (UINT8)(value >> 56));
-		break;
+  case 1:
+    cpu_memorywrite(paddr[0], (UINT8)value);
+    cpu_memorywrite_d(paddr[1], (UINT32)(value >> 8));
+    cpu_memorywrite_w(paddr[1] + 4, (UINT16)(value >> 40));
+    cpu_memorywrite(paddr[1] + 6, (UINT8)(value >> 56));
+    break;
 
-	default:
-		ia32_panic("cpu_linear_memory_write_q: out of range (remain=%d)\n", remain);
-		break;
-	}
+  default:
+    ia32_panic("cpu_linear_memory_write_q: out of range (remain=%d)\n", remain);
+    break;
+  }
 }
 
-void MEMCALL
-cpu_linear_memory_write_f(UINT32 laddr, const REG80 *value, int ucrw)
-{
-	UINT32 paddr[2];
-	UINT remain;
-	UINT i, j;
+void MEMCALL cpu_linear_memory_write_f(UINT32 laddr, const REG80 *value,
+                                       int ucrw) {
+  UINT32 paddr[2];
+  UINT remain;
+  UINT i, j;
 
-	paddr[0] = paging(laddr, ucrw);
-	remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
-	if (remain >= sizeof(value)) {
-		cpu_memorywrite_f(paddr[0], value);
-		return;
-	}
+  paddr[0] = paging(laddr, ucrw);
+  remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
+  if (remain >= sizeof(value)) {
+    cpu_memorywrite_f(paddr[0], value);
+    return;
+  }
 
-	paddr[1] = paging(laddr + remain, ucrw);
-	for (i = 0; i < remain; ++i) {
-		cpu_memorywrite(paddr[0] + i, value->b[i]);
-	}
-	for (j = 0; i < 10; ++i, ++j) {
-		cpu_memorywrite(paddr[1] + j, value->b[i]);
-	}
+  paddr[1] = paging(laddr + remain, ucrw);
+  for (i = 0; i < remain; ++i) {
+    cpu_memorywrite(paddr[0] + i, value->b[i]);
+  }
+  for (j = 0; i < 10; ++i, ++j) {
+    cpu_memorywrite(paddr[1] + j, value->b[i]);
+  }
 }
 
 /*
  * linear address memory access function
  */
-void MEMCALL
-cpu_memory_access_la_region(UINT32 laddr, UINT length, int ucrw, UINT8 *data)
-{
-	UINT32 paddr;
-	UINT remain;	/* page remain */
-	UINT r;
+void MEMCALL cpu_memory_access_la_region(UINT32 laddr, UINT length, int ucrw,
+                                         UINT8 *data) {
+  UINT32 paddr;
+  UINT remain; /* page remain */
+  UINT r;
 
-	while (length > 0) {
-		remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
-		if (!CPU_STAT_PAGING) {
-			paddr = laddr;
-		} else {
-			paddr = paging(laddr, ucrw);
-		}
+  while (length > 0) {
+    remain = CPU_PAGE_SIZE - (laddr & CPU_PAGE_MASK);
+    if (!CPU_STAT_PAGING) {
+      paddr = laddr;
+    } else {
+      paddr = paging(laddr, ucrw);
+    }
 
-		r = (remain > length) ? length : remain;
-		if (!(ucrw & CPU_PAGE_WRITE)) {
-			cpu_memoryread_region(paddr, data, r);
-		} else {
-			cpu_memorywrite_region(paddr, data, r);
-		}
+    r = (remain > length) ? length : remain;
+    if (!(ucrw & CPU_PAGE_WRITE)) {
+      cpu_memoryread_region(paddr, data, r);
+    } else {
+      cpu_memorywrite_region(paddr, data, r);
+    }
 
-		laddr += r;
-		data += r;
-		length -= r;
-	}
+    laddr += r;
+    data += r;
+    length -= r;
+  }
 }
 
-UINT32 MEMCALL
-laddr2paddr(UINT32 laddr, int ucrw)
-{
+UINT32 MEMCALL laddr2paddr(UINT32 laddr, int ucrw) {
 
-	return paging(laddr, ucrw);
+  return paging(laddr, ucrw);
 }
 
 /*
  * paging
  */
-static UINT32 MEMCALL
-paging(UINT32 laddr, int ucrw)
-{
-	struct tlb_entry *ep;
-	UINT32 paddr;		/* physical address */
-	UINT32 pde_addr;	/* page directory entry address */
-	UINT32 pde;		/* page directory entry */
-	UINT32 pte_addr;	/* page table entry address */
-	UINT32 pte;		/* page table entry */
-	UINT bit;
-	UINT err;
+static UINT32 MEMCALL paging(UINT32 laddr, int ucrw) {
+  struct tlb_entry *ep;
+  UINT32 paddr;    /* physical address */
+  UINT32 pde_addr; /* page directory entry address */
+  UINT32 pde;      /* page directory entry */
+  UINT32 pte_addr; /* page table entry address */
+  UINT32 pte;      /* page table entry */
+  UINT bit;
+  UINT err;
 
-	ep = tlb_lookup(laddr, ucrw);
-	if (ep != NULL)
-		return ep->paddr + (laddr & CPU_PAGE_MASK);
+  ep = tlb_lookup(laddr, ucrw);
+  if (ep != NULL)
+    return ep->paddr + (laddr & CPU_PAGE_MASK);
 
-	pde_addr = CPU_STAT_PDE_BASE + ((laddr >> 20) & 0xffc);
-	pde = cpu_memoryread_d_paging(pde_addr);
-	if (!(pde & CPU_PDE_PRESENT)) {
-		VERBOSE(("paging: PTE page is not present"));
-		VERBOSE(("paging: CPU_CR3 = 0x%08x", CPU_CR3));
-		VERBOSE(("paging: laddr = 0x%08x, pde_addr = 0x%08x, pde = 0x%08x", laddr, pde_addr, pde));
-		err = 0;
-		goto pf_exception;
-	}
-	if (!(pde & CPU_PDE_ACCESS)) {
-		pde |= CPU_PDE_ACCESS;
-		cpu_memorywrite_d_paging(pde_addr, pde);
-	}
+  pde_addr = CPU_STAT_PDE_BASE + ((laddr >> 20) & 0xffc);
+  pde = cpu_memoryread_d_paging(pde_addr);
+  if (!(pde & CPU_PDE_PRESENT)) {
+    VERBOSE(("paging: PTE page is not present"));
+    VERBOSE(("paging: CPU_CR3 = 0x%08x", CPU_CR3));
+    VERBOSE(("paging: laddr = 0x%08x, pde_addr = 0x%08x, pde = 0x%08x", laddr,
+             pde_addr, pde));
+    err = 0;
+    goto pf_exception;
+  }
+  if (!(pde & CPU_PDE_ACCESS)) {
+    pde |= CPU_PDE_ACCESS;
+    cpu_memorywrite_d_paging(pde_addr, pde);
+  }
 
-	pte_addr = (pde & CPU_PDE_BASEADDR_MASK) + ((laddr >> 10) & 0xffc);
-	pte = cpu_memoryread_d_paging(pte_addr);
-	if (!(pte & CPU_PTE_PRESENT)) {
-		VERBOSE(("paging: page is not present"));
-		VERBOSE(("paging: laddr = 0x%08x, pde_addr = 0x%08x, pde = 0x%08x", laddr, pde_addr, pde));
-		VERBOSE(("paging: pte_addr = 0x%08x, pte = 0x%08x", pte_addr, pte));
-		err = 0;
-		goto pf_exception;
-	}
-	if (!(pte & CPU_PTE_ACCESS)) {
-		pte |= CPU_PTE_ACCESS;
-		cpu_memorywrite_d_paging(pte_addr, pte);
-	}
+  pte_addr = (pde & CPU_PDE_BASEADDR_MASK) + ((laddr >> 10) & 0xffc);
+  pte = cpu_memoryread_d_paging(pte_addr);
+  if (!(pte & CPU_PTE_PRESENT)) {
+    VERBOSE(("paging: page is not present"));
+    VERBOSE(("paging: laddr = 0x%08x, pde_addr = 0x%08x, pde = 0x%08x", laddr,
+             pde_addr, pde));
+    VERBOSE(("paging: pte_addr = 0x%08x, pte = 0x%08x", pte_addr, pte));
+    err = 0;
+    goto pf_exception;
+  }
+  if (!(pte & CPU_PTE_ACCESS)) {
+    pte |= CPU_PTE_ACCESS;
+    cpu_memorywrite_d_paging(pte_addr, pte);
+  }
 
-	/* make physical address */
-	paddr = (pte & CPU_PTE_BASEADDR_MASK) + (laddr & CPU_PAGE_MASK);
+  /* make physical address */
+  paddr = (pte & CPU_PTE_BASEADDR_MASK) + (laddr & CPU_PAGE_MASK);
 
-	bit  = ucrw & (CPU_PAGE_WRITE|CPU_PAGE_USER_MODE);
-	bit |= (pde & pte & (CPU_PTE_WRITABLE|CPU_PTE_USER_MODE));
-	bit |= CPU_STAT_WP;
+  bit = ucrw & (CPU_PAGE_WRITE | CPU_PAGE_USER_MODE);
+  bit |= (pde & pte & (CPU_PTE_WRITABLE | CPU_PTE_USER_MODE));
+  bit |= CPU_STAT_WP;
 
 #if !defined(USE_PAGE_ACCESS_TABLE)
-	if (!(page_access & (1 << bit)))
+  if (!(page_access & (1 << bit)))
 #else
-	if (!(page_access_bit[bit]))
+  if (!(page_access_bit[bit]))
 #endif
-	{
-		VERBOSE(("paging: page access violation."));
-		VERBOSE(("paging: laddr = 0x%08x, pde_addr = 0x%08x, pde = 0x%08x", laddr, pde_addr, pde));
-		VERBOSE(("paging: pte_addr = 0x%08x, pte = 0x%08x", pte_addr, pte));
-		VERBOSE(("paging: paddr = 0x%08x, bit = 0x%08x", paddr, bit));
-		err = 1;
-		goto pf_exception;
-	}
+  {
+    VERBOSE(("paging: page access violation."));
+    VERBOSE(("paging: laddr = 0x%08x, pde_addr = 0x%08x, pde = 0x%08x", laddr,
+             pde_addr, pde));
+    VERBOSE(("paging: pte_addr = 0x%08x, pte = 0x%08x", pte_addr, pte));
+    VERBOSE(("paging: paddr = 0x%08x, bit = 0x%08x", paddr, bit));
+    err = 1;
+    goto pf_exception;
+  }
 
-	if ((ucrw & CPU_PAGE_WRITE) && !(pte & CPU_PTE_DIRTY)) {
-		pte |= CPU_PTE_DIRTY;
-		cpu_memorywrite_d_paging(pte_addr, pte);
-	}
+  if ((ucrw & CPU_PAGE_WRITE) && !(pte & CPU_PTE_DIRTY)) {
+    pte |= CPU_PTE_DIRTY;
+    cpu_memorywrite_d_paging(pte_addr, pte);
+  }
 
-	tlb_update(laddr, pte, (bit & (CPU_PTE_WRITABLE|CPU_PTE_USER_MODE)) + ((ucrw & CPU_PAGE_CODE) ? 1 : 0));
+  tlb_update(laddr, pte,
+             (bit & (CPU_PTE_WRITABLE | CPU_PTE_USER_MODE)) +
+                 ((ucrw & CPU_PAGE_CODE) ? 1 : 0));
 
-	return paddr;
+  return paddr;
 
 pf_exception:
-	CPU_CR2 = laddr;
-	err |= (ucrw & CPU_PAGE_WRITE) << 1;
-	err |= (ucrw & CPU_PAGE_USER_MODE) >> 1;
-	EXCEPTION(PF_EXCEPTION, err);
-	return 0;	/* compiler happy */
+  CPU_CR2 = laddr;
+  err |= (ucrw & CPU_PAGE_WRITE) << 1;
+  err |= (ucrw & CPU_PAGE_USER_MODE) >> 1;
+  EXCEPTION(PF_EXCEPTION, err);
+  return 0; /* compiler happy */
 }
 
-/* 
+/*
  * TLB
  */
-#define	TLB_TAG_SHIFT		TLB_ENTRY_TAG_MAX_SHIFT
-#define	TLB_TAG_MASK		(~((1 << TLB_TAG_SHIFT) - 1))
-#define	TLB_GET_TAG_ADDR(ep)	((ep)->tag & TLB_TAG_MASK)
-#define	TLB_SET_TAG_ADDR(ep, addr) \
-do { \
-	(ep)->tag &= ~TLB_TAG_MASK; \
-	(ep)->tag |= (addr) & TLB_TAG_MASK; \
-} while (/*CONSTCOND(*/ 0)
+#define TLB_TAG_SHIFT TLB_ENTRY_TAG_MAX_SHIFT
+#define TLB_TAG_MASK (~((1 << TLB_TAG_SHIFT) - 1))
+#define TLB_GET_TAG_ADDR(ep) ((ep)->tag & TLB_TAG_MASK)
+#define TLB_SET_TAG_ADDR(ep, addr)                                             \
+  do {                                                                         \
+    (ep)->tag &= ~TLB_TAG_MASK;                                                \
+    (ep)->tag |= (addr)&TLB_TAG_MASK;                                          \
+  } while (/*CONSTCOND(*/ 0)
 
-#define	TLB_IS_VALID(ep)	((ep)->tag & TLB_ENTRY_TAG_VALID)
-#define	TLB_SET_VALID(ep)	((ep)->tag = TLB_ENTRY_TAG_VALID)
-#define	TLB_SET_INVALID(ep)	((ep)->tag = 0)
+#define TLB_IS_VALID(ep) ((ep)->tag & TLB_ENTRY_TAG_VALID)
+#define TLB_SET_VALID(ep) ((ep)->tag = TLB_ENTRY_TAG_VALID)
+#define TLB_SET_INVALID(ep) ((ep)->tag = 0)
 
-#define	TLB_IS_WRITABLE(ep)	((ep)->tag & CPU_PTE_WRITABLE)
-#define	TLB_IS_USERMODE(ep)	((ep)->tag & CPU_PTE_USER_MODE)
-#define	TLB_IS_DIRTY(ep)	((ep)->tag & TLB_ENTRY_TAG_DIRTY)
+#define TLB_IS_WRITABLE(ep) ((ep)->tag & CPU_PTE_WRITABLE)
+#define TLB_IS_USERMODE(ep) ((ep)->tag & CPU_PTE_USER_MODE)
+#define TLB_IS_DIRTY(ep) ((ep)->tag & TLB_ENTRY_TAG_DIRTY)
 #if (CPU_FEATURES & CPU_FEATURE_PGE) == CPU_FEATURE_PGE
-#define	TLB_IS_GLOBAL(ep)	((ep)->tag & TLB_ENTRY_TAG_GLOBAL)
+#define TLB_IS_GLOBAL(ep) ((ep)->tag & TLB_ENTRY_TAG_GLOBAL)
 #else
-#define	TLB_IS_GLOBAL(ep)	0
+#define TLB_IS_GLOBAL(ep) 0
 #endif
 
-#define	TLB_SET_TAG_FLAGS(ep, entry, bit) \
-do { \
-	(ep)->tag |= (entry) & (CPU_PTE_GLOBAL_PAGE|CPU_PTE_DIRTY); \
-	(ep)->tag |= (bit) & (CPU_PTE_WRITABLE|CPU_PTE_USER_MODE); \
-} while (/*CONSTCOND*/ 0)
+#define TLB_SET_TAG_FLAGS(ep, entry, bit)                                      \
+  do {                                                                         \
+    (ep)->tag |= (entry) & (CPU_PTE_GLOBAL_PAGE | CPU_PTE_DIRTY);              \
+    (ep)->tag |= (bit) & (CPU_PTE_WRITABLE | CPU_PTE_USER_MODE);               \
+  } while (/*CONSTCOND*/ 0)
 
-#define	NTLB		2	/* 0: DTLB, 1: ITLB */
-#define	NENTRY		(1 << 8)
-#define	TLB_ENTRY_SHIFT	12
-#define	TLB_ENTRY_MASK	(NENTRY - 1)
+#define NTLB 2 /* 0: DTLB, 1: ITLB */
+#define NENTRY (1 << 8)
+#define TLB_ENTRY_SHIFT 12
+#define TLB_ENTRY_MASK (NENTRY - 1)
 
 typedef struct {
-	struct tlb_entry entry[NENTRY];
+  struct tlb_entry entry[NENTRY];
 } tlb_t;
 static tlb_t tlb[NTLB];
 
-void
-tlb_init(void)
-{
-	memset(tlb, 0, sizeof(tlb));
+void tlb_init(void) { memset(tlb, 0, sizeof(tlb)); }
+
+void MEMCALL tlb_flush() {
+  struct tlb_entry *ep;
+  int i;
+  int n;
+
+  for (n = 0; n < NTLB; n++) {
+    for (i = 0; i < NENTRY; i++) {
+      ep = &tlb[n].entry[i];
+      if (TLB_IS_VALID(ep) && !TLB_IS_GLOBAL(ep)) {
+        TLB_SET_INVALID(ep);
+      }
+    }
+  }
 }
 
-void MEMCALL
-tlb_flush()
-{
-	struct tlb_entry *ep;
-	int i;
-	int n;
+void MEMCALL tlb_flush_all() { tlb_init(); }
 
-	for (n = 0; n < NTLB; n++) {
-		for (i = 0; i < NENTRY ; i++) {
-			ep = &tlb[n].entry[i];
-			if (TLB_IS_VALID(ep) && !TLB_IS_GLOBAL(ep)) {
-				TLB_SET_INVALID(ep);
-			}
-		}
-	}
+void MEMCALL tlb_flush_page(UINT32 laddr) {
+  struct tlb_entry *ep;
+  int idx;
+  int n;
+
+  idx = (laddr >> TLB_ENTRY_SHIFT) & TLB_ENTRY_MASK;
+
+  for (n = 0; n < NTLB; n++) {
+    ep = &tlb[n].entry[idx];
+    if (TLB_IS_VALID(ep)) {
+      if ((laddr & TLB_TAG_MASK) == TLB_GET_TAG_ADDR(ep)) {
+        TLB_SET_INVALID(ep);
+      }
+    }
+  }
 }
 
-void MEMCALL
-tlb_flush_all()
-{
-	tlb_init();
-}
+struct tlb_entry *MEMCALL tlb_lookup(UINT32 laddr, int ucrw) {
+  struct tlb_entry *ep;
+  UINT bit;
+  int idx;
+  int n;
 
-void MEMCALL
-tlb_flush_page(UINT32 laddr)
-{
-	struct tlb_entry *ep;
-	int idx;
-	int n;
+  n = (ucrw & CPU_PAGE_CODE) ? 1 : 0;
+  idx = (laddr >> TLB_ENTRY_SHIFT) & TLB_ENTRY_MASK;
+  ep = &tlb[n].entry[idx];
 
-	idx = (laddr >> TLB_ENTRY_SHIFT) & TLB_ENTRY_MASK;
-
-	for (n = 0; n < NTLB; n++) {
-		ep = &tlb[n].entry[idx];
-		if (TLB_IS_VALID(ep)) {
-			if ((laddr & TLB_TAG_MASK) == TLB_GET_TAG_ADDR(ep)) {
-				TLB_SET_INVALID(ep);
-			}
-		}
-	}
-}
-
-struct tlb_entry * MEMCALL
-tlb_lookup(UINT32 laddr, int ucrw)
-{
-	struct tlb_entry *ep;
-	UINT bit;
-	int idx;
-	int n;
-
-	n = (ucrw & CPU_PAGE_CODE) ? 1 : 0;
-	idx = (laddr >> TLB_ENTRY_SHIFT) & TLB_ENTRY_MASK;
-	ep = &tlb[n].entry[idx];
-
-	if (TLB_IS_VALID(ep)) {
-		if ((laddr & TLB_TAG_MASK) == TLB_GET_TAG_ADDR(ep)) {
-			bit = ucrw & (CPU_PAGE_WRITE|CPU_PAGE_USER_MODE);
-			bit |= ep->tag & (CPU_PTE_WRITABLE|CPU_PTE_USER_MODE);
-			bit |= CPU_STAT_WP;
+  if (TLB_IS_VALID(ep)) {
+    if ((laddr & TLB_TAG_MASK) == TLB_GET_TAG_ADDR(ep)) {
+      bit = ucrw & (CPU_PAGE_WRITE | CPU_PAGE_USER_MODE);
+      bit |= ep->tag & (CPU_PTE_WRITABLE | CPU_PTE_USER_MODE);
+      bit |= CPU_STAT_WP;
 #if !defined(USE_PAGE_ACCESS_TABLE)
-			if ((page_access & (1 << bit)))
+      if ((page_access & (1 << bit)))
 #else
-			if (page_access_bit[bit])
+      if (page_access_bit[bit])
 #endif
-			{
-				if (!(ucrw & CPU_PAGE_WRITE) || TLB_IS_DIRTY(ep)) {
-					return ep;
-				}
-			}
-		}
-	}
-	return NULL;
+      {
+        if (!(ucrw & CPU_PAGE_WRITE) || TLB_IS_DIRTY(ep)) {
+          return ep;
+        }
+      }
+    }
+  }
+  return NULL;
 }
 
-static void MEMCALL
-tlb_update(UINT32 laddr, UINT entry, int bit)
-{
-	struct tlb_entry *ep;
-	int idx;
-	int n;
+static void MEMCALL tlb_update(UINT32 laddr, UINT entry, int bit) {
+  struct tlb_entry *ep;
+  int idx;
+  int n;
 
-	n = bit & 1;
-	idx = (laddr >> TLB_ENTRY_SHIFT) & TLB_ENTRY_MASK;
-	ep = &tlb[n].entry[idx];
+  n = bit & 1;
+  idx = (laddr >> TLB_ENTRY_SHIFT) & TLB_ENTRY_MASK;
+  ep = &tlb[n].entry[idx];
 
-	TLB_SET_VALID(ep);
-	TLB_SET_TAG_ADDR(ep, laddr);
-	TLB_SET_TAG_FLAGS(ep, entry, bit);
-	ep->paddr = entry & CPU_PTE_BASEADDR_MASK;
+  TLB_SET_VALID(ep);
+  TLB_SET_TAG_ADDR(ep, laddr);
+  TLB_SET_TAG_FLAGS(ep, entry, bit);
+  ep->paddr = entry & CPU_PTE_BASEADDR_MASK;
 }

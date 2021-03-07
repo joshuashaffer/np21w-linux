@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_RESOLVE_H__
-#define	IA32_CPU_RESOLVE_H__
+#ifndef IA32_CPU_RESOLVE_H__
+#define IA32_CPU_RESOLVE_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,21 +32,19 @@ extern "C" {
 
 void resolve_init(void);
 
-STATIC_INLINE UINT32 CPUCALL
-calc_ea_dst(UINT32 op)
-{
-	extern UINT32 (*calc_ea_dst_tbl[0x100])(void);
-	extern UINT32 (*calc_ea32_dst_tbl[0x100])(void);
+STATIC_INLINE UINT32 CPUCALL calc_ea_dst(UINT32 op) {
+  extern UINT32 (*calc_ea_dst_tbl[0x100])(void);
+  extern UINT32 (*calc_ea32_dst_tbl[0x100])(void);
 
-	__ASSERT(op < 0x100);
+  __ASSERT(op < 0x100);
 
-	if (!CPU_INST_AS32)
-		return ((*calc_ea_dst_tbl[op])() & 0xffff);
-	return (*calc_ea32_dst_tbl[op])();
+  if (!CPU_INST_AS32)
+    return ((*calc_ea_dst_tbl[op])() & 0xffff);
+  return (*calc_ea32_dst_tbl[op])();
 }
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* IA32_CPU_RESOLVE_H__ */
+#endif /* IA32_CPU_RESOLVE_H__ */

@@ -5,8 +5,8 @@
 #ifdef __cplusplus
 extern "C"
 #endif
-BOOL APIENTRY _DllMainCRTStartup(HANDLE hModule, DWORD ulReasonForCall, LPVOID lpvReserved)
-{
-	return TRUE;
+    BOOL APIENTRY
+    _DllMainCRTStartup(HANDLE hModule, DWORD ulReasonForCall,
+                       LPVOID lpvReserved) {
+  return TRUE;
 }
-

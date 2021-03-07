@@ -23,23 +23,24 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_TASK_H__
-#define	IA32_CPU_TASK_H__
+#ifndef IA32_CPU_TASK_H__
+#define IA32_CPU_TASK_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 void CPUCALL load_tr(UINT16 selector);
-void CPUCALL get_stack_pointer_from_tss(UINT pl, UINT16 *new_ss, UINT32 *new_esp);
+void CPUCALL get_stack_pointer_from_tss(UINT pl, UINT16 *new_ss,
+                                        UINT32 *new_esp);
 UINT16 get_backlink_selector_from_tss(void);
 
 /* task_switch type */
 typedef enum {
-	TASK_SWITCH_JMP,
-	TASK_SWITCH_CALL,
-	TASK_SWITCH_IRET,
-	TASK_SWITCH_INTR
+  TASK_SWITCH_JMP,
+  TASK_SWITCH_CALL,
+  TASK_SWITCH_IRET,
+  TASK_SWITCH_INTR
 } task_switch_type_t;
 
 void CPUCALL task_switch(selector_t *selector, task_switch_type_t type);
@@ -48,4 +49,4 @@ void CPUCALL task_switch(selector_t *selector, task_switch_type_t type);
 }
 #endif
 
-#endif	/* !IA32_CPU_TASK_H__ */
+#endif /* !IA32_CPU_TASK_H__ */

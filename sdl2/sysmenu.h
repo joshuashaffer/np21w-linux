@@ -1,8 +1,5 @@
 
-enum {
-	MENUTYPE_NORMAL	= 0
-};
-
+enum { MENUTYPE_NORMAL = 0 };
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,4 +13,3 @@ BRESULT sysmenu_menuopen(UINT menutype, int x, int y);
 #ifdef __cplusplus
 }
 #endif
-

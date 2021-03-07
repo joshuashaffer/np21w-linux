@@ -1,20 +1,18 @@
-#include	"compiler.h"
-#include	"cpucore.h"
-#include	"i286x.h"
-#include	"i286xadr.h"
-#include	"i286xcts.h"
-#include	"i286x.mcr"
-#include	"i286xea.mcr"
-
+#include "compiler.h"
+#include "cpucore.h"
+#include "i286x.h"
+#include "i286xadr.h"
+#include "i286xcts.h"
+#include "i286x.mcr"
+#include "i286xea.mcr"
 
 typedef void (*I286OP_0F)(void);
-
 
 // ---- 0f 00
 
 I286 _sldt(void) {
 
-		__asm {
+  __asm {
 				PREPART_EA16(2)
 					mov		dx, I286_LDTR
 					mov		word ptr I286_REG[eax*2], dx
@@ -27,12 +25,12 @@ I286 _sldt(void) {
 				extmem_eareg16:
 					mov		dx, I286_LDTR
 					jmp		i286_memorywrite_w
-		}
+  }
 }
 
 I286 _str(void) {
 
-		__asm {
+  __asm {
 				PREPART_EA16(3)
 					mov		dx, I286_TR
 					mov		word ptr I286_REG[eax*2], dx
@@ -45,12 +43,12 @@ I286 _str(void) {
 				extmem_eareg16:
 					mov		dx, I286_TR
 					jmp		i286_memorywrite_w
-		}
+  }
 }
 
 I286 _lldt(void) {
 
-		__asm {
+  __asm {
 				PREPART_EA16(17)
 					mov		ax, word ptr I286_REG[eax*2]
 					call	lldt_sub
@@ -73,12 +71,12 @@ lldt_sub:			mov		word ptr I286_LDTR, ax
 					call	i286_memoryread
 					mov		I286_LDTRC.base24, al
 					ret
-		}
+  }
 }
 
 I286 _ltr(void) {
 
-		__asm {
+  __asm {
 				PREPART_EA16(17)
 					mov		ax, word ptr I286_REG[eax*2]
 					call	ltr_sub
@@ -101,12 +99,12 @@ ltr_sub:			mov		word ptr I286_TR, ax
 					call	i286_memoryread
 					mov		I286_TRC.base24, al
 					ret
-		}
+  }
 }
 
 I286 _verr(void) {
 
-		__asm {
+  __asm {
 				PREPART_EA16(14)
 					mov		ax, word ptr I286_REG[eax*2]
 					GET_NEXTPRE2
@@ -116,12 +114,12 @@ I286 _verr(void) {
 					ret
 				EXTMEM_EA16
 					ret
-		}
+  }
 }
 
 I286 _verw(void) {
 
-		__asm {
+  __asm {
 				PREPART_EA16(14)
 					mov		ax, word ptr I286_REG[eax*2]
 					GET_NEXTPRE2
@@ -131,19 +129,17 @@ I286 _verw(void) {
 					ret
 				EXTMEM_EA16
 					ret
-		}
+  }
 }
 
-static const I286OP_0F cts0x_table[] = {
-			_sldt,	_str,	_lldt,	_ltr,
-			_verr,	_verw,	_verr,	_verw};
-
+static const I286OP_0F cts0x_table[] = {_sldt, _str,  _lldt, _ltr,
+                                        _verr, _verw, _verr, _verw};
 
 // ---- 0f 01
 
 I286 _sgdt(void) {
 
-		__asm {
+  __asm {
 				cmp		al, 0c0h
 				jnc		register_eareg16
 				I286CLOCK(11)
@@ -160,12 +156,12 @@ I286 _sgdt(void) {
 				align	4
 		register_eareg16:
 				INT_NUM(6)
-		}
+  }
 }
 
 I286 _sidt(void) {
 
-		__asm {
+  __asm {
 				cmp		al, 0c0h
 				jnc		register_eareg16
 				I286CLOCK(12)
@@ -182,12 +178,12 @@ I286 _sidt(void) {
 				align	4
 		register_eareg16:
 				INT_NUM(6)
-		}
+  }
 }
 
 I286 _lgdt(void) {
 
-		__asm {
+  __asm {
 				cmp		al, 0c0h
 				jnc		register_eareg16
 				I286CLOCK(11)
@@ -204,12 +200,12 @@ I286 _lgdt(void) {
 				align	4
 		register_eareg16:
 				INT_NUM(6)
-		}
+  }
 }
 
 I286 _lidt(void) {
 
-		__asm {
+  __asm {
 				cmp		al, 0c0h
 				jnc		register_eareg16
 				I286CLOCK(12)
@@ -226,12 +222,12 @@ I286 _lidt(void) {
 				align	4
 		register_eareg16:
 				INT_NUM(6)
-		}
+  }
 }
 
 I286 _smsw(void) {
 
-		__asm {
+  __asm {
 				PREPART_EA16(3)
 					mov		dx, I286_MSW
 					mov		word ptr I286_REG[eax*2], dx
@@ -244,12 +240,12 @@ I286 _smsw(void) {
 				extmem_eareg16:
 					mov		dx, I286_MSW
 					jmp		i286_memorywrite_w
-		}
+  }
 }
 
 I286 _lmsw(void) {
 
-		__asm {
+  __asm {
 				and		I286_MSW, MSW_PE
 				PREPART_EA16(2)
 					mov		ax, word ptr I286_REG[eax*2]
@@ -263,19 +259,17 @@ I286 _lmsw(void) {
 				EXTMEM_EA16
 					or		I286_MSW, ax
 					ret
-		}
+  }
 }
 
-static const I286OP_0F cts1x_table[] = {
-			_sgdt,	_sidt,	_lgdt,	_lidt,
-			_smsw,	_smsw,	_lmsw,	_lmsw};
-
+static const I286OP_0F cts1x_table[] = {_sgdt, _sidt, _lgdt, _lidt,
+                                        _smsw, _smsw, _lmsw, _lmsw};
 
 // ----
 
 I286EXT _xcts(void) {
 
-		__asm {
+  __asm {
 				mov		edi, esi
 				GET_NEXTPRE1
 				test	bl, bl
@@ -304,73 +298,73 @@ i286_cts1:		movzx	eax, bh
 
 				align	4
 loadall286:		I286CLOCK(195)
-				mov		ax, word ptr mem[0x0804]		// MSW
+				mov		ax, word ptr mem[0x0804] // MSW
 				mov		I286_MSW, ax
-				mov		ax, word ptr mem[0x0816]		// TR
+				mov		ax, word ptr mem[0x0816] // TR
 				mov		I286_TR, ax
-				mov		ax, word ptr mem[0x0818]		// flag
+				mov		ax, word ptr mem[0x0818] // flag
 				mov		I286_FLAG, ax
 				and		ah, 3
 				cmp		ah, 3
 				sete	I286_TRAP
-				mov		si, word ptr mem[0x081a]		// ip
-				mov		ax, word ptr mem[0x081c]		// LDTR
+				mov		si, word ptr mem[0x081a] // ip
+				mov		ax, word ptr mem[0x081c] // LDTR
 				mov		I286_LDTR, ax
-				mov		ax, word ptr mem[0x081e]		// ds
+				mov		ax, word ptr mem[0x081e] // ds
 				mov		I286_DS, ax
-				mov		ax, word ptr mem[0x0820]		// ss
+				mov		ax, word ptr mem[0x0820] // ss
 				mov		I286_SS, ax
-				mov		ax, word ptr mem[0x0822]		// cs
+				mov		ax, word ptr mem[0x0822] // cs
 				mov		I286_CS, ax
-				mov		ax, word ptr mem[0x0824]		// es
+				mov		ax, word ptr mem[0x0824] // es
 				mov		I286_ES, ax
-				mov		ax, word ptr mem[0x0826]		// di
+				mov		ax, word ptr mem[0x0826] // di
 				mov		I286_DI, ax
-				mov		ax, word ptr mem[0x0828]		// si
+				mov		ax, word ptr mem[0x0828] // si
 				mov		I286_SI, ax
-				mov		ax, word ptr mem[0x082a]		// bp
+				mov		ax, word ptr mem[0x082a] // bp
 				mov		I286_BP, ax
-				mov		ax, word ptr mem[0x082c]		// sp
+				mov		ax, word ptr mem[0x082c] // sp
 				mov		I286_SP, ax
-				mov		ax, word ptr mem[0x082e]		// bx
+				mov		ax, word ptr mem[0x082e] // bx
 				mov		I286_BX, ax
-				mov		ax, word ptr mem[0x0830]		// dx
+				mov		ax, word ptr mem[0x0830] // dx
 				mov		I286_DX, ax
-				mov		ax, word ptr mem[0x0832]		// cx
+				mov		ax, word ptr mem[0x0832] // cx
 				mov		I286_CX, ax
-				mov		ax, word ptr mem[0x0834]		// ax
+				mov		ax, word ptr mem[0x0834] // ax
 				mov		I286_AX, ax
-				mov		eax, dword ptr mem[0x0836]		// es_desc
+				mov		eax, dword ptr mem[0x0836] // es_desc
 				and		eax, 00ffffffh
 				mov		ES_BASE, eax
-				mov		eax, dword ptr mem[0x083c]		// cs_desc
+				mov		eax, dword ptr mem[0x083c] // cs_desc
 				and		eax, 00ffffffh
 				mov		CS_BASE, eax
-				mov		eax, dword ptr mem[0x0842]		// ss_desc
+				mov		eax, dword ptr mem[0x0842] // ss_desc
 				and		eax, 00ffffffh
 				mov		SS_BASE, eax
 				mov		SS_FIX, eax
-				mov		eax, dword ptr mem[0x0848]		// ds_desc
+				mov		eax, dword ptr mem[0x0848] // ds_desc
 				and		eax, 00ffffffh
 				mov		DS_BASE, eax
 				mov		DS_FIX, eax
 
-				mov		eax, dword ptr mem[0x084e]		// GDTR
+				mov		eax, dword ptr mem[0x084e] // GDTR
 				mov		dword ptr (I286_GDTR.base), eax
 				mov		ax, word ptr mem[0x0852]
 				mov		I286_GDTR.limit, ax
 
-				mov		eax, dword ptr mem[0x0854]		// LDTRC
+				mov		eax, dword ptr mem[0x0854] // LDTRC
 				mov		dword ptr (I286_LDTRC.base), eax
 				mov		ax, word ptr mem[0x0858]
 				mov		I286_LDTRC.limit, ax
 
-				mov		eax, dword ptr mem[0x085a]		// IDTR
+				mov		eax, dword ptr mem[0x085a] // IDTR
 				mov		dword ptr (I286_IDTR.base), eax
 				mov		ax, word ptr mem[0x085e]
 				mov		I286_IDTR.limit, ax
 
-				mov		eax, dword ptr mem[0x0860]		// TRC
+				mov		eax, dword ptr mem[0x0860] // TRC
 				mov		dword ptr (I286_TRC.base), eax
 				mov		ax, word ptr mem[0x0864]
 				mov		I286_TRC.limit, ax
@@ -379,9 +373,8 @@ loadall286:		I286CLOCK(195)
 				I286IRQCHECKTERM
 
 				align	4
-expint6:		mov		si, di					// ver0.27 このタイプ・・・
-				I286CLOCK(20)					// 全部修正しなきゃ(汗
-				INT_NUM(6)						// i286とi386で挙動が違うから
-		}										// いやらしいね…
+expint6:		mov		si, di // ver0.27 このタイプ・・・
+				I286CLOCK(20) // 全部修正しなきゃ(汗
+				INT_NUM(6) // i286とi386で挙動が違うから
+  }            // いやらしいね…
 }
-

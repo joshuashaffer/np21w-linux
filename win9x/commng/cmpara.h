@@ -10,21 +10,20 @@
 /**
  * @brief commng パラレル デバイス クラス
  */
-class CComPara : public CComBase
-{
+class CComPara : public CComBase {
 public:
-	static CComPara* CreateInstance(UINT nPort);
+  static CComPara *CreateInstance(UINT nPort);
 
 protected:
-	CComPara();
-	virtual ~CComPara();
-	virtual UINT Read(UINT8* pData);
-	virtual UINT Write(UINT8 cData);
-	virtual UINT8 GetStat();
-	virtual INTPTR Message(UINT nMessage, INTPTR nParam);
+  CComPara();
+  virtual ~CComPara();
+  virtual UINT Read(UINT8 *pData);
+  virtual UINT Write(UINT8 cData);
+  virtual UINT8 GetStat();
+  virtual INTPTR Message(UINT nMessage, INTPTR nParam);
 
 private:
-	HANDLE m_hParallel;			/*!< パラレル ハンドル */
+  HANDLE m_hParallel; /*!< パラレル ハンドル */
 
-	bool Initialize(UINT nPort);
+  bool Initialize(UINT nPort);
 };

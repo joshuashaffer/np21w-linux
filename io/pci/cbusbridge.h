@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 extern int pcidev_cbusbridge_deviceid;
-	
+
 void pcidev_cbusbridge_reset(const NP2CFG *pConfig);
 void pcidev_cbusbridge_bind(void);
 
@@ -19,4 +19,3 @@ void pcidev_cbusbridge_bind(void);
 
 #endif
 #endif
-

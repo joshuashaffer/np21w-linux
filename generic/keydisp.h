@@ -9,63 +9,51 @@
 
 #include "cmndraw.h"
 
-struct _cmnpalfn
-{
-	UINT8	(*get8)(struct _cmnpalfn *fn, UINT num);
-	UINT32	(*get32)(struct _cmnpalfn *fn, UINT num);
-	UINT16	(*cnv16)(struct _cmnpalfn *fn, RGB32 pal32);
-	INTPTR	userdata;
+struct _cmnpalfn {
+  UINT8 (*get8)(struct _cmnpalfn *fn, UINT num);
+  UINT32 (*get32)(struct _cmnpalfn *fn, UINT num);
+  UINT16 (*cnv16)(struct _cmnpalfn *fn, RGB32 pal32);
+  INTPTR userdata;
 };
-typedef struct _cmnpalfn	CMNPALFN;
+typedef struct _cmnpalfn CMNPALFN;
 
-enum
-{
-	KEYDISP_MODENONE			= 0,
-	KEYDISP_MODEFM,
-	KEYDISP_MODEMIDI
+enum { KEYDISP_MODENONE = 0, KEYDISP_MODEFM, KEYDISP_MODEMIDI };
+
+enum {
+  KEYDISP_CHMAX = 64,
 };
 
-enum
-{
-	KEYDISP_CHMAX		= 64,
+enum {
+  KEYDISP_NOTEMAX = 16,
+
+  KEYDISP_KEYCX = 28,
+  KEYDISP_KEYCY = 14,
+
+  KEYDISP_LEVEL = (1 << 4),
+  KEYDISP_LEVEL_MAX = KEYDISP_LEVEL - 1,
+
+  KEYDISP_WIDTH = 301,
+  KEYDISP_HEIGHT = (KEYDISP_KEYCY * KEYDISP_CHMAX) + 1,
+
+  KEYDISP_DELAYEVENTS = 2048,
 };
 
-enum
-{
-	KEYDISP_NOTEMAX		= 16,
+enum {
+  KEYDISP_PALBG = 0,
+  KEYDISP_PALFG,
+  KEYDISP_PALHIT,
 
-	KEYDISP_KEYCX		= 28,
-	KEYDISP_KEYCY		= 14,
-
-	KEYDISP_LEVEL		= (1 << 4),
-	KEYDISP_LEVEL_MAX	= KEYDISP_LEVEL - 1,
-
-	KEYDISP_WIDTH		= 301,
-	KEYDISP_HEIGHT		= (KEYDISP_KEYCY * KEYDISP_CHMAX) + 1,
-
-	KEYDISP_DELAYEVENTS	= 2048,
+  KEYDISP_PALS
 };
 
-enum
-{
-	KEYDISP_PALBG		= 0,
-	KEYDISP_PALFG,
-	KEYDISP_PALHIT,
-
-	KEYDISP_PALS
+enum {
+  KEYDISP_FLAGDRAW = 0x01,
+  KEYDISP_FLAGREDRAW = 0x02,
+  KEYDISP_FLAGSIZING = 0x04
 };
-
-enum
-{
-	KEYDISP_FLAGDRAW		= 0x01,
-	KEYDISP_FLAGREDRAW		= 0x02,
-	KEYDISP_FLAGSIZING		= 0x04
-};
-
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 void keydisp_initialize(void);
@@ -100,6 +88,6 @@ void keydisp_setresizeflag(void);
 #define keydisp_opnakeyon(r, d)
 #define keydisp_psg(r, a)
 #define keydisp_opl3keyon(r, c, d)
-#define	keydisp_midi(a)
+#define keydisp_midi(a)
 
 #endif

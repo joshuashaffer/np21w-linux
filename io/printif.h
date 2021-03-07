@@ -10,4 +10,3 @@ void printif_finalize(void);
 #ifdef __cplusplus
 }
 #endif
-

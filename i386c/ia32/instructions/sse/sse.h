@@ -23,15 +23,15 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_INSTRUCTION_SSE_SSE_H__
-#define	IA32_CPU_INSTRUCTION_SSE_SSE_H__
+#ifndef IA32_CPU_INSTRUCTION_SSE_SSE_H__
+#define IA32_CPU_INSTRUCTION_SSE_SSE_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 float SSE_ROUND(float val);
-	
+
 void SSE_ADDPS(void);
 void SSE_ADDSS(void);
 void SSE_ANDNPS(void);
@@ -101,7 +101,7 @@ void SSE_MOVNTPS(void);
 void SSE_MOVNTQ(void);
 void SSE_PREFETCHTx(void);
 void SSE_NOPPREFETCH(void);
-//void SSE_PREFETCHNTA(void); // -> SSE_PREFETCHTx
+// void SSE_PREFETCHNTA(void); // -> SSE_PREFETCHTx
 void SSE_SFENCE(void);
 void SSE_LFENCE(void);
 void SSE_MFENCE(void);
@@ -111,4 +111,4 @@ void SSE_CLFLUSH(UINT32 op);
 }
 #endif
 
-#endif	/* IA32_CPU_INSTRUCTION_SSE_SSE_H__ */
+#endif /* IA32_CPU_INSTRUCTION_SSE_SSE_H__ */

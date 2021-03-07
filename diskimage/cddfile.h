@@ -4,7 +4,7 @@ extern "C" {
 
 #ifdef DEFAULT_SECSIZE
 #undef DEFAULT_SECSIZE
-#endif 
+#endif
 #define DEFAULT_SECSIZE 128
 
 extern const OEMCHAR str_cue[];
@@ -15,13 +15,13 @@ extern const OEMCHAR str_nrg[];
 extern const OEMCHAR str_iso[];
 
 typedef struct {
-	FILEH	fh;
-	UINT	trks;
-	_CDTRK	trk[100];
-	OEMCHAR	path[MAX_PATH];
+  FILEH fh;
+  UINT trks;
+  _CDTRK trk[100];
+  OEMCHAR path[MAX_PATH];
 } _CDINFO, *CDINFO;
 
-BOOL isCDImage(const OEMCHAR *fname);	//	追加(kaiA)
+BOOL isCDImage(const OEMCHAR *fname); //	追加(kaiA)
 long issec2048(FILEH fh);
 long issec2352(FILEH fh);
 long issec2448(FILEH fh);
@@ -41,7 +41,8 @@ void cd_destroy(SXSIDEV sxsi);
 
 void set_secread(SXSIDEV sxsi, const _CDTRK *trk, UINT trks);
 
-BRESULT setsxsidev(SXSIDEV sxsi, const OEMCHAR *path, const _CDTRK *trk, UINT trks);
+BRESULT setsxsidev(SXSIDEV sxsi, const OEMCHAR *path, const _CDTRK *trk,
+                   UINT trks);
 
 #ifdef __cplusplus
 }

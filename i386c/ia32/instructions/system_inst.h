@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_INSTRUCTION_SYSTEM_H__
-#define	IA32_CPU_INSTRUCTION_SYSTEM_H__
+#ifndef IA32_CPU_INSTRUCTION_SYSTEM_H__
+#define IA32_CPU_INSTRUCTION_SYSTEM_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -97,9 +97,8 @@ void MOV_RdTd(void);
 void SYSENTER(void);
 void SYSEXIT(void);
 
-
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* IA32_CPU_INSTRUCTION_SYSTEM_H__ */
+#endif /* IA32_CPU_INSTRUCTION_SYSTEM_H__ */

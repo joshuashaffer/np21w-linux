@@ -18,4 +18,3 @@ void CPUCALL softinttrap(UINT cs, UINT32 eip, UINT vect);
 #endif
 
 #endif
-

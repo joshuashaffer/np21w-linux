@@ -18,7 +18,6 @@ void scrnmngDD_update(void);
 
 RGB16 scrnmngDD_makepal16(RGB32 pal32);
 
-
 // ---- for windows
 
 void scrnmngDD_setmultiple(int multiple);
@@ -49,4 +48,3 @@ void scrnmngDD_dispclock(void);
 #ifdef __cplusplus
 }
 #endif
-

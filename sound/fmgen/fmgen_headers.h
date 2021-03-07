@@ -12,10 +12,10 @@
 #include <assert.h>
 
 #ifdef _MSC_VER
-	#undef max
-	#define max _MAX
-	#undef min
-	#define min _MIN
+#undef max
+#define max _MAX
+#undef min
+#define min _MIN
 #endif
 
-#endif	// WIN_HEADERS_H
+#endif // WIN_HEADERS_H

@@ -23,47 +23,45 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_EXCEPTION_H__
-#define	IA32_CPU_EXCEPTION_H__
+#ifndef IA32_CPU_EXCEPTION_H__
+#define IA32_CPU_EXCEPTION_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 enum {
-	DE_EXCEPTION = 0,	/* F */
-	DB_EXCEPTION = 1,	/* F/T */
-	NMI_EXCEPTION = 2,	/* I */
-	BP_EXCEPTION = 3,	/* T */
-	OF_EXCEPTION = 4,	/* T */
-	BR_EXCEPTION = 5,	/* F */
-	UD_EXCEPTION = 6,	/* F */
-	NM_EXCEPTION = 7,	/* F */
-	DF_EXCEPTION = 8,	/* A, Err(0) */
-	/* CoProcesser Segment Overrun = 9 */
-	TS_EXCEPTION = 10,	/* F */
-	NP_EXCEPTION = 11,	/* F, Err */
-	SS_EXCEPTION = 12,	/* F, Err */
-	GP_EXCEPTION = 13,	/* F, Err */
-	PF_EXCEPTION = 14,	/* F, Err */
-	/* Reserved = 15 */
-	MF_EXCEPTION = 16,	/* F */
-	AC_EXCEPTION = 17,	/* F, Err(0) */
-	MC_EXCEPTION = 18,	/* A, Err(?) */
-	XF_EXCEPTION = 19,	/* F */
-	EXCEPTION_NUM
+  DE_EXCEPTION = 0,  /* F */
+  DB_EXCEPTION = 1,  /* F/T */
+  NMI_EXCEPTION = 2, /* I */
+  BP_EXCEPTION = 3,  /* T */
+  OF_EXCEPTION = 4,  /* T */
+  BR_EXCEPTION = 5,  /* F */
+  UD_EXCEPTION = 6,  /* F */
+  NM_EXCEPTION = 7,  /* F */
+  DF_EXCEPTION = 8,  /* A, Err(0) */
+  /* CoProcesser Segment Overrun = 9 */
+  TS_EXCEPTION = 10, /* F */
+  NP_EXCEPTION = 11, /* F, Err */
+  SS_EXCEPTION = 12, /* F, Err */
+  GP_EXCEPTION = 13, /* F, Err */
+  PF_EXCEPTION = 14, /* F, Err */
+  /* Reserved = 15 */
+  MF_EXCEPTION = 16, /* F */
+  AC_EXCEPTION = 17, /* F, Err(0) */
+  MC_EXCEPTION = 18, /* A, Err(?) */
+  XF_EXCEPTION = 19, /* F */
+  EXCEPTION_NUM
 };
 
 enum {
-	INTR_TYPE_SOFTINTR = -1,	/* software interrupt (INTn) */
-	INTR_TYPE_EXTINTR = 0,		/* external interrupt */
-	INTR_TYPE_EXCEPTION = 1,	/* exception */
+  INTR_TYPE_SOFTINTR = -1, /* software interrupt (INTn) */
+  INTR_TYPE_EXTINTR = 0,   /* external interrupt */
+  INTR_TYPE_EXCEPTION = 1, /* exception */
 };
 
-#define	EXCEPTION(num, vec) \
-	exception(num, vec);
-#define	INTERRUPT(num, softintp) \
-	interrupt(num, softintp, 0, 0)
+#define EXCEPTION(num, vec) exception(num, vec);
+#define INTERRUPT(num, softintp) interrupt(num, softintp, 0, 0)
 
 void CPUCALL exception(int num, int vec);
 void CPUCALL interrupt(int num, int intrtype, int errorp, int error_code);
@@ -72,4 +70,4 @@ void CPUCALL interrupt(int num, int intrtype, int errorp, int error_code);
 }
 #endif
 
-#endif	/* !IA32_CPU_EXCEPTION_H__ */
+#endif /* !IA32_CPU_EXCEPTION_H__ */

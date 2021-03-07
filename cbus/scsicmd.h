@@ -17,4 +17,3 @@ void scsicmd_bios(void);
 #endif
 
 #endif
-

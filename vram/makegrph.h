@@ -1,9 +1,5 @@
 
-enum {
-	GRPHXMAX	= 80,
-	GRPHYMAX	= 400
-};
-
+enum { GRPHXMAX = 80, GRPHYMAX = 400 };
 
 #ifdef __cplusplus
 extern "C" {
@@ -15,4 +11,3 @@ void VRAMCALL makegrph(int page, int alldraw);
 #ifdef __cplusplus
 }
 #endif
-

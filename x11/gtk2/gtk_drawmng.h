@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	NP2_X11_GTK2_GTKDRAWMNG_H__
-#define	NP2_X11_GTK2_GTKDRAWMNG_H__
+#ifndef NP2_X11_GTK2_GTKDRAWMNG_H__
+#define NP2_X11_GTK2_GTKDRAWMNG_H__
 
 #include "compiler.h"
 
@@ -35,15 +35,15 @@
 G_BEGIN_DECLS
 
 typedef struct {
-	_DRAWMNG_HDL	d;
+  _DRAWMNG_HDL d;
 
-	GtkWidget	*drawarea;
-	GdkImage	*surface;
-	GdkPixmap	*backsurf;
+  GtkWidget *drawarea;
+  GdkImage *surface;
+  GdkPixmap *backsurf;
 } _GTKDRAWMNG_HDL, *GTKDRAWMNG_HDL;
 
 BOOL gtkdrawmng_getformat(GtkWidget *w, GtkWidget *pw, pixmap_format_t *fmtp);
 
 G_END_DECLS
 
-#endif	/* NP2_X11_GTK2_GTKDRAWMNG_H__ */
+#endif /* NP2_X11_GTK2_GTKDRAWMNG_H__ */

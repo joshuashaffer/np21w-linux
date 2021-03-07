@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_CTRLXFER_H__
-#define	IA32_CPU_CTRLXFER_H__
+#ifndef IA32_CPU_CTRLXFER_H__
+#define IA32_CPU_CTRLXFER_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -39,4 +39,4 @@ void IRET_pm(void);
 }
 #endif
 
-#endif	/* IA32_CPU_CTRLXFER_H__ */
+#endif /* IA32_CPU_CTRLXFER_H__ */

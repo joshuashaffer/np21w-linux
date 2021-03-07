@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	NP2_GTK2_GTKTOOLKIT_H__
-#define	NP2_GTK2_GTKTOOLKIT_H__
+#ifndef NP2_GTK2_GTKTOOLKIT_H__
+#define NP2_GTK2_GTKTOOLKIT_H__
 
 G_BEGIN_DECLS
 
@@ -35,9 +35,9 @@ void gui_gtk_widget_show(void);
 void gui_gtk_widget_mainloop(void);
 void gui_gtk_widget_quit(void);
 void gui_gtk_event_process(void);
-void gui_gtk_set_window_title(const char* str);
-int gui_gtk_msgbox(const char* title, const char *msg, UINT flags);
+void gui_gtk_set_window_title(const char *str);
+int gui_gtk_msgbox(const char *title, const char *msg, UINT flags);
 
 G_END_DECLS
 
-#endif	/* NP2_GTK2_GTKTOOLKIT_H__ */
+#endif /* NP2_GTK2_GTKTOOLKIT_H__ */

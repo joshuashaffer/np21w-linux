@@ -9,36 +9,31 @@
 /**
  * types
  */
-enum tagScrnSaveType
-{
-	SCRNSAVE_1BIT	= 0,
-	SCRNSAVE_4BIT	= 1,
-	SCRNSAVE_8BIT	= 2,
-	SCRNSAVE_24BIT	= 3
+enum tagScrnSaveType {
+  SCRNSAVE_1BIT = 0,
+  SCRNSAVE_4BIT = 1,
+  SCRNSAVE_8BIT = 2,
+  SCRNSAVE_24BIT = 3
 };
 
 /**
  * flags
  */
-enum tagScrnSaveFlags
-{
-	SCRNSAVE_AUTO	= 0
-};
+enum tagScrnSaveFlags { SCRNSAVE_AUTO = 0 };
 
 struct tagScrnSave;
-typedef struct tagScrnSave *		SCRNSAVE;
-
+typedef struct tagScrnSave *SCRNSAVE;
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 SCRNSAVE scrnsave_create(void);
 void scrnsave_destroy(SCRNSAVE hdl);
 int scrnsave_gettype(SCRNSAVE hdl);
 BRESULT scrnsave_writebmp(SCRNSAVE hdl, const OEMCHAR *filename, UINT flag);
-BRESULT scrnsave_getbmp(SCRNSAVE hdl, BMPFILE *lpbf, BMPINFO *lpbi, UINT8 **lplppal, UINT8 **lplppixels, UINT flag);
+BRESULT scrnsave_getbmp(SCRNSAVE hdl, BMPFILE *lpbf, BMPINFO *lpbi,
+                        UINT8 **lplppal, UINT8 **lplppixels, UINT flag);
 BRESULT scrnsave_writegif(SCRNSAVE hdl, const OEMCHAR *filename, UINT flag);
 
 #ifdef __cplusplus

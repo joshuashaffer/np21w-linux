@@ -1,19 +1,11 @@
 
 #if defined(SUPPORT_SOFTKBD)
 
-#include	"cmndraw.h"
+#include "cmndraw.h"
 
-enum {
-	LEDFLAG_NUM		= 0x01,
-	LEDFLAG_CAPS	= 0x04,
-	LEDFLAG_KANA	= 0x08
-};
+enum { LEDFLAG_NUM = 0x01, LEDFLAG_CAPS = 0x04, LEDFLAG_KANA = 0x08 };
 
-enum {
-	SOFTKEY_FLAGDRAW		= 0x01,
-	SOFTKEY_FLAGREDRAW		= 0x02
-};
-
+enum { SOFTKEY_FLAGDRAW = 0x01, SOFTKEY_FLAGREDRAW = 0x02 };
 
 #ifdef __cplusplus
 extern "C" {
@@ -33,4 +25,3 @@ void softkbd_led(REG8 led);
 #endif
 
 #endif
-

@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_INSTRUCTION_SSE3_SSE3_H__
-#define	IA32_CPU_INSTRUCTION_SSE3_SSE3_H__
+#ifndef IA32_CPU_INSTRUCTION_SSE3_SSE3_H__
+#define IA32_CPU_INSTRUCTION_SSE3_SSE3_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -40,7 +40,7 @@ void SSE3_HSUBPS(void);
 void SSE3_MONITOR(void);
 void SSE3_MWAIT(void);
 
-//void SSE3_FISTTP(void); // -> FPU命令 ESC7
+// void SSE3_FISTTP(void); // -> FPU命令 ESC7
 void SSE3_LDDQU(void);
 void SSE3_MOVDDUP(void);
 void SSE3_MOVSHDUP(void);
@@ -50,4 +50,4 @@ void SSE3_MOVSLDUP(void);
 }
 #endif
 
-#endif	/* IA32_CPU_INSTRUCTION_SSE3_SSE3_H__ */
+#endif /* IA32_CPU_INSTRUCTION_SSE3_SSE3_H__ */

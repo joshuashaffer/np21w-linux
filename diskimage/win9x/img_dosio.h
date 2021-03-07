@@ -7,11 +7,11 @@
 //#define		FLISTH_INVALID		(INVALID_HANDLE_VALUE)
 //
 //#ifdef __cplusplus
-//extern "C" {
+// extern "C" {
 //#endif
 //
-//INT64 DOSIOCALL file_seeki64(FILEH handle, INT64 pointer, int method);
-//INT64 DOSIOCALL file_getsizei64(FILEH handle);
+// INT64 DOSIOCALL file_seeki64(FILEH handle, INT64 pointer, int method);
+// INT64 DOSIOCALL file_getsizei64(FILEH handle);
 //
 //#ifdef __cplusplus
 //}

@@ -9,48 +9,42 @@
 
 #include "statsave.h"
 
-#define	DIRMAX_DEPTH		8
+#define DIRMAX_DEPTH 8
 
-enum {
-	HDFMODE_READ		= 0x01,
-	HDFMODE_WRITE		= 0x02,
-	HDFMODE_DELETE		= 0x04
-};
+enum { HDFMODE_READ = 0x01, HDFMODE_WRITE = 0x02, HDFMODE_DELETE = 0x04 };
 
 /**
  * @brief ファイル ハンドル
  */
-struct tagHostDrvHandle
-{
-	INTPTR	hdl;
-	UINT	mode;
-	OEMCHAR	path[MAX_PATH];
+struct tagHostDrvHandle {
+  INTPTR hdl;
+  UINT mode;
+  OEMCHAR path[MAX_PATH];
 };
 typedef struct tagHostDrvHandle _HDRVHANDLE;
 typedef struct tagHostDrvHandle *HDRVHANDLE;
 
 typedef struct {
-	struct {
-		UINT8	is_mount;
-		UINT8	drive_no;
-		UINT8	dosver_major;
-		UINT8	dosver_minor;
-		UINT16	sda_off;
-		UINT16	sda_seg;
-		UINT	flistpos;
-	}			stat;
+  struct {
+    UINT8 is_mount;
+    UINT8 drive_no;
+    UINT8 dosver_major;
+    UINT8 dosver_minor;
+    UINT16 sda_off;
+    UINT16 sda_seg;
+    UINT flistpos;
+  } stat;
 
-//	LISTARRAY	cache[DIRMAX_DEPTH];
-	LISTARRAY	fhdl;
-	LISTARRAY	flist;
+  //	LISTARRAY	cache[DIRMAX_DEPTH];
+  LISTARRAY fhdl;
+  LISTARRAY flist;
 } HOSTDRV;
-
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-extern	HOSTDRV		hostdrv;
+extern HOSTDRV hostdrv;
 
 void hostdrv_initialize(void);
 void hostdrv_deinitialize(void);
@@ -70,4 +64,3 @@ int hostdrv_sfload(STFLAGH sfh, const SFENTRY *tbl);
 #endif
 
 #endif
-

@@ -19,9 +19,8 @@
  * @param[out] lpModule VSTi モジュール ファイル名
  * @param[in] cchModule VSTi モジュール ファイル名のバッファの長さ
  */
-static void GetPath(LPTSTR lpModule, UINT cchModule)
-{
-	::ExpandEnvironmentStrings(np2oscfg.szVSTiFile, lpModule, cchModule);
+static void GetPath(LPTSTR lpModule, UINT cchModule) {
+  ::ExpandEnvironmentStrings(np2oscfg.szVSTiFile, lpModule, cchModule);
 }
 
 /**
@@ -29,47 +28,39 @@ static void GetPath(LPTSTR lpModule, UINT cchModule)
  * @retval true 有効
  * @retval false 無効
  */
-bool CComMidiOutVst::IsEnabled()
-{
-	TCHAR szModule[MAX_PATH];
-	GetPath(szModule, _countof(szModule));
-	return (::PathFileExists(szModule) != FALSE);
+bool CComMidiOutVst::IsEnabled() {
+  TCHAR szModule[MAX_PATH];
+  GetPath(szModule, _countof(szModule));
+  return (::PathFileExists(szModule) != FALSE);
 }
 
 /**
  * インスタンスを作成
  * @return インスタンス
  */
-CComMidiOutVst* CComMidiOutVst::CreateInstance()
-{
-	CComMidiOutVst* pVst = new CComMidiOutVst;
+CComMidiOutVst *CComMidiOutVst::CreateInstance() {
+  CComMidiOutVst *pVst = new CComMidiOutVst;
 
-	TCHAR szModule[MAX_PATH];
-	GetPath(szModule, _countof(szModule));
-	if (!pVst->Initialize(szModule))
-	{
-		delete pVst;
-		pVst = NULL;
-	}
-	return pVst;
+  TCHAR szModule[MAX_PATH];
+  GetPath(szModule, _countof(szModule));
+  if (!pVst->Initialize(szModule)) {
+    delete pVst;
+    pVst = NULL;
+  }
+  return pVst;
 }
 
 /**
  * コンストラクタ
  */
-CComMidiOutVst::CComMidiOutVst()
-	: m_nBlockSize(128)
-	, m_nIndex(0)
-{
-}
+CComMidiOutVst::CComMidiOutVst() : m_nBlockSize(128), m_nIndex(0) {}
 
 /**
  * デストラクタ
  */
-CComMidiOutVst::~CComMidiOutVst()
-{
-	m_wnd.Destroy();
-	m_effect.Unload();
+CComMidiOutVst::~CComMidiOutVst() {
+  m_wnd.Destroy();
+  m_effect.Unload();
 }
 
 /**
@@ -78,51 +69,48 @@ CComMidiOutVst::~CComMidiOutVst()
  * @retval true 成功
  * @retval false 失敗
  */
-bool CComMidiOutVst::Initialize(LPCTSTR lpPath)
-{
-	if (soundcfg.rate == 0)
-	{
-		return false;
-	}
+bool CComMidiOutVst::Initialize(LPCTSTR lpPath) {
+  if (soundcfg.rate == 0) {
+    return false;
+  }
 
-	if (!m_effect.Load(lpPath))
-	{
-		printf("Cloudn't attach VSTi.\n");
-		return false;
-	}
+  if (!m_effect.Load(lpPath)) {
+    printf("Cloudn't attach VSTi.\n");
+    return false;
+  }
 
-	// Effect をオープン
-	m_effect.open();
+  // Effect をオープン
+  m_effect.open();
 
-	// サンプリング レートを設定
-	m_effect.setSampleRate(static_cast<float>(soundcfg.rate));
+  // サンプリング レートを設定
+  m_effect.setSampleRate(static_cast<float>(soundcfg.rate));
 
-	// ブロックサイズを設定
-	m_effect.setBlockSize(m_nBlockSize);
-	m_effect.resume();
+  // ブロックサイズを設定
+  m_effect.setBlockSize(m_nBlockSize);
+  m_effect.resume();
 
-	m_effect.beginSetProgram();
-	m_effect.setProgram(0);
-	m_effect.endSetProgram();
+  m_effect.beginSetProgram();
+  m_effect.setProgram(0);
+  m_effect.endSetProgram();
 
-	m_input.Alloc(2, m_nBlockSize);
-	m_output.Alloc(2, m_nBlockSize);
+  m_input.Alloc(2, m_nBlockSize);
+  m_output.Alloc(2, m_nBlockSize);
 
-	::sound_streamregist(this, reinterpret_cast<SOUNDCB>(GetPcm));
+  ::sound_streamregist(this, reinterpret_cast<SOUNDCB>(GetPcm));
 
-	m_wnd.Create(&m_effect, TEXT("NP2 VSTi"), WS_OVERLAPPED | WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX);
+  m_wnd.Create(&m_effect, TEXT("NP2 VSTi"),
+               WS_OVERLAPPED | WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX);
 
-	return true;
+  return true;
 }
 
 /**
  * ショート メッセージ
  * @param[in] nMessage メッセージ
  */
-void CComMidiOutVst::Short(UINT32 nMessage)
-{
-	sound_sync();
-	m_event.ShortMessage(m_nIndex, nMessage);
+void CComMidiOutVst::Short(UINT32 nMessage) {
+  sound_sync();
+  m_event.ShortMessage(m_nIndex, nMessage);
 }
 
 /**
@@ -130,10 +118,9 @@ void CComMidiOutVst::Short(UINT32 nMessage)
  * @param[in] lpMessage メッセージ ポインタ
  * @param[in] cbMessage メッセージ サイズ
  */
-void CComMidiOutVst::Long(const UINT8* lpMessage, UINT cbMessage)
-{
-	sound_sync();
-	m_event.LongMessage(m_nIndex, lpMessage, cbMessage);
+void CComMidiOutVst::Long(const UINT8 *lpMessage, UINT cbMessage) {
+  sound_sync();
+  m_event.LongMessage(m_nIndex, lpMessage, cbMessage);
 }
 
 /**
@@ -142,9 +129,9 @@ void CComMidiOutVst::Long(const UINT8* lpMessage, UINT cbMessage)
  * @param[out] lpBuffer バッファ
  * @param[in] nBufferCount サンプル数
  */
-void SOUNDCALL CComMidiOutVst::GetPcm(CComMidiOutVst* pVst, SINT32* lpBuffer, UINT nBufferCount)
-{
-	pVst->Process32(lpBuffer, nBufferCount);
+void SOUNDCALL CComMidiOutVst::GetPcm(CComMidiOutVst *pVst, SINT32 *lpBuffer,
+                                      UINT nBufferCount) {
+  pVst->Process32(lpBuffer, nBufferCount);
 }
 
 /**
@@ -152,30 +139,27 @@ void SOUNDCALL CComMidiOutVst::GetPcm(CComMidiOutVst* pVst, SINT32* lpBuffer, UI
  * @param[out] lpBuffer バッファ
  * @param[in] nBufferCount サンプル数
  */
-void CComMidiOutVst::Process32(SINT32* lpBuffer, UINT nBufferCount)
-{
-	while (nBufferCount)
-	{
-		if (m_nIndex >= m_nBlockSize)
-		{
-			m_nIndex = 0;
-			m_effect.processEvents(m_event.GetEvents());
-			m_effect.processReplacing(m_input.GetBuffer(), m_output.GetBuffer(), m_nBlockSize);
-			m_event.Clear();
-		}
+void CComMidiOutVst::Process32(SINT32 *lpBuffer, UINT nBufferCount) {
+  while (nBufferCount) {
+    if (m_nIndex >= m_nBlockSize) {
+      m_nIndex = 0;
+      m_effect.processEvents(m_event.GetEvents());
+      m_effect.processReplacing(m_input.GetBuffer(), m_output.GetBuffer(),
+                                m_nBlockSize);
+      m_event.Clear();
+    }
 
-		UINT nSize = m_nBlockSize - m_nIndex;
-		nSize = min(nSize, nBufferCount);
-		nBufferCount -= nSize;
-		float** output = m_output.GetBuffer();
-		do
-		{
-			lpBuffer[0] += static_cast<SINT32>(output[0][m_nIndex] * 32767.0f - 0.5f);
-			lpBuffer[1] += static_cast<SINT32>(output[1][m_nIndex] * 32767.0f - 0.5f);
-			lpBuffer += 2;
-			m_nIndex++;
-		} while (--nSize);
-	}
+    UINT nSize = m_nBlockSize - m_nIndex;
+    nSize = min(nSize, nBufferCount);
+    nBufferCount -= nSize;
+    float **output = m_output.GetBuffer();
+    do {
+      lpBuffer[0] += static_cast<SINT32>(output[0][m_nIndex] * 32767.0f - 0.5f);
+      lpBuffer[1] += static_cast<SINT32>(output[1][m_nIndex] * 32767.0f - 0.5f);
+      lpBuffer += 2;
+      m_nIndex++;
+    } while (--nSize);
+  }
 }
 
-#endif	// defined(SUPPORT_VSTi)
+#endif // defined(SUPPORT_VSTi)

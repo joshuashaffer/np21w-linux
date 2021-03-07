@@ -8,4 +8,3 @@ void makepc98bmp(const OEMCHAR *filename);
 #ifdef __cplusplus
 }
 #endif
-

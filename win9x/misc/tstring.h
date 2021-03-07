@@ -7,14 +7,13 @@
 
 #include <string>
 
-namespace std
-{
+namespace std {
 #ifdef _UNICODE
-typedef wstring			tstring;				//!< tchar string 型定義
-#else	// _UNICODE
-typedef string			tstring;				//!< tchar string型定義
-#endif	// _UNICODE
-}
+typedef wstring tstring; //!< tchar string 型定義
+#else                    // _UNICODE
+typedef string tstring; //!< tchar string型定義
+#endif                   // _UNICODE
+} // namespace std
 
 std::tstring LoadTString(UINT uID);
 std::tstring LoadTString(LPCTSTR lpString);

@@ -10,8 +10,8 @@ G_END_DECLS
 
 #else
 
-#define	debugwin_create()
-#define	debugwin_destroy()
-#define	debugwin_process()
+#define debugwin_create()
+#define debugwin_destroy()
+#define debugwin_process()
 
 #endif

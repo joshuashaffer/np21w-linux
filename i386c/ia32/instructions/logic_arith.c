@@ -30,7 +30,6 @@
 
 #include "logic_arith.h"
 
-
 /*
  * AND
  */

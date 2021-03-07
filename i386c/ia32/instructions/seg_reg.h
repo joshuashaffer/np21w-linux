@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_INSTRUCTION_SEG_REG_H__
-#define	IA32_CPU_INSTRUCTION_SEG_REG_H__
+#ifndef IA32_CPU_INSTRUCTION_SEG_REG_H__
+#define IA32_CPU_INSTRUCTION_SEG_REG_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -45,4 +45,4 @@ void LGS_GdMp(void);
 }
 #endif
 
-#endif	/* IA32_CPU_INSTRUCTION_SEG_REG_H__ */
+#endif /* IA32_CPU_INSTRUCTION_SEG_REG_H__ */

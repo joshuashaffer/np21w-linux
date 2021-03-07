@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	NP2_GTK2_GTKMENU_H__
-#define	NP2_GTK2_GTKMENU_H__
+#ifndef NP2_GTK2_GTKMENU_H__
+#define NP2_GTK2_GTKMENU_H__
 
 #include "gtk2/xnp2.h"
 
@@ -44,8 +44,8 @@ void create_newdisk_fd_dialog(const gchar *filename);
 void create_newdisk_hd_dialog(const gchar *filename, int kind);
 
 typedef struct {
-	GtkActionGroup	*action_group;
-	GtkUIManager	*ui_manager;
+  GtkActionGroup *action_group;
+  GtkUIManager *ui_manager;
 } _MENU_HDL, *MENU_HDL;
 
 void xmenu_toggle_item(MENU_HDL, const char *, BOOL);
@@ -54,4 +54,4 @@ void xmenu_select_screen(UINT8 mode);
 
 G_END_DECLS
 
-#endif	/* NP2_GTK2_GTKMENU_H__ */
+#endif /* NP2_GTK2_GTKMENU_H__ */

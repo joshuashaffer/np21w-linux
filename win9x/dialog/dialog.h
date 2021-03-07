@@ -6,9 +6,9 @@
 #pragma once
 
 enum {
-	NEWDISKMODE_ALL = 0,
-	NEWDISKMODE_FD = 1,
-	NEWDISKMODE_HD = 2,
+  NEWDISKMODE_ALL = 0,
+  NEWDISKMODE_FD = 1,
+  NEWDISKMODE_HD = 2,
 };
 
 // d_about.cpp
@@ -22,7 +22,7 @@ void dialog_writetxt(HWND hWnd);
 void dialog_getTVRAM(OEMCHAR *buffer);
 
 // d_cfgload.cpp
-int  dialog_readnpcfg(HWND hWnd);
+int dialog_readnpcfg(HWND hWnd);
 
 // d_cfgsave.cpp
 void dialog_writenpcfg(HWND hWnd);
@@ -75,7 +75,7 @@ void dialog_ideopt(HWND hwndParent);
 // d_hostdrv.cpp
 #if defined(SUPPORT_HOSTDRV)
 void dialog_hostdrvopt(HWND hwndParent);
-void hostdrv_readini(); // 暫定 hostdrv.cあたりに移動すべき？
+void hostdrv_readini();  // 暫定 hostdrv.cあたりに移動すべき？
 void hostdrv_writeini(); // 暫定 hostdrv.cあたりに移動すべき？
 #endif
 

@@ -8,4 +8,3 @@ void dmax86(void);
 #ifdef __cplusplus
 }
 #endif
-

@@ -23,22 +23,16 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	NP2_X11_KBDMNG_H__
-#define	NP2_X11_KBDMNG_H__
+#ifndef NP2_X11_KBDMNG_H__
+#define NP2_X11_KBDMNG_H__
 
 #include "keystat.h"
 
 G_BEGIN_DECLS
 
-enum {
-	KEY_KEY106,
-	KEY_KEY101,
-	KEY_TYPEMAX
-};
+enum { KEY_KEY106, KEY_KEY101, KEY_TYPEMAX };
 
-enum {
-	KEYBOARD_KC_NC = 0xff
-};
+enum { KEYBOARD_KC_NC = 0xff };
 
 BRESULT kbdmng_init(void);
 UINT8 kbdmng_getf12key(void);
@@ -46,4 +40,4 @@ void kbdmng_resetf12(void);
 
 G_END_DECLS
 
-#endif	/* NP2_X11_KBDMNG_H__ */
+#endif /* NP2_X11_KBDMNG_H__ */

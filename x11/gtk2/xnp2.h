@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	NP2_GTK2_XNP2_H__
-#define	NP2_GTK2_XNP2_H__
+#ifndef NP2_GTK2_XNP2_H__
+#define NP2_GTK2_XNP2_H__
 
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
@@ -35,9 +35,9 @@ extern GtkWidget *main_window;
 extern GtkWidget *drawarea;
 
 typedef struct {
-	int depth;
-	int bits_per_pixel;
-	int scanline_pad;
+  int depth;
+  int bits_per_pixel;
+  int scanline_pad;
 } pixmap_format_t;
 
 void install_idle_process(void);
@@ -45,7 +45,8 @@ void uninstall_idle_process(void);
 
 void gtk_scale_set_default_values(GtkScale *scale);
 void gdk_window_set_pointer(GdkWindow *w, gint x, gint y);
-gboolean gdk_window_get_pixmap_format(GdkWindow *w, GdkVisual *visual, pixmap_format_t *fmtp);
+gboolean gdk_window_get_pixmap_format(GdkWindow *w, GdkVisual *visual,
+                                      pixmap_format_t *fmtp);
 gboolean gtk_window_init_fullscreen(GtkWidget *widget);
 void gtk_window_fullscreen_mode(GtkWidget *widget);
 void gtk_window_restore_mode(GtkWidget *widget);

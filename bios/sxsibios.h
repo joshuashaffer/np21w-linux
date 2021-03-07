@@ -5,11 +5,7 @@
 
 #pragma once
 
-enum {
-	SXSIBIOS_SASI		= 0,
-	SXSIBIOS_IDE		= 1,
-	SXSIBIOS_SCSI		= 2
-};
+enum { SXSIBIOS_SASI = 0, SXSIBIOS_IDE = 1, SXSIBIOS_SCSI = 2 };
 
 #ifdef __cplusplus
 extern "C" {

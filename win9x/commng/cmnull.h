@@ -1,6 +1,7 @@
 /**
  * @file	cmnull.h
- * @brief	commng NULL デバイス クラスの宣言およびインターフェイスの定義をします
+ * @brief	commng NULL デバイス
+ * クラスの宣言およびインターフェイスの定義をします
  */
 
 #pragma once
@@ -10,14 +11,13 @@
 /**
  * @brief commng NULL デバイス クラス
  */
-class CComNull : public CComBase
-{
+class CComNull : public CComBase {
 public:
-	CComNull();
+  CComNull();
 
 protected:
-	virtual UINT Read(UINT8* pData);
-	virtual UINT Write(UINT8 cData);
-	virtual UINT8 GetStat();
-	virtual INTPTR Message(UINT nMessage, INTPTR nParam);
+  virtual UINT Read(UINT8 *pData);
+  virtual UINT Write(UINT8 cData);
+  virtual UINT8 GetStat();
+  virtual INTPTR Message(UINT nMessage, INTPTR nParam);
 };

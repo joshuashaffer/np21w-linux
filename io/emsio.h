@@ -1,11 +1,10 @@
 
 typedef struct {
-	UINT8	maxmem; // LARGE_MEM //UINT8	UINT16	maxmem;
-	UINT8	target;
-	UINT16	padding;
-	UINT32	addr[4];
+  UINT8 maxmem; // LARGE_MEM //UINT8	UINT16	maxmem;
+  UINT8 target;
+  UINT16 padding;
+  UINT32 addr[4];
 } _EMSIO, *EMSIO;
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,4 +16,3 @@ void emsio_bind(void);
 #ifdef __cplusplus
 }
 #endif
-

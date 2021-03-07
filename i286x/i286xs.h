@@ -21,4 +21,3 @@ extern const I286TBL ope0xf6_xtable[8];
 extern const I286TBL ope0xf7_xtable[8];
 extern const I286TBL ope0xfe_xtable[2];
 extern const I286TBL ope0xff_xtable[8];
-

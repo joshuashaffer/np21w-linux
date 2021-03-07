@@ -1,11 +1,10 @@
 
 enum {
-	SOUND_PCMSEEK		= 0,
-	SOUND_PCMSEEK1		= 1,
+  SOUND_PCMSEEK = 0,
+  SOUND_PCMSEEK1 = 1,
 
-	SOUND_MAXPCM
+  SOUND_MAXPCM
 };
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,10 +18,8 @@ void soundmng_stop(void);
 #define soundmng_sync()
 #define soundmng_setreverse(r)
 
-#define	soundmng_pcmplay(a, b)
-#define	soundmng_pcmstop(a)
-
-
+#define soundmng_pcmplay(a, b)
+#define soundmng_pcmstop(a)
 
 // ---- for SDL
 

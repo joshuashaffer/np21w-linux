@@ -12,4 +12,3 @@ void cbuscore_detachsndex(UINT port);
 #ifdef __cplusplus
 }
 #endif
-

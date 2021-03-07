@@ -23,13 +23,13 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_INSTRUCTION_MMX_MMX_H__
-#define	IA32_CPU_INSTRUCTION_MMX_MMX_H__
+#ifndef IA32_CPU_INSTRUCTION_MMX_MMX_H__
+#define IA32_CPU_INSTRUCTION_MMX_MMX_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-	
+
 void MMX_EMMS(void);
 
 void MMX_MOVD_mm_rm32(void);
@@ -107,4 +107,4 @@ void MMX_PUNPCKLDQ(void);
 }
 #endif
 
-#endif	/* IA32_CPU_INSTRUCTION_MMX_MMX_H__ */
+#endif /* IA32_CPU_INSTRUCTION_MMX_MMX_H__ */

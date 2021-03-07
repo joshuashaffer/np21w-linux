@@ -1,5 +1,5 @@
 
-typedef	void 		*TEXTFILEH;
+typedef void *TEXTFILEH;
 
 #ifdef __cplusplus
 extern "C" {
@@ -14,4 +14,3 @@ void textfile_close(TEXTFILEH fh);
 #ifdef __cplusplus
 }
 #endif
-

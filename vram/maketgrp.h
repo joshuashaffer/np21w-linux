@@ -9,4 +9,3 @@ void maketextgrph40(int plane, int text_renewal, int grph_renewal);
 #ifdef __cplusplus
 }
 #endif
-

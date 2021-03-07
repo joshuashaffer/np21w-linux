@@ -1,10 +1,8 @@
-#include	"compiler.h"
-#include	"strres.h"
-
+#include "compiler.h"
+#include "strres.h"
 
 const UINT8 str_utf8[3] = {0xef, 0xbb, 0xbf};
 const UINT16 str_ucs2[1] = {0xfeff};
-
 
 const OEMCHAR str_null[] = OEMTEXT("");
 const OEMCHAR str_space[] = OEMTEXT(" ");
@@ -58,4 +56,3 @@ const OEMCHAR str_EPSON[] = OEMTEXT("EPSON");
 const OEMCHAR str_biosrom[] = OEMTEXT("bios.rom");
 const OEMCHAR str_sasirom[] = OEMTEXT("sasi.rom");
 const OEMCHAR str_scsirom[] = OEMTEXT("scsi.rom");
-

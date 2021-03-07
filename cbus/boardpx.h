@@ -10,8 +10,7 @@
 #include "pccore.h"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 void boardpx1_reset(const NP2CFG *pConfig);
@@ -26,4 +25,4 @@ void boardpx2_unbind(void);
 }
 #endif
 
-#endif	// defined(SUPPORT_PX)
+#endif // defined(SUPPORT_PX)

@@ -8,4 +8,3 @@ UINT8 joymng_getstat(void);
 #ifdef __cplusplus
 }
 #endif
-

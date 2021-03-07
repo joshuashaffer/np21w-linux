@@ -2,7 +2,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-	
+
 BRESULT scrnmngD3D_check(void);
 
 BRESULT scrnmngD3D_create(UINT8 scrnmode);
@@ -19,7 +19,6 @@ void scrnmngD3D_surfunlock(const SCRNSURF *surf);
 void scrnmngD3D_update(void);
 
 RGB16 scrnmngD3D_makepal16(RGB32 pal32);
-
 
 // ---- for windows
 

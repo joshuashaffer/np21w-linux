@@ -5,62 +5,53 @@
 
 #pragma once
 
-enum {
-	LIO_SEGMENT		= 0xf990,
-	LIO_FONT		= 0x00a0
-};
+enum { LIO_SEGMENT = 0xf990, LIO_FONT = 0x00a0 };
+
+enum { LIO_SUCCESS = 0, LIO_ILLEGALFUNC = 5, LIO_OUTOFMEMORY = 7 };
 
 enum {
-	LIO_SUCCESS		= 0,
-	LIO_ILLEGALFUNC	= 5,
-	LIO_OUTOFMEMORY	= 7
-};
-
-enum {
-	LIODRAW_PMASK	= 0x03,
-	LIODRAW_MONO	= 0x04,
-	LIODRAW_UPPER	= 0x20,
-	LIODRAW_4BPP	= 0x40
+  LIODRAW_PMASK = 0x03,
+  LIODRAW_MONO = 0x04,
+  LIODRAW_UPPER = 0x20,
+  LIODRAW_4BPP = 0x40
 };
 
 typedef struct {
-	UINT8	scrnmode;
-	UINT8	pos;
-	UINT8	plane;
-	UINT8	fgcolor;
-	UINT8	bgcolor;
-	UINT8	padding;
-	UINT8	color[8];
-	UINT8	viewx1[2];
-	UINT8	viewy1[2];
-	UINT8	viewx2[2];
-	UINT8	viewy2[2];
-	UINT8	disp;
-	UINT8	access;
+  UINT8 scrnmode;
+  UINT8 pos;
+  UINT8 plane;
+  UINT8 fgcolor;
+  UINT8 bgcolor;
+  UINT8 padding;
+  UINT8 color[8];
+  UINT8 viewx1[2];
+  UINT8 viewy1[2];
+  UINT8 viewx2[2];
+  UINT8 viewy2[2];
+  UINT8 disp;
+  UINT8 access;
 } LIOWORK;
 
 typedef struct {
-	SINT16	x1;
-	SINT16	y1;
-	SINT16	x2;
-	SINT16	y2;
-	UINT32	base;
-	UINT8	flag;
-	UINT8	palmax;
-	UINT8	bank;
-	UINT8	sbit;
+  SINT16 x1;
+  SINT16 y1;
+  SINT16 x2;
+  SINT16 y2;
+  UINT32 base;
+  UINT8 flag;
+  UINT8 palmax;
+  UINT8 bank;
+  UINT8 sbit;
 } LIODRAW;
 
-
 typedef struct {
-	LIOWORK	work;
-	UINT8	palmode;
+  LIOWORK work;
+  UINT8 palmode;
 
-	// ---- work
-	UINT32	wait;
-	LIODRAW	draw;
+  // ---- work
+  UINT32 wait;
+  LIODRAW draw;
 } _GLIO, *GLIO;
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -96,4 +87,3 @@ REG8 lio_gcopy(GLIO lio);
 #ifdef __cplusplus
 }
 #endif
-

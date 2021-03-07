@@ -8,8 +8,7 @@
 #include "pccore.h"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 void board26k_reset(const NP2CFG *pConfig);

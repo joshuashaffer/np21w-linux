@@ -1,14 +1,14 @@
 
 enum {
-	MICON_NULL			= 0,
-	MICON_STOP,
-	MICON_QUESTION,
-	MICON_EXCLAME,
-	MICON_INFO,
-	MICON_FOLDER,
-	MICON_FOLDERPARENT,
-	MICON_FILE,
-	MICON_USER
+  MICON_NULL = 0,
+  MICON_STOP,
+  MICON_QUESTION,
+  MICON_EXCLAME,
+  MICON_INFO,
+  MICON_FOLDER,
+  MICON_FOLDERPARENT,
+  MICON_FILE,
+  MICON_USER
 };
 
 #ifdef __cplusplus
@@ -24,4 +24,3 @@ void menuicon_unlock(VRAMHDL vram);
 #ifdef __cplusplus
 }
 #endif
-

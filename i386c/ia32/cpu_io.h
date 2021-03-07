@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_CPU_IO_H__
-#define	IA32_CPU_CPU_IO_H__
+#ifndef IA32_CPU_CPU_IO_H__
+#define IA32_CPU_CPU_IO_H__
 
 #include "interface.h"
 
@@ -43,4 +43,4 @@ void IOOUTCALL cpu_out_d(UINT port, UINT32 val);
 }
 #endif
 
-#endif	/* !IA32_CPU_CPU_IO_H__ */
+#endif /* !IA32_CPU_CPU_IO_H__ */

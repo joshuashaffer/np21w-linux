@@ -23,48 +23,38 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_INSTRUCTION_FPU_FPUMEM_H__
-#define	IA32_CPU_INSTRUCTION_FPU_FPUMEM_H__
+#ifndef IA32_CPU_INSTRUCTION_FPU_FPUMEM_H__
+#define IA32_CPU_INSTRUCTION_FPU_FPUMEM_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-	
+
 /*
  * FPU memory access function
  */
-UINT8 MEMCALL
-fpu_memoryread_b(UINT32 address);
+UINT8 MEMCALL fpu_memoryread_b(UINT32 address);
 
-UINT16 MEMCALL
-fpu_memoryread_w(UINT32 address);
+UINT16 MEMCALL fpu_memoryread_w(UINT32 address);
 
-UINT32 MEMCALL
-fpu_memoryread_d(UINT32 address);
+UINT32 MEMCALL fpu_memoryread_d(UINT32 address);
 
-UINT64 MEMCALL
-fpu_memoryread_q(UINT32 address);
+UINT64 MEMCALL fpu_memoryread_q(UINT32 address);
 
-REG80 MEMCALL
-fpu_memoryread_f(UINT32 address);
+REG80 MEMCALL fpu_memoryread_f(UINT32 address);
 
-void MEMCALL
-fpu_memorywrite_b(UINT32 address, UINT8 value);
+void MEMCALL fpu_memorywrite_b(UINT32 address, UINT8 value);
 
-void MEMCALL
-fpu_memorywrite_w(UINT32 address, UINT16 value);
+void MEMCALL fpu_memorywrite_w(UINT32 address, UINT16 value);
 
-void MEMCALL
-fpu_memorywrite_d(UINT32 address, UINT32 value);
+void MEMCALL fpu_memorywrite_d(UINT32 address, UINT32 value);
 
-void MEMCALL
-fpu_memorywrite_q(UINT32 address, UINT64 value);
+void MEMCALL fpu_memorywrite_q(UINT32 address, UINT64 value);
 
-void MEMCALL
-fpu_memorywrite_f(UINT32 address, REG80 *value);
+void MEMCALL fpu_memorywrite_f(UINT32 address, REG80 *value);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* IA32_CPU_INSTRUCTION_FPU_FP_H__ */
+#endif /* IA32_CPU_INSTRUCTION_FPU_FP_H__ */

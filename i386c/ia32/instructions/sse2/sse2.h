@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_INSTRUCTION_SSE2_SSE2_H__
-#define	IA32_CPU_INSTRUCTION_SSE2_SSE2_H__
+#ifndef IA32_CPU_INSTRUCTION_SSE2_SSE2_H__
+#define IA32_CPU_INSTRUCTION_SSE2_SSE2_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -79,7 +79,7 @@ void SSE2_ORPD(void);
 void SSE2_SHUFPD(void);
 void SSE2_SQRTPD(void);
 void SSE2_SQRTSD(void);
-//void SSE2_STMXCSR(UINT32 maddr); // -> SSE_STMXCSRと同じ
+// void SSE2_STMXCSR(UINT32 maddr); // -> SSE_STMXCSRと同じ
 void SSE2_SUBPD(void);
 void SSE2_SUBSD(void);
 void SSE2_UCOMISD(void);
@@ -105,15 +105,15 @@ void SSE2_PADDQxmm(void);
 void SSE2_PADDB(void);
 void SSE2_PADDW(void);
 void SSE2_PADDD(void);
-//void SSE2_PADDQ(void);
+// void SSE2_PADDQ(void);
 void SSE2_PADDSB(void);
 void SSE2_PADDSW(void);
-//void SSE2_PADDSD(void);
-//void SSE2_PADDSQ(void);
+// void SSE2_PADDSD(void);
+// void SSE2_PADDSQ(void);
 void SSE2_PADDUSB(void);
 void SSE2_PADDUSW(void);
-//void SSE2_PADDUSD(void);
-//void SSE2_PADDUSQ(void);
+// void SSE2_PADDUSD(void);
+// void SSE2_PADDUSQ(void);
 void SSE2_PAND(void);
 void SSE2_PANDN(void);
 void SSE2_PAVGB(void);
@@ -121,11 +121,11 @@ void SSE2_PAVGW(void);
 void SSE2_PCMPEQB(void);
 void SSE2_PCMPEQW(void);
 void SSE2_PCMPEQD(void);
-//void SSE2_PCMPEQQ(void);
+// void SSE2_PCMPEQQ(void);
 void SSE2_PCMPGTB(void);
 void SSE2_PCMPGTW(void);
 void SSE2_PCMPGTD(void);
-//void SSE2_PCMPGTQ(void);
+// void SSE2_PCMPGTQ(void);
 void SSE2_PEXTRW(void);
 void SSE2_PINSRW(void);
 void SSE2_PMADD(void);
@@ -144,32 +144,32 @@ void SSE2_PSADBW(void);
 void SSE2_PSHUFLW(void);
 void SSE2_PSHUFHW(void);
 void SSE2_PSHUFD(void);
-//void SSE2_PSLLDQ(void);
-//void SSE2_PSLLB(void);
+// void SSE2_PSLLDQ(void);
+// void SSE2_PSLLB(void);
 void SSE2_PSLLW(void);
 void SSE2_PSLLD(void);
 void SSE2_PSLLQ(void);
-//void SSE2_PSLLBimm(void);
-//void SSE2_PSLLWimm(void);
-//void SSE2_PSLLDimm(void);
-//void SSE2_PSLLQimm(void);
-//void SSE2_PSRAB(void);
+// void SSE2_PSLLBimm(void);
+// void SSE2_PSLLWimm(void);
+// void SSE2_PSLLDimm(void);
+// void SSE2_PSLLQimm(void);
+// void SSE2_PSRAB(void);
 void SSE2_PSRAW(void);
 void SSE2_PSRAD(void);
-//void SSE2_PSRAQ(void);
-//void SSE2_PSRABimm(void);
-//void SSE2_PSRAWimm(void);
-//void SSE2_PSRADimm(void);
-//void SSE2_PSRAQimm(void);
-//void SSE2_PSRLDQ(void);
-//void SSE2_PSRLB(void);
+// void SSE2_PSRAQ(void);
+// void SSE2_PSRABimm(void);
+// void SSE2_PSRAWimm(void);
+// void SSE2_PSRADimm(void);
+// void SSE2_PSRAQimm(void);
+// void SSE2_PSRLDQ(void);
+// void SSE2_PSRLB(void);
 void SSE2_PSRLW(void);
 void SSE2_PSRLD(void);
 void SSE2_PSRLQ(void);
-//void SSE2_PSRLBimm(void);
-//void SSE2_PSRLWimm(void);
-//void SSE2_PSRLDimm(void);
-//void SSE2_PSRLQimm(void);
+// void SSE2_PSRLBimm(void);
+// void SSE2_PSRLWimm(void);
+// void SSE2_PSRLDimm(void);
+// void SSE2_PSRLQimm(void);
 void SSE2_PSxxWimm(void);
 void SSE2_PSxxDimm(void);
 void SSE2_PSxxQimm(void);
@@ -178,15 +178,15 @@ void SSE2_PSUBQxmm(void);
 void SSE2_PSUBB(void);
 void SSE2_PSUBW(void);
 void SSE2_PSUBD(void);
-//void SSE2_PSUBQ(void);
+// void SSE2_PSUBQ(void);
 void SSE2_PSUBSB(void);
 void SSE2_PSUBSW(void);
-//void SSE2_PSUBSD(void);
-//void SSE2_PSUBSQ(void);
+// void SSE2_PSUBSD(void);
+// void SSE2_PSUBSQ(void);
 void SSE2_PSUBUSB(void);
 void SSE2_PSUBUSW(void);
-//void SSE2_PSUBUSD(void);
-//void SSE2_PSUBUSQ(void);
+// void SSE2_PSUBUSD(void);
+// void SSE2_PSUBUSQ(void);
 void SSE2_PUNPCKHBW(void);
 void SSE2_PUNPCKHWD(void);
 void SSE2_PUNPCKHDQ(void);
@@ -198,16 +198,16 @@ void SSE2_PUNPCKLQDQ(void);
 void SSE2_PXOR(void);
 
 void SSE2_MASKMOVDQU(void);
-//void SSE2_CLFLUSH(UINT32 op); // --> SSE_CLFLUSH(UINT32 op)へ
+// void SSE2_CLFLUSH(UINT32 op); // --> SSE_CLFLUSH(UINT32 op)へ
 void SSE2_MOVNTPD(void);
 void SSE2_MOVNTDQ(void);
 void SSE2_MOVNTI(void);
 void SSE2_PAUSE(void);
-//void SSE2_LFENCE(void); // --> SSE_LFENCE(void)へ
-//void SSE2_MFENCE(void); // --> SSE_MFENCE(void)へ
+// void SSE2_LFENCE(void); // --> SSE_LFENCE(void)へ
+// void SSE2_MFENCE(void); // --> SSE_MFENCE(void)へ
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* IA32_CPU_INSTRUCTION_SSE2_SSE2_H__ */
+#endif /* IA32_CPU_INSTRUCTION_SSE2_SSE2_H__ */

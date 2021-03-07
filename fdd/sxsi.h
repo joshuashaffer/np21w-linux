@@ -1,76 +1,68 @@
 
 #if defined(SUPPORT_SCSI)
-enum {
-	SASIHDD_MAX		= 4,
-	SCSIHDD_MAX		= 8
-};
+enum { SASIHDD_MAX = 4, SCSIHDD_MAX = 8 };
 #else
-enum {
-	SASIHDD_MAX		= 4,
-	SCSIHDD_MAX		= 0
-};
+enum { SASIHDD_MAX = 4, SCSIHDD_MAX = 0 };
 #endif
 
 enum {
-	SXSIDRV_UNITMASK	= 0x0f,
-	SXSIDRV_SASI		= 0x00,
-	SXSIDRV_SCSI		= 0x20,
-	SXSIDRV_IFMASK		= 0x20,
+  SXSIDRV_UNITMASK = 0x0f,
+  SXSIDRV_SASI = 0x00,
+  SXSIDRV_SCSI = 0x20,
+  SXSIDRV_IFMASK = 0x20,
 
-	SXSIDEV_NC			= 0x00,
-	SXSIDEV_HDD			= 0x01,
-	SXSIDEV_CDROM		= 0x02,
-	SXSIDEV_MO			= 0x03,
-	SXSIDEV_SCANNER		= 0x04,
+  SXSIDEV_NC = 0x00,
+  SXSIDEV_HDD = 0x01,
+  SXSIDEV_CDROM = 0x02,
+  SXSIDEV_MO = 0x03,
+  SXSIDEV_SCANNER = 0x04,
 
-	SXSIFLAG_READY		= 0x01,
-	SXSIFLAG_FILEOPENED	= 0x02
+  SXSIFLAG_READY = 0x01,
+  SXSIFLAG_FILEOPENED = 0x02
 };
 
 enum {
-	CD_ECC_NOERROR		= 0,
-	CD_ECC_RECOVERED	= 1,
-	CD_ECC_ERROR		= 2,
-	CD_ECC_BITMASK		= 0x03,
+  CD_ECC_NOERROR = 0,
+  CD_ECC_RECOVERED = 1,
+  CD_ECC_ERROR = 2,
+  CD_ECC_BITMASK = 0x03,
 };
-
 
 struct _sxsidev;
-typedef struct _sxsidev		_SXSIDEV;
-typedef struct _sxsidev		*SXSIDEV;
+typedef struct _sxsidev _SXSIDEV;
+typedef struct _sxsidev *SXSIDEV;
 
-#include	"sxsihdd.h"
-#include	"sxsicd.h"
+#include "sxsihdd.h"
+#include "sxsicd.h"
 
 struct _sxsidev {
-	UINT8	drv;
-	UINT8	devtype;
-	UINT8	flag;
-	UINT8	__caps;
+  UINT8 drv;
+  UINT8 devtype;
+  UINT8 flag;
+  UINT8 __caps;
 
-	BRESULT	(*reopen)(SXSIDEV sxsi);
-	REG8	(*read)(SXSIDEV sxsi, FILEPOS pos, UINT8 *buf, UINT size);
-	REG8	(*write)(SXSIDEV sxsi, FILEPOS pos, const UINT8 *buf, UINT size);
-	REG8	(*format)(SXSIDEV sxsi, FILEPOS pos);
-	void	(*close)(SXSIDEV sxsi);
-	void	(*destroy)(SXSIDEV sxsi);
+  BRESULT (*reopen)(SXSIDEV sxsi);
+  REG8 (*read)(SXSIDEV sxsi, FILEPOS pos, UINT8 *buf, UINT size);
+  REG8 (*write)(SXSIDEV sxsi, FILEPOS pos, const UINT8 *buf, UINT size);
+  REG8 (*format)(SXSIDEV sxsi, FILEPOS pos);
+  void (*close)(SXSIDEV sxsi);
+  void (*destroy)(SXSIDEV sxsi);
 
-	INTPTR	hdl;
-	FILELEN	totals;
-	UINT16	cylinders;
-	UINT16	size;
-	UINT8	sectors;
-	UINT8	surfaces;
-	UINT8	mediatype;
-	UINT8	padding;
-	UINT32	headersize;
-	
-	UINT8	cdflag_ecc;
+  INTPTR hdl;
+  FILELEN totals;
+  UINT16 cylinders;
+  UINT16 size;
+  UINT8 sectors;
+  UINT8 surfaces;
+  UINT8 mediatype;
+  UINT8 padding;
+  UINT32 headersize;
 
-	OEMCHAR	fname[MAX_PATH];
-	UINT	ftype;
+  UINT8 cdflag_ecc;
+
+  OEMCHAR fname[MAX_PATH];
+  UINT ftype;
 };
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -99,4 +91,3 @@ BOOL sxsi_iside(void);
 #ifdef __cplusplus
 }
 #endif
-

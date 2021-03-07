@@ -23,76 +23,76 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_INTERFACE_H__
-#define	IA32_CPU_INTERFACE_H__
+#ifndef IA32_CPU_INTERFACE_H__
+#define IA32_CPU_INTERFACE_H__
 
 #ifndef CPUCALL
-#define	CPUCALL
+#define CPUCALL
 #endif
 
-#ifndef	STATIC_INLINE
+#ifndef STATIC_INLINE
 #if defined(__GNUC__)
-#define	STATIC_INLINE	static INLINE __attribute__((unused))
+#define STATIC_INLINE static INLINE __attribute__((unused))
 #else
-#define	STATIC_INLINE	static INLINE
+#define STATIC_INLINE static INLINE
 #endif
 #endif
 
 #if !defined(QWORD_CONST)
-#define	QWORD_CONST(v)	v ## ULL
-#define	SQWORD_CONST(v)	v ## LL
+#define QWORD_CONST(v) v##ULL
+#define SQWORD_CONST(v) v##LL
 #endif
 
-#define CPU_isEI		(CPU_FLAG & I_FLAG)
-#define CPU_isDI		(!CPU_isEI)
-#define	CPU_A20EN(en)		CPU_ADRSMASK = (en)?0xffffffff:0x000fffff;
+#define CPU_isEI (CPU_FLAG & I_FLAG)
+#define CPU_isDI (!CPU_isEI)
+#define CPU_A20EN(en) CPU_ADRSMASK = (en) ? 0xffffffff : 0x000fffff;
 
-#define CPU_INITIALIZE()		i386c_initialize()
-#define	CPU_DEINITIALIZE()
-#define	CPU_RESET()			ia32reset()
-#define	CPU_CLEARPREFETCH()
-#define	CPU_INTERRUPT(vect, soft)	ia32_interrupt(vect, soft)
-#define	CPU_EXEC()			ia32()
-#define	CPU_EXECV30()			ia32()
-#define	CPU_SHUT()			ia32shut()
-#define	CPU_SETEXTSIZE(size)		ia32_setextsize((UINT32)(size) << 20)
-#define CPU_SETEMM(frame, addr)		ia32_setemm(frame, addr)
+#define CPU_INITIALIZE() i386c_initialize()
+#define CPU_DEINITIALIZE()
+#define CPU_RESET() ia32reset()
+#define CPU_CLEARPREFETCH()
+#define CPU_INTERRUPT(vect, soft) ia32_interrupt(vect, soft)
+#define CPU_EXEC() ia32()
+#define CPU_EXECV30() ia32()
+#define CPU_SHUT() ia32shut()
+#define CPU_SETEXTSIZE(size) ia32_setextsize((UINT32)(size) << 20)
+#define CPU_SETEMM(frame, addr) ia32_setemm(frame, addr)
 
-#define	cpu_memorywrite(a,v)	memp_write8(a,v)
-#define	cpu_memorywrite_b(a,v)	memp_write8(a,v)
-#define	cpu_memorywrite_w(a,v)	memp_write16(a,v)
-#define	cpu_memorywrite_d(a,v)	memp_write32(a,v)
-#define	cpu_memoryread(a)	memp_read8(a)
-#define	cpu_memoryread_b(a)	memp_read8(a)
-#define	cpu_memoryread_w(a)	memp_read16(a)
-#define	cpu_memoryread_d(a)	memp_read32(a)
-#define	cpu_memoryread_codefetch(a)		memp_read8_codefetch(a)
-#define	cpu_memoryread_b_codefetch(a)	memp_read8_codefetch(a)
-#define	cpu_memoryread_w_codefetch(a)	memp_read16_codefetch(a)
-#define	cpu_memoryread_d_codefetch(a)	memp_read32_codefetch(a)
+#define cpu_memorywrite(a, v) memp_write8(a, v)
+#define cpu_memorywrite_b(a, v) memp_write8(a, v)
+#define cpu_memorywrite_w(a, v) memp_write16(a, v)
+#define cpu_memorywrite_d(a, v) memp_write32(a, v)
+#define cpu_memoryread(a) memp_read8(a)
+#define cpu_memoryread_b(a) memp_read8(a)
+#define cpu_memoryread_w(a) memp_read16(a)
+#define cpu_memoryread_d(a) memp_read32(a)
+#define cpu_memoryread_codefetch(a) memp_read8_codefetch(a)
+#define cpu_memoryread_b_codefetch(a) memp_read8_codefetch(a)
+#define cpu_memoryread_w_codefetch(a) memp_read16_codefetch(a)
+#define cpu_memoryread_d_codefetch(a) memp_read32_codefetch(a)
 #ifdef USE_FASTPAGING
-#define	cpu_memoryread_paging(a)		memp_read8_paging(a)
-#define	cpu_memoryread_b_paging(a)		memp_read8_paging(a)
-#define	cpu_memoryread_w_paging(a)		memp_read16_paging(a)
-#define	cpu_memoryread_d_paging(a)		memp_read32_paging(a)
-#define	cpu_memorywrite_paging(a,v)		memp_write8_paging(a,v)
-#define	cpu_memorywrite_b_paging(a,v)	memp_write8_paging(a,v)
-#define	cpu_memorywrite_w_paging(a,v)	memp_write16_paging(a,v)
-#define	cpu_memorywrite_d_paging(a,v)	memp_write32_paging(a,v)
+#define cpu_memoryread_paging(a) memp_read8_paging(a)
+#define cpu_memoryread_b_paging(a) memp_read8_paging(a)
+#define cpu_memoryread_w_paging(a) memp_read16_paging(a)
+#define cpu_memoryread_d_paging(a) memp_read32_paging(a)
+#define cpu_memorywrite_paging(a, v) memp_write8_paging(a, v)
+#define cpu_memorywrite_b_paging(a, v) memp_write8_paging(a, v)
+#define cpu_memorywrite_w_paging(a, v) memp_write16_paging(a, v)
+#define cpu_memorywrite_d_paging(a, v) memp_write32_paging(a, v)
 #else
-#define	cpu_memoryread_paging(a)		memp_read8_codefetch(a)
-#define	cpu_memoryread_b_paging(a)		memp_read8_codefetch(a)
-#define	cpu_memoryread_w_paging(a)		memp_read16_codefetch(a)
-#define	cpu_memoryread_d_paging(a)		memp_read32_codefetch(a)
-#define	cpu_memorywrite_paging(a,v)		memp_write8(a,v)
-#define	cpu_memorywrite_b_paging(a,v)	memp_write8(a,v)
-#define	cpu_memorywrite_w_paging(a,v)	memp_write16(a,v)
-#define	cpu_memorywrite_d_paging(a,v)	memp_write32(a,v)
+#define cpu_memoryread_paging(a) memp_read8_codefetch(a)
+#define cpu_memoryread_b_paging(a) memp_read8_codefetch(a)
+#define cpu_memoryread_w_paging(a) memp_read16_codefetch(a)
+#define cpu_memoryread_d_paging(a) memp_read32_codefetch(a)
+#define cpu_memorywrite_paging(a, v) memp_write8(a, v)
+#define cpu_memorywrite_b_paging(a, v) memp_write8(a, v)
+#define cpu_memorywrite_w_paging(a, v) memp_write16(a, v)
+#define cpu_memorywrite_d_paging(a, v) memp_write32(a, v)
 #endif
 
-#define	cpu_memoryread_region(a,p,l)	memp_reads(a,p,l)
-#define	cpu_memorywrite_region(a,p,l)	memp_writes(a,p,l)
+#define cpu_memoryread_region(a, p, l) memp_reads(a, p, l)
+#define cpu_memorywrite_region(a, p, l) memp_writes(a, p, l)
 
 void i386c_initialize(void);
 
-#endif	/* IA32_CPU_INTERFACE_H__ */
+#endif /* IA32_CPU_INTERFACE_H__ */

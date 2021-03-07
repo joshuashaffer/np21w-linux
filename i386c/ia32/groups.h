@@ -23,8 +23,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	IA32_CPU_GROUPS_H__
-#define	IA32_CPU_GROUPS_H__
+#ifndef IA32_CPU_GROUPS_H__
+#define IA32_CPU_GROUPS_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -77,4 +77,4 @@ void Grp9(void);
 }
 #endif
 
-#endif	/* IA32_CPU_GROUPS_H__ */
+#endif /* IA32_CPU_GROUPS_H__ */

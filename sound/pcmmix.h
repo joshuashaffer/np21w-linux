@@ -7,39 +7,33 @@
 
 #include "sound.h"
 
-enum {
-	PMIXFLAG_L		= 0x0001,
-	PMIXFLAG_R		= 0x0002,
-	PMIXFLAG_LOOP	= 0x0004
-};
+enum { PMIXFLAG_L = 0x0001, PMIXFLAG_R = 0x0002, PMIXFLAG_LOOP = 0x0004 };
 
 typedef struct {
-	UINT32	playing;
-	UINT32	enable;
+  UINT32 playing;
+  UINT32 enable;
 } PMIXHDR;
 
 typedef struct {
-	SINT16	*sample;
-	UINT	samples;
+  SINT16 *sample;
+  UINT samples;
 } PMIXDAT;
 
 typedef struct {
-const SINT16	*pcm;
-	UINT		remain;
-	PMIXDAT		data;
-	UINT		flag;
-	SINT32		volume;
+  const SINT16 *pcm;
+  UINT remain;
+  PMIXDAT data;
+  UINT flag;
+  SINT32 volume;
 } PMIXTRK;
 
 typedef struct {
-	PMIXHDR		hdr;
-	PMIXTRK		trk[1];
+  PMIXHDR hdr;
+  PMIXTRK trk[1];
 } _PCMMIX, *PCMMIX;
 
-
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 BRESULT pcmmix_regist(PMIXDAT *dat, void *datptr, UINT datsize, UINT rate);

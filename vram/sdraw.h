@@ -1,18 +1,17 @@
 
 typedef struct {
-const UINT8	*src;
-const UINT8	*src2;
-	UINT8	*dst;
-	int		width;
-	int		xbytes;
-	int		y;
-	int		xalign;
-	int		yalign;
-	UINT8	dirty[SURFACE_HEIGHT];
+  const UINT8 *src;
+  const UINT8 *src2;
+  UINT8 *dst;
+  int width;
+  int xbytes;
+  int y;
+  int xalign;
+  int yalign;
+  UINT8 dirty[SURFACE_HEIGHT];
 } _SDRAW, *SDRAW;
 
-typedef void (SCRNCALL * SDRAWFN)(SDRAW sdraw, int maxy);
-
+typedef void(SCRNCALL *SDRAWFN)(SDRAW sdraw, int maxy);
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,4 +26,3 @@ const SDRAWFN *sdraw_getproctblex(const SCRNSURF *surf);
 #ifdef __cplusplus
 }
 #endif
-

@@ -23,17 +23,17 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef	NP2_GTK2_GTKKEYBOARD_H__
-#define	NP2_GTK2_GTKKEYBOARD_H__
+#ifndef NP2_GTK2_GTKKEYBOARD_H__
+#define NP2_GTK2_GTKKEYBOARD_H__
 
 #include <gdk/gdkkeysyms.h>
 
 #if GTK_MAJOR_VERSION <= 2
-#ifndef	GDK_KEY_F11
-#define	GDK_KEY_F11	GDK_F11
+#ifndef GDK_KEY_F11
+#define GDK_KEY_F11 GDK_F11
 #endif
-#ifndef	GDK_KEY_F12
-#define	GDK_KEY_F12	GDK_F12
+#ifndef GDK_KEY_F12
+#define GDK_KEY_F12 GDK_F12
 #endif
 #endif
 
@@ -48,4 +48,4 @@ void gtkkbd_keyup(guint keysym);
 
 G_END_DECLS
 
-#endif	/* NP2_GTK2_GTKKEYBOARD_H__ */
+#endif /* NP2_GTK2_GTKKEYBOARD_H__ */

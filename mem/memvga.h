@@ -13,7 +13,8 @@ void MEMCALL memvgaf_wr16(UINT32 address, REG16 value);
 UINT32 MEMCALL memvgaf_rd32(UINT32 address);
 void MEMCALL memvgaf_wr32(UINT32 address, UINT32 value);
 
-// PEGC memvga0:A8000h-AFFFFh, memvga1:B0000h-B7FFFh Bank(Packed-pixel Mode) or Plane Access(Plane Mode)
+// PEGC memvga0:A8000h-AFFFFh, memvga1:B0000h-B7FFFh Bank(Packed-pixel Mode) or
+// Plane Access(Plane Mode)
 REG8 MEMCALL memvga0_rd8(UINT32 address);
 REG8 MEMCALL memvga1_rd8(UINT32 address);
 void MEMCALL memvga0_wr8(UINT32 address, REG8 value);
@@ -40,4 +41,3 @@ void MEMCALL memvgaio_wr32(UINT32 address, UINT32 value);
 #endif
 
 #endif
-

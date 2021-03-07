@@ -6,16 +6,15 @@
 #pragma once
 
 enum {
-	TCMODE_DEFAULT = 0,
-	TCMODE_GETTICKCOUNT = 1,
-	TCMODE_TIMEGETTIME = 2,
-	TCMODE_PERFORMANCECOUNTER = 3,
+  TCMODE_DEFAULT = 0,
+  TCMODE_GETTICKCOUNT = 1,
+  TCMODE_TIMEGETTIME = 2,
+  TCMODE_PERFORMANCECOUNTER = 3,
 };
 
 #ifdef __cplusplus
-extern "C"
-{
-#endif	// __cplusplus
+extern "C" {
+#endif // __cplusplus
 
 DWORD GetTickCounter();
 void SetTickCounterMode(int mode);
@@ -25,4 +24,4 @@ LARGE_INTEGER GetTickCounter_ClockPerSec();
 
 #ifdef __cplusplus
 }
-#endif	// __cplusplus
+#endif // __cplusplus

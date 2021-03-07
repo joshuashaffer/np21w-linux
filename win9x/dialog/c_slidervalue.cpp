@@ -9,10 +9,7 @@
 /**
  * コンストラクタ
  */
-CSliderValue::CSliderValue()
-	: m_nStaticId(0)
-{
-}
+CSliderValue::CSliderValue() : m_nStaticId(0) {}
 
 /**
  * 範囲の設定
@@ -20,29 +17,25 @@ CSliderValue::CSliderValue()
  * @param[in] nMax 最大値
  * @param[in] bRedraw 再描画フラグ
  */
-void CSliderValue::SetRange(int nMin, int nMax, BOOL bRedraw)
-{
-	SetRangeMin(nMin, FALSE);
-	SetRangeMax(nMax, bRedraw);
+void CSliderValue::SetRange(int nMin, int nMax, BOOL bRedraw) {
+  SetRangeMin(nMin, FALSE);
+  SetRangeMax(nMax, bRedraw);
 }
 
 /**
  * 値の設定
  * @param[in] nPos 値
  */
-void CSliderValue::SetPos(int nPos)
-{
-	CSliderProc::SetPos(nPos);
-	UpdateValue();
+void CSliderValue::SetPos(int nPos) {
+  CSliderProc::SetPos(nPos);
+  UpdateValue();
 }
 
 /**
  * 値の更新
  */
-void CSliderValue::UpdateValue()
-{
-	if (m_nStaticId)
-	{
-		GetParent().SetDlgItemInt(m_nStaticId, GetPos(), TRUE);
-	}
+void CSliderValue::UpdateValue() {
+  if (m_nStaticId) {
+    GetParent().SetDlgItemInt(m_nStaticId, GetPos(), TRUE);
+  }
 }

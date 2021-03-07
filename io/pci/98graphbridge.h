@@ -7,9 +7,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-	
+
 extern int pcidev_98graphbridge_deviceid;
-	
+
 void pcidev_98graphbridge_reset(const NP2CFG *pConfig);
 void pcidev_98graphbridge_bind(void);
 
@@ -19,4 +19,3 @@ void pcidev_98graphbridge_bind(void);
 
 #endif
 #endif
-

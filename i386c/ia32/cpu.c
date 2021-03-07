@@ -38,30 +38,29 @@
 #include "timing.h"
 #include "nevent.h"
 #include "pccore.h"
-#include	"iocore.h"
-#include	"sound/sound.h"
-#include	"sound/beep.h"
-#include	"sound/fmboard.h"
-#include	"sound/soundrom.h"
-#include	"cbus/mpu98ii.h"
+#include "iocore.h"
+#include "sound/sound.h"
+#include "sound/beep.h"
+#include "sound/fmboard.h"
+#include "sound/soundrom.h"
+#include "cbus/mpu98ii.h"
 #if defined(SUPPORT_SMPU98)
-#include	"cbus/smpu98.h"
+#include "cbus/smpu98.h"
 #endif
 #endif
-
 
 sigjmp_buf exec_1step_jmpbuf;
 
 #if defined(IA32_INSTRUCTION_TRACE)
 typedef struct {
-	CPU_REGS		regs;
-	disasm_context_t	disasm;
+  CPU_REGS regs;
+  disasm_context_t disasm;
 
-	BYTE			op[MAX_PREFIX + 2];
-	int			opbytes;
+  BYTE op[MAX_PREFIX + 2];
+  int opbytes;
 } ia32_context_t;
 
-#define	NCTX	1024
+#define NCTX 1024
 
 ia32_context_t ctx[NCTX];
 int ctx_index = 0;
@@ -74,555 +73,554 @@ int cpu_debug_rep_cont = 0;
 CPU_REGS cpu_debug_rep_regs;
 #endif
 
-void
-exec_1step(void)
-{
-	int prefix;
-	UINT32 op;
+void exec_1step(void) {
+  int prefix;
+  UINT32 op;
 
-	CPU_PREV_EIP = CPU_EIP;
-	CPU_STATSAVE.cpu_inst = CPU_STATSAVE.cpu_inst_default;
+  CPU_PREV_EIP = CPU_EIP;
+  CPU_STATSAVE.cpu_inst = CPU_STATSAVE.cpu_inst_default;
 
 #if defined(ENABLE_TRAP)
-	steptrap(CPU_CS, CPU_EIP);
+  steptrap(CPU_CS, CPU_EIP);
 #endif
 
 #if defined(IA32_INSTRUCTION_TRACE)
-	ctx[ctx_index].regs = CPU_STATSAVE.cpu_regs;
-	if (cpu_inst_trace) {
-		disasm_context_t *d = &ctx[ctx_index].disasm;
-		UINT32 eip = CPU_EIP;
-		int rv;
+  ctx[ctx_index].regs = CPU_STATSAVE.cpu_regs;
+  if (cpu_inst_trace) {
+    disasm_context_t *d = &ctx[ctx_index].disasm;
+    UINT32 eip = CPU_EIP;
+    int rv;
 
-		rv = disasm(&eip, d);
-		if (rv == 0) {
-			char buf[256];
-			char tmp[32];
-			int len = d->nopbytes > 8 ? 8 : d->nopbytes;
-			int i;
+    rv = disasm(&eip, d);
+    if (rv == 0) {
+      char buf[256];
+      char tmp[32];
+      int len = d->nopbytes > 8 ? 8 : d->nopbytes;
+      int i;
 
-			buf[0] = '\0';
-			for (i = 0; i < len; i++) {
-				snprintf(tmp, sizeof(tmp), "%02x ", d->opbyte[i]);
-				milstr_ncat(buf, tmp, sizeof(buf));
-			}
-			for (; i < 8; i++) {
-				milstr_ncat(buf, "   ", sizeof(buf));
-			}
-			VERBOSE(("%04x:%08x: %s%s", CPU_CS, CPU_EIP, buf, d->str));
+      buf[0] = '\0';
+      for (i = 0; i < len; i++) {
+        snprintf(tmp, sizeof(tmp), "%02x ", d->opbyte[i]);
+        milstr_ncat(buf, tmp, sizeof(buf));
+      }
+      for (; i < 8; i++) {
+        milstr_ncat(buf, "   ", sizeof(buf));
+      }
+      VERBOSE(("%04x:%08x: %s%s", CPU_CS, CPU_EIP, buf, d->str));
 
-			buf[0] = '\0';
-			for (; i < d->nopbytes; i++) {
-				snprintf(tmp, sizeof(tmp), "%02x ", d->opbyte[i]);
-				milstr_ncat(buf, tmp, sizeof(buf));
-				if ((i % 8) == 7) {
-					VERBOSE(("             : %s", buf));
-					buf[0] = '\0';
-				}
-			}
-			if ((i % 8) != 0) {
-				VERBOSE(("             : %s", buf));
-			}
-		}
-	}
-	ctx[ctx_index].opbytes = 0;
+      buf[0] = '\0';
+      for (; i < d->nopbytes; i++) {
+        snprintf(tmp, sizeof(tmp), "%02x ", d->opbyte[i]);
+        milstr_ncat(buf, tmp, sizeof(buf));
+        if ((i % 8) == 7) {
+          VERBOSE(("             : %s", buf));
+          buf[0] = '\0';
+        }
+      }
+      if ((i % 8) != 0) {
+        VERBOSE(("             : %s", buf));
+      }
+    }
+  }
+  ctx[ctx_index].opbytes = 0;
 #endif
 
-	for (prefix = 0; prefix < MAX_PREFIX; prefix++) {
-		GET_PCBYTE(op);
+  for (prefix = 0; prefix < MAX_PREFIX; prefix++) {
+    GET_PCBYTE(op);
 #if defined(IA32_INSTRUCTION_TRACE)
-		ctx[ctx_index].op[prefix] = op;
-		ctx[ctx_index].opbytes++;
+    ctx[ctx_index].op[prefix] = op;
+    ctx[ctx_index].opbytes++;
 #endif
 
-		/* prefix */
-		if (insttable_info[op] & INST_PREFIX) {
-			(*insttable_1byte[0][op])();
-			continue;
-		}
-		break;
-	}
-	if (prefix == MAX_PREFIX) {
-		EXCEPTION(UD_EXCEPTION, 0);
-	}
+    /* prefix */
+    if (insttable_info[op] & INST_PREFIX) {
+      (*insttable_1byte[0][op])();
+      continue;
+    }
+    break;
+  }
+  if (prefix == MAX_PREFIX) {
+    EXCEPTION(UD_EXCEPTION, 0);
+  }
 
 #if defined(IA32_INSTRUCTION_TRACE)
-	if (op == 0x0f) {
-		BYTE op2;
-		op2 = cpu_codefetch(CPU_EIP);
-		ctx[ctx_index].op[prefix + 1] = op2;
-		ctx[ctx_index].opbytes++;
-	}
-	ctx_index = (ctx_index + 1) % NELEMENTS(ctx);
+  if (op == 0x0f) {
+    BYTE op2;
+    op2 = cpu_codefetch(CPU_EIP);
+    ctx[ctx_index].op[prefix + 1] = op2;
+    ctx[ctx_index].opbytes++;
+  }
+  ctx_index = (ctx_index + 1) % NELEMENTS(ctx);
 #endif
-	
-	/* normal / rep, but not use */
-	if (!(insttable_info[op] & INST_STRING) || !CPU_INST_REPUSE) {
-#if defined(DEBUG)
-		cpu_debug_rep_cont = 0;
-#endif
-		(*insttable_1byte[CPU_INST_OP32][op])();
-		return;
-	}
 
-	/* rep */
-	CPU_WORKCLOCK(5);
+  /* normal / rep, but not use */
+  if (!(insttable_info[op] & INST_STRING) || !CPU_INST_REPUSE) {
 #if defined(DEBUG)
-	if (!cpu_debug_rep_cont) {
-		cpu_debug_rep_cont = 1;
-		cpu_debug_rep_regs = CPU_STATSAVE.cpu_regs;
-	}
+    cpu_debug_rep_cont = 0;
 #endif
-	if (!CPU_INST_AS32) {
-		if (CPU_CX != 0) {
-			if (!(insttable_info[op] & REP_CHECKZF)) {
-				/* rep */
-				for (;;) {
-					(*insttable_1byte[CPU_INST_OP32][op])();
-					if (--CPU_CX == 0) {
+    (*insttable_1byte[CPU_INST_OP32][op])();
+    return;
+  }
+
+  /* rep */
+  CPU_WORKCLOCK(5);
 #if defined(DEBUG)
-						cpu_debug_rep_cont = 0;
+  if (!cpu_debug_rep_cont) {
+    cpu_debug_rep_cont = 1;
+    cpu_debug_rep_regs = CPU_STATSAVE.cpu_regs;
+  }
 #endif
-						break;
-					}
-					if (CPU_REMCLOCK <= 0) {
-						CPU_EIP = CPU_PREV_EIP;
-						break;
-					}
-				}
-			} else if (CPU_INST_REPUSE != 0xf2) {
-				/* repe */
-				for (;;) {
-					(*insttable_1byte[CPU_INST_OP32][op])();
-					if (--CPU_CX == 0 || CC_NZ) {
+  if (!CPU_INST_AS32) {
+    if (CPU_CX != 0) {
+      if (!(insttable_info[op] & REP_CHECKZF)) {
+        /* rep */
+        for (;;) {
+          (*insttable_1byte[CPU_INST_OP32][op])();
+          if (--CPU_CX == 0) {
 #if defined(DEBUG)
-						cpu_debug_rep_cont = 0;
+            cpu_debug_rep_cont = 0;
 #endif
-						break;
-					}
-					if (CPU_REMCLOCK <= 0) {
-						CPU_EIP = CPU_PREV_EIP;
-						break;
-					}
-				}
-			} else {
-				/* repne */
-				for (;;) {
-					(*insttable_1byte[CPU_INST_OP32][op])();
-					if (--CPU_CX == 0 || CC_Z) {
+            break;
+          }
+          if (CPU_REMCLOCK <= 0) {
+            CPU_EIP = CPU_PREV_EIP;
+            break;
+          }
+        }
+      } else if (CPU_INST_REPUSE != 0xf2) {
+        /* repe */
+        for (;;) {
+          (*insttable_1byte[CPU_INST_OP32][op])();
+          if (--CPU_CX == 0 || CC_NZ) {
 #if defined(DEBUG)
-						cpu_debug_rep_cont = 0;
+            cpu_debug_rep_cont = 0;
 #endif
-						break;
-					}
-					if (CPU_REMCLOCK <= 0) {
-						CPU_EIP = CPU_PREV_EIP;
-						break;
-					}
-				}
-			}
-		}
-	} else {
-		if (CPU_ECX != 0) {
-			if (!(insttable_info[op] & REP_CHECKZF)) {
-				/* rep */
-				for (;;) {
-					(*insttable_1byte[CPU_INST_OP32][op])();
-					if (--CPU_ECX == 0) {
+            break;
+          }
+          if (CPU_REMCLOCK <= 0) {
+            CPU_EIP = CPU_PREV_EIP;
+            break;
+          }
+        }
+      } else {
+        /* repne */
+        for (;;) {
+          (*insttable_1byte[CPU_INST_OP32][op])();
+          if (--CPU_CX == 0 || CC_Z) {
 #if defined(DEBUG)
-						cpu_debug_rep_cont = 0;
+            cpu_debug_rep_cont = 0;
 #endif
-						break;
-					}
-					if (CPU_REMCLOCK <= 0) {
-						CPU_EIP = CPU_PREV_EIP;
-						break;
-					}
-				}
-			} else if (CPU_INST_REPUSE != 0xf2) {
-				/* repe */
-				for (;;) {
-					(*insttable_1byte[CPU_INST_OP32][op])();
-					if (--CPU_ECX == 0 || CC_NZ) {
+            break;
+          }
+          if (CPU_REMCLOCK <= 0) {
+            CPU_EIP = CPU_PREV_EIP;
+            break;
+          }
+        }
+      }
+    }
+  } else {
+    if (CPU_ECX != 0) {
+      if (!(insttable_info[op] & REP_CHECKZF)) {
+        /* rep */
+        for (;;) {
+          (*insttable_1byte[CPU_INST_OP32][op])();
+          if (--CPU_ECX == 0) {
 #if defined(DEBUG)
-						cpu_debug_rep_cont = 0;
+            cpu_debug_rep_cont = 0;
 #endif
-						break;
-					}
-					if (CPU_REMCLOCK <= 0) {
-						CPU_EIP = CPU_PREV_EIP;
-						break;
-					}
-				}
-			} else {
-				/* repne */
-				for (;;) {
-					(*insttable_1byte[CPU_INST_OP32][op])();
-					if (--CPU_ECX == 0 || CC_Z) {
+            break;
+          }
+          if (CPU_REMCLOCK <= 0) {
+            CPU_EIP = CPU_PREV_EIP;
+            break;
+          }
+        }
+      } else if (CPU_INST_REPUSE != 0xf2) {
+        /* repe */
+        for (;;) {
+          (*insttable_1byte[CPU_INST_OP32][op])();
+          if (--CPU_ECX == 0 || CC_NZ) {
 #if defined(DEBUG)
-						cpu_debug_rep_cont = 0;
+            cpu_debug_rep_cont = 0;
 #endif
-						break;
-					}
-					if (CPU_REMCLOCK <= 0) {
-						CPU_EIP = CPU_PREV_EIP;
-						break;
-					}
-				}
-			}
-		}
-	}
+            break;
+          }
+          if (CPU_REMCLOCK <= 0) {
+            CPU_EIP = CPU_PREV_EIP;
+            break;
+          }
+        }
+      } else {
+        /* repne */
+        for (;;) {
+          (*insttable_1byte[CPU_INST_OP32][op])();
+          if (--CPU_ECX == 0 || CC_Z) {
+#if defined(DEBUG)
+            cpu_debug_rep_cont = 0;
+#endif
+            break;
+          }
+          if (CPU_REMCLOCK <= 0) {
+            CPU_EIP = CPU_PREV_EIP;
+            break;
+          }
+        }
+      }
+    }
+  }
 }
 
-
-void
-exec_allstep(void)
-{
-	int prefix;
-	UINT32 op;
-	void (*func)(void);
+void exec_allstep(void) {
+  int prefix;
+  UINT32 op;
+  void (*func)(void);
 #if defined(SUPPORT_ASYNC_CPU)
-	int firstflag = 1;
-	UINT timing;
-	UINT lcflag = 0;
-	SINT32 oldremclock = CPU_REMCLOCK;
-	static int remclock_mul = 1000;
-	int remclockb = 0;
-	int remclkcnt = 0x100;
-	static int latecount = 0;
-	static int latecount2 = 0;
-	static int hltflag = 0;
+  int firstflag = 1;
+  UINT timing;
+  UINT lcflag = 0;
+  SINT32 oldremclock = CPU_REMCLOCK;
+  static int remclock_mul = 1000;
+  int remclockb = 0;
+  int remclkcnt = 0x100;
+  static int latecount = 0;
+  static int latecount2 = 0;
+  static int hltflag = 0;
 
-	if(latecount2==0){
-		if(latecount > 0){
-			//latecount--;
-		}else if (latecount < 0){
-			latecount++;
-		}
-	}
-	latecount2 = (latecount2+1) & 0x1fff;
+  if (latecount2 == 0) {
+    if (latecount > 0) {
+      // latecount--;
+    } else if (latecount < 0) {
+      latecount++;
+    }
+  }
+  latecount2 = (latecount2 + 1) & 0x1fff;
 #endif
-	
-	do {
 
-		CPU_PREV_EIP = CPU_EIP;
-		CPU_STATSAVE.cpu_inst = CPU_STATSAVE.cpu_inst_default;
+  do {
 
-	#if defined(ENABLE_TRAP)
-		steptrap(CPU_CS, CPU_EIP);
-	#endif
+    CPU_PREV_EIP = CPU_EIP;
+    CPU_STATSAVE.cpu_inst = CPU_STATSAVE.cpu_inst_default;
 
-	#if defined(IA32_INSTRUCTION_TRACE)
-		ctx[ctx_index].regs = CPU_STATSAVE.cpu_regs;
-		if (cpu_inst_trace) {
-			disasm_context_t *d = &ctx[ctx_index].disasm;
-			UINT32 eip = CPU_EIP;
-			int rv;
+#if defined(ENABLE_TRAP)
+    steptrap(CPU_CS, CPU_EIP);
+#endif
 
-			rv = disasm(&eip, d);
-			if (rv == 0) {
-				char buf[256];
-				char tmp[32];
-				int len = d->nopbytes > 8 ? 8 : d->nopbytes;
-				int i;
+#if defined(IA32_INSTRUCTION_TRACE)
+    ctx[ctx_index].regs = CPU_STATSAVE.cpu_regs;
+    if (cpu_inst_trace) {
+      disasm_context_t *d = &ctx[ctx_index].disasm;
+      UINT32 eip = CPU_EIP;
+      int rv;
 
-				buf[0] = '\0';
-				for (i = 0; i < len; i++) {
-					snprintf(tmp, sizeof(tmp), "%02x ", d->opbyte[i]);
-					milstr_ncat(buf, tmp, sizeof(buf));
-				}
-				for (; i < 8; i++) {
-					milstr_ncat(buf, "   ", sizeof(buf));
-				}
-				VERBOSE(("%04x:%08x: %s%s", CPU_CS, CPU_EIP, buf, d->str));
+      rv = disasm(&eip, d);
+      if (rv == 0) {
+        char buf[256];
+        char tmp[32];
+        int len = d->nopbytes > 8 ? 8 : d->nopbytes;
+        int i;
 
-				buf[0] = '\0';
-				for (; i < d->nopbytes; i++) {
-					snprintf(tmp, sizeof(tmp), "%02x ", d->opbyte[i]);
-					milstr_ncat(buf, tmp, sizeof(buf));
-					if ((i % 8) == 7) {
-						VERBOSE(("             : %s", buf));
-						buf[0] = '\0';
-					}
-				}
-				if ((i % 8) != 0) {
-					VERBOSE(("             : %s", buf));
-				}
-			}
-		}
-		ctx[ctx_index].opbytes = 0;
-	#endif
+        buf[0] = '\0';
+        for (i = 0; i < len; i++) {
+          snprintf(tmp, sizeof(tmp), "%02x ", d->opbyte[i]);
+          milstr_ncat(buf, tmp, sizeof(buf));
+        }
+        for (; i < 8; i++) {
+          milstr_ncat(buf, "   ", sizeof(buf));
+        }
+        VERBOSE(("%04x:%08x: %s%s", CPU_CS, CPU_EIP, buf, d->str));
 
-		for (prefix = 0; prefix < MAX_PREFIX; prefix++) {
-			GET_PCBYTE(op);
-	#if defined(IA32_INSTRUCTION_TRACE)
-			ctx[ctx_index].op[prefix] = op;
-			ctx[ctx_index].opbytes++;
-	#endif
+        buf[0] = '\0';
+        for (; i < d->nopbytes; i++) {
+          snprintf(tmp, sizeof(tmp), "%02x ", d->opbyte[i]);
+          milstr_ncat(buf, tmp, sizeof(buf));
+          if ((i % 8) == 7) {
+            VERBOSE(("             : %s", buf));
+            buf[0] = '\0';
+          }
+        }
+        if ((i % 8) != 0) {
+          VERBOSE(("             : %s", buf));
+        }
+      }
+    }
+    ctx[ctx_index].opbytes = 0;
+#endif
 
-			/* prefix */
-			if (insttable_info[op] & INST_PREFIX) {
-				(*insttable_1byte[0][op])();
-				continue;
-			}
-			break;
-		}
-		if (prefix == MAX_PREFIX) {
-			EXCEPTION(UD_EXCEPTION, 0);
-		}
+    for (prefix = 0; prefix < MAX_PREFIX; prefix++) {
+      GET_PCBYTE(op);
+#if defined(IA32_INSTRUCTION_TRACE)
+      ctx[ctx_index].op[prefix] = op;
+      ctx[ctx_index].opbytes++;
+#endif
 
-	#if defined(IA32_INSTRUCTION_TRACE)
-		if (op == 0x0f) {
-			BYTE op2;
-			op2 = cpu_codefetch(CPU_EIP);
-			ctx[ctx_index].op[prefix + 1] = op2;
-			ctx[ctx_index].opbytes++;
-		}
-		ctx_index = (ctx_index + 1) % NELEMENTS(ctx);
-	#endif
-	
-		/* normal / rep, but not use */
-		if (!(insttable_info[op] & INST_STRING) || !CPU_INST_REPUSE) {
-	#if defined(DEBUG)
-			cpu_debug_rep_cont = 0;
-	#endif
-			(*insttable_1byte[CPU_INST_OP32][op])();
-			goto cpucontinue; //continue;
-		}
+      /* prefix */
+      if (insttable_info[op] & INST_PREFIX) {
+        (*insttable_1byte[0][op])();
+        continue;
+      }
+      break;
+    }
+    if (prefix == MAX_PREFIX) {
+      EXCEPTION(UD_EXCEPTION, 0);
+    }
 
-		/* rep */
-		CPU_WORKCLOCK(5);
-	#if defined(DEBUG)
-		if (!cpu_debug_rep_cont) {
-			cpu_debug_rep_cont = 1;
-			cpu_debug_rep_regs = CPU_STATSAVE.cpu_regs;
-		}
-	#endif
-		func = insttable_1byte[CPU_INST_OP32][op];
-		if (!CPU_INST_AS32) {
-			if (CPU_CX != 0) {
-				if(CPU_CX==1){
-					(*func)();
-					--CPU_CX;
-				}else{
-					if (!(insttable_info[op] & REP_CHECKZF)) {
-						if(insttable_1byte_repfunc[CPU_INST_OP32][op]){
-							(*insttable_1byte_repfunc[CPU_INST_OP32][op])(0);
-						}else{
-							/* rep */
-							for (;;) {
-								(*func)();
-								if (--CPU_CX == 0) {
-			#if defined(DEBUG)
-									cpu_debug_rep_cont = 0;
-			#endif
-									break;
-								}
-								if (CPU_REMCLOCK <= 0) {
-									CPU_EIP = CPU_PREV_EIP;
-									break;
-								}
-							}
-						}
-					} else if (CPU_INST_REPUSE != 0xf2) {
-						if(insttable_1byte_repfunc[CPU_INST_OP32][op]){
-							(*insttable_1byte_repfunc[CPU_INST_OP32][op])(1);
-						}else{
-							/* repe */
-							for (;;) {
-								(*func)();
-								if (--CPU_CX == 0 || CC_NZ) {
-			#if defined(DEBUG)
-									cpu_debug_rep_cont = 0;
-			#endif
-									break;
-								}
-								if (CPU_REMCLOCK <= 0) {
-									CPU_EIP = CPU_PREV_EIP;
-									break;
-								}
-							}
-						}
-					} else {
-						if(insttable_1byte_repfunc[CPU_INST_OP32][op]){
-							(*insttable_1byte_repfunc[CPU_INST_OP32][op])(2);
-						}else{
-							/* repne */
-							for (;;) {
-								(*func)();
-								if (--CPU_CX == 0 || CC_Z) {
-			#if defined(DEBUG)
-									cpu_debug_rep_cont = 0;
-			#endif
-									break;
-								}
-								if (CPU_REMCLOCK <= 0) {
-									CPU_EIP = CPU_PREV_EIP;
-									break;
-								}
-							}
-						}
-					}
-				}
-			}
-		} else {
-			if (CPU_ECX != 0) {
-				if(CPU_ECX==1){
-					(*func)();
-					--CPU_ECX;
-				}else{
-					if (!(insttable_info[op] & REP_CHECKZF)) {
-						if(insttable_1byte_repfunc[CPU_INST_OP32][op]){
-							(*insttable_1byte_repfunc[CPU_INST_OP32][op])(0);
-						}else{
-							/* rep */
-							for (;;) {
-								(*func)();
-								if (--CPU_ECX == 0) {
-			#if defined(DEBUG)
-									cpu_debug_rep_cont = 0;
-			#endif
-									break;
-								}
-								if (CPU_REMCLOCK <= 0) {
-									CPU_EIP = CPU_PREV_EIP;
-									break;
-								}
-							}
-						}
-					} else if (CPU_INST_REPUSE != 0xf2) {
-						if(insttable_1byte_repfunc[CPU_INST_OP32][op]){
-							(*insttable_1byte_repfunc[CPU_INST_OP32][op])(1);
-						}else{
-							/* repe */
-							for (;;) {
-								(*func)();
-								if (--CPU_ECX == 0 || CC_NZ) {
-			#if defined(DEBUG)
-									cpu_debug_rep_cont = 0;
-			#endif
-									break;
-								}
-								if (CPU_REMCLOCK <= 0) {
-									CPU_EIP = CPU_PREV_EIP;
-									break;
-								}
-							}
-						}
-					} else {
-						if(insttable_1byte_repfunc[CPU_INST_OP32][op]){
-							(*insttable_1byte_repfunc[CPU_INST_OP32][op])(2);
-						}else{
-							/* repne */
-							for (;;) {
-								(*func)();
-								if (--CPU_ECX == 0 || CC_Z) {
-			#if defined(DEBUG)
-									cpu_debug_rep_cont = 0;
-			#endif
-									break;
-								}
-								if (CPU_REMCLOCK <= 0) {
-									CPU_EIP = CPU_PREV_EIP;
-									break;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-cpucontinue:
+#if defined(IA32_INSTRUCTION_TRACE)
+    if (op == 0x0f) {
+      BYTE op2;
+      op2 = cpu_codefetch(CPU_EIP);
+      ctx[ctx_index].op[prefix + 1] = op2;
+      ctx[ctx_index].opbytes++;
+    }
+    ctx_index = (ctx_index + 1) % NELEMENTS(ctx);
+#endif
+
+    /* normal / rep, but not use */
+    if (!(insttable_info[op] & INST_STRING) || !CPU_INST_REPUSE) {
+#if defined(DEBUG)
+      cpu_debug_rep_cont = 0;
+#endif
+      (*insttable_1byte[CPU_INST_OP32][op])();
+      goto cpucontinue; // continue;
+    }
+
+    /* rep */
+    CPU_WORKCLOCK(5);
+#if defined(DEBUG)
+    if (!cpu_debug_rep_cont) {
+      cpu_debug_rep_cont = 1;
+      cpu_debug_rep_regs = CPU_STATSAVE.cpu_regs;
+    }
+#endif
+    func = insttable_1byte[CPU_INST_OP32][op];
+    if (!CPU_INST_AS32) {
+      if (CPU_CX != 0) {
+        if (CPU_CX == 1) {
+          (*func)();
+          --CPU_CX;
+        } else {
+          if (!(insttable_info[op] & REP_CHECKZF)) {
+            if (insttable_1byte_repfunc[CPU_INST_OP32][op]) {
+              (*insttable_1byte_repfunc[CPU_INST_OP32][op])(0);
+            } else {
+              /* rep */
+              for (;;) {
+                (*func)();
+                if (--CPU_CX == 0) {
+#if defined(DEBUG)
+                  cpu_debug_rep_cont = 0;
+#endif
+                  break;
+                }
+                if (CPU_REMCLOCK <= 0) {
+                  CPU_EIP = CPU_PREV_EIP;
+                  break;
+                }
+              }
+            }
+          } else if (CPU_INST_REPUSE != 0xf2) {
+            if (insttable_1byte_repfunc[CPU_INST_OP32][op]) {
+              (*insttable_1byte_repfunc[CPU_INST_OP32][op])(1);
+            } else {
+              /* repe */
+              for (;;) {
+                (*func)();
+                if (--CPU_CX == 0 || CC_NZ) {
+#if defined(DEBUG)
+                  cpu_debug_rep_cont = 0;
+#endif
+                  break;
+                }
+                if (CPU_REMCLOCK <= 0) {
+                  CPU_EIP = CPU_PREV_EIP;
+                  break;
+                }
+              }
+            }
+          } else {
+            if (insttable_1byte_repfunc[CPU_INST_OP32][op]) {
+              (*insttable_1byte_repfunc[CPU_INST_OP32][op])(2);
+            } else {
+              /* repne */
+              for (;;) {
+                (*func)();
+                if (--CPU_CX == 0 || CC_Z) {
+#if defined(DEBUG)
+                  cpu_debug_rep_cont = 0;
+#endif
+                  break;
+                }
+                if (CPU_REMCLOCK <= 0) {
+                  CPU_EIP = CPU_PREV_EIP;
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
+    } else {
+      if (CPU_ECX != 0) {
+        if (CPU_ECX == 1) {
+          (*func)();
+          --CPU_ECX;
+        } else {
+          if (!(insttable_info[op] & REP_CHECKZF)) {
+            if (insttable_1byte_repfunc[CPU_INST_OP32][op]) {
+              (*insttable_1byte_repfunc[CPU_INST_OP32][op])(0);
+            } else {
+              /* rep */
+              for (;;) {
+                (*func)();
+                if (--CPU_ECX == 0) {
+#if defined(DEBUG)
+                  cpu_debug_rep_cont = 0;
+#endif
+                  break;
+                }
+                if (CPU_REMCLOCK <= 0) {
+                  CPU_EIP = CPU_PREV_EIP;
+                  break;
+                }
+              }
+            }
+          } else if (CPU_INST_REPUSE != 0xf2) {
+            if (insttable_1byte_repfunc[CPU_INST_OP32][op]) {
+              (*insttable_1byte_repfunc[CPU_INST_OP32][op])(1);
+            } else {
+              /* repe */
+              for (;;) {
+                (*func)();
+                if (--CPU_ECX == 0 || CC_NZ) {
+#if defined(DEBUG)
+                  cpu_debug_rep_cont = 0;
+#endif
+                  break;
+                }
+                if (CPU_REMCLOCK <= 0) {
+                  CPU_EIP = CPU_PREV_EIP;
+                  break;
+                }
+              }
+            }
+          } else {
+            if (insttable_1byte_repfunc[CPU_INST_OP32][op]) {
+              (*insttable_1byte_repfunc[CPU_INST_OP32][op])(2);
+            } else {
+              /* repne */
+              for (;;) {
+                (*func)();
+                if (--CPU_ECX == 0 || CC_Z) {
+#if defined(DEBUG)
+                  cpu_debug_rep_cont = 0;
+#endif
+                  break;
+                }
+                if (CPU_REMCLOCK <= 0) {
+                  CPU_EIP = CPU_PREV_EIP;
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  cpucontinue:
 #if defined(SUPPORT_ASYNC_CPU)
-		// 非同期CPU処理
-		if(np2cfg.asynccpu){
-#define LATECOUNTER_THRESHOLD	6
-#define LATECOUNTER_THRESHOLDM	2
-			int realclock = 0;
-			if(CPU_STAT_HLT){
-				hltflag = pccore.multiple;
-			}
-			if(CPU_REMCLOCK >= 0 && !realclock && (remclkcnt > 0x7)){
-				remclkcnt = 0;
-				firstflag = 0;
-				timing = timing_getcount_baseclock();
-				if(timing!=0){
-					if(!asynccpu_fastflag && !asynccpu_lateflag){
-						if(remclock_mul < 100000) {
-							latecount++;
-							if(latecount > +LATECOUNTER_THRESHOLD){
-								if(pccore.multiple > 4){
-									UINT32 oldmultiple = pccore.multiple;
-									if(pccore.multiple > 40){
-										pccore.multiple-=3;
-									}else if(pccore.multiple > 20){
-										pccore.multiple-=2;
-									}else{
-										pccore.multiple-=1;
-									}
-									pccore.realclock = pccore.baseclock * pccore.multiple;
-									nevent_changeclock(oldmultiple, pccore.multiple);
-		
-									sound_changeclock();
-									pcm86_changeclock(oldmultiple);
-									beep_changeclock();
-									mpu98ii_changeclock();
-#if defined(SUPPORT_SMPU98)
-									smpu98_changeclock();
-#endif
-									keyboard_changeclock();
-									mouseif_changeclock();
-									gdc_updateclock();
-								}
+    // 非同期CPU処理
+    if (np2cfg.asynccpu) {
+#define LATECOUNTER_THRESHOLD 6
+#define LATECOUNTER_THRESHOLDM 2
+      int realclock = 0;
+      if (CPU_STAT_HLT) {
+        hltflag = pccore.multiple;
+      }
+      if (CPU_REMCLOCK >= 0 && !realclock && (remclkcnt > 0x7)) {
+        remclkcnt = 0;
+        firstflag = 0;
+        timing = timing_getcount_baseclock();
+        if (timing != 0) {
+          if (!asynccpu_fastflag && !asynccpu_lateflag) {
+            if (remclock_mul < 100000) {
+              latecount++;
+              if (latecount > +LATECOUNTER_THRESHOLD) {
+                if (pccore.multiple > 4) {
+                  UINT32 oldmultiple = pccore.multiple;
+                  if (pccore.multiple > 40) {
+                    pccore.multiple -= 3;
+                  } else if (pccore.multiple > 20) {
+                    pccore.multiple -= 2;
+                  } else {
+                    pccore.multiple -= 1;
+                  }
+                  pccore.realclock = pccore.baseclock * pccore.multiple;
+                  nevent_changeclock(oldmultiple, pccore.multiple);
 
-								latecount = 0;
-							}
-						}
-						asynccpu_lateflag = 1;
-
-						CPU_REMCLOCK = 0;
-						break;
-					}
-				}else{
-					if(!hltflag && !asynccpu_lateflag && g_nevent.item[NEVENT_FLAMES].proc==screendisp && g_nevent.item[NEVENT_FLAMES].clock <= CPU_BASECLOCK){
-						//CPU_REMCLOCK = 10000;
-						//oldremclock = CPU_REMCLOCK;
-						if(!asynccpu_fastflag){
-							latecount--;
-							if(latecount < -LATECOUNTER_THRESHOLDM * ((g_pcm86.fifo & 0x80) ? 10 : 1)){
-								if(pccore.multiple < pccore.maxmultiple){
-									UINT32 oldmultiple = pccore.multiple;
-									pccore.multiple+=1;
-									pccore.realclock = pccore.baseclock * pccore.multiple;
-									nevent_changeclock(oldmultiple, pccore.multiple);
-		
-									sound_changeclock();
-									pcm86_changeclock(oldmultiple);
-									beep_changeclock();
-									mpu98ii_changeclock();
+                  sound_changeclock();
+                  pcm86_changeclock(oldmultiple);
+                  beep_changeclock();
+                  mpu98ii_changeclock();
 #if defined(SUPPORT_SMPU98)
-									smpu98_changeclock();
+                  smpu98_changeclock();
 #endif
-									keyboard_changeclock();
-									mouseif_changeclock();
-									gdc_updateclock();
-								}
-								latecount = 0;
-							}
-							asynccpu_fastflag = 1;
-						}
-					}
-					firstflag = 1;
-				}
-			}
-			remclkcnt++;
-		}
+                  keyboard_changeclock();
+                  mouseif_changeclock();
+                  gdc_updateclock();
+                }
+
+                latecount = 0;
+              }
+            }
+            asynccpu_lateflag = 1;
+
+            CPU_REMCLOCK = 0;
+            break;
+          }
+        } else {
+          if (!hltflag && !asynccpu_lateflag &&
+              g_nevent.item[NEVENT_FLAMES].proc == screendisp &&
+              g_nevent.item[NEVENT_FLAMES].clock <= CPU_BASECLOCK) {
+            // CPU_REMCLOCK = 10000;
+            // oldremclock = CPU_REMCLOCK;
+            if (!asynccpu_fastflag) {
+              latecount--;
+              if (latecount <
+                  -LATECOUNTER_THRESHOLDM * ((g_pcm86.fifo & 0x80) ? 10 : 1)) {
+                if (pccore.multiple < pccore.maxmultiple) {
+                  UINT32 oldmultiple = pccore.multiple;
+                  pccore.multiple += 1;
+                  pccore.realclock = pccore.baseclock * pccore.multiple;
+                  nevent_changeclock(oldmultiple, pccore.multiple);
+
+                  sound_changeclock();
+                  pcm86_changeclock(oldmultiple);
+                  beep_changeclock();
+                  mpu98ii_changeclock();
+#if defined(SUPPORT_SMPU98)
+                  smpu98_changeclock();
+#endif
+                  keyboard_changeclock();
+                  mouseif_changeclock();
+                  gdc_updateclock();
+                }
+                latecount = 0;
+              }
+              asynccpu_fastflag = 1;
+            }
+          }
+          firstflag = 1;
+        }
+      }
+      remclkcnt++;
+    }
 #else
-		;
+      ;
 #endif
 
-	} while (CPU_REMCLOCK > 0);
+  } while (CPU_REMCLOCK > 0);
 #if defined(SUPPORT_ASYNC_CPU)
-	if(hltflag > 0) hltflag--;
+  if (hltflag > 0)
+    hltflag--;
 #endif
 }

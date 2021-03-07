@@ -122,67 +122,64 @@ enum {
 #endif
 
 enum {
-	NKEY_SYSTEM			= 0x90,
+  NKEY_SYSTEM = 0x90,
 
-	NKEY_USER			= 0x90,
-	NKEY_USERKEYS		= 2,
+  NKEY_USER = 0x90,
+  NKEY_USERKEYS = 2,
 
-	NKEYREF_uPD8255		= 0xf7,
-	NKEYREF_USER		= 0xf8,
-	NKEYREF_SOFTKBD		= 0xf9,
-	NKEYREF_NC			= 0xff
+  NKEYREF_uPD8255 = 0xf7,
+  NKEYREF_USER = 0xf8,
+  NKEYREF_SOFTKBD = 0xf9,
+  NKEYREF_NC = 0xff
 };
 
-
 typedef struct {
-	UINT8	keys;
-	UINT8	key[1];
+  UINT8 keys;
+  UINT8 key[1];
 } NKEYM;
 
 typedef struct {
-	UINT8	keys;
-	UINT8	key[3];
+  UINT8 keys;
+  UINT8 key[3];
 } NKEYM3;
 
 typedef struct {
-	UINT8	keys;
-	UINT8	key[15];
+  UINT8 keys;
+  UINT8 key[15];
 } NKEYM15;
 
 typedef struct {
-	NKEYM3	key[NKEY_SYSTEM];
-	NKEYM15	user[NKEY_USERKEYS];
+  NKEYM3 key[NKEY_SYSTEM];
+  NKEYM15 user[NKEY_USERKEYS];
 } NKEYTBL;
 
 typedef struct {
-	UINT8	reqparam;
-	UINT8	mode;
-	UINT8	kbdtype;
-	UINT8	keyrep;
-	UINT8	capsref;
-	UINT8	kanaref;
+  UINT8 reqparam;
+  UINT8 mode;
+  UINT8 kbdtype;
+  UINT8 keyrep;
+  UINT8 capsref;
+  UINT8 kanaref;
 } KEYCTRL;
 
 typedef struct {
-	UINT8	ref[0x80];
-	UINT8	extkey;
-	UINT8	mouselast;
-	UINT8	padding;
-	UINT8	d_up;
-	UINT8	d_dn;
-	UINT8	d_lt;
-	UINT8	d_rt;
+  UINT8 ref[0x80];
+  UINT8 extkey;
+  UINT8 mouselast;
+  UINT8 padding;
+  UINT8 d_up;
+  UINT8 d_dn;
+  UINT8 d_lt;
+  UINT8 d_rt;
 } KEYSTAT;
-
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-extern	NKEYTBL		nkeytbl;
-extern	KEYCTRL		keyctrl;
-extern	KEYSTAT		keystat;
-
+extern NKEYTBL nkeytbl;
+extern KEYCTRL keyctrl;
+extern KEYSTAT keystat;
 
 void keystat_initialize(void);
 
@@ -200,7 +197,6 @@ void keystat_releaseref(REG8 ref);
 void keystat_releasekey(REG8 key);
 void keystat_resetjoykey(void);
 
-
 // ---- I/O
 
 void keystat_down(const UINT8 *key, REG8 keys, REG8 ref);
@@ -208,8 +204,6 @@ void keystat_up(const UINT8 *key, REG8 keys, REG8 ref);
 void keystat_resendstat(void);
 REG8 keystat_getjoy(void);
 REG8 keystat_getmouse(SINT16 *x, SINT16 *y);
-
-
 
 // ---- 廃止関数
 
@@ -219,4 +213,3 @@ void keystat_forcerelease(REG8 data);
 #ifdef __cplusplus
 }
 #endif
-

@@ -27,4 +27,3 @@ extern const UINT16 menures_sldpos[3][12];
 #ifdef __cplusplus
 }
 #endif
-
