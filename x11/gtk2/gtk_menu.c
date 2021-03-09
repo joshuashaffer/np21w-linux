@@ -31,6 +31,7 @@
 #include "np2.h"
 #include "dosio.h"
 #include "ini.h"
+#include "cpucore.h"
 #include "pccore.h"
 #include "iocore.h"
 #include "debugsub.h"
@@ -63,6 +64,7 @@
 
 /* normal */
 static void cb_bmpsave(GtkAction *action, gpointer user_data);
+static void cb_copyclipboard(GtkAction *action, gpointer user_data);
 static void cb_change_font(GtkAction *action, gpointer user_data);
 static void cb_diskeject(GtkAction *action, gpointer user_data);
 static void cb_diskopen(GtkAction *action, gpointer user_data);
@@ -87,6 +89,9 @@ static void cb_statload(GtkAction *action, gpointer user_data);
 static void cb_dialog(GtkAction *action, gpointer user_data);
 static void cb_radio(GtkRadioAction *action, GtkRadioAction *current,
                      gpointer user_data);
+
+static void convertJIStoSJIS(UINT8 buf[]);
+
 
 static GtkActionEntry menu_entries[] = {
     /* Menu */
@@ -120,6 +125,7 @@ static GtkActionEntry menu_entries[] = {
     /* MenuItem */
     {"about", NULL, "_About", NULL, NULL, G_CALLBACK(cb_dialog)},
     {"bmpsave", NULL, "_BMP save...", NULL, NULL, G_CALLBACK(cb_bmpsave)},
+    {"copytext", NULL, "Copy _Text", NULL, NULL, G_CALLBACK(cb_copyclipboard)},
     {"calendar", NULL, "Ca_lendar...", NULL, NULL, G_CALLBACK(cb_dialog)},
     {"configure", NULL, "_Configure...", NULL, NULL, G_CALLBACK(cb_dialog)},
     {
@@ -770,6 +776,7 @@ static const gchar *ui_info =
     "  </menu>\n"
     "  <menu name='Other' action='OtherMenu'>\n"
     "   <menuitem action='bmpsave'/>\n"
+    "   <menuitem action='copytext'/>\n"
     "   <menuitem action='s98logging'/>\n"
     "   <menuitem action='calendar'/>\n"
     "   <menuitem action='clockdisp'/>\n"
@@ -860,6 +867,77 @@ static void xmenu_select_item_by_index(MENU_HDL hdl, GtkRadioActionEntry *entry,
  */
 extern NP2CFG np2cfg_default;
 extern NP2OSCFG np2oscfg_default;
+
+#undef CB_COPYCLIPBOARD_SCREENSIZE
+#define CB_COPYCLIPBOARD_SCREENSIZE (80*25)
+static void cb_copyclipboard(GtkAction *action, gpointer user_data) {
+
+  int i;
+  int j;
+  int lpos = 0;
+  int cpos = 0;
+  UINT8 buf[5];
+  FILEH fh;
+  j = 0;
+  size_t charbuf_sz = 0x0A3FFF-0x0A0000+1; 
+  UINT8 charbuf[2*charbuf_sz+1];
+  memset(charbuf, 0, 2*charbuf_sz+1);
+  // iconv wants multibyte characters in big endian and single byte
+  // characters unpadded.
+  for (i = 0x0A0000; i < 0x0A3FFF; i += 2) {
+    if (mem[i + 1]) {
+      // 標準漢字
+      buf[0] = mem[i] + 0x20;
+      buf[1] = mem[i + 1];
+      convertJIStoSJIS(buf); // JIS -> Shift-JIS
+      charbuf[j++] = buf[0];
+      charbuf[j++] = buf[1];
+      i += 2;
+      lpos += 2;
+    } else {
+      if (mem[i] < 0x20 || (0x7F <= mem[i] && mem[i] < 0xA0) ||
+          (0xE0 <= mem[i] && mem[i] < 0xFF)) {
+        // 空白に変換
+        buf[0] = ' ';
+      } else {
+        buf[0] = mem[i];
+      }
+      charbuf[j++] = buf[0];
+      lpos++;
+    }
+    if (lpos >= 80) {
+      cpos += lpos;
+      lpos -= 80;
+      if (cpos >= CB_COPYCLIPBOARD_SCREENSIZE)
+        break;
+      buf[0] = '\r';
+      charbuf[j++] = buf[0]; 
+      buf[0] = '\n';
+      charbuf[j++] = buf[0];
+    }
+  }
+
+  GError *error = NULL;
+  int bytes_read = 0;
+  int bytes_written = 0;
+  gchar *utf8_text = g_convert(charbuf, CB_COPYCLIPBOARD_SCREENSIZE, "UTF-8", "Shift_JIS", &bytes_read, &bytes_written, &error);
+  if(error != NULL) { 
+      fprintf(stderr, "Unable to convert from SHIFT-JIS to UTF-8\n");
+      g_error_free(error);
+      return;
+  } 
+
+  //fprintf(stderr, "orig: %d, read %d, written %d\n", j, bytes_read, bytes_written);
+  if(utf8_text == NULL) {
+      fprintf(stderr, "ICONV returned null string during conversion.\n");
+      return;
+  }
+  
+  GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+  if(clipboard != NULL) 
+      gtk_clipboard_set_text(clipboard,utf8_text,80*25);
+  g_free(utf8_text);
+}
 
 static void cb_bmpsave(GtkAction *action, gpointer user_data) {
   GtkWidget *dialog = NULL;
@@ -2194,4 +2272,26 @@ void xmenu_select_screen(UINT8 mode) {
 
   xmenu_select_rotate(mode & SCRNMODE_ROTATEMASK);
   xmenu_select_screenmode(mode & SCRNMODE_FULLSCREEN);
+}
+
+static void convertJIStoSJIS(UINT8 buf[]) {
+  unsigned char high = buf[0];
+  unsigned char low = buf[1];
+  high -= 0x21;
+  if (high & 0x1) {
+    low += 0x7E;
+  } else {
+    low += 0x1F;
+    if (low >= 0x7F) {
+      low++;
+    }
+  }
+  high = high >> 1;
+  if (high < 0x1F) {
+    high += 0x81;
+  } else {
+    high += 0xC1;
+  }
+  buf[0] = high;
+  buf[1] = low;
 }

@@ -819,18 +819,20 @@ AUTOCONF = ${SHELL} /home/jbs/Downloads/np21w-0.86-rev80/src/np21w-0.86/x11/miss
 AUTOHEADER = ${SHELL} /home/jbs/Downloads/np21w-0.86-rev80/src/np21w-0.86/x11/missing autoheader
 AUTOMAKE = ${SHELL} /home/jbs/Downloads/np21w-0.86-rev80/src/np21w-0.86/x11/missing automake-1.15
 AWK = gawk
-CC = gcc-8
+#CC = gcc-8
+CC = clang-12
 CCDEPMODE = depmode=none
-CFLAGS = -Ofast -pthread -Wall 
+#CFLAGS = -ggdb -g3 -Og -pg -pthread -Wall 
 #CFLAGS = -Ofast -pthread -Wall -fexceptions -D_FORTIFY_SOURCE=2 -D_GLIBCXX_ASSERTIONS -fasynchronous-unwind-tables  -fstack-protector-strong -Werror=format-security -Werror=implicit-function-declaration -fstack-clash-protection -Wno-unused-variable -Wno-unused-function 
-#CFLAGS = -g -Og -pg -Wall -Wpedantic  -pthread -fsanitize=address -fsanitize-memory-track-origins=2 -fno-omit-frame-pointer -fsanitize-memory-use-after-dtor -fno-optimize-sibling-calls -fsanitize-blacklist=blacklist.txt  -fPIE -pie  -fsanitize-recover=all
+CFLAGS = -g -Og -pg -Wall -Wpedantic  -pthread -fsanitize=address -fsanitize-memory-track-origins=2 -fno-omit-frame-pointer -fsanitize-memory-use-after-dtor -fno-optimize-sibling-calls -fsanitize-blacklist=blacklist.txt  -fPIE -pie  -fsanitize-recover=all
 CPP = gcc -E
 CPPFLAGS =  -DNDEBUG
-CXX = g++-8
+#CXX = g++-8
+CXX = clang++-12
 CXXDEPMODE = depmode=none
-CXXFLAGS = -Ofast -pthread -Wall  
+#CXXFLAGS = -ggdb -g3 -Og -pg -pthread -Wall  
 #CXXFLAGS = -Ofast -pthread -Wall  -fexceptions -D_FORTIFY_SOURCE=2 -D_GLIBCXX_ASSERTIONS -fasynchronous-unwind-tables  -fstack-protector-strong -Werror=format-security  -fstack-clash-protection -Woverloaded-virtual  -Wno-unused-variable -Wno-unused-function  
-#CXXFLAGS = -g -Og -pg -Wall -Wpedantic  -pthread -fsanitize=address -fsanitize-memory-track-origins=2 -fno-omit-frame-pointer  -fsanitize-memory-use-after-dtor  -fno-optimize-sibling-calls  -fsanitize-blacklist=blacklist.txt  -fPIE -pie -fsanitize-recover=all
+CXXFLAGS = -g -Og -pg -Wall -Wpedantic  -pthread -fsanitize=address -fsanitize-memory-track-origins=2 -fno-omit-frame-pointer  -fsanitize-memory-use-after-dtor  -fno-optimize-sibling-calls  -fsanitize-blacklist=blacklist.txt  -fPIE -pie -fsanitize-recover=all
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H -DSYSRESPATH=\""$(pkgdatadir)"\"
 DEPDIR = .deps

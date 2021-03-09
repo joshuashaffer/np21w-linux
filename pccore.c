@@ -1119,7 +1119,9 @@ void pccore_postevent(UINT32 event) { // yet!
 void pccore_exec(BOOL draw) {
 
   // ここでローカル変数を使うとsetjmp周りの最適化で破壊される可能性があるので注意
+#ifdef USE_TSC
   static UINT32 baseclk = 0;
+#endif
   // UINT32 lastclock;
   // UINT32 mflag = 0;
 

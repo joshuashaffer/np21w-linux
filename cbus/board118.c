@@ -205,19 +205,6 @@ static REG8 IOINPCALL ymf_ia460(UINT port) {
   (void)port;
 }
 
-/*********** SRN-F I/O ***********/
-
-char srnf;
-static void IOOUTCALL srnf_oa460(UINT port, REG8 dat) {
-  srnf = dat;
-  (void)port;
-}
-
-static REG8 IOINPCALL srnf_ia460(UINT port) {
-  (void)port;
-  return (srnf);
-}
-
 /*********** WaveStar I/O ***********/
 
 REG8 wavestar_4d2 = 0xff;
@@ -469,23 +456,6 @@ static REG8 IOINPCALL ym_i1488(UINT port) // FM Music Status Port
   return 0;
 }
 
-static REG8 IOINPCALL ym_i1489(UINT port) //  ???
-{
-  TRACEOUT(("%x read", port));
-  return opl3_readRegister(&g_opl3[G_OPL3_INDEX], g_opl3[G_OPL3_INDEX].s.addrl);
-}
-static REG8 IOINPCALL ym_i148a(UINT port) // Advanced FM Music Status Port
-{
-  TRACEOUT(("%x read", port));
-  return opl3_readStatus(&g_opl3[G_OPL3_INDEX]);
-}
-
-static REG8 IOINPCALL ym_i148b(UINT port) //  ???
-{
-  TRACEOUT(("%x read", port));
-  return opl3_readExtendedRegister(&g_opl3[G_OPL3_INDEX],
-                                   g_opl3[G_OPL3_INDEX].s.addrh);
-}
 
 /*********** PC-9801-118 config I/O ? ***********/
 
@@ -753,7 +723,6 @@ void board118_reset(const NP2CFG *pConfig) {
  * Bind
  */
 void board118_bind(void) {
-  int i;
 
   // CS4231バインド（I/Oポート割り当てとか）
   cs4231io_bind();

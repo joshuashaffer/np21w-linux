@@ -79,10 +79,6 @@ static REG8 IOINPCALL csctrl_i480(UINT port) {
   return sa3_control;
   (void)port;
 }
-static void IOOUTCALL csctrl_o481(UINT port, REG8 dat) {
-  sa3data[sa3_control] = dat;
-  (void)port;
-}
 static REG8 IOINPCALL csctrl_i481(UINT port) {
   TRACEOUT(("read %x", port));
   (void)port;
@@ -90,27 +86,7 @@ static REG8 IOINPCALL csctrl_i481(UINT port) {
 }
 REG8 f4a_control;
 UINT8 f4bdata[256];
-static void IOOUTCALL csctrl_of4a(UINT port, REG8 dat) {
-  f4a_control = dat;
-  (void)port;
-}
 
-static REG8 IOINPCALL csctrl_if4a(UINT port) {
-  TRACEOUT(("read %x", port));
-  return f4a_control;
-  (void)port;
-}
-
-static void IOOUTCALL csctrl_of4b(UINT port, REG8 dat) {
-  f4bdata[f4a_control] = dat;
-  (void)port;
-}
-
-static REG8 IOINPCALL csctrl_if4b(UINT port) {
-  TRACEOUT(("read %x", port));
-  (void)port;
-  return f4bdata[f4a_control];
-}
 
 static REG8 IOINPCALL csctrl_iac6d(UINT port) {
   TRACEOUT(("read %x", port));
@@ -124,46 +100,7 @@ static REG8 IOINPCALL csctrl_iac6e(UINT port) {
   return 0;
 }
 
-static REG8 IOINPCALL srnf_i51ee(UINT port) {
-  TRACEOUT(("read %x", port));
-  (void)port;
-  return (0x02);
-}
 
-static REG8 IOINPCALL srnf_i51ef(UINT port) {
-  TRACEOUT(("read %x", port));
-  (void)port;
-  return 0xc2;
-}
-
-static REG8 IOINPCALL srnf_i56ef(UINT port) {
-  TRACEOUT(("read %x", port));
-  (void)port;
-  return (0x9f);
-}
-static REG8 IOINPCALL srnf_i57ef(UINT port) {
-  TRACEOUT(("read %x", port));
-  (void)port;
-  return (0xc0);
-}
-
-static REG8 IOINPCALL srnf_i59ef(UINT port) {
-  TRACEOUT(("read %x", port));
-  (void)port;
-  return 0x3;
-}
-
-static REG8 IOINPCALL srnf_i5bef(UINT port) {
-  TRACEOUT(("read %x", port));
-  (void)port;
-  return (0x0e);
-}
-
-static REG8 IOINPCALL ifab(UINT port) {
-  TRACEOUT(("read %x", port));
-  (void)port;
-  return (0);
-}
 
 // ----
 
