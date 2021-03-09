@@ -37,23 +37,23 @@ static const UINT8 mds_sig[16] = {'M', 'E', 'D', 'I', 'A', ' ', 'D', 'E',
 #if defined(__GNUC__)
 typedef struct {
   UINT8
-      signature[16];  /*	0x0000	"MEDIA DESCRIPTOR"  */
+  signature[16];      /*	0x0000	"MEDIA DESCRIPTOR"  */
   UINT8 version[2];   /*	0x0010	Version ?
                        */
   UINT16 medium_type; /*	0x0012	Medium type
                        */
   UINT16
-      num_sessions; /*	0x0014	Number of sessions */
+  num_sessions; /*	0x0014	Number of sessions */
   UINT16
-      __dummy1__[2];                  /*	0x0016	Wish I knew...                  */
-  UINT16 bca_len;                     /*	0x001A	Length of BCA data (DVD-ROM)	*/
-  UINT32 __dummy2__[2];               /*	0x001C
-                                       */
-  UINT32 bca_data_offset;             /*	0x0026	Offset to BCA data (DVD-ROM)	*/
-  UINT32 __dummy3__[6];               /*	0x002A	Probably more offsets               */
-  UINT32 disc_structures_offset;      /*	0x0042	Offset to disc structures
-                                       */
-  UINT32 __dummy4__[3];               /*	0x0046	Probably more offsets               */
+  __dummy1__[2];          /*	0x0016	Wish I knew...                  */
+  UINT16 bca_len;         /*	0x001A	Length of BCA data (DVD-ROM)	*/
+  UINT32 __dummy2__[2];   /*	0x001C
+                           */
+  UINT32 bca_data_offset; /*	0x0026	Offset to BCA data (DVD-ROM)	*/
+  UINT32 __dummy3__[6];   /*	0x002A	Probably more offsets               */
+  UINT32 disc_structures_offset; /*	0x0042	Offset to disc structures
+                                  */
+  UINT32 __dummy4__[3]; /*	0x0046	Probably more offsets               */
   UINT32 sessions_blocks_offset;      /*	0x0052	Offset to session blocks
                                        */
   UINT32 dpm_blocks_offset;           /*	0x0056	offset to DPM data blocks
@@ -61,21 +61,21 @@ typedef struct {
 } __attribute__((packed)) MDS_Header; /*	length: 88 bytes	*/
 
 typedef struct {
-  INT32 session_start;         /*	Session's start address
-                                */
-  INT32 session_end;           /*	Session's end address
-                                */
-  UINT16 session_number;       /*	(Unknown)
-                                */
-  UINT8 num_all_blocks;        /*	Number of all data blocks.
-                                */
-  UINT8 num_nontrack_blocks;   /*	Number of lead-in data blocks
-                                */
-  UINT16 first_track;          /*	Total number of sessions in image?
-                                */
-  UINT16 last_track;           /*	Number of regular track data blocks.           */
-  UINT32 __dummy2__;           /*	(unknown)
-                                */
+  INT32 session_start;       /*	Session's start address
+                              */
+  INT32 session_end;         /*	Session's end address
+                              */
+  UINT16 session_number;     /*	(Unknown)
+                              */
+  UINT8 num_all_blocks;      /*	Number of all data blocks.
+                              */
+  UINT8 num_nontrack_blocks; /*	Number of lead-in data blocks
+                              */
+  UINT16 first_track;        /*	Total number of sessions in image?
+                              */
+  UINT16 last_track; /*	Number of regular track data blocks.           */
+  UINT32 __dummy2__; /*	(unknown)
+                      */
   UINT32 tracks_blocks_offset; /*	Offset of lead-in+regular track data
                                   blocks.	*/
 } __attribute__((packed)) MDS_SessionBlock; /*	length: 24 bytes */
@@ -99,7 +99,7 @@ typedef struct {
   UINT8 frame; /*	Frame
                 */
   UINT32
-      extra_offset;   /*	Start offset of this track's extra block.	*/
+  extra_offset;       /*	Start offset of this track's extra block.	*/
   UINT16 sector_size; /*	Sector size.
                        */
 
@@ -129,15 +129,15 @@ typedef struct {
 #pragma pack(push, 1)
 typedef struct {
   UINT8
-      signature[16];  /*	0x0000	"MEDIA DESCRIPTOR"  */
+  signature[16];      /*	0x0000	"MEDIA DESCRIPTOR"  */
   UINT8 version[2];   /*	0x0010	Version ?
                        */
   UINT16 medium_type; /*	0x0012	Medium type
                        */
   UINT16
-      num_sessions; /*	0x0014	Number of sessions */
+  num_sessions; /*	0x0014	Number of sessions */
   UINT16
-      __dummy1__[2];             /*	0x0016	Wish I knew...             */
+  __dummy1__[2];                 /*	0x0016	Wish I knew...             */
   UINT16 bca_len;                /*	0x001A	Length of BCA data (DVD-ROM)	*/
   UINT32 __dummy2__[2];          /*	0x001C
                                   */
@@ -153,21 +153,21 @@ typedef struct {
 } MDS_Header;                    /*	length: 88 bytes	*/
 
 typedef struct {
-  INT32 session_start;         /*	Session's start address
-                                */
-  INT32 session_end;           /*	Session's end address
-                                */
-  UINT16 session_number;       /*	(Unknown)
-                                */
-  UINT8 num_all_blocks;        /*	Number of all data blocks.
-                                */
-  UINT8 num_nontrack_blocks;   /*	Number of lead-in data blocks
-                                */
-  UINT16 first_track;          /*	Total number of sessions in image?
-                                */
-  UINT16 last_track;           /*	Number of regular track data blocks.           */
-  UINT32 __dummy2__;           /*	(unknown)
-                                */
+  INT32 session_start;       /*	Session's start address
+                              */
+  INT32 session_end;         /*	Session's end address
+                              */
+  UINT16 session_number;     /*	(Unknown)
+                              */
+  UINT8 num_all_blocks;      /*	Number of all data blocks.
+                              */
+  UINT8 num_nontrack_blocks; /*	Number of lead-in data blocks
+                              */
+  UINT16 first_track;        /*	Total number of sessions in image?
+                              */
+  UINT16 last_track; /*	Number of regular track data blocks.           */
+  UINT32 __dummy2__; /*	(unknown)
+                      */
   UINT32 tracks_blocks_offset; /*	Offset of lead-in+regular track data
                                   blocks.	*/
 } MDS_SessionBlock;            /*	length: 24 bytes */
@@ -191,7 +191,7 @@ typedef struct {
   UINT8 frame; /*	Frame
                 */
   UINT32
-      extra_offset;   /*	Start offset of this track's extra block.	*/
+  extra_offset;       /*	Start offset of this track's extra block.	*/
   UINT16 sector_size; /*	Sector size.
                        */
 

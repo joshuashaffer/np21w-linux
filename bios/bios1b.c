@@ -151,8 +151,8 @@ static void fdd_int(int result) {
   case 0x02: // 診断の為の読み込み
   case 0x05: // データの書き込み
   case 0x06: // データの読み込み
-             //		case 0x07:								//
-             //シリンダ０へシーク
+             //		case 0x07:
+             //// シリンダ０へシーク
   case 0x0a: // READ ID
   case 0x0d: // フォーマット
     break;
@@ -335,8 +335,8 @@ static REG8 fdd_operate(REG8 type, REG8 rpm, BOOL ndensity) {
     }
   }
 
-  // モード選択													//
-  // ver0.78
+  // モード選択
+  // // ver0.78
   fmode = (type & 1) ? MEMB_F2HD_MODE : MEMB_F2DD_MODE;
   if (!(CPU_AL & 0x80)) {
     if (!(mem[fmode] & (0x10 << fdc.us))) {

@@ -16,12 +16,14 @@
 
 CS4231CFG cs4231cfg;
 
-int calpenflag = 0; // XXX:
-                    // CAL0だけ(0x04)→CAL0とPENが同時に立つ状態(0x05)に遷移した時だけ挙動を変える･･･
-                    // Win3.1+necpcm.drv用のその場しのぎ
-int w31play = 0;    // XXX:
-                 // CAL0だけ(0x04)→CAL0とPENが同時に立つ状態(0x05)に遷移した時だけ挙動を変える･･･
-                 // Win3.1+necpcm.drv用のその場しのぎ
+int calpenflag =
+    0; // XXX:
+       // CAL0だけ(0x04)→CAL0とPENが同時に立つ状態(0x05)に遷移した時だけ挙動を変える･･･
+       // Win3.1+necpcm.drv用のその場しのぎ
+int w31play =
+    0; // XXX:
+       // CAL0だけ(0x04)→CAL0とPENが同時に立つ状態(0x05)に遷移した時だけ挙動を変える･･･
+       // Win3.1+necpcm.drv用のその場しのぎ
 
 static int playcountsmp_Ictl =
     CS4231_BUFREADSMP; // 積分制御で無理やり一定サンプルずつ読むようにする･･･
@@ -184,19 +186,20 @@ void cs4231_dma(NEVENTITEM item) {
       //	SINT32 neventms;
       //	int playcountsmp;// =
       //(cs4231.reg.playcount[1]|(cs4231.reg.playcount[0] << 8)); //
-      //PI割り込みを発生させるサンプル数(Playback Base register) 	playcountsmp =
-      //32 / cs4231_playcountshift[cs4231.reg.datafmt >> 4];//max(r, 32) /
-      //cs4231_playcountshift[cs4231.reg.datafmt >> 4];//min(max(r, 64) /
-      //cs4231_playcountshift[cs4231.reg.datafmt >> 4], playcountsmp) / 2; // 謎
+      // PI割り込みを発生させるサンプル数(Playback Base register)
+      // playcountsmp = 32 / cs4231_playcountshift[cs4231.reg.datafmt >>
+      // 4];//max(r, 32) / cs4231_playcountshift[cs4231.reg.datafmt >>
+      // 4];//min(max(r, 64) / cs4231_playcountshift[cs4231.reg.datafmt >> 4],
+      // playcountsmp) / 2; // 謎
       //	//neventms = playcountsmp * 1000 / cs4231cfg.rate;
       //	//if(neventms <= 0) neventms = 1;
       //	//cnt = pccore.realclock / cs4231cfg.rate * 32;
       //	//nevent_set(NEVENT_CS4231, cnt, cs4231_dma, NEVENT_RELATIVE);
       //	//cnt = (UINT32)((UINT64)pccore.realclock * playcountsmp /
-      //cs4231cfg.rate / 10);
+      // cs4231cfg.rate / 10);
       //	//nevent_setbyms(NEVENT_CS4231, neventms, cs4231_dma,
-      //NEVENT_RELATIVE); 	nevent_set(NEVENT_CS4231, pccore.realclock /
-      //cs4231cfg.rate * playcountsmp, cs4231_dma, NEVENT_RELATIVE);
+      // NEVENT_RELATIVE); 	nevent_set(NEVENT_CS4231, pccore.realclock /
+      // cs4231cfg.rate * playcountsmp, cs4231_dma, NEVENT_RELATIVE);
       //}
     }
   }

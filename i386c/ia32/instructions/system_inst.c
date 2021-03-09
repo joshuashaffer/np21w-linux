@@ -990,7 +990,8 @@ void CPUCALL INVLPG(UINT32 op) {
   EXCEPTION(UD_EXCEPTION, 0);
 }
 
-void _LOCK(void) { /* Nothing to do */ }
+void _LOCK(void) { /* Nothing to do */
+}
 
 void HLT(void) {
 

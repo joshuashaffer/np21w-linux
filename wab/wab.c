@@ -732,8 +732,8 @@ void np2wab_setRelayState(REG8 state) {
         np2wab.lastWidth = 0;
         np2wab.lastHeight = 0;
         // scrnmng_setwidth(dsync.scrnxpos, dsync.scrnxmax); // XXX:
-        // 画面幅を乗っ取る前に戻す scrnmng_setheight(0, dsync.scrnymax); // XXX:
-        // 画面高さを乗っ取る前に戻す
+        // 画面幅を乗っ取る前に戻す scrnmng_setheight(0, dsync.scrnymax); //
+        // XXX: 画面高さを乗っ取る前に戻す
         scrnmng_setsize(dsync.scrnxpos, 0, dsync.scrnxmax,
                         dsync.scrnymax); // XXX: 画面サイズを乗っ取る前に戻す
         scrnmng_updatefsres(); // フルスクリーン解像度更新

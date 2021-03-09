@@ -2383,7 +2383,8 @@ I286FN _aam(void) { // D4:	AAM
     I286_FLAGL |= WORDSZPF(I286_AX);
   } else {
     INT_NUM(0, I286_IP - 2); // 80286
-                             //		INT_NUM(0, I286_IP);					// V30
+                             //		INT_NUM(0, I286_IP);
+                             //// V30
   }
 }
 

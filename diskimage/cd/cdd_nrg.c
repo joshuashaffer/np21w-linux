@@ -232,7 +232,7 @@ BRESULT opennrg(SXSIDEV sxsi, const OEMCHAR *fname) {
       if (NRG_CB.index == 0x00 && NRG_CB.track >= 0x02) {
         //	モノによってトラック番号偽っているCD-ROMがあるっぽい？
         //				trk[NRG_CB.track].pos0		=
-        //UINT32_FROM_BE(NRG_CB.start_sector);
+        // UINT32_FROM_BE(NRG_CB.start_sector);
         trk[index].pos0 = UINT32_FROM_BE(NRG_CB.start_sector);
       }
       if (NRG_CB.index == 0x01 && NRG_CB.track != 0xAA) {

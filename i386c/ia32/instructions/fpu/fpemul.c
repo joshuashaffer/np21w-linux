@@ -579,7 +579,8 @@ char *fpu_reg2str(void) {
 /*
  * FPU instruction
  */
-void fpu_fwait(void) { /* XXX: check pending FPU exception */ }
+void fpu_fwait(void) { /* XXX: check pending FPU exception */
+}
 
 void ESC0(void) {
   UINT32 op, madr;

@@ -87,7 +87,6 @@ static REG8 IOINPCALL csctrl_i481(UINT port) {
 REG8 f4a_control;
 UINT8 f4bdata[256];
 
-
 static REG8 IOINPCALL csctrl_iac6d(UINT port) {
   TRACEOUT(("read %x", port));
   (void)port;
@@ -99,8 +98,6 @@ static REG8 IOINPCALL csctrl_iac6e(UINT port) {
   (void)port;
   return 0;
 }
-
-
 
 // ----
 

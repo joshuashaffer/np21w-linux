@@ -1384,15 +1384,17 @@ static int init_tables(void) {
     // logerror("YMF262.C: sin1[%4i]= %4i (tl_tab value=%5i)\n", i,
     // sin_tab[1*SIN_LEN+i], tl_tab[sin_tab[1*SIN_LEN+i]] ); logerror("YMF262.C:
     // sin2[%4i]= %4i (tl_tab value=%5i)\n", i, sin_tab[2*SIN_LEN+i],
-    // tl_tab[sin_tab[2*SIN_LEN+i]] ); logerror("YMF262.C: sin3[%4i]= %4i (tl_tab
-    // value=%5i)\n", i, sin_tab[3*SIN_LEN+i], tl_tab[sin_tab[3*SIN_LEN+i]] );
-    // logerror("YMF262.C: sin4[%4i]= %4i (tl_tab value=%5i)\n", i,
-    // sin_tab[4*SIN_LEN+i], tl_tab[sin_tab[4*SIN_LEN+i]] ); logerror("YMF262.C:
-    // sin5[%4i]= %4i (tl_tab value=%5i)\n", i, sin_tab[5*SIN_LEN+i],
-    // tl_tab[sin_tab[5*SIN_LEN+i]] ); logerror("YMF262.C: sin6[%4i]= %4i (tl_tab
-    // value=%5i)\n", i, sin_tab[6*SIN_LEN+i], tl_tab[sin_tab[6*SIN_LEN+i]] );
-    // logerror("YMF262.C: sin7[%4i]= %4i (tl_tab value=%5i)\n", i,
-    // sin_tab[7*SIN_LEN+i], tl_tab[sin_tab[7*SIN_LEN+i]] );
+    // tl_tab[sin_tab[2*SIN_LEN+i]] ); logerror("YMF262.C: sin3[%4i]= %4i
+    // (tl_tab value=%5i)\n", i, sin_tab[3*SIN_LEN+i],
+    // tl_tab[sin_tab[3*SIN_LEN+i]] ); logerror("YMF262.C: sin4[%4i]= %4i
+    // (tl_tab value=%5i)\n", i, sin_tab[4*SIN_LEN+i],
+    // tl_tab[sin_tab[4*SIN_LEN+i]] ); logerror("YMF262.C: sin5[%4i]= %4i
+    // (tl_tab value=%5i)\n", i, sin_tab[5*SIN_LEN+i],
+    // tl_tab[sin_tab[5*SIN_LEN+i]] ); logerror("YMF262.C: sin6[%4i]= %4i
+    // (tl_tab value=%5i)\n", i, sin_tab[6*SIN_LEN+i],
+    // tl_tab[sin_tab[6*SIN_LEN+i]] ); logerror("YMF262.C: sin7[%4i]= %4i
+    // (tl_tab value=%5i)\n", i, sin_tab[7*SIN_LEN+i],
+    // tl_tab[sin_tab[7*SIN_LEN+i]] );
   }
   /*logerror("YMF262.C: ENV_QUIET= %08x (dec*8=%i)\n", ENV_QUIET, ENV_QUIET*8
    * );*/

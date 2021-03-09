@@ -32,15 +32,15 @@ void pal_makegrad(RGB32 *pal, int pals, UINT32 bg, UINT32 fg) {
   if (pals >= 2) {
     pals--;
     for (i = 0; i <= pals; i++) {
-      pal[i].p.b = (UINT8)(
-          (((fg >> 0) & 0x0000ff) * i + ((bg >> 0) & 0x0000ff) * (pals - i)) /
-          pals);
-      pal[i].p.g = (UINT8)(
-          (((fg >> 8) & 0x0000ff) * i + ((bg >> 8) & 0x0000ff) * (pals - i)) /
-          pals);
-      pal[i].p.r = (UINT8)(
-          (((fg >> 16) & 0x0000ff) * i + ((bg >> 16) & 0x0000ff) * (pals - i)) /
-          pals);
+      pal[i].p.b = (UINT8)((((fg >> 0) & 0x0000ff) * i +
+                            ((bg >> 0) & 0x0000ff) * (pals - i)) /
+                           pals);
+      pal[i].p.g = (UINT8)((((fg >> 8) & 0x0000ff) * i +
+                            ((bg >> 8) & 0x0000ff) * (pals - i)) /
+                           pals);
+      pal[i].p.r = (UINT8)((((fg >> 16) & 0x0000ff) * i +
+                            ((bg >> 16) & 0x0000ff) * (pals - i)) /
+                           pals);
       pal[i].p.e = 0;
     }
   }

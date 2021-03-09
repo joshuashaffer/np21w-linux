@@ -641,10 +641,9 @@ BRESULT scrnsave_writegif(SCRNSAVE hdl, const OEMCHAR *filename, UINT flag) {
 
   ZeroMemory(bitbuf, sizeof(bitbuf));
   bitbuf[0] = (UINT8)(0x80 + ((8 - 1) << 4) + (bpp - 1));
-  //	bitbuf[1] = 0;									//
-  //background
-  //	bitbuf[2] = 0;									//
-  //reserved
+  //	bitbuf[1] = 0;
+  //// background 	bitbuf[2] = 0;
+  //// reserved
   for (r = 0; r < sd->pals; r++) {
     bitbuf[r * 3 + 3] = sd->pal[r].rgb[2]; // R
     bitbuf[r * 3 + 4] = sd->pal[r].rgb[1]; // G

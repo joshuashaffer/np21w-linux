@@ -65,11 +65,15 @@
 
 /* force some bits to zero */
 const uint8_t sr_mask[8] = {
-    (uint8_t)~0xfc, (uint8_t)~0xc2,
+    (uint8_t)~0xfc,
+    (uint8_t)~0xc2,
     (uint8_t)~0x00, // np21w ver0.86 rev29  (uint8_t)~0xf0,
                     // 上位ビットも残さないとWin9xで文字表示がおかしくなる
-    (uint8_t)~0xc0, (uint8_t)~0xf1, (uint8_t)~0xff,
-    (uint8_t)~0xff, (uint8_t)~0x00,
+    (uint8_t)~0xc0,
+    (uint8_t)~0xf1,
+    (uint8_t)~0xff,
+    (uint8_t)~0xff,
+    (uint8_t)~0x00,
 };
 
 const uint8_t gr_mask[16] = {
@@ -131,10 +135,10 @@ DisplayState ds = {0}; // np21/wでは実質的に使われない
 
 #if defined(_WIN32)
 BITMAPINFO
-    *ga_bmpInfo; // CIRRUS VGAのVRAM映像を転送する時に使うBITMAPINFO構造体
+*ga_bmpInfo; // CIRRUS VGAのVRAM映像を転送する時に使うBITMAPINFO構造体
 BITMAPINFO
-    *ga_bmpInfo_cursor; // CIRRUS
-                        // VGAのカーソル画像を転送する時に使うBITMAPINFO構造体
+*ga_bmpInfo_cursor; // CIRRUS
+                    // VGAのカーソル画像を転送する時に使うBITMAPINFO構造体
 HBITMAP ga_hbmp_cursor; // CIRRUS VGAのカーソルのHBITMAP
 HDC ga_hdc_cursor;      // CIRRUS VGAのカーソル画像のHDC
 
@@ -2908,21 +2912,22 @@ void cirrus_linear_mmio_update(void *opaque) {
   } else {
     // if((s->sr[0x17] & 0x44) == 0x44 && (s->gr[0x6] & 0x0c) == 0x04){
     //	if(mmio_mode != MMIO_MODE_VRAM1 ||
-    //np2clvga.VRAMWindowAddr!=mmio_mode_region1  ||
-    //np2clvga.pciLFB_Addr!=mmio_mode_region2 || lastlinmmio!=linmmio){
+    // np2clvga.VRAMWindowAddr!=mmio_mode_region1  ||
+    // np2clvga.pciLFB_Addr!=mmio_mode_region2 || lastlinmmio!=linmmio){
     //		if(np2clvga.VRAMWindowAddr){
-    //			if(mmio_mode_region1) i386hax_vm_removememoryarea(vramptr,
-    //mmio_mode_region1, cirrusvga->real_vram_size);
-    //			i386hax_vm_setmemoryarea(vramptr, np2clvga.VRAMWindowAddr,
-    //cirrusvga->real_vram_size - 0x1000);
+    //			if(mmio_mode_region1)
+    // i386hax_vm_removememoryarea(vramptr, mmio_mode_region1,
+    // cirrusvga->real_vram_size);
+    // i386hax_vm_setmemoryarea(vramptr,
+    // np2clvga.VRAMWindowAddr, cirrusvga->real_vram_size - 0x1000);
     //		}
     //		mmio_mode_region1 = np2clvga.VRAMWindowAddr;
     //		if(np2clvga.pciLFB_Addr){
-    //			if(mmio_mode_region2) i386hax_vm_removememoryarea(vramptr,
-    //mmio_mode_region2, linmmio ? s->linear_mmio_mask :
-    //cirrusvga->real_vram_size); 			i386hax_vm_setmemoryarea(vramptr,
-    //np2clvga.pciLFB_Addr, linmmio ? s->linear_mmio_mask :
-    //cirrusvga->real_vram_size);
+    //			if(mmio_mode_region2)
+    // i386hax_vm_removememoryarea(vramptr, mmio_mode_region2, linmmio ?
+    // s->linear_mmio_mask : cirrusvga->real_vram_size);
+    // i386hax_vm_setmemoryarea(vramptr, np2clvga.pciLFB_Addr, linmmio ?
+    // s->linear_mmio_mask : cirrusvga->real_vram_size);
     //		}
     //		mmio_mode_region2 = np2clvga.pciLFB_Addr;
     //		lastlinmmio = linmmio;
@@ -5106,8 +5111,9 @@ void cirrusvga_drawGraphic() {
   // if(cirrusvga->device_id == CIRRUS_ID_CLGD5446 || (np2clvga.gd54xxtype &
   // CIRRUS_98ID_GA98NBMASK) == CIRRUS_98ID_GA98NBIC || (np2clvga.gd54xxtype &
   // CIRRUS_98ID_WABMASK) == CIRRUS_98ID_WAB){ if((cirrusvga->cr[0x5e] & 0x7) ==
-  // 0x1){ 	cirrusvga->graphics_dblbuf_index = (cirrusvga->graphics_dblbuf_index +
-  //1) & 0x1;
+  // 0x1){ 	cirrusvga->graphics_dblbuf_index =
+  // (cirrusvga->graphics_dblbuf_index +
+  // 1) & 0x1;
   //}
   // if(cirrusvga->graphics_dblbuf_index != 0 || (cirrusvga->cr[0x1a] & 0x2) ||
   // (np2clvga.gd54xxtype & CIRRUS_98ID_GA98NBMASK) == CIRRUS_98ID_GA98NBIC ||
@@ -5327,13 +5333,14 @@ void cirrusvga_drawGraphic() {
         // SetDIBitsToDevice(
         //	hdc , 0 , 0 ,
         //	ga_bmpInfo->bmiHeader.biWidth , -ga_bmpInfo->bmiHeader.biHeight
-        //, 	0 , 0 , scanshiftY , -ga_bmpInfo->bmiHeader.biHeight , 	vram_ptr ,
-        //ga_bmpInfo , DIB_PAL_COLORS
+        //, 	0 , 0 , scanshiftY , -ga_bmpInfo->bmiHeader.biHeight , vram_ptr
+        //, ga_bmpInfo , DIB_PAL_COLORS
         //);
         // SetDIBitsToDevice(
         //	hdc , 0 , 0 ,
         //	ga_bmpInfo->bmiHeader.biWidth , -ga_bmpInfo->bmiHeader.biHeight
-        //, 	0 , 0 , 0 , scanshiftY , 	vram_ptr , ga_bmpInfo , DIB_PAL_COLORS
+        //, 	0 , 0 , 0 , scanshiftY , 	vram_ptr , ga_bmpInfo ,
+        // DIB_PAL_COLORS
         //);
 #elif defined(NP2_X11)
         scanptr = vram_ptr;
@@ -6509,17 +6516,17 @@ void pc98_cirrus_vga_setvramsize() {
   } else if (np2clvga.gd54xxtype == CIRRUS_98ID_96) {
     cirrusvga->real_vram_size =
         CIRRUS_VRAM_SIZE_1MB; //(cirrusvga->device_id == CIRRUS_ID_CLGD5446) ?
-                              //CIRRUS_VRAM_SIZE : CIRRUS_VRAM_SIZE;
+                              // CIRRUS_VRAM_SIZE : CIRRUS_VRAM_SIZE;
   } else if (np2clvga.gd54xxtype == CIRRUS_98ID_Be) {
     cirrusvga->real_vram_size =
         CIRRUS_VRAM_SIZE_1MB; //(cirrusvga->device_id == CIRRUS_ID_CLGD5446) ?
-                              //CIRRUS_VRAM_SIZE : CIRRUS_VRAM_SIZE;
+                              // CIRRUS_VRAM_SIZE : CIRRUS_VRAM_SIZE;
   } else if (np2clvga.gd54xxtype == CIRRUS_98ID_PCI) {
     cirrusvga->real_vram_size = CIRRUS_VRAM_SIZE_2MB;
   } else if (np2clvga.gd54xxtype <= 0xff) {
     cirrusvga->real_vram_size =
         CIRRUS_VRAM_SIZE; //(cirrusvga->device_id == CIRRUS_ID_CLGD5446) ?
-                          //CIRRUS_VRAM_SIZE : CIRRUS_VRAM_SIZE;
+                          // CIRRUS_VRAM_SIZE : CIRRUS_VRAM_SIZE;
   } else if (np2clvga.gd54xxtype == CIRRUS_98ID_WAB) {
     cirrusvga->real_vram_size = CIRRUS_VRAM_SIZE_WAB;
   } else if (np2clvga.gd54xxtype == CIRRUS_98ID_WSN_A2F) {
@@ -6831,7 +6838,7 @@ static void pc98_cirrus_init_common(CirrusVGAState *s, int device_id,
     iocore_attachinp(0x59E0 + cirrusvga_melcowab_ofs,
                      vga_ioport_read_wrap); // 0x3B5	これは使っている
     ////iocore_attachout(0x3AE0 + cirrusvga_melcowab_ofs,
-    ///vga_ioport_write_wrap);	// 0x3BA	使ってないからいいや
+    /// vga_ioport_write_wrap);	// 0x3BA	使ってないからいいや
     ////iocore_attachinp(0x3AE0 + cirrusvga_melcowab_ofs, vga_ioport_read_wrap);
     ///// 0x3BA	使ってないからいいや
 
@@ -6854,12 +6861,12 @@ static void pc98_cirrus_init_common(CirrusVGAState *s, int device_id,
     //}
 
     //		iocore_attachout(0x51E1 + cirrusvga_melcowab_ofs,
-    //vga_ioport_write_wrap);	// 0x3BA 		iocore_attachinp(0x51E1 +
-    //cirrusvga_melcowab_ofs, vga_ioport_read_wrap);		// 0x3BA
+    // vga_ioport_write_wrap);	// 0x3BA 		iocore_attachinp(0x51E1
+    // + cirrusvga_melcowab_ofs, vga_ioport_read_wrap);		// 0x3BA
 
     //		iocore_attachout(0x57E1 + cirrusvga_melcowab_ofs,
-    //vga_ioport_write_wrap);	// 0x3DA 		iocore_attachinp(0x57E1 +
-    //cirrusvga_melcowab_ofs, vga_ioport_read_wrap);		// 0x3DA
+    // vga_ioport_write_wrap);	// 0x3DA 		iocore_attachinp(0x57E1
+    // + cirrusvga_melcowab_ofs, vga_ioport_read_wrap);		// 0x3DA
 
     iocore_attachout(0x40E1 + cirrusvga_melcowab_ofs, cirrusvga_o40e1);
     iocore_attachinp(0x40E1 + cirrusvga_melcowab_ofs, cirrusvga_i40e1);
@@ -7091,12 +7098,12 @@ static void pc98_cirrus_deinit_common(CirrusVGAState *s, int device_id,
     iocore_detachinp(0x5AE0 + cirrusvga_melcowab_ofs); // 0x3DA
 
     //		iocore_detachout(0x51E1 + cirrusvga_melcowab_ofs);	// 0x3BA
-    //		iocore_detachinp(0x51E1 + cirrusvga_melcowab_ofs);		//
-    //0x3BA
+    //		iocore_detachinp(0x51E1 + cirrusvga_melcowab_ofs);
+    //// 0x3BA
 
     //		iocore_detachout(0x57E1 + cirrusvga_melcowab_ofs);	// 0x3DA
-    //		iocore_detachinp(0x57E1 + cirrusvga_melcowab_ofs);		//
-    //0x3DA
+    //		iocore_detachinp(0x57E1 + cirrusvga_melcowab_ofs);
+    //// 0x3DA
 
     iocore_detachout(0x40E1 + cirrusvga_melcowab_ofs);
     iocore_detachinp(0x40E1 + cirrusvga_melcowab_ofs);
@@ -7328,8 +7335,8 @@ void pc98_cirrus_vga_resetresolution(void) {
   cirrusvga->cr[0x07] &= ~0x42;
   // ついでにVRAMもクリア
   //	if ((np2clvga.gd54xxtype & CIRRUS_98ID_GA98NBMASK) ==
-  //CIRRUS_98ID_GA98NBIC || np2clvga.gd54xxtype == CIRRUS_98ID_WSN ||
-  //np2clvga.gd54xxtype == CIRRUS_98ID_WSN_A2F) {
+  // CIRRUS_98ID_GA98NBIC || np2clvga.gd54xxtype == CIRRUS_98ID_WSN ||
+  // np2clvga.gd54xxtype == CIRRUS_98ID_WSN_A2F) {
   if (np2clvga.gd54xxtype == CIRRUS_98ID_WSN ||
       np2clvga.gd54xxtype == CIRRUS_98ID_WSN_A2F) {
     memset(cirrusvga->vram_ptr, 0x00, cirrusvga->real_vram_size);

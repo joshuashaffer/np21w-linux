@@ -1003,12 +1003,13 @@ coutinue_cpu_imm:
 
     // 高速化のために一部のI/Oポートの処理を簡略化
     // if(tunnel->io._port != 0x90 && tunnel->io._port != 0x92 &&
-    // tunnel->io._port != 0x94 && 	tunnel->io._port != 0xc8 && tunnel->io._port
+    // tunnel->io._port != 0x94 && 	tunnel->io._port != 0xc8 &&
+    // tunnel->io._port
     //!= 0xca && tunnel->io._port != 0xcc && tunnel->io._port != 0xbe &&
-    //tunnel->io._port != 0x4be) { 	(0x430 <= tunnel->io._port &&
-    //tunnel->io._port <= 0x64e && !(g_nevent.item[NEVENT_SASIIO].flag &
-    //NEVENT_ENABLE)) || 	(0x7FD9 <= tunnel->io._port && tunnel->io._port <=
-    //0x7FDF)){
+    // tunnel->io._port != 0x4be) { 	(0x430 <= tunnel->io._port &&
+    // tunnel->io._port <= 0x64e && !(g_nevent.item[NEVENT_SASIIO].flag &
+    // NEVENT_ENABLE)) || 	(0x7FD9 <= tunnel->io._port && tunnel->io._port
+    // <= 0x7FDF)){
     if (tunnel->io._port == 0x640) {
       // 厳しめにする
       if (np2haxcore.hurryup) {

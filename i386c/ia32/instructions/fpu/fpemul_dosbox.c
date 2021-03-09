@@ -205,7 +205,7 @@ static void FPU_FPOP(void) {
   // maybe set zero in it as well
   FPU_STAT_TOP = ((FPU_STAT_TOP + 1) & 7);
   //	LOG(LOG_FPU,LOG_ERROR)("popped from %d  %g off the
-  //stack",top,fpu.regs[top].d64);
+  // stack",top,fpu.regs[top].d64);
   return;
 }
 
@@ -442,9 +442,9 @@ static void FPU_FBST(UINT32 addr) {
 
 static void FPU_FADD(UINT op1, UINT op2) {
   //// HACK: Set the denormal flag according to whether the source or final
-  ///result is a denormalized number. /       This is vital if we don't want
-  ///certain DOS programs to mis-detect our FPU emulation as an IIT clone chip
-  ///when cputype == 286
+  /// result is a denormalized number. /       This is vital if we don't want
+  /// certain DOS programs to mis-detect our FPU emulation as an IIT clone chip
+  /// when cputype == 286
   // BOOL was_not_normal;
 
   // was_not_normal = isdenormal(FPU_STAT.reg[op1].d64);

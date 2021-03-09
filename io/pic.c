@@ -196,8 +196,8 @@ void pic_irq(void) { // ver0.78
     if (num == 0) {
       nevent_reset(NEVENT_PICMASK);
     }
-    //		TRACEOUT(("hardware-int %.2x [%.4x:%.4x]", (p->pi[0].icw[1] & 0xf8) |
-    //num, CPU_CS, CPU_IP));
+    //		TRACEOUT(("hardware-int %.2x [%.4x:%.4x]", (p->pi[0].icw[1] &
+    //0xf8) | num, CPU_CS, CPU_IP));
     CPU_INTERRUPT((REG8)((p->pi[0].icw[1] & 0xf8) | num), 0);
   }
   pic_leave_criticalsection();

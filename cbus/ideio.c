@@ -131,11 +131,11 @@ static BRESULT setidentify(IDEDRV drv) {
       FILELEN tmpCyl = (UINT32)(sxsi->totals / 255 / 255);
       tmp[80] = 0x007e; // support ATA-1 to 6
       tmp[81] = 0;
-      tmp[82] = 0x0200; // support DEVICE RESET
-      tmp[83] = 0x4400; // 48-bit Address feature set supported
-      tmp[86] = 0x4400; // 48-bit Address feature set supported
-      tmp[100] = (UINT16)(
-          sxsi->totals); // Maximum user LBA for 48-bit Address feature set 1
+      tmp[82] = 0x0200;                  // support DEVICE RESET
+      tmp[83] = 0x4400;                  // 48-bit Address feature set supported
+      tmp[86] = 0x4400;                  // 48-bit Address feature set supported
+      tmp[100] = (UINT16)(sxsi->totals); // Maximum user LBA for 48-bit Address
+                                         // feature set 1
       tmp[101] =
           (UINT16)(sxsi->totals >>
                    16); // Maximum user LBA for 48-bit Address feature set 2
@@ -481,8 +481,8 @@ static void readsec(IDEDRV drv) {
   }
   sec = getcursec(drv);
   // TRACEOUT(("readsec->drv %d sec %x cnt %d thr %d",
-  //							drv->sxsidrv, sec, drv->mulcnt,
-  //drv->multhr));
+  //							drv->sxsidrv, sec,
+  // drv->mulcnt, drv->multhr));
   if (sxsi_read(drv->sxsidrv, sec, drv->buf, 512)) {
     TRACEOUT(("read error!"));
     goto read_err;
@@ -1420,8 +1420,8 @@ void IOOUTCALL ideio_w16(UINT port, REG16 value) {
     p[0] = (UINT8)value;
     p[1] = (UINT8)(value >> 8);
     // TRACEOUT(("ide-data send %.4x (%.4x) [%.4x:%.8x]",
-    //								value, drv->bufpos, CPU_CS,
-    //CPU_EIP));
+    //								value,
+    //drv->bufpos, CPU_CS, CPU_EIP));
     drv->bufpos += 2;
     if (drv->bufpos >= drv->bufsize) {
       drv->status &= ~IDESTAT_DRQ;
@@ -1504,8 +1504,8 @@ REG16 IOINPCALL ideio_r16(UINT port) {
     p = drv->buf + drv->bufpos;
     ret = p[0] + (p[1] << 8);
     // TRACEOUT(("ide-data recv %.4x (%.4x) [%.4x:%.8x]",
-    //								ret, drv->bufpos, CPU_CS,
-    //CPU_EIP));
+    //								ret,
+    //drv->bufpos, CPU_CS, CPU_EIP));
     drv->bufpos += 2;
     if (drv->bufpos >= drv->bufsize) {
       drv->status &= ~IDESTAT_DRQ;
@@ -1590,12 +1590,13 @@ static BRESULT SOUNDCALL playdevaudio(IDEDRV drv, SINT32 *pcm, UINT count) {
   // g_nSoundID == SOUNDID_PC_9801_86_WSS || g_nSoundID == SOUNDID_WAVESTAR ||
   // g_nSoundID == SOUNDID_PC_9801_118_SB16 || g_nSoundID ==
   // SOUNDID_PC_9801_86_118_SB16){ 	if(cdda_softvolumereg_L !=
-  //cs4231.devvolume[0x32]){ 		cdda_softvolumereg_L = cs4231.devvolume[0x32];
-  //		if(cdda_softvolumereg_L & 0x80){ // CD L Mute
+  // cs4231.devvolume[0x32]){ 		cdda_softvolumereg_L =
+  // cs4231.devvolume[0x32]; 		if(cdda_softvolumereg_L & 0x80){ // CD L
+  // Mute
   //			cdda_softvolume_L = 0;
   //		}else{
-  //			cdda_softvolume_L = ((~cdda_softvolumereg_L) & 0x1f); // CD L
-  //Volume
+  //			cdda_softvolume_L = ((~cdda_softvolumereg_L) & 0x1f); //
+  //CD L Volume
   //		}
   //	}
   //	if(cdda_softvolumereg_R != cs4231.devvolume[0x33]){
@@ -1603,8 +1604,8 @@ static BRESULT SOUNDCALL playdevaudio(IDEDRV drv, SINT32 *pcm, UINT count) {
   //		if(cdda_softvolumereg_R & 0x80){ // CD R Mute
   //			cdda_softvolume_R = 0;
   //		}else{
-  //			cdda_softvolume_R = ((~cdda_softvolumereg_R) & 0x1f); // CD R
-  //Volume
+  //			cdda_softvolume_R = ((~cdda_softvolumereg_R) & 0x1f); //
+  //CD R Volume
   //		}
   //	}
   //}else{

@@ -32,8 +32,7 @@
 #endif
 
 #define NP2SYSP_VER "C"
-// #define	NP2SYSP_CREDIT		""					//
-// 要るなら・・・
+// #define	NP2SYSP_CREDIT		"" // 要るなら・・・
 
 // NP2依存ポート
 // port:07edh	np2 value comm
@@ -44,7 +43,7 @@
 
 // verA
 //		out->str: 'ver'				in->str:	ver番号
-//A〜 		out->str: 'poweroff'		NP2を終了
+// A〜 		out->str: 'poweroff'		NP2を終了
 
 // verB
 //		out->str: 'cpu'				in->str:	CPU型番

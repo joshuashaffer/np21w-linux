@@ -298,8 +298,8 @@ static void IOOUTCALL gameport_o4d2(UINT port, REG8 dat) {
   gameport_tsc = 0;
 #endif
   // gameport_clkmax = pccore.baseclock * pccore.maxmultiple / 1000; //
-  // とりあえず1msで･･･ gameport_timeoutcounter = 400; gameport_timeoutinterval =
-  // gameport_clkmax * 2 / gameport_timeoutcounter; nevent_set(NEVENT_CDWAIT,
+  // とりあえず1msで･･･ gameport_timeoutcounter = 400; gameport_timeoutinterval
+  // = gameport_clkmax * 2 / gameport_timeoutcounter; nevent_set(NEVENT_CDWAIT,
   // gameport_timeoutinterval, gameport_timeoutproc, NEVENT_ABSOLUTE);
 #endif
   (void)port;
@@ -308,7 +308,7 @@ static void IOOUTCALL gameport_o4d2(UINT port, REG8 dat) {
 //	if(gameport_timeoutcounter > 0){
 //		gameport_timeoutcounter--;
 //		nevent_set(NEVENT_CDWAIT, gameport_timeoutinterval,
-//gameport_timeoutproc, NEVENT_ABSOLUTE);
+// gameport_timeoutproc, NEVENT_ABSOLUTE);
 //	}
 //}
 static REG8 IOINPCALL gameport_i4d2(UINT port) {
@@ -488,11 +488,13 @@ void boardsb16_bind(void) {
 #endif
 
   iocore_attachout(0x8000 + g_sb16.base, sb16_o8000); /* MIDI Port */
-  // iocore_attachout(0x8001 + g_sb16.base, sb16_o8100);	/* MIDI Port 暫定
+  // iocore_attachout(0x8001 + g_sb16.base, sb16_o8100);	/* MIDI Port
+  // 暫定
   // */
   iocore_attachout(0x8100 + g_sb16.base, sb16_o8100); /* MIDI Port */
   iocore_attachinp(0x8000 + g_sb16.base, sb16_i8000); /* MIDI Port */
-  // iocore_attachinp(0x8001 + g_sb16.base, sb16_i8100);	/* MIDI Port 暫定
+  // iocore_attachinp(0x8001 + g_sb16.base, sb16_i8100);	/* MIDI Port
+  // 暫定
   // */
   iocore_attachinp(0x8100 + g_sb16.base, sb16_i8100); /* MIDI Port */
 

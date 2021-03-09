@@ -475,8 +475,10 @@ static void FDC_Recalibrate(void) { // cmd: 07
   case FDCEVENT_CMDRECV:
     get_hdus();
     //			fdc.ncn = 0;
-    //			fdc.R = 1;						/* 170107 for Windows95
-    //*/ 			fdc.crcn = fdc.R;				/* 170107 for Windows95
+    //			fdc.R = 1;						/* 170107
+    //for Windows95
+    //*/ 			fdc.crcn = fdc.R;				/* 170107
+    //for Windows95
     //*/
     fdc.int_stat[fdc.us] = /* (fdc.hd << 2) | */ fdc.us;
     fdc.int_stat[fdc.us] |= FDCRLT_SE;
@@ -559,8 +561,8 @@ static void FDC_SenceintStatus(void) { // cmd: 08
         fdc.buf[1] = fdc.treg[i];
         fdc.bufcnt = 2;
         fdc.stat[i] = 0;
-        //					TRACEOUT(("fdc stat - %d [%.2x]", i,
-        //fdc.buf[0]));
+        //					TRACEOUT(("fdc stat - %d
+        //[%.2x]", i, fdc.buf[0]));
         break;
       }
     }
@@ -605,10 +607,11 @@ static void FDC_ReadID(void) { // cmd: 0a
         soundmng_pcmplay(SOUND_PCMSEEK, FALSE);
 #endif
     } else {
-      fdc.stat[fdc.us] = fdc.us | (fdc.hd << 2) |
-                         //													FDCRLT_IC0
-                         //| FDCRLT_MA;
-                         FDCRLT_IC0 | FDCRLT_ND;
+      fdc.stat[fdc.us] =
+          fdc.us | (fdc.hd << 2) |
+          //													FDCRLT_IC0
+          //| FDCRLT_MA;
+          FDCRLT_IC0 | FDCRLT_ND;
 
       fdcsend_error7();
     }
@@ -629,8 +632,8 @@ static void FDC_WriteID(void) { // cmd: 0d
     if (FDC_DriveCheck(TRUE)) {
       //				TRACE_("FDC_WriteID FDC_DriveCheck", 0);
       if (fdd_formatinit()) {
-        //					TRACE_("FDC_WriteID fdd_formatinit",
-        //0);
+        //					TRACE_("FDC_WriteID
+        // fdd_formatinit", 0);
         fdcsend_error7();
         break;
       }
@@ -642,7 +645,7 @@ static void FDC_WriteID(void) { // cmd: 0d
       }
       /* 170107 modified to work on Windows 9x/2000 ... to */
       //				TRACE_("FDC_WriteID FDCEVENT_BUFRECV",
-      //0);
+      // 0);
       fdc.event = FDCEVENT_BUFRECV;
       fdc.bufcnt = 4;
       fdc.bufp = 0;
@@ -700,7 +703,8 @@ static void FDC_Seek(void) { // cmd: 0f
     //			fdc.ncn = fdc.cmds[1];
     //			fdc.treg[fdc.us] = fdc.ncn;
     //			fdc.R = 1;
-    //			fdc.crcn = fdc.R;				/* 170107 for Windows95
+    //			fdc.crcn = fdc.R;				/* 170107
+    //for Windows95
     //*/
     /* 170101 ST modified to work on Windows 9x/2000 */
     fdc.int_stat[fdc.us] = /*(fdc.hd << 2) |*/ fdc.us;
@@ -714,7 +718,7 @@ static void FDC_Seek(void) { // cmd: 0f
       fdc.crcn = fdc.R; /* 170107 for Windows95 */
                         /* 170107 for Windows95 form ... */
                         // if (fdd_seek()) {
-      //	fdc.stat[fdc.us] |= FDCRLT_IC0;
+                        //	fdc.stat[fdc.us] |= FDCRLT_IC0;
 #if defined(SUPPORT_SWSEEKSND)
       if (np2cfg.MOTOR)
         fddmtrsnd_play(1, TRUE);
@@ -840,7 +844,8 @@ REG8 DMACCALL fdc_dataread(void) {
   int i;
 
   //	if ((fdc.status & (FDCSTAT_RQM | FDCSTAT_DIO))
-  //									== (FDCSTAT_RQM | FDCSTAT_DIO))
+  //									== (FDCSTAT_RQM
+  //| FDCSTAT_DIO))
   //{
   switch (fdc.event) {
   case FDCEVENT_BUFSEND:

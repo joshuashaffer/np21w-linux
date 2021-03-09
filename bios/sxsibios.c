@@ -371,7 +371,7 @@ static REG8 sasibios_init(UINT type, SXSIDEV sxsi) {
 #endif
     // sxsi = sxsi_getptr(i);
     // if ((sxsi) && ((sxsi->flag & SXSIFLAG_READY) &&
-    // sxsi->devtype==SXSIDEV_HDD || sxsi->devtype==SXSIDEV_CDROM)) { 	diskequip
+    // sxsi->devtype==SXSIDEV_HDD || sxsi->devtype==SXSIDEV_CDROM)) { diskequip
     //|= bit;
     //}
     sxsi = sxsi_getptr(sxsi_unittbl[i]);

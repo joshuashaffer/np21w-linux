@@ -252,15 +252,14 @@ void atapicmd_a0(IDEDRV drv) {
               0x0204; // LOGICAL DRIVE NOT READY - INITIALIZING COMMAND REQUIRED
           //}else if(mediachangeflag >= 1){
           //	drv->asc = 0x0204; // LOGICAL DRIVE NOT READY - INITIALIZING
-          //COMMAND REQUIRED 	mediachangeflag++;
+          // COMMAND REQUIRED 	mediachangeflag++;
         } else {
           drv->asc = ATAPI_ASC_MEDIUM_NOT_PRESENT;
           //#if defined(CPUCORE_IA32)
           //					// Workaround for WinNT
-          //					if (CPU_STAT_PM && !CPU_STAT_VM86)
-          //{ mediachangeflag++;
-          //					} else
-          //#endif
+          //					if (CPU_STAT_PM &&
+          //! CPU_STAT_VM86) { mediachangeflag++; 					} else
+          //! #endif
           //					{
           mediachangeflag = MEDIA_CHANGE_WAIT;
           //}
@@ -1104,8 +1103,8 @@ static void atapi_cmd_readtoc(IDEDRV drv) {
 #else
   time = (drv->buf[1] & 0x02) >> 0x01;
   // format = (drv->buf[2] & 0x0f);
-  // if (format == 0)		// "When Format in Byte 2 is zero, then Byte 9 is
-  // used" (SFF8020)
+  // if (format == 0)		// "When Format in Byte 2 is zero, then Byte 9
+  // is used" (SFF8020)
   format = (drv->buf[9] >> 6);
   leng = (drv->buf[7] << 8) + drv->buf[8];
 #endif
@@ -1177,8 +1176,8 @@ static void atapi_cmd_readtoc(IDEDRV drv) {
     break;
 
   default:
-    // time = 1;		// 0010b~0101b: MSF(TIME) Field "Ignored by Drive" (SCSI
-    // MMC)
+    // time = 1;		// 0010b~0101b: MSF(TIME) Field "Ignored by
+    // Drive" (SCSI MMC)
     senderror(drv);
     break;
   }

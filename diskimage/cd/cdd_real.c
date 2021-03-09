@@ -159,12 +159,13 @@ REG8 sec2048_read_SPTI(SXSIDEV sxsi, FILEPOS pos, UINT8 *buf, UINT size) {
   //	//memset(ucDataBuf, 0, 16384);
   //	//SetLastError(0);
   //	if (DeviceIoControl(fh, IOCTL_SCSI_PASS_THROUGH, &sptd, offsetof(struct
-  //sptdinfo, sense_buffer)+sizeof(sptd.sense_buffer), &sptd, offsetof(struct
-  //sptdinfo, ucDataBuf)+2352, &sptisize, FALSE))
+  // sptdinfo, sense_buffer)+sizeof(sptd.sense_buffer), &sptd, offsetof(struct
+  // sptdinfo, ucDataBuf)+2352, &sptisize, FALSE))
   //	{
   //		//if (sptd.info.DataTransferLength != 0){
   //			//memcpy(buf, sptd.ucDataBuf + 16,
-  //sptd.info.DataTransferLength); 			sxsi->cdflag_ecc = 2; 			return(0xd0);
+  // sptd.info.DataTransferLength); 			sxsi->cdflag_ecc = 2;
+  // return(0xd0);
   //			//return(0x00);
   //		//}
   //	}
@@ -389,7 +390,7 @@ sxsiope_err1:
 
 //	----
 //	セクタ長取得用（でもREAD
-//CAPACITYコマンドに返事してくれない場合があるような･･･）
+// CAPACITYコマンドに返事してくれない場合があるような･･･）
 UINT32 readcapacity_SPTI(FILEH fh) {
 
   // CDINFO	cdinfo;
@@ -514,8 +515,9 @@ BRESULT openrealcdd(SXSIDEV sxsi, const OEMCHAR *path) {
       trk[i].adr_ctl = TRACKTYPE_AUDIO;
     }
     trk[i].point = tocCDROM.TrackData[i].TrackNumber;
-    trk[i].pos = (UINT32)(
-        msf2lba(LOADMOTOROLADWORD(tocCDROM.TrackData[i].Address)) - 150);
+    trk[i].pos =
+        (UINT32)(msf2lba(LOADMOTOROLADWORD(tocCDROM.TrackData[i].Address)) -
+                 150);
     trk[i].pos0 = trk[i].pos;
 
     trk[i].sector_size = sector_size;
@@ -525,9 +527,9 @@ BRESULT openrealcdd(SXSIDEV sxsi, const OEMCHAR *path) {
     if (i == trks - 1) {
       trk[i].end_sector = (UINT32)totals;
     } else {
-      trk[i].end_sector = (UINT32)(
-          msf2lba(LOADMOTOROLADWORD(tocCDROM.TrackData[i + 1].Address)) - 150 -
-          1);
+      trk[i].end_sector = (UINT32)(msf2lba(LOADMOTOROLADWORD(
+                                       tocCDROM.TrackData[i + 1].Address)) -
+                                   150 - 1);
     }
 
     trk[i].img_pregap_sec = trk[i].pregap_sector;
@@ -604,8 +606,8 @@ openiso_err1:
 //	trks = 0;
 //
 //	//fh = CreateFile(path, GENERIC_READ, FILE_SHARE_READ|FILE_SHARE_WRITE,
-//0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL); 	fh = file_open_rb(path); 	if
-//(fh == FILEH_INVALID) { 		goto openiso_err1;
+// 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL); 	fh = file_open_rb(path);
+// if (fh == FILEH_INVALID) { 		goto openiso_err1;
 //	}
 //
 //	//	セクタサイズが2048byte、2352byte、2448byteのどれかをチェック
@@ -618,7 +620,7 @@ openiso_err1:
 //	}
 //	sector_size = dgCDROM.BytesPerSector;
 //	totals =
-//dgCDROM.SectorsPerTrack*dgCDROM.TracksPerCylinder*dgCDROM.Cylinders.QuadPart;
+// dgCDROM.SectorsPerTrack*dgCDROM.TracksPerCylinder*dgCDROM.Cylinders.QuadPart;
 //	switch(sector_size){
 //	case 2048:
 //		sxsi->read = sec2048_read;
@@ -636,11 +638,11 @@ openiso_err1:
 //	//	トラック情報を拾う
 //	DeviceIoControl(fh, IOCTL_CDROM_READ_TOC_EX,
 //				&TOCEx, sizeof(TOCEx), &tocCDROMtmp,
-//sizeof(tocCDROMtmp), 				&dwNotUsed, NULL); 	trks =
-//(LOADMOTOROLAWORD(tocCDROMtmp.Length) - sizeof(UCHAR)*2) /
-//sizeof(CDROM_TOC_FULL_TOC_DATA_BLOCK); 	lentmp =
-//sizeof(CDROM_TOC_FULL_TOC_DATA) + trks *
-//sizeof(CDROM_TOC_FULL_TOC_DATA_BLOCK); 	lptocCDROM =
+// sizeof(tocCDROMtmp), 				&dwNotUsed, NULL);
+// trks = (LOADMOTOROLAWORD(tocCDROMtmp.Length) - sizeof(UCHAR)*2) /
+// sizeof(CDROM_TOC_FULL_TOC_DATA_BLOCK); 	lentmp =
+// sizeof(CDROM_TOC_FULL_TOC_DATA) + trks *
+// sizeof(CDROM_TOC_FULL_TOC_DATA_BLOCK); 	lptocCDROM =
 //(CDROM_TOC_FULL_TOC_DATA*)calloc(lentmp, 1);
 //
 //	DeviceIoControl(fh, IOCTL_CDROM_READ_TOC_EX,
@@ -655,7 +657,7 @@ openiso_err1:
 //			trk[i].adr_ctl		= TRACKTYPE_AUDIO;
 //		}
 //		trk[i].point			=
-//lptocCDROM->Descriptors[i].SessionNumber;
+// lptocCDROM->Descriptors[i].SessionNumber;
 //		trk[i].pos				=
 //(msf2lba(LOADMOTOROLADWORD(lptocCDROM->Descriptors[i].Msf)) - 150);
 //		trk[i].pos0				= trk[i].pos;
@@ -677,16 +679,16 @@ openiso_err1:
 //
 //		trk[i].pregap_sectors	= 0;
 //		trk[i].track_sectors	= trk[i].end_sector -
-//trk[i].start_sector + 1;
+// trk[i].start_sector + 1;
 //
 //		trk[i].str_sec		= trk[i].start_sector;
 //		trk[i].end_sec		= trk[i].end_sector;
 //		trk[i].sectors		= trk[i].track_sectors;
 //
 //		trk[i].pregap_offset	= trk[i].start_sector *
-//trk[i].sector_size; 		trk[i].start_offset		= trk[i].start_sector *
-//trk[i].sector_size; 		trk[i].end_offset		= trk[i].end_sector *
-//trk[i].sector_size;
+// trk[i].sector_size; 		trk[i].start_offset		=
+// trk[i].start_sector * trk[i].sector_size; 		trk[i].end_offset
+// = trk[i].end_sector * trk[i].sector_size;
 //	}
 //
 //	//trk[0].adr_ctl			= TRACKTYPE_DATA;

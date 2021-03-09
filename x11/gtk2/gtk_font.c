@@ -51,7 +51,8 @@ fontmng_init(void) {
   return SUCCESS;
 }
 
-void fontmng_terminate(void) { /* Nothing to do */ }
+void fontmng_terminate(void) { /* Nothing to do */
+}
 
 void fontmng_setdeffontname(const OEMCHAR *fontface) {
 

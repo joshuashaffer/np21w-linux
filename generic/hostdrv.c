@@ -607,8 +607,9 @@ static void read_file(INTRST intrst) {
   STOREINTELDWORD(sft.file_pos, file_pos);
 
   store_sft(intrst, &sft);
-  //	store_sda_currcds(&sc);						// ver0.74 Yui /
-  //sdaは変更無し
+  //	store_sda_currcds(&sc);						// ver0.74
+  //Yui
+  /// sdaは変更無し
   succeed(intrst);
 }
 

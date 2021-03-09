@@ -213,7 +213,7 @@ static void ct1741_prepare_dma_old(DMA_MODES mode, BOOL autoinit) {
   g_sb16.dsp_info.dma.chan = dmac.dmach + g_sb16.dmach; // 8bit dma irq
   ct1741_dma_transfer(mode, g_sb16.dsp_info.freq / 1, FALSE);
   //	ct1741_dma_transfer(mode, g_sb16.dsp_info.freq / (sb.mixer.stereo ? 2 :
-  //1), sb.mixer.stereo);
+  // 1), sb.mixer.stereo);
 }
 
 static void ct1741_prepare_dma(DMA_MODES mode, UINT32 length, BOOL autoinit,
@@ -226,12 +226,12 @@ static void ct1741_prepare_dma(DMA_MODES mode, UINT32 length, BOOL autoinit,
     if (g_sb16.dmairq != 0xff) {
       g_sb16.dsp_info.dma.chan = dmac.dmach + g_sb16.dmach;
       //			g_sb16.dsp_info.dma.chan =
-      //GetDMAChannel(sb.hw.dma16);
+      // GetDMAChannel(sb.hw.dma16);
     } else {
       g_sb16.mixreg[0x82] |= 0x1;
       g_sb16.dsp_info.dma.chan = dmac.dmach + g_sb16.dmach;
       //			g_sb16.dsp_info.dma.chan =
-      //GetDMAChannel(sb.hw.dma8);
+      // GetDMAChannel(sb.hw.dma8);
       mode = DSP_DMA_16_ALIASED;
       freq /= 2;
     }
@@ -284,15 +284,17 @@ static void ct1741_exec_command() {
       playwaitcounter = DMA_BUFSIZE / 2;
     }
     //		if (sb.dac.used<DSP_DACSIZE) {
-    //			sb.dac.data[sb.dac.used++]=(Bit8s(sb.dsp.in.data[0] ^ 0x80)) <<
-    //8; 			sb.dac.data[sb.dac.used++]=(Bit8s(sb.dsp.in.data[0] ^ 0x80)) << 8;
+    //			sb.dac.data[sb.dac.used++]=(Bit8s(sb.dsp.in.data[0] ^
+    //0x80))
+    //<< 8;
+    // sb.dac.data[sb.dac.used++]=(Bit8s(sb.dsp.in.data[0] ^ 0x80)) << 8;
     //		}
     break;
   case 0x24: /* Singe Cycle 8-Bit DMA ADC */
     g_sb16.dsp_info.dma.left = g_sb16.dsp_info.dma.total =
         1 + g_sb16.dsp_info.in.data[0] + (g_sb16.dsp_info.in.data[1] << 8);
     //		LOG(LOG_SB,LOG_ERROR)("DSP:Faked ADC for %d
-    //bytes",sb.dma.total);
+    // bytes",sb.dma.total);
     //		GetDMAChannel(sb.hw.dma8)->Register_Callback(DSP_ADC_CallBack);
     break;
   case 0x14: /* Singe Cycle 8-Bit DMA DAC */
@@ -315,7 +317,7 @@ static void ct1741_exec_command() {
       }
     }
     //		if (sb.midi == true)
-    //MIDI_RawOutByte(g_sb16.dsp_info.in.data[0]);
+    // MIDI_RawOutByte(g_sb16.dsp_info.in.data[0]);
     break;
   case 0x40: /* Set Timeconstant */
     g_sb16.dsp_info.freq = (1000000 / (256 - g_sb16.dsp_info.in.data[0]));
@@ -331,7 +333,7 @@ static void ct1741_exec_command() {
     g_sb16.dsp_info.freq =
         (g_sb16.dsp_info.in.data[0] << 8) | g_sb16.dsp_info.in.data[1];
     //		g_sb16.dsp_info.dma.step12 = (g_sb16.dsp_info.freq <<
-    //12)/g_sb16.dsp_info.dma.rate2; 		g_sb16.dsp_info.dma.bufpos = 1;
+    // 12)/g_sb16.dsp_info.dma.rate2; 		g_sb16.dsp_info.dma.bufpos = 1;
     break;
   case 0x48: /* Set DMA Block Size */
     // TODO Maybe check limit for new irq?
@@ -445,9 +447,9 @@ static void ct1741_exec_command() {
   {
     //			LOG(LOG_SB,LOG_NORMAL)("DSP Function 0xe2");
     //			for (Bitu i = 0; i < 8; i++)
-    //				if ((sb.dsp.in.data[0] >> i) & 0x01) sb.e2.value +=
-    //E2_incr_table[sb.e2.count % 4][i]; 			 sb.e2.value +=
-    //E2_incr_table[sb.e2.count % 4][8]; 			 sb.e2.count++;
+    //				if ((sb.dsp.in.data[0] >> i) & 0x01) sb.e2.value
+    //+= E2_incr_table[sb.e2.count % 4][i]; 			 sb.e2.value +=
+    // E2_incr_table[sb.e2.count % 4][8]; 			 sb.e2.count++;
     //			 GetDMAChannel(sb.hw.dma8)->Register_Callback(DSP_E2_DMA_CallBack);
   } break;
   case 0xe3: /* DSP Copyright */
@@ -503,8 +505,8 @@ static void ct1741_exec_command() {
   case 0x7d:
   case 0x7f:
   case 0x1f:
-    //		LOG(LOG_SB,LOG_ERROR)("DSP:Unimplemented auto-init DMA ADPCM command
-    //%2X",sb.dsp.cmd);
+    //		LOG(LOG_SB,LOG_ERROR)("DSP:Unimplemented auto-init DMA ADPCM
+    // command %2X",sb.dsp.cmd);
     break;
   case 0x20:
   case 0x2c:
@@ -740,10 +742,13 @@ void ct1741_dma(NEVENTITEM item) {
         // 転送〜
         // DMAでデータを取るのが速すぎるといかれるのでバッファサイズに制限を設けた方が良いのかなと思いました（無意味な気もする）
         // if(g_sb16.dsp_info.dma.bufsize *
-        // BUF_ALIGN[g_sb16.dsp_info.dma.mode|g_sb16.dsp_info.dma.stereo <<3] / 4
-        // * g_sb16.dsp_info.freq / 44100 < g_sb16.dsp_info.dma.bufdatas){ 	rem =
-        //0; }else{ 	rem = g_sb16.dsp_info.dma.bufsize *
-        //BUF_ALIGN[g_sb16.dsp_info.dma.mode|g_sb16.dsp_info.dma.stereo <<3] / 4
+        // BUF_ALIGN[g_sb16.dsp_info.dma.mode|g_sb16.dsp_info.dma.stereo <<3] /
+        // 4
+        // * g_sb16.dsp_info.freq / 44100 < g_sb16.dsp_info.dma.bufdatas){
+        // rem =
+        // 0; }else{ 	rem = g_sb16.dsp_info.dma.bufsize *
+        // BUF_ALIGN[g_sb16.dsp_info.dma.mode|g_sb16.dsp_info.dma.stereo <<3] /
+        // 4
         //* g_sb16.dsp_info.freq / 44100 - g_sb16.dsp_info.dma.bufdatas;
         //}
         if (g_sb16.dsp_info.dma.bufsize < g_sb16.dsp_info.dma.bufdatas) {
@@ -804,7 +809,7 @@ void ct1741_dma(NEVENTITEM item) {
                 (DMAPLAY_ADJUST_VALUE * g_sb16.dsp_info.freq / 44100);
           // if(g_sb16.dsp_info.dma.mode==DSP_DMA_16 ||
           // g_sb16.dsp_info.dma.mode==DSP_DMA_16_ALIASED){ }else{ 	cnt =
-          //pccore.realclock / g_sb16.dsp_info.freq * g_sb16.dsp_info.dma.rate2
+          // pccore.realclock / g_sb16.dsp_info.freq * g_sb16.dsp_info.dma.rate2
           /// g_sb16.dsp_info.freq * BUF_SPEED;
           //}
           if (cnt != 0) {
@@ -1282,16 +1287,19 @@ void ct1741io_bind(void) {
                    ct1741_read_rstatus16); /* DSP Read Buffer Status (Bit 7) */
 
   // Canopus PowerWindow T64S/98 音源部テスト
-  // iocore_attachout(0x6600 + g_sb16.base, ct1741_write_reset);	/* DSP Reset
+  // iocore_attachout(0x6600 + g_sb16.base, ct1741_write_reset);	/* DSP
+  // Reset
   // */
   // iocore_attachout(0x6C00 + g_sb16.base, ct1741_write_data);	/* DSP Write
   // Command/Data */
 
   // iocore_attachinp(0x6600 + g_sb16.base, ct1741_read_reset);	/* DSP Reset */
-  // iocore_attachinp(0x6a00 + g_sb16.base, ct1741_read_data);		/* DSP Read
-  // Data Port */ iocore_attachinp(0x6c00 + g_sb16.base, ct1741_read_wstatus);
-  // /* DSP Write Buffer Status (Bit 7) */ iocore_attachinp(0x6d00 + g_sb16.base,
-  // ct1741_read_reset);	/* DSP Reset */ iocore_attachinp(0x6e00 + g_sb16.base,
+  // iocore_attachinp(0x6a00 + g_sb16.base, ct1741_read_data);		/* DSP
+  // Read Data Port */ iocore_attachinp(0x6c00 + g_sb16.base,
+  // ct1741_read_wstatus);
+  // /* DSP Write Buffer Status (Bit 7) */ iocore_attachinp(0x6d00 +
+  // g_sb16.base, ct1741_read_reset);	/* DSP Reset */ iocore_attachinp(0x6e00
+  // + g_sb16.base,
   // ct1741_read_rstatus);	/* DSP Read Buffer Status (Bit 7) */
   // iocore_attachinp(0x6f00 + g_sb16.base, ct1741_read_rstatus16);	/* DSP
   // Read Buffer Status (Bit 7) */

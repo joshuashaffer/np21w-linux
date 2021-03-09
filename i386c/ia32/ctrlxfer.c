@@ -1463,10 +1463,13 @@ static void CPUCALL IRET_pm_return_from_vm86(UINT16 new_cs, UINT32 new_ip,
   //	if((CPU_EFLAG & VIP_FLAG) || (CPU_EFLAG & T_FLAG)){
   //		EXCEPTION(GP_EXCEPTION, 0);
   //	}else{
-  //		new_flags = (new_flags & ~VIF_FLAG) | ((new_flags & I_FLAG) << 10);
-  //// IF → VIFにコピー 		new_flags = (new_flags & ~(IOPL_FLAG|I_FLAG)) |
-  //(CPU_EFLAG & (IOPL_FLAG|I_FLAG)); // IF, IOPLは変更させない 		goto
-  //vme_emulate;
+  //		new_flags = (new_flags & ~VIF_FLAG) | ((new_flags & I_FLAG) <<
+  // 10);
+  //// IF → VIFにコピー 		new_flags = (new_flags &
+  ///~(IOPL_FLAG|I_FLAG))
+  ///|
+  //(CPU_EFLAG & (IOPL_FLAG|I_FLAG)); // IF, IOPLは変更させない
+  // goto vme_emulate;
   //	}
   //}else{
   //	EXCEPTION(GP_EXCEPTION, 0);

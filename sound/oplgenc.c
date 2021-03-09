@@ -112,9 +112,11 @@ void oplgen_initialize(UINT rate) {
       oplcfg.sintable[1][i] = oplcfg.sintable[0][i];
     oplcfg.sintable[2][i] = oplcfg.sintable[0][i];
     //		oplcfg.sintable[1][i] = (i & (SIN_ENT >> 1)) ? 0 :
-    //oplcfg.sintable[0][i]; 		oplcfg.sintable[2][i] = oplcfg.sintable[0][i &
-    //((SIN_ENT >> 1) - 1)]; 		oplcfg.sintable[3][i] = (i & (SIN_ENT >> 2)) ? 0 :
-    //oplcfg.sintable[0][i & ((SIN_ENT >> 2) - 1)];
+    // oplcfg.sintable[0][i]; 		oplcfg.sintable[2][i] =
+    // oplcfg.sintable[0][i
+    // &
+    //((SIN_ENT >> 1) - 1)]; 		oplcfg.sintable[3][i] = (i & (SIN_ENT >> 2))
+    //? 0 : oplcfg.sintable[0][i & ((SIN_ENT >> 2) - 1)];
   }
   for (i = 0; i < SIN_ENT; i++) {
     pom = (double)((1 << SINTBL_BIT) - 1) * sin(4 * M_PI * i / SIN_ENT);
@@ -372,9 +374,9 @@ void oplgen_reset(OPLGEN oplgen, UINT nBaseClock) {
 
   memset(oplgen, 0, sizeof(*oplgen));
   oplgen->noise = 1;
-  oplgen->calc1024 = (SINT32)(
-      (FMDIV_ENT * (oplcfg.rate << oplcfg.ratebit) / (nBaseClock / 72.0)) +
-      0.5);
+  oplgen->calc1024 = (SINT32)((FMDIV_ENT * (oplcfg.rate << oplcfg.ratebit) /
+                               (nBaseClock / 72.0)) +
+                              0.5);
 
   ch = oplgen->oplch;
   for (i = 0; i < OPLCH_MAX; i++) {

@@ -100,8 +100,8 @@ void pcm86_cb(NEVENTITEM item) {
         // int i;
         // for(i=0;i<OPNA_MAX;i++){
         //	if(g_opna[i].s.irq == pcm86->irq){
-        //		if(((g_opna[i].s.status & 0x01)) || ((g_opna[i].s.status &
-        //0x02))){ 			break;
+        //		if(((g_opna[i].s.status & 0x01)) || ((g_opna[i].s.status
+        //& 0x02))){ 			break;
         //		}
         //	}
         //}
@@ -237,8 +237,8 @@ void SOUNDCALL pcm86gen_checkbuf(PCM86 pcm86, UINT nCount) {
           // int i;
           // for(i=0;i<OPNA_MAX;i++){
           //	if(g_opna[i].s.irq == pcm86->irq){
-          //		if(((g_opna[i].s.status & 0x01)) || ((g_opna[i].s.status &
-          //0x02))){ 			break;
+          //		if(((g_opna[i].s.status & 0x01)) || ((g_opna[i].s.status
+          //& 0x02))){ 			break;
           //		}
           //	}
           //}

@@ -312,13 +312,14 @@ static void smpu98_int(void) {
   //	// Sound Blaster 16
   //	if(g_nSoundID == SOUNDID_SB16 || g_nSoundID == SOUNDID_PC_9801_86_SB16
   //|| g_nSoundID == SOUNDID_WSS_SB16 || g_nSoundID ==
-  //SOUNDID_PC_9801_86_WSS_SB16 || g_nSoundID == SOUNDID_PC_9801_118_SB16 ||
-  //g_nSoundID == SOUNDID_PC_9801_86_118_SB16){ 		pic_setirq(g_sb16.dmairq);
+  // SOUNDID_PC_9801_86_WSS_SB16 || g_nSoundID == SOUNDID_PC_9801_118_SB16 ||
+  // g_nSoundID == SOUNDID_PC_9801_86_118_SB16){
+  // pic_setirq(g_sb16.dmairq);
   //	}
   //	// PC-9801-118
   //	if(g_nSoundID == SOUNDID_PC_9801_118 || g_nSoundID ==
-  //SOUNDID_PC_9801_86_118 || g_nSoundID == SOUNDID_PC_9801_118_SB16 ||
-  //g_nSoundID == SOUNDID_PC_9801_86_118_SB16){ 		pic_setirq(10);
+  // SOUNDID_PC_9801_86_118 || g_nSoundID == SOUNDID_PC_9801_118_SB16 ||
+  // g_nSoundID == SOUNDID_PC_9801_86_118_SB16){ 		pic_setirq(10);
   //	}
   //	// WaveStar
   //	if(g_nSoundID == SOUNDID_WAVESTAR){

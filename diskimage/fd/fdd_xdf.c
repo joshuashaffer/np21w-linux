@@ -40,8 +40,10 @@ static const _XDFINFO supportxdf[] = {
     {0, 160, 8, 2, DISKTYPE_2DD, 0}, //	BKDSK(DD6)	MS-DOS  640K(2DD)
     {0, 160, 9, 2, DISKTYPE_2DD, 0}, //	BKDSK(DD9)	MS-DOS  720K(2DD)
     //	track 0とそれ以外でセクタサイズが違うため未対応
-    //			{0, 154, 26, 1, DISKTYPE_2HD, 0},	//	BKDSK(HDB)	BASIC
-    //2HD
+    //			{0, 154, 26, 1, DISKTYPE_2HD, 0},	//
+    //BKDSK(HDB)
+    // BASIC
+    // 2HD
     //
     {0, 160, 16, 1, DISKTYPE_2DD, 0}, //	BKDSK(DDB)	BASIC 2DD
     //

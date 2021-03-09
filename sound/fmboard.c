@@ -67,8 +67,8 @@ REG8 fmboard_getjoy(POPNA opna) {
     ret |= s_rapids;
   }
 
-  // rapidと非rapidを合成								//
-  // ver0.28
+  // rapidと非rapidを合成
+  // // ver0.28
   ret &= ((ret >> 2) | (~0x30));
 
   if (np2cfg.BTN_MODE) {
@@ -77,8 +77,8 @@ REG8 fmboard_getjoy(POPNA opna) {
     ret = (ret & (~0x30)) | bit1 | bit2;
   }
 
-  // intr 反映して終わり								//
-  // ver0.28
+  // intr 反映して終わり
+  // // ver0.28
   ret &= 0x3f;
   ret |= opna->s.intr;
   return ret;

@@ -206,7 +206,7 @@ static void FPU_FPOP(void) {
   // maybe set zero in it as well
   FPU_STAT_TOP = ((FPU_STAT_TOP + 1) & 7);
   //	LOG(LOG_FPU,LOG_ERROR)("popped from %d  %g off the
-  //stack",top,fpu.regs[top].d64);
+  // stack",top,fpu.regs[top].d64);
   return;
 }
 
@@ -519,9 +519,9 @@ static void FPU_FBST(UINT32 addr) {
 
 static void FPU_FADD(UINT op1, UINT op2) {
   //// HACK: Set the denormal flag according to whether the source or final
-  ///result is a denormalized number. /       This is vital if we don't want
-  ///certain DOS programs to mis-detect our FPU emulation as an IIT clone chip
-  ///when cputype == 286
+  /// result is a denormalized number. /       This is vital if we don't want
+  /// certain DOS programs to mis-detect our FPU emulation as an IIT clone chip
+  /// when cputype == 286
   // BOOL was_not_normal;
 
   // was_not_normal = isdenormal(FPU_STAT.reg[op1].d64);
@@ -537,9 +537,10 @@ static void FPU_FADD(UINT op1, UINT op2) {
   //	if((v1>=0 && v2<=0) || (v1<=0 && v2>=0)){ //
   //符号が異なればオーバーフローしない 		FPU_STAT.int_reg[op1].ul64.m12 =
   //(UINT64)v12; 	}else if((v1>0 && v2>0) && v12 > 0){ // XXX:
-  //正+正→正　多分処理系依存 		FPU_STAT.int_reg[op1].ul64.m12 = (UINT64)v12; 	}else
-  //if((v1<0 && v2<0) && v12 < 0){ // XXX: 負+負→負　多分処理系依存
-  //		FPU_STAT.int_reg[op1].ul64.m12 = (UINT64)v12;
+  //正+正→正　多分処理系依存 		FPU_STAT.int_reg[op1].ul64.m12 =
+  //(UINT64)v12; 	}else if((v1<0 && v2<0) && v12 < 0){ // XXX:
+  // 負+負→負　多分処理系依存 		FPU_STAT.int_reg[op1].ul64.m12 =
+  // (UINT64)v12;
   //	}else{
   //		FPU_STAT.int_regvalid[op1] = 0;
   //	}
@@ -639,10 +640,10 @@ static void FPU_FSUB(UINT st, UINT other) {
   //	if((v1>=0 && v2>=0) || (v1<=0 && v2<=0)){ //
   //符号が異なればオーバーフローしない 		FPU_STAT.int_reg[st].ul64.m12 =
   //(UINT64)v12; 	}else if((v1>0 && v2<0) && v12 > 0){ // XXX:
-  //正+正→正　多分処理系依存 		FPU_STAT.int_reg[st].ul64.m12 = (UINT64)v12; 	}else
-  //if((v1<0 && v2>0) && v12 < 0){ // XXX: 負+負→負　多分処理系依存
-  //		FPU_STAT.int_reg[st].ul64.m12 = (UINT64)v12;
-  //	}else{
+  //正+正→正　多分処理系依存 		FPU_STAT.int_reg[st].ul64.m12 =
+  //(UINT64)v12; 	}else if((v1<0 && v2>0) && v12 < 0){ // XXX:
+  // 負+負→負　多分処理系依存 		FPU_STAT.int_reg[st].ul64.m12 = (UINT64)v12;
+  // }else{
   //		FPU_STAT.int_regvalid[st] = 0;
   //	}
   //}else{
@@ -661,10 +662,10 @@ static void FPU_FSUBR(UINT st, UINT other) {
   //	if((v1>=0 && v2>=0) || (v1<=0 && v2<=0)){ //
   //符号が異なればオーバーフローしない 		FPU_STAT.int_reg[st].ul64.m12 =
   //(UINT64)v12; 	}else if((v1>0 && v2<0) && v12 > 0){ //
-  //正+正→正　多分処理系依存 		FPU_STAT.int_reg[st].ul64.m12 = (UINT64)v12; 	}else
-  //if((v1<0 && v2>0) && v12 < 0){ // 負+負→負　多分処理系依存
-  //		FPU_STAT.int_reg[st].ul64.m12 = (UINT64)v12;
-  //	}else{
+  //正+正→正　多分処理系依存 		FPU_STAT.int_reg[st].ul64.m12 =
+  //(UINT64)v12; 	}else if((v1<0 && v2>0) && v12 < 0){ //
+  // 負+負→負　多分処理系依存 		FPU_STAT.int_reg[st].ul64.m12 = (UINT64)v12;
+  // }else{
   //		FPU_STAT.int_regvalid[st] = 0;
   //	}
   //}else{

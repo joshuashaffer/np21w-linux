@@ -41,7 +41,7 @@ BRESULT sxsicd_open(SXSIDEV sxsi, const OEMCHAR *fname) {
   } else if (!file_cmpname(
                  ext,
                  str_cdm)) { //	CD
-                             //Manipulator(*.cdm)に対応(読み方はCloneCDと一緒)
+                             // Manipulator(*.cdm)に対応(読み方はCloneCDと一緒)
     return (openccd(sxsi, fname));
     //		return(opencdm(sxsi, fname));
   } else if (!file_cmpname(ext, str_mds)) { //	Media Descriptor(*.mds)に対応

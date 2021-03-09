@@ -25,8 +25,9 @@ REG16 MEMCALL pegc_memvgaplane_rd16(UINT32 address) {
   // UINT8 src, dst, pat1, pat2; //
   // ソースデータ、ディスティネーションデータ、パターンデータ1&2
   UINT8 ropcode = 0; // ラスタオペレーション設定 E0108h bit0〜bit7
-  UINT8 ropmethod = 0; // 論理演算の方法を指定（パターンレジスタまたはカラーパレット）
-                       // E0108h bit11,10
+  UINT8 ropmethod =
+      0; // 論理演算の方法を指定（パターンレジスタまたはカラーパレット）
+         // E0108h bit11,10
   UINT8 ropupdmode = 0; // 1ならラスタオペレーションを使用 E0108h bit12
   UINT8 planemask = 0; // プレーン書き込み禁止(0=許可, 1=禁止)　E0104h
   UINT32 pixelmask = 0; // ビット（画素）への書き込み禁止(0=禁止, 1=許可) E010Ch
@@ -123,8 +124,9 @@ void MEMCALL pegc_memvgaplane_wr16(UINT32 address, REG16 value) {
   UINT8 src, dst, pat1,
       pat2; // ソースデータ、ディスティネーションデータ、パターンデータ1&2
   UINT8 ropcode = 0; // ラスタオペレーション設定 E0108h bit0〜bit7
-  UINT8 ropmethod = 0; // 論理演算の方法を指定（パターンレジスタまたはカラーパレット）
-                       // E0108h bit11,10
+  UINT8 ropmethod =
+      0; // 論理演算の方法を指定（パターンレジスタまたはカラーパレット）
+         // E0108h bit11,10
   UINT8 ropupdmode = 0; // 1ならラスタオペレーションを使用 E0108h bit12
   UINT8 planemask = 0; // プレーン書き込み禁止(0=許可, 1=禁止)　E0104h
   UINT32 pixelmask = 0; // ビット（画素）への書き込み禁止(0=禁止, 1=許可) E010Ch

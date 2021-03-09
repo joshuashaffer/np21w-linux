@@ -220,7 +220,7 @@ static void FPU_FPOP(void) {
   // maybe set zero in it as well
   FPU_STAT_TOP = ((FPU_STAT_TOP + 1) & 7);
   //	LOG(LOG_FPU,LOG_ERROR)("popped from %d  %g off the
-  //stack",top,fpu.regs[top].d);
+  // stack",top,fpu.regs[top].d);
   return;
 }
 

@@ -357,8 +357,10 @@ void bios0x1a_pci_part(int is32bit) {
     devnum = CPU_BL >> 3;
     funcnum = CPU_BL & 0x7;
     // if(CPU_BH==0 && 0x0A <= CPU_CL && CPU_CL <= 0x0D && (CPU_CH & 0xf0)==0 &&
-    // pcidev.devices[devnum].enable){ 	UINT8 intpinidx = CPU_CL - 0x0A; 	CPU_AH =
-    //PCIBIOS_STATUS_SUCCESSFUL; 	CPU_FLAGL &= ~C_FLAG; }else{
+    // pcidev.devices[devnum].enable){ 	UINT8 intpinidx = CPU_CL - 0x0A;
+    // CPU_AH
+    // =
+    // PCIBIOS_STATUS_SUCCESSFUL; 	CPU_FLAGL &= ~C_FLAG; }else{
     CPU_AH = PCIBIOS_STATUS_SET_FAILED;
     CPU_FLAGL |= C_FLAG;
     //}

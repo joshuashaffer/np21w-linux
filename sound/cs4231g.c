@@ -325,12 +325,13 @@ void SOUNDCALL cs4231_getpcm(CS4231 cs, SINT32 *pcm, UINT count) {
 
     //// CS4231タイマー割り込みTI（手抜き）
     // if ((cs->reg.pinctrl & 2) && (cs->dmairq != 0xff) &&
-    // LOADINTELWORD(cs->reg.timer)) { 	static double timercount = 0; 	int decval =
-    //0; 	timercount += (double)count/44100 * 1000 * 100; // 10usec timer 	decval
-    //= (int)(timercount); 	timercount -= (double)decval; 	cs->timercounter -=
-    //decval; 	if(cs->timercounter < 0){ 		cs->timercounter =
-    //LOADINTELWORD(cs->reg.timer); 		cs->intflag |= INt; 		cs->reg.featurestatus |=
-    //TI; 		pic_setirq(cs->dmairq);
+    // LOADINTELWORD(cs->reg.timer)) { 	static double timercount = 0; 	int
+    // decval =
+    // 0; 	timercount += (double)count/44100 * 1000 * 100; // 10usec timer
+    // decval = (int)(timercount); 	timercount -= (double)decval;
+    // cs->timercounter -= decval; 	if(cs->timercounter < 0){
+    // cs->timercounter = LOADINTELWORD(cs->reg.timer); 		cs->intflag
+    // |= INt; 		cs->reg.featurestatus |= TI; pic_setirq(cs->dmairq);
     //	}
     //}
 

@@ -971,7 +971,8 @@ REG8 MEMCALL memp_read8_codefetch(UINT32 address) {
     return (mem[address]);
   } else {
     // if(pcidev.bios32entrypoint <= address && address <
-    // pcidev.bios32entrypoint + sizeof(pcidev.biosdata.data8)){ 	printf("BIOS32
+    // pcidev.bios32entrypoint + sizeof(pcidev.biosdata.data8)){
+    // printf("BIOS32
     //(read8): %x");
     //}
     address = address & CPU_ADRSMASK;
@@ -1207,7 +1208,8 @@ void MEMCALL memp_write8(UINT32 address, REG8 value) {
           if ((addr2 & CIRRUS_VRAMWINDOW2MASK) == vramWndAddr2) {
             CIRRUS_VRAMWND2_FUNC_wb(cirrusvga_opaque, addr2, value);
             // if((vramWndAddr2 != 0xE0000 || !(gdc.analog & ((1 <<
-            // GDCANALOG_16) | (1 << GDCANALOG_256) | (1 << GDCANALOG_256E)))) &&
+            // GDCANALOG_16) | (1 << GDCANALOG_256) | (1 << GDCANALOG_256E))))
+            // &&
             // !(gdc.display & (1 << GDCDISP_31))) 	return;
           }
         }

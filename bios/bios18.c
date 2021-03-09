@@ -326,16 +326,14 @@ static REG8 bios0x18_30(REG8 rate, REG8 scrn) {
     // if (rate & 4) {
     if (rate & 0xc) { // np21w ver0.86 rev47 workaround
                       //#if defined(BIOS_IO_EMULATION) && defined(CPUCORE_IA32)
-                      //			// XXX: Windows3.1 DOSプロンプト用 無理やり
-                      //			if (CPU_STAT_PM && CPU_STAT_VM86) {
-                      //				biosioemu_enq8(0x6a, 0x21);
-                      //				mem[MEMB_PRXDUPD] |= 0x80;
-                      //				crt = 4;
-                      //				master = 3 + (scrn & 3);
-                      //				slave = 1;
-                      //				biosioemu_enq8(0x6a, 0x69);
-                      //			}else
-                      //#endif
+                      //			// XXX: Windows3.1
+                      // DOSプロンプト用 無理やり 			if
+                      // (CPU_STAT_PM && CPU_STAT_VM86) {
+                      // biosioemu_enq8(0x6a, 0x21); 				mem[MEMB_PRXDUPD] |= 0x80;
+                      // crt = 4; 				master = 3 +
+                      // (scrn & 3); 				slave = 1;
+                      //				biosioemu_enq8(0x6a,
+                      // 0x69); 			}else #endif
       {
         gdc_analogext(TRUE);
         mem[MEMB_PRXDUPD] |= 0x80;
@@ -372,8 +370,8 @@ static REG8 bios0x18_30(REG8 rate, REG8 scrn) {
       //#if defined(BIOS_IO_EMULATION) && defined(CPUCORE_IA32)
       //			// XXX: Windows3.1 DOSプロンプト用 無理やり
       //			if (CPU_STAT_PM && CPU_STAT_VM86 &&
-      //biosioemu.enable) { 				biosioemu_enq8(0x6a, 0x20); // これは駄目 			}else
-      //#endif
+      // biosioemu.enable) { 				biosioemu_enq8(0x6a,
+      // 0x20); // これは駄目 			}else #endif
       { gdc_analogext(FALSE); }
       mem[MEMB_PRXDUPD] &= ~0x80;
     }
@@ -579,8 +577,8 @@ void bios0x18_42(REG8 mode) {
       }
       //#if defined(BIOS_IO_EMULATION) && defined(CPUCORE_IA32)
       //			if (CPU_STAT_PM && CPU_STAT_VM86 &&
-      //biosioemu.enable) { 				biosioemu_enq8(0x6a, 0x83); 				biosioemu_enq8(0x6a,
-      //0x85);
+      // biosioemu.enable) { 				biosioemu_enq8(0x6a,
+      // 0x83); 				biosioemu_enq8(0x6a, 0x85);
       //			}
       //#endif
     } else {
@@ -599,8 +597,8 @@ void bios0x18_42(REG8 mode) {
         mem[MEMB_PRXDUPD] |= 0x08;
         //#if defined(BIOS_IO_EMULATION) && defined(CPUCORE_IA32)
         //				if (CPU_STAT_PM && CPU_STAT_VM86 &&
-        //biosioemu.enable) { 					biosioemu_enq8(0x6a, 0x82); 					biosioemu_enq8(0x6a,
-        //0x84);
+        // biosioemu.enable) { biosioemu_enq8(0x6a, 0x82);
+        // biosioemu_enq8(0x6a, 0x84);
         //				}
         //#endif
       }

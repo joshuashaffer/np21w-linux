@@ -10,9 +10,10 @@
 
 static const UINT8 vfdd_verID_100[8] = {'V', 'F', 'D', '1',
                                         '.', '0', '0', 0x00};
-static const UINT8 vfdd_verID_101[8] = {
-    'V', 'F', 'D', '1',
-    '.', '0', '1', 0x00}; //	1.01もとりあえず対象に(kaiF)
+static const UINT8 vfdd_verID_101[8] =
+    {
+        'V', 'F', 'D', '1',
+        '.', '0', '1', 0x00}; //	1.01もとりあえず対象に(kaiF)
 
 BRESULT fdd_set_vfdd(FDDFILE fdd, FDDFUNC fdd_fn, const OEMCHAR *fname,
                      int ro) {

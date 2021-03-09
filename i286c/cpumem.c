@@ -653,7 +653,8 @@ void MEMCALL memp_write8(UINT32 address, REG8 value) {
           if ((addr2 & CIRRUS_VRAMWINDOW2MASK) == vramWndAddr2) {
             CIRRUS_VRAMWND2_FUNC_wb(cirrusvga_opaque, addr2, value);
             // if((vramWndAddr2 != 0xE0000 || !(gdc.analog & ((1 <<
-            // GDCANALOG_16) | (1 << GDCANALOG_256) | (1 << GDCANALOG_256E)))) &&
+            // GDCANALOG_16) | (1 << GDCANALOG_256) | (1 << GDCANALOG_256E))))
+            // &&
             // !(gdc.display & (1 << GDCDISP_31))) 	return;
           }
         }
@@ -753,7 +754,8 @@ void MEMCALL memp_write16(UINT32 address, REG16 value) {
           if ((addr2 & CIRRUS_VRAMWINDOW2MASK) == vramWndAddr2) {
             CIRRUS_VRAMWND2_FUNC_ww(cirrusvga_opaque, addr2, value);
             // if((vramWndAddr2 != 0xE0000 || !(gdc.analog & ((1 <<
-            // GDCANALOG_16) | (1 << GDCANALOG_256) | (1 << GDCANALOG_256E)))) &&
+            // GDCANALOG_16) | (1 << GDCANALOG_256) | (1 << GDCANALOG_256E))))
+            // &&
             // !(gdc.display & (1 << GDCDISP_31))) 	return;
           }
         }
@@ -859,7 +861,8 @@ void MEMCALL memp_write32(UINT32 address, UINT32 value) {
           if ((addr2 & CIRRUS_VRAMWINDOW2MASK) == vramWndAddr2) {
             CIRRUS_VRAMWND2_FUNC_wl(cirrusvga_opaque, addr2, value);
             // if((vramWndAddr2 != 0xE0000 || !(gdc.analog & ((1 <<
-            // GDCANALOG_16) | (1 << GDCANALOG_256) | (1 << GDCANALOG_256E)))) &&
+            // GDCANALOG_16) | (1 << GDCANALOG_256) | (1 << GDCANALOG_256E))))
+            // &&
             // !(gdc.display & (1 << GDCDISP_31))) 	return;
           }
         }

@@ -282,8 +282,9 @@ BRESULT fdd_seeksector_nfd(FDDFILE fdd) {
   trk = (fdc.treg[fdc.us] << 1) + fdc.hd;
   MaxR = 0;
   for (i = 0; i < NFD_SECMAX; i++) {
-    //		TRACEOUT(("fdd_seek_nfd1 read sector_id[C:%02x,H:%02x,R:%02x,N:%02x]",
-    //sec_id.C, sec_id.H, sec_id.R, sec_id.N));
+    //		TRACEOUT(("fdd_seek_nfd1 read
+    // sector_id[C:%02x,H:%02x,R:%02x,N:%02x]", sec_id.C, sec_id.H, sec_id.R,
+    // sec_id.N));
     if (fdd->inf.nfd.head.r0.si[trk][i].R > MaxR) {
       MaxR = fdd->inf.nfd.head.r0.si[trk][i].R;
     }
@@ -678,12 +679,13 @@ BRESULT fdd_seeksector_nfd1(FDDFILE fdd) {
             FSEEK_SET);
   file_read(hdl, &trk_id, sizeof(NFD_TRACK_ID1));
   //	TRACEOUT(("fdd_seek_nfd1 read track_id[%03d:%08x]", trk,
-  //fdd->inf.nfd.head.r1.dwTrackHead[trk]));
+  // fdd->inf.nfd.head.r1.dwTrackHead[trk]));
   MaxR = 0;
   for (i = 0; i < LOADINTELWORD(&(trk_id.wSector)); i++) {
     file_read(hdl, &sec_id, sizeof(NFD_SECT_ID1));
-    //		TRACEOUT(("fdd_seek_nfd1 read sector_id[C:%02x,H:%02x,R:%02x,N:%02x]",
-    //sec_id.C, sec_id.H, sec_id.R, sec_id.N));
+    //		TRACEOUT(("fdd_seek_nfd1 read
+    // sector_id[C:%02x,H:%02x,R:%02x,N:%02x]", sec_id.C, sec_id.H, sec_id.R,
+    // sec_id.N));
     if (sec_id.R > MaxR) {
       MaxR = sec_id.R;
     }

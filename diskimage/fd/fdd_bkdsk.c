@@ -40,8 +40,8 @@ BRESULT fdd_set_bkdsk(FDDFILE fdd, FDDFUNC fdd_fn, const OEMCHAR *fname,
   file_close(fh);
 
   //	イメージファイルサイズチェック
-  //			{0, 154, 26, 1, DISKTYPE_2HD, 0},	//	BKDSK(HDB)	BASIC
-  //2HD
+  //			{0, 154, 26, 1, DISKTYPE_2HD, 0},	//
+  //BKDSK(HDB) BASIC 2HD
   xdf = supportbkdsk;
   size = xdf->tracks;
   size *= xdf->sectors;

@@ -25,7 +25,7 @@
 #endif
 
 /*TGUI9400CXi has extended write modes, controlled by extended GDC registers :
-        
+
   GDC[0x10] - Control
         bit 0 - pixel width (1 = 16 bit, 0 = 8 bit)
         bit 1 - mono->colour expansion (1 = enabled, 0 = disabled)
@@ -37,7 +37,7 @@
   GDC[0x15] - Foreground colour (high byte)
   GDC[0x17] - Write mask (low byte)
   GDC[0x18] - Write mask (high byte)
-  
+
   Mono->colour expansion will expand written data 8:1 to 8/16 consecutive bytes.
   MSB is processed first. On word writes, low byte is processed first. 1 bits
   write foreground colour, 0 bits write background colour unless transparency is
@@ -46,13 +46,13 @@
 
   With 16-bit pixel width, each bit still expands to one byte, so the TGUI
   driver doubles up monochrome data.
-  
+
   While there is room in the register map for three byte colours, I don't
   believe 24-bit colour is supported. The TGUI9440 blitter has the same
   limitation.
-  
+
   I don't think double word writes are supported.
-  
+
   Extended latch copy uses an internal 16 byte latch. Reads load the latch,
   writing writes out 16 bytes. I don't think the access size or host data has
   any affect, but the Windows 3.1 driver always reads bytes and write words of
@@ -187,7 +187,7 @@ void tgui_out(uint16_t addr, uint8_t val, void *p) {
   uint8_t old;
 
   //	pclog("tgui_out : %04X %02X  %04X:%04X  %i\n", addr, val, CS,pc,
-  //svga->bpp);
+  // svga->bpp);
   if (((addr & 0xFFF0) == 0x3D0 || (addr & 0xFFF0) == 0x3B0) &&
       !(svga->miscout & 1))
     addr ^= 0x60;
@@ -569,7 +569,7 @@ void tgui_recalcmapping(tgui_t *tgui) {
   svga_t *svga = &tgui->svga;
 
   //	pclog("tgui_recalcmapping : %02X %02X\n", svga->crtc[0x21],
-  //svga->gdcreg[6]);
+  // svga->gdcreg[6]);
 
   if (tgui->type == TGUI_9400CXI) {
     if (tgui->ext_gdc_regs[0] & EXT_CTRL_LATCH_COPY) {
@@ -600,7 +600,7 @@ void tgui_recalcmapping(tgui_t *tgui) {
     mem_mapping_set_addr(&tgui->linear_mapping, tgui->linear_base,
                          tgui->linear_size);
     //		pclog("Trident linear framebuffer at %08X - size %06X\n",
-    //tgui->linear_base, tgui->linear_size);
+    // tgui->linear_base, tgui->linear_size);
     if (tgui->type >= TGUI_9440) {
       mem_mapping_enable(&tgui->accel_mapping);
       mem_mapping_disable(&svga->mapping);
@@ -1158,13 +1158,13 @@ void tgui_accel_command(int count, uint32_t cpu_dat, tgui_t *tgui) {
      tgui->accel.tgui_pattern[y][7]);
           }*/
   //	if (count == -1) pclog("Command %i %i %p\n", tgui->accel.command,
-  //TGUI_BITBLT, tgui);
+  // TGUI_BITBLT, tgui);
   switch (tgui->accel.command) {
   case TGUI_BITBLT:
-    //		if (count == -1) pclog("BITBLT src %i,%i dst %i,%i size %i,%i flags
-    //%04X\n", tgui->accel.src_x, tgui->accel.src_y, tgui->accel.dst_x,
-    //tgui->accel.dst_y, tgui->accel.size_x, tgui->accel.size_y,
-    //tgui->accel.flags);
+    //		if (count == -1) pclog("BITBLT src %i,%i dst %i,%i size %i,%i
+    // flags %04X\n", tgui->accel.src_x, tgui->accel.src_y, tgui->accel.dst_x,
+    // tgui->accel.dst_y, tgui->accel.size_x, tgui->accel.size_y,
+    // tgui->accel.flags);
     if (count == -1) {
       tgui->accel.src = tgui->accel.src_old =
           tgui->accel.src_x + (tgui->accel.src_y * tgui->accel.pitch);
@@ -1207,7 +1207,7 @@ void tgui_accel_command(int count, uint32_t cpu_dat, tgui_t *tgui) {
         }
 
         //				pclog("  %i,%i  %02X %02X %02X  %02X\n",
-        //tgui->accel.x, tgui->accel.y, src_dat,dst_dat,pat_dat, out);
+        // tgui->accel.x, tgui->accel.y, src_dat,dst_dat,pat_dat, out);
 
         tgui->accel.src += xdir;
         tgui->accel.dst += xdir;
@@ -1242,7 +1242,7 @@ void tgui_accel_command(int count, uint32_t cpu_dat, tgui_t *tgui) {
     case TGUI_SRCMONO | TGUI_SRCCPU:
       if (count == -1) {
         //				pclog("Blit start  TGUI_SRCMONO |
-        //TGUI_SRCCPU\n");
+        // TGUI_SRCCPU\n");
         if (svga->crtc[0x21] & 0x20) {
           tgui->write_blitter = 1;
         }
@@ -1267,8 +1267,8 @@ void tgui_accel_command(int count, uint32_t cpu_dat, tgui_t *tgui) {
 
           WRITE(tgui->accel.dst, out);
         }
-        //				pclog("  %i,%i  %02X %02X %02X  %02X %i\n",
-        //tgui->accel.x, tgui->accel.y, src_dat,dst_dat,pat_dat, out,
+        //				pclog("  %i,%i  %02X %02X %02X  %02X
+        //%i\n", tgui->accel.x, tgui->accel.y, src_dat,dst_dat,pat_dat, out,
         //(!(tgui->accel.flags & TGUI_TRANSENA) || src_dat != trans_col));
         cpu_dat <<= 1;
         tgui->accel.src += xdir;
@@ -1660,7 +1660,7 @@ static void tgui_queue(tgui_t *tgui, uint32_t addr, uint32_t val,
 void tgui_accel_write(uint32_t addr, uint8_t val, void *p) {
   tgui_t *tgui = (tgui_t *)p;
   //	pclog("tgui_accel_write : %08X %02X  %04X(%08X):%08X %02X\n", addr, val,
-  //CS,cs,pc, opcode);
+  // CS,cs,pc, opcode);
   if ((addr & ~0xff) != 0xbff00)
     return;
   tgui_queue(tgui, addr, val, FIFO_WRITE_BYTE);

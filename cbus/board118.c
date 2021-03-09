@@ -330,8 +330,8 @@ static void IOOUTCALL gameport_o1480(UINT port, REG8 dat) {
   gameport_tsc = 0;
 #endif
   // gameport_clkmax = pccore.baseclock * pccore.maxmultiple / 1000; //
-  // とりあえず1msで･･･ gameport_timeoutcounter = 400; gameport_timeoutinterval =
-  // gameport_clkmax * 2 / gameport_timeoutcounter; nevent_set(NEVENT_CDWAIT,
+  // とりあえず1msで･･･ gameport_timeoutcounter = 400; gameport_timeoutinterval
+  // = gameport_clkmax * 2 / gameport_timeoutcounter; nevent_set(NEVENT_CDWAIT,
   // gameport_timeoutinterval, gameport_timeoutproc, NEVENT_ABSOLUTE);
 #endif
   (void)port;
@@ -340,7 +340,7 @@ static void IOOUTCALL gameport_o1480(UINT port, REG8 dat) {
 //	if(gameport_timeoutcounter > 0){
 //		gameport_timeoutcounter--;
 //		nevent_set(NEVENT_CDWAIT, gameport_timeoutinterval,
-//gameport_timeoutproc, NEVENT_ABSOLUTE);
+// gameport_timeoutproc, NEVENT_ABSOLUTE);
 //	}
 //}
 static REG8 IOINPCALL gameport_i1480(UINT port) {
@@ -455,7 +455,6 @@ static REG8 IOINPCALL ym_i1488(UINT port) // FM Music Status Port
     return 0xc0;
   return 0;
 }
-
 
 /*********** PC-9801-118 config I/O ? ***********/
 

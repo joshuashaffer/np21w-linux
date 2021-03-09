@@ -158,7 +158,7 @@ BRESULT opencue(SXSIDEV sxsi, const OEMCHAR *fname) {
         trk[index].img_start_sec = trk[index].pos;
 
         //				trk[index].pregap_sector	=
-        //trk[index].start_sector - trk[index].pregap_sectors;
+        // trk[index].start_sector - trk[index].pregap_sectors;
 
         index++;
         curpregap = 0;

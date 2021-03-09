@@ -92,7 +92,6 @@ static void cb_radio(GtkRadioAction *action, GtkRadioAction *current,
 
 static void convertJIStoSJIS(UINT8 buf[]);
 
-
 static GtkActionEntry menu_entries[] = {
     /* Menu */
     {"EmulateMenu", NULL, "Emulate", NULL, NULL, NULL},
@@ -869,7 +868,7 @@ extern NP2CFG np2cfg_default;
 extern NP2OSCFG np2oscfg_default;
 
 #undef CB_COPYCLIPBOARD_SCREENSIZE
-#define CB_COPYCLIPBOARD_SCREENSIZE (80*25)
+#define CB_COPYCLIPBOARD_SCREENSIZE (80 * 25)
 static void cb_copyclipboard(GtkAction *action, gpointer user_data) {
 
   int i;
@@ -879,9 +878,9 @@ static void cb_copyclipboard(GtkAction *action, gpointer user_data) {
   UINT8 buf[5];
   FILEH fh;
   j = 0;
-  size_t charbuf_sz = 0x0A3FFF-0x0A0000+1; 
-  UINT8 charbuf[2*charbuf_sz+1];
-  memset(charbuf, 0, 2*charbuf_sz+1);
+  size_t charbuf_sz = 0x0A3FFF - 0x0A0000 + 1;
+  UINT8 charbuf[2 * charbuf_sz + 1];
+  memset(charbuf, 0, 2 * charbuf_sz + 1);
   // iconv wants multibyte characters in big endian and single byte
   // characters unpadded.
   for (i = 0x0A0000; i < 0x0A3FFF; i += 2) {
@@ -911,7 +910,7 @@ static void cb_copyclipboard(GtkAction *action, gpointer user_data) {
       if (cpos >= CB_COPYCLIPBOARD_SCREENSIZE)
         break;
       buf[0] = '\r';
-      charbuf[j++] = buf[0]; 
+      charbuf[j++] = buf[0];
       buf[0] = '\n';
       charbuf[j++] = buf[0];
     }
@@ -920,22 +919,25 @@ static void cb_copyclipboard(GtkAction *action, gpointer user_data) {
   GError *error = NULL;
   int bytes_read = 0;
   int bytes_written = 0;
-  gchar *utf8_text = g_convert(charbuf, CB_COPYCLIPBOARD_SCREENSIZE, "UTF-8", "Shift_JIS", &bytes_read, &bytes_written, &error);
-  if(error != NULL) { 
-      fprintf(stderr, "Unable to convert from SHIFT-JIS to UTF-8\n");
-      g_error_free(error);
-      return;
-  } 
-
-  //fprintf(stderr, "orig: %d, read %d, written %d\n", j, bytes_read, bytes_written);
-  if(utf8_text == NULL) {
-      fprintf(stderr, "ICONV returned null string during conversion.\n");
-      return;
+  gchar *utf8_text =
+      g_convert(charbuf, CB_COPYCLIPBOARD_SCREENSIZE, "UTF-8", "Shift_JIS",
+                &bytes_read, &bytes_written, &error);
+  if (error != NULL) {
+    fprintf(stderr, "Unable to convert from SHIFT-JIS to UTF-8\n");
+    g_error_free(error);
+    return;
   }
-  
-  GtkClipboard* clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-  if(clipboard != NULL) 
-      gtk_clipboard_set_text(clipboard,utf8_text,80*25);
+
+  // fprintf(stderr, "orig: %d, read %d, written %d\n", j, bytes_read,
+  // bytes_written);
+  if (utf8_text == NULL) {
+    fprintf(stderr, "ICONV returned null string during conversion.\n");
+    return;
+  }
+
+  GtkClipboard *clipboard = gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+  if (clipboard != NULL)
+    gtk_clipboard_set_text(clipboard, utf8_text, 80 * 25);
   g_free(utf8_text);
 }
 
