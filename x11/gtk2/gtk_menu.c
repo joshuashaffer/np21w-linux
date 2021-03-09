@@ -933,8 +933,8 @@ static void cb_copyclipboard(GtkAction *action, gpointer user_data) {
     return;
   }
 
-  fprintf(stderr, "orig: %d, read %d, written %d\n", j, bytes_read,
-          bytes_written);
+  //fprintf(stderr, "orig: %d, read %d, written %d\n", j, bytes_read,
+  //        bytes_written);
   if (utf8_text == NULL) {
     fprintf(stderr, "ICONV returned null string during conversion.\n");
     return;
