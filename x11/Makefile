@@ -249,6 +249,7 @@ am__objects_2 = $(real_topsrcdir)/x11/xnp2-main.$(OBJEXT) \
 	$(real_topsrcdir)/generic/xnp2-cmndraw.$(OBJEXT) \
 	$(real_topsrcdir)/generic/xnp2-keydisp.$(OBJEXT) \
 	$(real_topsrcdir)/generic/xnp2-cmjasts.$(OBJEXT) \
+	$(real_topsrcdir)/generic/xnp2-hostdrv.$(OBJEXT) \
 	$(real_topsrcdir)/generic/xnp2-hostdrvs.$(OBJEXT) \
 	$(real_topsrcdir)/generic/xnp2-unasm.$(OBJEXT) \
 	$(real_topsrcdir)/generic/xnp2-np2info.$(OBJEXT) \
@@ -819,19 +820,17 @@ AUTOCONF = ${SHELL} /home/jbs/Downloads/np21w-0.86-rev80/src/np21w-0.86/x11/miss
 AUTOHEADER = ${SHELL} /home/jbs/Downloads/np21w-0.86-rev80/src/np21w-0.86/x11/missing autoheader
 AUTOMAKE = ${SHELL} /home/jbs/Downloads/np21w-0.86-rev80/src/np21w-0.86/x11/missing automake-1.15
 AWK = gawk
-#CC = gcc-8
+#CC = gcc
 CC = clang-12
 CCDEPMODE = depmode=none
-#CFLAGS = -ggdb -g3 -Og -pg -pthread -Wall 
-#CFLAGS = -Ofast -pthread -Wall -fexceptions -D_FORTIFY_SOURCE=2 -D_GLIBCXX_ASSERTIONS -fasynchronous-unwind-tables  -fstack-protector-strong -Werror=format-security -Werror=implicit-function-declaration -fstack-clash-protection -Wno-unused-variable -Wno-unused-function 
+#CFLAGS = -g -O2 -pthread
 CFLAGS = -g -Og -pg -Wall -Wpedantic  -pthread -fsanitize=address -fsanitize-memory-track-origins=2 -fno-omit-frame-pointer -fsanitize-memory-use-after-dtor -fno-optimize-sibling-calls -fsanitize-blacklist=blacklist.txt  -fPIE -pie  -fsanitize-recover=all
 CPP = gcc -E
 CPPFLAGS =  -DNDEBUG
-#CXX = g++-8
+#CXX = g++
 CXX = clang++-12
 CXXDEPMODE = depmode=none
-#CXXFLAGS = -ggdb -g3 -Og -pg -pthread -Wall  
-#CXXFLAGS = -Ofast -pthread -Wall  -fexceptions -D_FORTIFY_SOURCE=2 -D_GLIBCXX_ASSERTIONS -fasynchronous-unwind-tables  -fstack-protector-strong -Werror=format-security  -fstack-clash-protection -Woverloaded-virtual  -Wno-unused-variable -Wno-unused-function  
+#CXXFLAGS = -g -O2 -pthread
 CXXFLAGS = -g -Og -pg -Wall -Wpedantic  -pthread -fsanitize=address -fsanitize-memory-track-origins=2 -fno-omit-frame-pointer  -fsanitize-memory-use-after-dtor  -fno-optimize-sibling-calls  -fsanitize-blacklist=blacklist.txt  -fPIE -pie -fsanitize-recover=all
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H -DSYSRESPATH=\""$(pkgdatadir)"\"
@@ -935,7 +934,7 @@ mkdir_p = $(MKDIR_P)
 nasm = nasm
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /usr/local
+prefix = /home/jbs/.local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
